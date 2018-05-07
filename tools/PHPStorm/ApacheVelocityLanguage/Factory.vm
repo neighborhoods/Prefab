@@ -1,0 +1,24 @@
+<?php
+declare(strict_types=1);
+
+#if (${NAMESPACE})
+
+namespace ${NAMESPACE};
+
+#end
+
+use Neighborhoods\Kojo\Service\FactoryAbstract;
+use ${NAMESPACE};
+use ${NAMESPACE}Interface;
+
+class Factory extends FactoryAbstract implements FactoryInterface
+{
+    use \\${NAMESPACE}\AwareTrait;
+
+    public function create(): \\${NAMESPACE}Interface
+    {
+        // @TODO - assemble target class.
+
+        return ${DS}${targetClassVariable};
+    }
+}

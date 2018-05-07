@@ -1,0 +1,40 @@
+<?php
+declare(strict_types=1);
+
+#if (${NAMESPACE})
+
+namespace ${NAMESPACE};
+
+#end
+
+trait AwareTrait
+{
+    public function set${ACCESSOR_NAME}(${CLASS_NAME}Interface ${DS}${SNAKE_CASE_ACCESSOR_NAME}): self
+    {
+        ${DS}this->_create(${CLASS_NAME}Interface::class, ${DS}${SNAKE_CASE_ACCESSOR_NAME});
+
+        return ${DS}this;
+    }
+
+    protected function _get${ACCESSOR_NAME}(): ${CLASS_NAME}Interface
+    {
+        return ${DS}this->_read(${CLASS_NAME}Interface::class);
+    }
+
+    protected function _get${ACCESSOR_NAME}Clone(): ${CLASS_NAME}Interface
+    {
+        return clone ${DS}this->_get${ACCESSOR_NAME}();
+    }
+
+    protected function _has${ACCESSOR_NAME}(): bool
+    {
+        return ${DS}this->_exists(${CLASS_NAME}Interface::class);
+    }
+
+    protected function _unset${ACCESSOR_NAME}(): self
+    {
+        ${DS}this->_delete(${CLASS_NAME}Interface::class);
+
+        return ${DS}this;
+    }
+}
