@@ -7,11 +7,9 @@ namespace ${NAMESPACE};
 
 #end
 
-use Neighborhoods\Kojo\Service\FactoryAbstract;
-use ${NAMESPACE};
 use ${NAMESPACE}Interface;
 
-class Factory extends FactoryAbstract implements FactoryInterface
+class Factory implements FactoryInterface
 {
     use \\${NAMESPACE}\AwareTrait;
 
