@@ -2,11 +2,9 @@
 declare(strict_types=1);
 
 #if (${NAMESPACE})
-
 namespace ${NAMESPACE};
 
 #end
-
 use ${NAMESPACE}Interface;
 
 trait AwareTrait
@@ -21,11 +19,6 @@ trait AwareTrait
     protected function _get${TargetClassName}(): \\${NAMESPACE}Interface
     {
         return ${DS}this->_read(\\${NAMESPACE}Interface::class);
-    }
-
-    protected function _get${TargetClassName}Clone(): \\${NAMESPACE}Interface
-    {
-        return clone ${DS}this->_get${TargetClassName}();
     }
 
     protected function _has${TargetClassName}(): bool
