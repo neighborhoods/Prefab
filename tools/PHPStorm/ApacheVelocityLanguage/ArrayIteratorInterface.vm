@@ -2,11 +2,9 @@
 declare(strict_types=1);
 
 #if (${NAMESPACE})
-
 namespace ${NAMESPACE};
 
 #end
-
 use ${ItemInterfaceNamespace};
 
 interface ${NAME} extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable

@@ -2,11 +2,9 @@
 declare(strict_types=1);
 
 #if (${NAMESPACE})
-
 namespace ${NAMESPACE};
 
 #end
-
 use ${NAMESPACE}Interface;
 
 class Factory implements FactoryInterface
@@ -15,8 +13,6 @@ class Factory implements FactoryInterface
 
     public function create(): \\${NAMESPACE}Interface
     {
-        // @TODO - assemble target class.
-
-        return ${DS}${targetClassVariable};
+        return clone ${DS}this->_get${targetClassVariable}();
     }
 }

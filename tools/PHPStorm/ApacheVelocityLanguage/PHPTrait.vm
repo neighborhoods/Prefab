@@ -2,11 +2,9 @@
 declare(strict_types=1);
 
 #if (${NAMESPACE})
-
 namespace ${NAMESPACE};
 
 #end
-
 trait AwareTrait
 {
     public function set${ACCESSOR_NAME}(${CLASS_NAME}Interface ${DS}${SNAKE_CASE_ACCESSOR_NAME}): self
@@ -19,11 +17,6 @@ trait AwareTrait
     protected function _get${ACCESSOR_NAME}(): ${CLASS_NAME}Interface
     {
         return ${DS}this->_read(${CLASS_NAME}Interface::class);
-    }
-
-    protected function _get${ACCESSOR_NAME}Clone(): ${CLASS_NAME}Interface
-    {
-        return clone ${DS}this->_get${ACCESSOR_NAME}();
     }
 
     protected function _has${ACCESSOR_NAME}(): bool
