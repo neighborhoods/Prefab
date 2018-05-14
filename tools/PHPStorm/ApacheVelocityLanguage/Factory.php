@@ -1,3 +1,4 @@
+#set( $unqualifiedClassName = "$NAMESPACE.substring($NAMESPACE.lastIndexOf('\')).substring(1)" )
 <?php
 declare(strict_types=1);
 
@@ -9,9 +10,9 @@ use ${NAMESPACE}Interface;
 
 class Factory implements FactoryInterface
 {
-    use \\${NAMESPACE}\AwareTrait;
+    use AwareTrait;
 
-    public function create(): \\${NAMESPACE}Interface
+    public function create(): ${unqualifiedClassName}Interface
     {
         return clone ${DS}this->_get${targetClassVariable}();
     }
