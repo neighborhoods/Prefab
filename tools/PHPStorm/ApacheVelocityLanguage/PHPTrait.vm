@@ -1,3 +1,5 @@
+#set( $camelCaseArgumentName = "$TargetClassName.substring(0,1).toLowerCase()$TargetClassName.substring(1)" )
+#set( $unqualifiedClassName = "$NAMESPACE.substring($NAMESPACE.lastIndexOf('\')).substring(1)" )
 <?php
 declare(strict_types=1);
 
@@ -5,28 +7,30 @@ declare(strict_types=1);
 namespace ${NAMESPACE};
 
 #end
+use ${NAMESPACE}Interface;
+
 trait AwareTrait
 {
-    public function set${ACCESSOR_NAME}(${CLASS_NAME}Interface ${DS}${SNAKE_CASE_ACCESSOR_NAME}): self
+    public function set${TargetClassName}(${unqualifiedClassName}Interface ${DS}$camelCaseArgumentName): self
     {
-        ${DS}this->_create(${CLASS_NAME}Interface::class, ${DS}${SNAKE_CASE_ACCESSOR_NAME});
+        ${DS}this->_create(${unqualifiedClassName}Interface::class, ${DS}$camelCaseArgumentName);
 
         return ${DS}this;
     }
 
-    protected function _get${ACCESSOR_NAME}(): ${CLASS_NAME}Interface
+    protected function _get${TargetClassName}(): ${unqualifiedClassName}Interface
     {
-        return ${DS}this->_read(${CLASS_NAME}Interface::class);
+        return ${DS}this->_read(${unqualifiedClassName}Interface::class);
     }
 
-    protected function _has${ACCESSOR_NAME}(): bool
+    protected function _has${TargetClassName}(): bool
     {
-        return ${DS}this->_exists(${CLASS_NAME}Interface::class);
+        return ${DS}this->_exists(${unqualifiedClassName}Interface::class);
     }
 
-    protected function _unset${ACCESSOR_NAME}(): self
+    protected function _unset${TargetClassName}(): self
     {
-        ${DS}this->_delete(${CLASS_NAME}Interface::class);
+        ${DS}this->_delete(${unqualifiedClassName}Interface::class);
 
         return ${DS}this;
     }
