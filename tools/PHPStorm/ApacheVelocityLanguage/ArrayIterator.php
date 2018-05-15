@@ -8,19 +8,19 @@ namespace ${NAMESPACE};
 #end
 class ${NAME} extends \ArrayIterator implements ${NAME}Interface
 {
-     /** @param ${elementType}Interface ...${DS}${arrayItemName}s */
+    /** @param ${elementType}Interface ...${DS}${arrayItemName}s */
     public function __construct(array ${DS}${arrayItemName}s = array(), int ${DS}flags = 0)
     {
         if (!empty(${DS}${arrayItemName}s)) {
-            ${DS}this->_assertValidArrayType(...${DS}${arrayItemName}s);
+        ${DS}this->_assertValidArrayType(...${DS}${arrayItemName}s);
         }
 
         parent::__construct(${DS}${arrayItemName}s, ${DS}flags);
     }
 
     public function offsetGet(${DS}index): ${elementType}Interface
-    {
-        return ${DS}this->_assertValidArrayItemType(parent::offsetGet(${DS}index));
+{
+return ${DS}this->_assertValidArrayItemType(parent::offsetGet(${DS}index));
     }
 
     /** @param ${elementType}Interface ${DS}${arrayItemName} */
@@ -37,9 +37,9 @@ class ${NAME} extends \ArrayIterator implements ${NAME}Interface
     }
 
     public function current(): ${elementType}Interface
-    {
-        return parent::current();
-    }
+{
+return parent::current();
+}
 
     protected function _assertValidArrayItemType(${elementType}Interface ${DS}${arrayItemName})
     {
@@ -47,7 +47,12 @@ class ${NAME} extends \ArrayIterator implements ${NAME}Interface
     }
 
     protected function _assertValidArrayType(${elementType}Interface ...${DS}${arrayItemName}s): ${NAME}Interface
-    {
-        return ${DS}this;
+{
+return ${DS}this;
+    }
+
+    public function getArrayCopy(): ${NAME}Interface
+{
+return new self(parent::getArrayCopy(), (int)${DS}this->getFlags());
     }
 }
