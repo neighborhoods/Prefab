@@ -21,6 +21,6 @@ class Factory implements FactoryInterface
         return ${DS}this->_get${targetClassVariable}()->getArrayCopy();
         #else
         return clone ${DS}this->_get${targetClassVariable}();
-        #
+        #end
     }
 }
