@@ -7,10 +7,12 @@ declare(strict_types=1);
 namespace ${NAMESPACE};
 
 #end
+use Neighborhoods\Pylon\Data\Property\Defensive;
 use ${NAMESPACE}Interface;
 
 class Factory implements FactoryInterface
 {
+    use Defensive\AwareTrait;
     use AwareTrait;
 
     public function create(): ${unqualifiedClassName}Interface
@@ -19,6 +21,6 @@ class Factory implements FactoryInterface
         return ${DS}this->_get${targetClassVariable}()->getArrayCopy();
         #else
         return clone ${DS}this->_get${targetClassVariable}();
-        #
+        #end
     }
 }
