@@ -18,9 +18,9 @@ class Factory implements FactoryInterface
     public function create(): ${unqualifiedClassName}Interface
     {
         #if ( $isArrayFactory == "true" )
-        return ${DS}this->_get${targetClassVariable}()->getArrayCopy();
+        return ${DS}this->get${targetClassVariable}()->getArrayCopy();
         #else
-        return clone ${DS}this->_get${targetClassVariable}();
+        return clone ${DS}this->get${targetClassVariable}();
         #end
     }
 }
