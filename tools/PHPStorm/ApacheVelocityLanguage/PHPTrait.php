@@ -1,5 +1,9 @@
-#set( $camelCaseArgumentName = "$TargetClassName.substring(0,1).toLowerCase()$TargetClassName.substring(1)" )
+#set($truncatedClassPath = "")
+#set($awarePropertyName = "")
+#parse("truncated classpath")
+#set( $camelCaseArgumentName = "$truncatedClassPath.substring(0,1).toLowerCase()$truncatedClassPath.substring(1)" )
 #set( $unqualifiedClassName = "$NAMESPACE.substring($NAMESPACE.lastIndexOf('\')).substring(1)" )
+
 <?php
 declare(strict_types=1);
 
@@ -8,29 +12,35 @@ namespace ${NAMESPACE};
 
 #end
 use ${NAMESPACE}Interface;
-
+/** @codeCoverageIgnore */
 trait AwareTrait
 {
-    public function set${TargetClassName}(${unqualifiedClassName}Interface ${DS}$camelCaseArgumentName): self
+protected ${DS}${awarePropertyName};
+
+    public function set${truncatedClassPath}(${unqualifiedClassName}Interface ${DS}$camelCaseArgumentName): self
     {
-        ${DS}this->_create(${unqualifiedClassName}Interface::class, ${DS}$camelCaseArgumentName);
+        assert(!${DS}this->has${truncatedClassPath}(), new \LogicException('${awarePropertyName} is already set.'));
+        ${DS}this->${awarePropertyName} = ${DS}$camelCaseArgumentName;
 
         return ${DS}this;
     }
 
-    protected function _get${TargetClassName}(): ${unqualifiedClassName}Interface
-    {
-        return ${DS}this->_read(${unqualifiedClassName}Interface::class);
+    protected function get${truncatedClassPath}(): ${unqualifiedClassName}Interface
+{
+assert(${DS}this->has${truncatedClassPath}(), new \LogicException('${awarePropertyName} is not set.'));
+
+        return ${DS}this->${awarePropertyName};
     }
 
-    protected function _has${TargetClassName}(): bool
+    protected function has${truncatedClassPath}(): bool
     {
-        return ${DS}this->_exists(${unqualifiedClassName}Interface::class);
+        return isset(${DS}this->${awarePropertyName});
     }
 
-    protected function _unset${TargetClassName}(): self
+    protected function unset${truncatedClassPath}(): self
     {
-        ${DS}this->_delete(${unqualifiedClassName}Interface::class);
+        assert(${DS}this->has${truncatedClassPath}(), new \LogicException('${awarePropertyName} is not set.'));
+        unset(${DS}this->${awarePropertyName});
 
         return ${DS}this;
     }
