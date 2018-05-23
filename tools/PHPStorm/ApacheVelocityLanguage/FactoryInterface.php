@@ -8,6 +8,7 @@ namespace ${NAMESPACE};
 #end
 use ${NAMESPACE}Interface;
 
+/** @codeCoverageIgnore */
 interface FactoryInterface
 {
     public function create(): ${unqualifiedClassName}Interface;
