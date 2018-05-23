@@ -1,4 +1,7 @@
+#set($truncatedClassPath = "")
+#parse("truncated classpath")
 #set( $elementType = "$NAME.substring(0, $NAME.indexOf('Array'))" )
+#set( $arrayItemName = "$truncatedClassPath.substring(0,1).toLowerCase()$truncatedClassPath.substring(1)$elementType" )
 <?php
 declare(strict_types=1);
 
@@ -6,6 +9,7 @@ declare(strict_types=1);
 namespace ${NAMESPACE};
 
 #end
+/** @codeCoverageIgnore */
 class ${NAME} extends \ArrayIterator implements ${NAME}Interface
 {
     /** @param ${elementType}Interface ...${DS}${arrayItemName}s */
