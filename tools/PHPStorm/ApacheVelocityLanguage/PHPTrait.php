@@ -18,17 +18,17 @@ trait AwareTrait
         return ${DS}this;
     }
 
-    protected function get${TargetClassName}(): ${unqualifiedClassName}Interface
+    protected function _get${TargetClassName}(): ${unqualifiedClassName}Interface
     {
         return ${DS}this->_read(${unqualifiedClassName}Interface::class);
     }
 
-    protected function has${TargetClassName}(): bool
+    protected function _has${TargetClassName}(): bool
     {
         return ${DS}this->_exists(${unqualifiedClassName}Interface::class);
     }
 
-    protected function unset${TargetClassName}(): self
+    protected function _unset${TargetClassName}(): self
     {
         ${DS}this->_delete(${unqualifiedClassName}Interface::class);
 
