@@ -28,4 +28,4 @@ Aware Traits provide the ability to include getters and setters for `Object1` th
 
 # Composition Over Inheritence
 As with any sufficiently mature software project, all of the features have a time and place when they are appropriate to use.  However, 
-* All classes and interfaces SHOULD not use inheritence. There must be a sufficiently strong reason to inherit from an object, and that reason MUST be documented in the PR along with any considerations on how to decouple that object in the future.
+* All classes and interfaces SHOULD NOT use inheritence. There must be a sufficiently strong reason to inherit from an object, and that reason MUST be documented in the PR along with any considerations on how to decouple that object in the future.
