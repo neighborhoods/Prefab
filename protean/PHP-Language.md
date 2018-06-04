@@ -8,6 +8,7 @@ PHP 7 introduced [strict typing](http://php.net/manual/en/functions.arguments.ph
 * Public methods MUST NOT declare an `array` primitive as an argument or return type declaration. See [Typed Arrays](#typed-arrays).
 * Internal methods SHOULD NOT declare an `array` primitive as an argument or return type declaration. See [Typed Arrays](#typed-arrays).
 * All methods MUST NOT use nullable types.
+* Methods that do not 
 
 # Interfaces
 All classes MUST have an Interface. 
@@ -32,8 +33,10 @@ As with any sufficiently mature software project, all of the features have a tim
 
 # Object Methods
 As with any sufficiently mature software project, all of the features have a time and place when they are appropriate to use.  However, 
-* All object methods MUST be either `public` or `protected`.
-* All object methods MUST NOT be `static`.
+* All methods MUST be either `public` or `protected`.
+* All methods MUST NOT be `static`.
+* All methods MUST do one thing and one thing well.
+* All methods MUST NOT return error or success information. A method succeeds by default, if it cannot complete it's contract it MUST throw an `Exception`.
 
 # Objects
 As with any sufficiently mature software project, all of the features have a time and place when they are appropriate to use.  However, 
