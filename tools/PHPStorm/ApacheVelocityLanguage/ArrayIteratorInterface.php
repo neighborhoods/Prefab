@@ -26,4 +26,8 @@ interface ${NAME} extends \SeekableIterator, \ArrayAccess, \Serializable, \Count
     public function current(): ${elementType}Interface;
 
     public function getArrayCopy(): $NAME;
+
+    public function toArray() : array;
+
+    public function hydrate(array ${DS}array) : $NAME;
 }
