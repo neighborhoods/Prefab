@@ -2,7 +2,7 @@
 The PHP langauge has improved a lot since PHP 7 was introduced, and some important improvements have also been made since then. This document describes some of the language features that we leverage and extend in order to accomplish the `Protean` architecture specification.
 
 # Strict Typing
-PHP 7 introduced strict typing and the ability to type return arguments as well as continuing with the ability to use typed arguments. All public methods MUST provide non-primitive type declarations.
+PHP 7 introduced strict typing and the ability to type return arguments as well as continuing with the ability to use typed arguments. All public methods MUST provide non-primitive type declarations. All PHP files MUST `declare(strict_types=1);`
 
 # Interfaces
 All classes MUST have an Interface. 
