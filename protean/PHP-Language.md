@@ -11,7 +11,7 @@ PHP 7 introduced [strict typing](http://php.net/manual/en/functions.arguments.ph
 All classes MUST have an Interface. 
 
 # Typed Arrays
-PHP 7 still does not have typed collections of objects. We have created the ability to have Typed Arrays of any arbitrary object.
+PHP 7 still does not have typed collections of objects. We have created the ability to have Typed Arrays of any arbitrary object. See the `prefab` repository for code generation specifics.
 * Typed Arrays MUST be code generated.
 * Type Arrays MUST be used to pass object collections between public interfaces. 
 * Typed Arrays SHOULD also be used for internal storage and access inside an actor.
