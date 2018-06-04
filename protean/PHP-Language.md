@@ -5,10 +5,8 @@ The PHP langauge has improved a lot since PHP 7 was introduced, and some importa
 PHP 7 introduced [strict typing](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration.strict) and the ability for [return type declarations](http://php.net/manual/en/functions.returning-values.php#functions.returning-values.type-declaration) as well as continuing with the ability to use [argument type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration). 
 * All methods MUST provide a typed declaration of any arguments or returned actors. 
 * All PHP files MUST `declare(strict_types=1);`
-* Public methods SHOULD NOT declare an `array` primitive as an argument or return type declaration. See [Typed Arrays](#typed-arrays).
-* Internal methods SHOULD NOT declare an `array` primitive as an argument or return type declaration. See [Typed Arrays](#typed-arrays).
+* All methods SHOULD NOT declare an `array` primitive as an argument or return type declaration. See [Typed Arrays](#typed-arrays).
 * All methods MUST NOT use nullable types.
-* Methods that do not 
 
 # Interfaces
 All classes MUST have an Interface. 
@@ -16,7 +14,7 @@ All classes MUST have an Interface.
 # Typed Arrays
 PHP 7 still does not have language support for typed collections of objects. We have created the ability to have Typed Arrays of any arbitrary object. See the `prefab` repository for code generation specifics.
 * Typed Arrays MUST be code generated.
-* Type Arrays MUST be used to pass object collections between public interfaces. 
+* Typed Arrays MUST be used to pass object collections between public interfaces. 
 * Typed Arrays SHOULD also be used for internal storage and access inside an actor.
 
 # Aware Traits
