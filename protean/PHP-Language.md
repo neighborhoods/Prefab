@@ -5,7 +5,7 @@ The PHP langauge has improved a lot since PHP 7 was introduced, and some importa
 PHP 7 introduced [strict typing](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration.strict) and the ability for [return type declarations](http://php.net/manual/en/functions.returning-values.php#functions.returning-values.type-declaration) as well as continuing with the ability to use [argument type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration). 
 * All methods MUST provide an argument or return type declaration. 
 * All PHP files MUST `declare(strict_types=1);`
-* Public methods MUST NOT declare an `array` primitive as an argument or return type declaration. See Typed Arrays.
+* Public methods MUST NOT declare an `array` primitive as an argument or return type declaration. See [Typed Arrays](typed-arrays).
 
 # Interfaces
 All classes MUST have an Interface. 
