@@ -7,5 +7,3 @@ A `Factory` is a creational pattern that uses factory methods to deal with the p
 # Repositories
 
 # Builders
-
-# Dependency Injection
