@@ -32,9 +32,9 @@ As with any sufficiently mature software project, all of the features have a tim
 
 # Object Methods
 As with any sufficiently mature software project, all of the features have a time and place when they are appropriate to use.  However, 
-* All object methods MUST be either public or protected.
-* Methods MUST NOT be static.
+* All object methods MUST be either `public` or `protected`.
+* Methods MUST NOT be `static`.
 
 # Objects
 As with any sufficiently mature software project, all of the features have a time and place when they are appropriate to use.  However, 
-* Objects MUST NOT be static.
+* Objects MUST NOT be `static`.
