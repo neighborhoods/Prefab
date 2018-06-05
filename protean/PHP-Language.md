@@ -34,7 +34,7 @@ As with any sufficiently mature software project, all of the features have a tim
 * All methods MUST be either `public` or `protected`.
 * All methods MUST NOT be `static`.
 * All methods MUST do one thing and one thing well.
-* All methods MUST NOT return error or success information. A method succeeds by default, if it cannot complete it's contract it MUST throw an `Exception`.
+* All methods MUST NOT return error or success information. A method succeeds by default, if it cannot fulfill it's contract it MUST throw an `Exception`.
 * All methods who are not asked to return an actor MUST return the interface to the class.
 * All methods SHOULD have one and only one return statement.
 
