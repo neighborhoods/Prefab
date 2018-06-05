@@ -1,5 +1,5 @@
 # Summary
-`Code Smell` is the concept of a colleciton of indicators that code is poorly written. This has taken on a very negative connotation equivalent to "You are doing it wrong".  
+`Code Smell` is the concept of a collection of indicators that code is poorly written. This has taken on a very negative connotation equivalent to "You are doing it wrong".  
 
 Refactoring is a constant, never ending process, and should be practiced constantly and agressively by any expert software engineer. Most of the time the *when* to refactor is not known when piece of software is started.  The idea of `Code Smell` creates a fear that everything must be perfect from the beginning, or that refactoring means that "You did it wrong". If this was the case then every piece of software has been "doing it wrong" since the Babbage engine.
 
