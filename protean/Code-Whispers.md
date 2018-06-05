@@ -13,7 +13,7 @@ Your code might be whispering to you to refactor it if
 * Code cannot be understood without comments.
 * Variable names are abbreviated or not descriptive.
 * Method names are abbreviated or not descriptive.
-* A class over 175 lines long.
+* A class is over 175 lines long.
 * Methods are not asks or tells.
 * Methods do not have strict contracts.
 * A method takes more than one argument.
