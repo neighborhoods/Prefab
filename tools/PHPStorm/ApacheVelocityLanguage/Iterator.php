@@ -48,7 +48,7 @@ class Iterator implements IteratorInterface
     protected function getGenerator() : \Generator
     {
         if (${DS}this->generator === null) {
-            throw new \LogicException('`generator` has not been set.');
+            throw new \LogicException('Generator has not been set.');
         }
         return ${DS}this->generator;
     }
@@ -56,7 +56,7 @@ class Iterator implements IteratorInterface
     public function setGenerator(\Generator ${DS}generator) : IteratorInterface
     {
         if (${DS}this->generator !== null) {
-            throw new \LogicException('`generator` already set.');
+            throw new \LogicException('Generator is already set.');
         }
         ${DS}this->generator = ${DS}generator;
         return ${DS}this;
