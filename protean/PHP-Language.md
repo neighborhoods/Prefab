@@ -22,7 +22,7 @@ PHP has included [Traits](http://php.net/manual/en/language.oop5.traits.php) sin
 
 Aware Traits provide the ability to include getters and setters for `Object1` that can be included in other objects to make them aware of `Object1`.
 * Aware Traits MUST be code generated.  
-* Aware Traits SHOULD be used as the method in which to acces other actors within in object.  There must be a sufficiently strong reason to use a hand written getter or setter for an external actor and that reason MUST be documented in the PR along with any considerations on how to avoid code duplication and tight coupling.
+* Aware Traits SHOULD be used as the method in which to access other actors within an object.  There must be a sufficiently strong reason to use a hand written getter or setter for an external actor and that reason MUST be documented in the PR along with any considerations on how to avoid code duplication and tight coupling.
 * Traits MUST NOT be used in any other way.
 
 # Composition Over Inheritence
