@@ -45,7 +45,7 @@ class Iterator implements IteratorInterface
         return ${DS}$lowerCaseUnqualifiedClassName;
     }
 
-    protected function getGenerator() : \Iterator
+    protected function getGenerator() : \Generator
     {
         if (${DS}this->generator === null) {
             throw new \LogicException('`generator` has not been set.');
@@ -53,7 +53,7 @@ class Iterator implements IteratorInterface
         return ${DS}this->generator;
     }
 
-    public function setGenerator(\Iterator ${DS}generator) : IteratorInterface
+    public function setGenerator(\Generator ${DS}generator) : IteratorInterface
     {
         if (${DS}this->generator !== null) {
             throw new \LogicException('`generator` already set.');

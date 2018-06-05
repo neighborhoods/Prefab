@@ -12,5 +12,5 @@ interface IteratorInterface extends \Iterator
 {
     public function current() : ${unqualifiedClassName}Interface;
 
-    public function setGenerator(\Iterator ${DS}generator) : IteratorInterface;
+    public function setGenerator(\Generator ${DS}generator) : IteratorInterface;
 }
