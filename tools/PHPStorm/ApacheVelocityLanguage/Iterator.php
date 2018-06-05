@@ -11,33 +11,33 @@ use ${NAMESPACE}Interface;
 #end
 class Iterator implements IteratorInterface
 {
-    protected ${DS}internalIterator;
+    protected ${DS}generator;
 
     public function next() : void
     {
-        ${DS}this->getInternalIterator()->next();
+        ${DS}this->getGenerator()->next();
     }
 
     public function current() : ${unqualifiedClassName}Interface
     {
         return ${DS}this->_assertValidArrayItemType(
-            ${DS}this->getInternalIterator()->current()
+            ${DS}this->getGenerator()->current()
         );
     }
 
     public function valid() : bool
     {
-        return ${DS}this->getInternalIterator()->valid();
+        return ${DS}this->getGenerator()->valid();
     }
 
     public function rewind() : void
     {
-        ${DS}this->getInternalIterator()->rewind();
+        ${DS}this->getGenerator()->rewind();
     }
 
     public function key()
     {
-        return ${DS}this->getInternalIterator()->key();
+        return ${DS}this->getGenerator()->key();
     }
 
     protected function _assertValidArrayItemType(${unqualifiedClassName}Interface ${DS}$lowerCaseUnqualifiedClassName) : ${unqualifiedClassName}Interface
@@ -45,20 +45,20 @@ class Iterator implements IteratorInterface
         return ${DS}$lowerCaseUnqualifiedClassName;
     }
 
-    protected function getInternalIterator() : \Iterator
+    protected function getGenerator() : \Iterator
     {
-        if (${DS}this->internalIterator === null) {
-            throw new \LogicException('`internalIterator` has not been set.');
+        if (${DS}this->generator === null) {
+            throw new \LogicException('`generator` has not been set.');
         }
-        return ${DS}this->internalIterator;
+        return ${DS}this->generator;
     }
 
-    public function setInternalIterator(\Iterator ${DS}internalIterator) : IteratorInterface
+    public function setGenerator(\Iterator ${DS}generator) : IteratorInterface
     {
-        if (${DS}this->internalIterator !== null) {
-            throw new \LogicException('`internalIterator` already set.');
+        if (${DS}this->generator !== null) {
+            throw new \LogicException('`generator` already set.');
         }
-        ${DS}this->internalIterator = ${DS}internalIterator;
+        ${DS}this->generator = ${DS}generator;
         return ${DS}this;
     }
 }
