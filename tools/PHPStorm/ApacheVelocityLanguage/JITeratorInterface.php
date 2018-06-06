@@ -8,6 +8,7 @@ namespace ${NAMESPACE};
 use ${NAMESPACE}Interface;
 
 #end
+/** @codeCoverageIgnore */
 interface JITeratorInterface extends \Iterator
 {
     public function current() : ${unqualifiedClassName}Interface;

@@ -9,6 +9,7 @@ namespace ${NAMESPACE};
 use ${NAMESPACE}Interface;
 
 #end
+/** @codeCoverageIgnore */
 class JITerator implements JITeratorInterface
 {
     protected ${DS}generator;
