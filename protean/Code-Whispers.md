@@ -6,7 +6,7 @@ This document attempts to define a concept of `Code Whispers` that differs from 
 
 Refactoring is a neverending process. It should be practiced constantly and agressively by any expert software engineer. The art of refactoring is *not* a tool that gets employed only on special occasion. Rather, it is an *inherent* and *continous* part of software engineering.
 
-Most of the time the *when* to refactor is not known when authorship of a piece of software is begun.  The idea of `Code Smell` creates a fear that everything must be perfect from the beginning, or that refactoring indicates that "You did it wrong". If this was the case then every piece of software has been "doing it wrong" since the Babbage engine. 
+Most of the time the *when* to refactor is not known when authorship of a piece of software begins.  The idea of `Code Smell` creates a fear that everything must be perfect from the beginning, or that refactoring indicates that "You did it wrong". If this was the case then every piece of software has been "doing it wrong" since the Babbage engine. 
 
 This sentiment encourages software engineers to not perform this critical behavior. The sentiment of `Code Smell` is an anti-pattern.
 
