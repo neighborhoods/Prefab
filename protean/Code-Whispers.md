@@ -8,7 +8,7 @@ Refactoring is a neverending process. It should be practiced constantly and agre
 
 Most of the time the *when* to refactor is not known when authorship of a piece of software is begun.  The idea of `Code Smell` creates a fear that everything must be perfect from the beginning, or that refactoring indicates that "You did it wrong". If this was the case then every piece of software has been "doing it wrong" since the Babbage engine. 
 
-This sentiment encourages software engineers to not perform this critical behavior. `Code Smell` is an anti-behavior.
+This sentiment encourages software engineers to not perform this critical behavior. The concept of `Code Smell` is an anti-pattern.
 
 # Solution
 Use the concept of `Code Whispers`. The distinction is that a judgement is not being passed on the author, but rather the emphasis is more akin to a long line marker; it is an indicator that the code is *whispering* to you that refactoring should happen at this point.
