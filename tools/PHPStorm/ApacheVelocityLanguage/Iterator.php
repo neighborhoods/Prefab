@@ -9,6 +9,7 @@ namespace ${NAMESPACE};
 use ${NAMESPACE}Interface;
 
 #end
+/** @codeCoverageIgnore */
 class Iterator implements IteratorInterface
 {
     protected ${DS}generator;
