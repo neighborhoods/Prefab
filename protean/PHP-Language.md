@@ -18,7 +18,7 @@ PHP 7 still does not have language support for typed collections of objects. We 
 * Typed Arrays SHOULD also be used for internal storage and access inside an actor.
 
 # Aware Traits
-PHP has included [Traits](http://php.net/manual/en/language.oop5.traits.php) since `>=` `5.4.0`. We will use code generated Traits in a singular, and very specific way. 
+PHP has included [Traits](http://php.net/manual/en/language.oop5.traits.php) since `>=` `5.4.0`. We use code generated Traits in a singular, and very specific way. 
 
 Aware Traits provide the ability to include getters and setters for `Object1` that can be included in other objects to make them aware of `Object1`.
 * Aware Traits MUST be code generated.  
