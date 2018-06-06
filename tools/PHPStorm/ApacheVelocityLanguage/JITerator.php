@@ -9,7 +9,7 @@ namespace ${NAMESPACE};
 use ${NAMESPACE}Interface;
 
 #end
-class Iterator implements IteratorInterface
+class JITerator implements JITeratorInterface
 {
     protected ${DS}generator;
 
@@ -53,7 +53,7 @@ class Iterator implements IteratorInterface
         return ${DS}this->generator;
     }
 
-    public function setGenerator(\Generator ${DS}generator) : IteratorInterface
+    public function setGenerator(\Generator ${DS}generator) : JITeratorInterface
     {
         if (${DS}this->generator !== null) {
             throw new \LogicException('Generator is already set.');

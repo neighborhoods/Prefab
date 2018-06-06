@@ -8,9 +8,9 @@ namespace ${NAMESPACE};
 use ${NAMESPACE}Interface;
 
 #end
-interface IteratorInterface extends \Iterator
+interface JITeratorInterface extends \Iterator
 {
     public function current() : ${unqualifiedClassName}Interface;
 
-    public function setGenerator(\Generator ${DS}generator) : IteratorInterface;
+    public function setGenerator(\Generator ${DS}generator) : JITeratorInterface;
 }
