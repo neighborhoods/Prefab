@@ -54,3 +54,42 @@ Creating objects directly within the class that requires the objects is inflexib
 ## Specification
 Use PSR-11 compatible Dependency Injection. Additionally, this encourages composition of objects that follow the SRP.
 
+
+# Interface Driven Design
+
+## Problem
+Software engineers often start writing implementations rather than starting from an Interface that describes the contracts that any given implementation may have.
+
+## Proposed Solution
+Force all implementations to require an Interface to be able to be useful in our codebases.
+
+# Code Generation
+## Problem
+Business logic often requires a non-trivial amount of supporting software to be written in order for that business logic to be used.  This supporting software is usually trivial to write.  However, it creates the opportunity for logical mistakes to be made (typos, etc.), breaks from a convention (an engineer isn’t aware of a convention, a convention changed, typos, etc.), and other common issues that are caused when humans write software.
+
+## Proposed Solution
+Generate the code for the supporting software through annotations on an Interface.
+
+
+# Immutable Contracts
+## Problem
+Changing the behavior of a software contract forces clients of that contract to change their behavior(s) synchronously with the introduction of the changes to the contract.  This forms very brittle relationships between providers and clients.
+
+## Proposed Solution
+Do not mutate contracts, instead create a new contract or version an existing one.
+
+
+# PSR-15 - HTTP Server Request Handlers
+## Problem
+This problem is identical to Dependency Injection for objects.  In this case, controllers do not provide the ability to arbitrarily inject logic to handle the abstraction of HTTP Messages (PSR-7). In addition, controllers couple our code to a particular framework.
+
+## Proposed Solution
+Use PSR-15 Server Request Handlers.
+
+
+# Testing
+## Problem
+Testing a behavior of a part of code is an important part of being able to validate that the behavior is correct.  It is often difficult to setup these tests which is unattractive to engineers with deadlines.
+
+## Proposed Solution
+Use Continuous Test Driven Development (CTDD).  Test Contracts (~behaviors), and pass implementations as part of a data provider. Use a framework to simplify the creation of tests.
