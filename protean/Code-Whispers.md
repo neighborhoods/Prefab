@@ -1,11 +1,17 @@
 # Summary
+This document attempts to define a concept of `Code Whispers` that differs from the concept of `Code Smell`.
+
+# Problem
 `Code Smell` is the concept of a collection of indicators that code is poorly written. This has taken on a very negative connotation equivalent to "You are doing it wrong".  
 
 Refactoring is a neverending process. It should be practiced constantly and agressively by any expert software engineer. The art of refactoring is *not* a tool that gets employed only on special occasion. Rather, it is an *inherent* and *continous* part of software engineering.
 
-Most of the time the *when* to refactor is not known when authorship of a piece of software is begun.  The idea of `Code Smell` creates a fear that everything must be perfect from the beginning, or that refactoring indicates that "You did it wrong". If this was the case then every piece of software has been "doing it wrong" since the Babbage engine. This sentiment encourages software engineers to not perform this critical behavior.
+Most of the time the *when* to refactor is not known when authorship of a piece of software is begun.  The idea of `Code Smell` creates a fear that everything must be perfect from the beginning, or that refactoring indicates that "You did it wrong". If this was the case then every piece of software has been "doing it wrong" since the Babbage engine. 
 
-This document attempts to define a less severe concept of `Code Smell` called `Code Whispers` where the distinction is that a judgement is not being passed on the author, but rather the emphasis is more like a long line marker; an indicator that the code is *whispering* to you that refactoring should happen at this point.
+This sentiment encourages software engineers to not perform this critical behavior. `Code Smell` is an anti-behavior.
+
+# Solution
+Use the concept of `Code Whispers`. The distinction is that a judgement is not being passed on the author, but rather the emphasis is more akin to a long line marker; it is an indicator that the code is *whispering* to you that refactoring should happen at this point.
 
 # Examples
 Your code might be whispering to you to refactor it if
