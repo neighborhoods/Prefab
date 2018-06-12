@@ -41,17 +41,6 @@ Software is almost always dependent on other software.  This is due to the fact 
 Use a dependency manager to assemble a software project’s dependencies.  This allows for the Single Responsibility Principle to be applied to our repositories.  In addition, it supports our design goal of our repositories being agile since they can do one thing well.
 
 
-# Dependency Injection
-## Problem
-The Dependency Injection design pattern solves problems like:
-
-- How can an application be independent of how its objects are created?
-- How can a class be independent of how the objects it requires are created?
-- How can the way objects are created be specified in separate configuration files?
-- How can an application support different configurations?
-
-Creating objects directly within the class that requires the objects is inflexible because it commits the class to particular objects and makes it impossible to change the instantiation later independently from (without having to change) the class. It stops the class from being reusable if other objects are required, and it makes the class hard to test because real objects can't be replaced with mock objects.
-
 ## Specification
 Use PSR-11 compatible Dependency Injection. Additionally, this encourages composition of objects that follow the SRP.
 
