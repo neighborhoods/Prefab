@@ -1,6 +1,15 @@
 
 # Summary
-[Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) implements the concept of [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control).
+The [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) design pattern implements the concept of [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control) and solves problems like:
+* How can an application be independent of how its objects are created?
+* How can a class be independent of how the objects it requires are created?
+* How can the way objects are created be specified in separate configuration files?
+* How can an application support different configurations?
+
+Creating objects directly within the class that requires the objects is inflexible because it commits the class to particular objects and makes it impossible to change the instantiation later independently from (without having to change) the class. It stops the class from being reusable if other objects are required, and it makes the class hard to test because real objects can't be replaced with mock objects.
+
+# Specification
+Use PSR-11 compatible Dependency Injection. Additionally, this encourages composition of objects that follow the SRP.
 
 # Implementation
 Dependency Injection MUST only use the Symfony Dependency Injection component. 
