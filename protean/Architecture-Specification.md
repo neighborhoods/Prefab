@@ -23,7 +23,6 @@ A consumer of the API applications with the mission to provide a browser interfa
 ### Mobile applications
 A consumer of the API applications with the mission to provide a native mobile device interface to our Data.
 
-
 # API
 An API is an exposed PHP object interface (HTTP, CLI, etc.).
 
@@ -32,18 +31,6 @@ An Operation is an exposed public method on an API.
 
 # API Groups
 An API Group is a collection of related APIs.  This is how repository boundaries are defined.
-
-# Dependency Management
-## Problem
-Software is almost always dependent on other software.  This is due to the fact that a lot of logic is already written and can be used without rewriting it for a particular use case.  This has an enormous number of obvious advantages.  However, it may not be easy to add dependencies to a dependent codebase.  This can lead to codebases that provide solutions to many different domains of problems since it it easier to add to a single dependency than manually combine multiple dependencies.
-
-## Specification
-Use a dependency manager to assemble a software project’s dependencies.  This allows for the Single Responsibility Principle to be applied to our repositories.  In addition, it supports our design goal of our repositories being agile since they can do one thing well.
-
-
-## Specification
-Use PSR-11 compatible Dependency Injection. Additionally, this encourages composition of objects that follow the SRP.
-
 
 # Interface Driven Design
 
