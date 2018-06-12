@@ -6,4 +6,4 @@ Software is almost always dependent on other software.  This is due to the fact 
 Use a dependency manager to assemble a software project’s dependencies.  This allows for the Single Responsibility Principle to be applied to our repositories.  In addition, it supports our design goal of our repositories being agile since they can do one thing well.
 
 ## Implementation
-Composer MUST be the only dependency manager used.
+[Composer](https://getcomposer.org/) MUST be the only dependency manager used.
