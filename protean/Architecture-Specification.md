@@ -40,14 +40,6 @@ Software engineers often start writing implementations rather than starting from
 ## Proposed Solution
 Force all implementations to require an Interface to be able to be useful in our codebases.
 
-# Code Generation
-## Problem
-Business logic often requires a non-trivial amount of supporting software to be written in order for that business logic to be used.  This supporting software is usually trivial to write.  However, it creates the opportunity for logical mistakes to be made (typos, etc.), breaks from a convention (an engineer isn’t aware of a convention, a convention changed, typos, etc.), and other common issues that are caused when humans write software.
-
-## Proposed Solution
-Generate the code for the supporting software through annotations on an Interface.
-
-
 # Immutable Contracts
 ## Problem
 Changing the behavior of a software contract forces clients of that contract to change their behavior(s) synchronously with the introduction of the changes to the contract.  This forms very brittle relationships between providers and clients.
