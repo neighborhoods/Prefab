@@ -1,5 +1,5 @@
 
-# Problem
+# Summary
 The [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) design pattern implements the concept of [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control) and solves problems like:
 * How can an application be independent of how its objects are created?
 * How can a class be independent of how the objects it requires are created?
