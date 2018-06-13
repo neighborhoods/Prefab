@@ -1,5 +1,7 @@
 # Summary
-There is an uncountable number of ways to organize and create software. This document describes the specifications of how we organize and create our applications at Neighborhoods.  This specification is called Protean, or more formally the Protean Architecture Specification.
+There is an uncountable number of ways to organize and create software. This document describes the specification of how we organize and create our software at Neighborhoods.  
+
+This specification is called Protean, or more formally the Protean Architecture Specification.
 
 # Problem
 ![simplify](images/simplify.jpeg)
