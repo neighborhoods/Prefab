@@ -39,7 +39,7 @@ Tight coupling and the traps of monotlithic applications lie in the ease of comp
 ## Specification
 * All domains of responsibility MUST be separated as much as possible.
 * From a technical perspective, all product teams MUST treat each individual product as if it were a **completely separate** company. The strongest separation MUST be maintained. This is especially difficult and the strongest discipline to this philosophical approach MUST be adhered to when several products are owned by the same product team.
-* Service applications MUST facilitate the *behavior* required by a client application.  However, service applications MUST dictate and be the authority with regrad to how that behavior is served, and this authority MUST be derived from a technical reason. 
+* Service applications MUST facilitate the *behavior* required by a client application.  However, service applications MUST dictate and be the authority with regrad to how that behavior is served, and this authority MUST be derived from a technical motivation. 
 
 # Interface Driven Design
 
