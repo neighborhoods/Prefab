@@ -37,17 +37,17 @@ I must take pride in my work and nurture it to ensure the success of my team and
 
 # Interface Driven Design
 
-## Problem
+## Summary
 Software engineers often start writing implementations rather than starting from an Interface that describes the contracts that any given implementation may have.
 
-## Proposed Solution
+## Specification
 Force all implementations to require an Interface to be able to be useful in our codebases.
 
 # Immutable Contracts
-## Problem
+## Summary
 Changing the behavior of a software contract forces clients of that contract to change their behavior(s) synchronously with the introduction of the changes to the contract.  This forms very brittle relationships between providers and clients.
 
-## Proposed Solution
+## Specification
 Do not mutate contracts, instead create a new contract or version an existing one.
 
 # References
