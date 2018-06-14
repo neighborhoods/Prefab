@@ -1,5 +1,5 @@
 # Summary
-There is an uncountable number of ways to organize and create software. This document describes the specification of how we organize and create our software at Neighborhoods.  
+There is an uncountable number of ways to organize and create software. These documents describe the specifications of how we organize and create our software at Neighborhoods.
 
 This specification is called Protean, or more formally; the Protean Architecture Specification.
 
@@ -31,6 +31,8 @@ Because others will share in my work, I must ensure that the work I produce guid
 
 ### Ownership
 I must take pride in my work and nurture it to ensure the success of my team and our company. Outstanding craftsmanship is vital to me.
+
+# Product Teams
 
 # Interface Driven Design
 
