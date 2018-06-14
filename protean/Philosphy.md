@@ -7,7 +7,7 @@ This specification is called Protean, or more formally; the Protean Architecture
 ![simplify](images/simplify.jpeg)
 
 # Neighborhoods Engineering Values
-Protean inherits and *relies on* all of the Neighborhoods engineering values.
+Protean inherits and *relies on* all of the Neighborhoods Engineering values.
 
 ## We Value...
 
