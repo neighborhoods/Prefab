@@ -56,3 +56,6 @@ This problem is identical to Dependency Injection for objects.  In this case, co
 
 ## Proposed Solution
 Use PSR-15 Server Request Handlers.
+
+# References
+* Language in all Protean documents uses [RFC 2119 Keywords](https://www.ietf.org/rfc/rfc2119.txt)
