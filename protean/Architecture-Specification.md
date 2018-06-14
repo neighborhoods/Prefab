@@ -7,7 +7,22 @@ This specification is called Protean, or more formally; the Protean Architecture
 ![simplify](images/simplify.jpeg)
 
 # Neighborhoods Engineering Values
-Protean inherits all of the Neighborhoods engineering values.
+Protean inherits and *relies on* all of the Neighborhoods engineering values.
+We Value...
+* Ease of Change
+Because nothing is permanent, my work must have clear boundaries, narrow scope and minimal complexity.
+* The Agile Manifesto and The Unix Philosophy
+I believe that these principles are paramount in writing good code, having healthy relationships with my team, and constantly seeking to improve our products and processes.
+* The Best Solution
+My success depends on our success. The best solution is the one that is best for the team.
+* Skepticism of our Work
+I know that mistakes are normal and common. I assume my work is broken until I prove otherwise.
+* Experimentation
+I must have a constant sense of curiosity and adaptability for improving myself, my work, our products, and my team. This requires me to fail fast and fail often to learn new things.
+* The Pit of Success
+Because others will share in my work, I must ensure that the work I produce guides my team toward good practices by making bad practices difficult.
+* Ownership.
+I must take pride in my work and nurture it to ensure the success of my team and our company. Outstanding craftsmanship is vital to me.
 
 # Interface Driven Design
 
