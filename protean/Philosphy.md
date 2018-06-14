@@ -32,8 +32,8 @@ Because others will share in my work, I must ensure that the work I produce guid
 ### Ownership
 I must take pride in my work and nurture it to ensure the success of my team and our company. Outstanding craftsmanship is vital to me.
 
-# Product Group Teams
-* From a technical perspective, all product group teams MUST treat each individual product as if it were a **completely seperate** company. The strongest separation MUST be maintained. This is especially difficult and the strongest discipline to this philosophical approach MUST be adhered to when several products are owned by the same product group team. 
+# Product Teams
+* From a technical perspective, all product teams MUST treat each individual product as if it were a **completely seperate** company. The strongest separation MUST be maintained. This is especially difficult and the strongest discipline to this philosophical approach MUST be adhered to when several products are owned by the same product team. 
 
 # Interface Driven Design
 
