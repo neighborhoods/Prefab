@@ -14,7 +14,7 @@ Protean inherits and *relies on* all of the Neighborhoods engineering values.
 ### Ease of Change
 Because nothing is permanent, my work must have clear boundaries, narrow scope and minimal complexity.
 
-### The Agile Manifesto and The Unix Philosophy
+### The [Agile Manifesto](http://agilemanifesto.org/) and The [Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
 I believe that these principles are paramount in writing good code, having healthy relationships with my team, and constantly seeking to improve our products and processes.
 
 ### The Best Solution
