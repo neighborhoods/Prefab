@@ -36,10 +36,14 @@ I must take pride in my work and nurture it to ensure the success of my team and
 ## Summary
 Tight coupling and the traps of monotlithic applications lie in the ease of compromise. Within an engineering orgranization it is very often far too tempting to make the wrong decision because it is easy, and because the logic to do so resides in within the same codebase.
 
+## Definitions
+* A client product is a product that consumes information from another product.
+* A service product is a product that produces information for another product.
+
 ## Specification
 * All domains of responsibility MUST be separated as much as possible.
 * From a technical perspective, all product teams MUST treat each individual product as if it were a **completely separate** company. The strongest separation MUST be maintained. This is especially difficult and the strongest discipline to this philosophical approach MUST be adhered to when several products are owned by the same product team.
-* Service products MUST facilitate the *behavior* required by a client products.  However, service products MUST dictate and be the authority with regard to how that behavior is served, and this authority MUST be derived from a technical motivation. 
+* Service products MUST facilitate the *behavior* required by client products.  However, service products MUST dictate and be the authority with regard to how that behavior is served, and this authority MUST be derived from a technical motivation. 
 
 # Interface Driven Design
 
