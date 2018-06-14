@@ -44,6 +44,8 @@ Tight coupling and the traps of monotlithic applications lie in the ease of comp
 * All domains of responsibility MUST be separated as much as possible.
 * From a technical perspective, all product teams MUST treat each individual product as if it were a **completely separate** company. The strongest separation MUST be maintained. This is especially difficult and the strongest discipline to this philosophical approach MUST be adhered to when several products are owned by the same product team.
 * Service products MUST facilitate the *behavior* required by client products.  However, service products MUST dictate and be the authority with regard to how that behavior is served, and this authority MUST be derived from a technical motivation. 
+* This SHOULD be a part of the conversation between the client and service product teams during the technical design phase.
+* If a product team has both a client and a service product that that team owns in the context of a project, two different engineers from that team SHOULD represent each product respectively and have a conversation as if they were two separate companies from a technical perspective.
 
 # Interface Driven Design
 
