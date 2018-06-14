@@ -20,7 +20,7 @@ class ${NAME} extends \ArrayIterator implements ${NAME}Interface
         }
 
         if (!empty(${DS}${arrayItemName}s)) {
-            ${DS}this->_assertValidArrayType(...${DS}${arrayItemName}s);
+            ${DS}this->assertValidArrayType(...${DS}${arrayItemName}s);
         }
 
         parent::__construct(${DS}${arrayItemName}s, ${DS}flags);
@@ -28,19 +28,19 @@ class ${NAME} extends \ArrayIterator implements ${NAME}Interface
 
     public function offsetGet(${DS}index): ${elementType}Interface
     {
-        return ${DS}this->_assertValidArrayItemType(parent::offsetGet(${DS}index));
+        return ${DS}this->assertValidArrayItemType(parent::offsetGet(${DS}index));
     }
 
     /** @param ${elementType}Interface ${DS}${arrayItemName} */
     public function offsetSet(${DS}index, ${DS}${arrayItemName})
     {
-        parent::offsetSet(${DS}index, ${DS}this->_assertValidArrayItemType(${DS}${arrayItemName}));
+        parent::offsetSet(${DS}index, ${DS}this->assertValidArrayItemType(${DS}${arrayItemName}));
     }
 
     /** @param ${elementType}Interface ${DS}${arrayItemName} */
     public function append(${DS}${arrayItemName})
     {
-        ${DS}this->_assertValidArrayItemType(${DS}${arrayItemName});
+        ${DS}this->assertValidArrayItemType(${DS}${arrayItemName});
         parent::append(${DS}${arrayItemName});
     }
 
@@ -49,12 +49,12 @@ class ${NAME} extends \ArrayIterator implements ${NAME}Interface
         return parent::current();
     }
 
-    protected function _assertValidArrayItemType(${elementType}Interface ${DS}${arrayItemName})
+    protected function assertValidArrayItemType(${elementType}Interface ${DS}${arrayItemName})
     {
         return ${DS}${arrayItemName};
     }
 
-    protected function _assertValidArrayType(${elementType}Interface ...${DS}${arrayItemName}s): ${NAME}Interface
+    protected function assertValidArrayType(${elementType}Interface ...${DS}${arrayItemName}s): ${NAME}Interface
     {
         return ${DS}this;
     }
