@@ -33,6 +33,11 @@ Because others will share in my work, I must ensure that the work I produce guid
 I must take pride in my work and nurture it to ensure the success of my team and our company. Outstanding craftsmanship is vital to me.
 
 # Product Teams
+## Summary
+Tight coupling and the traps of monotlithic applications lie in the ease of compromise. Within an engineering orgranization it is very often far too tempting to make the wrong decision because it is easy, and because the logic to do so resides in within the same codebase.
+
+## Specification
+* All domains of responsibility MUST be separated as much as possible.
 * From a technical perspective, all product teams MUST treat each individual product as if it were a **completely separate** company. The strongest separation MUST be maintained. This is especially difficult and the strongest discipline to this philosophical approach MUST be adhered to when several products are owned by the same product team. 
 
 # Interface Driven Design
