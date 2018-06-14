@@ -50,12 +50,5 @@ Changing the behavior of a software contract forces clients of that contract to 
 ## Proposed Solution
 Do not mutate contracts, instead create a new contract or version an existing one.
 
-# PSR-15 - HTTP Server Request Handlers
-## Problem
-This problem is identical to Dependency Injection for objects.  In this case, controllers do not provide the ability to arbitrarily inject logic to handle the abstraction of HTTP Messages (PSR-7). In addition, controllers couple our code to a particular framework.
-
-## Proposed Solution
-Use PSR-15 Server Request Handlers.
-
 # References
 * Language in all Protean documents uses [RFC 2119 Keywords](https://www.ietf.org/rfc/rfc2119.txt)
