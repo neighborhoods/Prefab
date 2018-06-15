@@ -21,7 +21,7 @@ class JITerator implements JITeratorInterface
 
     public function current() : ${unqualifiedClassName}Interface
     {
-        return ${DS}this->_assertValidArrayItemType(
+        return ${DS}this->assertValidArrayItemType(
             ${DS}this->getGenerator()->current()
         );
     }
@@ -41,7 +41,7 @@ class JITerator implements JITeratorInterface
         return ${DS}this->getGenerator()->key();
     }
 
-    protected function _assertValidArrayItemType(${unqualifiedClassName}Interface ${DS}$lowerCaseUnqualifiedClassName) : ${unqualifiedClassName}Interface
+    protected function assertValidArrayItemType(${unqualifiedClassName}Interface ${DS}$lowerCaseUnqualifiedClassName) : ${unqualifiedClassName}Interface
     {
         return ${DS}$lowerCaseUnqualifiedClassName;
     }
