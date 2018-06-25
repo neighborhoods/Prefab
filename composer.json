@@ -1,0 +1,36 @@
+{
+  "name": "neighborhoods/radar",
+  "type": "library",
+  "description": "Neighborhoods Radar is an implementation of the ThoughtWorks Radar.",
+  "license": "proprietary",
+  "keywords": [],
+  "authors": [
+    {
+      "name": "Brad Wilson",
+      "email": "brad.wilson@neighborhoods.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "symfony/filesystem": "^4.0",
+    "symfony/config": "^4.0",
+    "symfony/yaml": "^4.0",
+    "symfony/dependency-injection": "^4.0",
+    "symfony/expression-language": "^4.0",
+    "doctrine/dbal": "^2.7"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0",
+    "phpunit/dbunit": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Neighborhoods\\Radar\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Neighborhoods\\RadarTest\\": "test"
+    }
+  }
+}
