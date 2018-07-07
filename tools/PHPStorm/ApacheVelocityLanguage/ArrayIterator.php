@@ -20,7 +20,7 @@ class ${NAME} extends \ArrayIterator implements ${NAME}Interface
         }
 
         if (!empty(${DS}${arrayItemName}s)) {
-            ${DS}this->assertValidArrayType(...${DS}${arrayItemName}s);
+            ${DS}this->assertValidArrayType(...array_values(${DS}${arrayItemName}s));
         }
 
         parent::__construct(${DS}${arrayItemName}s, ${DS}flags);
