@@ -1,0 +1,11 @@
+parameters:
+  neighborhoods.radar.doctrine.dbal.connection.decorator.repository.id_core: !php/const \Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorInterface::ID_CORE
+services:
+  neighborhoods.radar.doctrine.dbal.connection.decorator.repository:
+    class: Neighborhoods\Radar\Doctrine\DBAL\Connection\Decorator\Repository
+    public: false
+    shared: true
+    calls:
+      - [setDoctrineDBALConnectionDecoratorArray, ['@neighborhoods.radar.doctrine.dbal.connection.decorator_array']]
+      - [setDoctrineDBALConnectionDecoratorFactory, ['@neighborhoods.radar.doctrine.dbal.connection.decorator.factory']]
+      - [create, ['%neighborhoods.radar.doctrine.dbal.connection.decorator.repository.id_core%']]
