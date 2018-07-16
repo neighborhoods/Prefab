@@ -1,5 +1,6 @@
 #set( $unqualifiedClassName = "$NAMESPACE.substring($NAMESPACE.lastIndexOf('\')).substring(1)" )
 #set( $isArrayFactory = "$NAMESPACE.endsWith('Array')" )
+#set( $isArrayFactory = "$NAMESPACE.endsWith('Map')" )
 #set($truncatedClassPath = "")
 #parse("truncated classpath")
 <?php
