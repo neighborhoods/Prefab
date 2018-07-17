@@ -3,7 +3,6 @@
 #parse("truncated classpath")
 #set( $camelCaseArgumentName = "$truncatedClassPath.substring(0,1).toLowerCase()$truncatedClassPath.substring(1)" )
 #set( $unqualifiedClassName = "$NAMESPACE.substring($NAMESPACE.lastIndexOf('\')).substring(1)" )
-
 <?php
 declare(strict_types=1);
 

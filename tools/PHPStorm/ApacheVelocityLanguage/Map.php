@@ -1,13 +1,14 @@
 #set($truncatedClassPath = "")
+#set($lastPartOfNamespace = "")
 #parse("truncated classpath")
-#set( $elementType = "$truncatedClassPath.substring(0)" )
+#set( $elementType = "$lastPartOfNamespace" )
 #set( $arrayItemName = "$elementType.toLowerCase()" )
 <?php
 declare(strict_types=1);
 
 #if (${NAMESPACE})
 namespace ${NAMESPACE};
-
+use ${NAMESPACE}Interface;
 #end
 /** @codeCoverageIgnore */
 class ${NAME} extends \ArrayIterator implements ${NAME}Interface
