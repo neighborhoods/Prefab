@@ -1,5 +1,7 @@
 #set($isNeighborhoodsNamespaced = $NAMESPACE.startsWith("Neighborhoods"))
 #set($parts = $NAMESPACE.split("\\"))
+#set($lastNamespaceElementPosition = $parts.size() - 1)
+#set($lastPartOfNamespace = $parts.get($lastNamespaceElementPosition))
 
 #set($part = "") 
 #set($truncatedClassPath = "")
