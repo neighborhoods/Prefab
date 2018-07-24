@@ -21,7 +21,7 @@ class Builder implements BuilderInterface
     public function build(): ${unqualifiedClassName}Interface
     {
         ${DS}${daoName} = ${DS}this->get${truncatedClassPath}Factory()->create();
-        // @TODO - build the DAO.
+        // @TODO - build the object.
 
         return ${DS}${daoName};
     }
