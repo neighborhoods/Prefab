@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
-use Neighborhoods\Radar\Doctrine;
-use Neighborhoods\Radar\PDO;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine;
+use Neighborhoods\~~PROJECT NAME~~\PDO;
 
 class Decorator implements DecoratorInterface
 {

@@ -1,7 +1,7 @@
 services:
-  neighborhoods.radar.pdo.builder.factory:
-    class: Neighborhoods\Radar\PDO\Builder\Factory
+  neighborhoods.~~PROJECT NAME~~.pdo.builder.factory:
+    class: Neighborhoods\~~PROJECT NAME~~\PDO\Builder\Factory
     public: false
     shared: true
     calls:
-      - [setPDOBuilder, ['@neighborhoods.radar.pdo.builder']]
+      - [setPDOBuilder, ['@neighborhoods.~~PROJECT NAME~~.pdo.builder']]

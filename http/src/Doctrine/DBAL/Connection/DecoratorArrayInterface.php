@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection;
 
 /** @codeCoverageIgnore */
 interface DecoratorArrayInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable

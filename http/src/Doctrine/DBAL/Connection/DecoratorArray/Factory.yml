@@ -1,7 +1,7 @@
 services:
-  neighborhoods.radar.doctrine.dbal.connection.decorator_array.factory:
-    class: Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArray\Factory
+  neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator_array.factory:
+    class: Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArray\Factory
     public: false
     shared: true
     calls:
-      - [setDoctrineDBALConnectionDecoratorArray, ['@neighborhoods.radar.doctrine.dbal.connection.decorator_array']]
+      - [setDoctrineDBALConnectionDecoratorArray, ['@neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator_array']]

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArray;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArray;
 
-use Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArrayInterface;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArrayInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface

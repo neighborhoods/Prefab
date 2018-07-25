@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection;
 
 /** @codeCoverageIgnore */
 class DecoratorArray extends \ArrayIterator implements DecoratorArrayInterface

@@ -1,7 +1,7 @@
 services:
-  neighborhoods.radar.doctrine.dbal.connection.decorator:
-    class: Neighborhoods\Radar\Doctrine\DBAL\Connection\Decorator
+  neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator:
+    class: Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator
     public: false
     shared: false
     calls:
-      - [setPDOBuilderFactory, ['@neighborhoods.radar.pdo.builder.factory']]
+      - [setPDOBuilderFactory, ['@neighborhoods.~~PROJECT NAME~~.pdo.builder.factory']]

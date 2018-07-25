@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection\Decorator\Repository;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator\Repository;
 
-use Neighborhoods\Radar\Doctrine\DBAL\Connection\Decorator\RepositoryInterface;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator\RepositoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository;
+    protected $Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository;
 
     public function setDoctrineDBALConnectionDecoratorRepository(
         RepositoryInterface $doctrineDBALConnectionDecoratorRepository
     ): self {
         assert(!$this->hasDoctrineDBALConnectionDecoratorRepository(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository is already set.'));
-        $this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository = $doctrineDBALConnectionDecoratorRepository;
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository = $doctrineDBALConnectionDecoratorRepository;
 
         return $this;
     }
@@ -23,21 +23,21 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorRepository(): RepositoryInterface
     {
         assert($this->hasDoctrineDBALConnectionDecoratorRepository(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository is not set.'));
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository is not set.'));
 
-        return $this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository;
+        return $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorRepository(): bool
     {
-        return isset($this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository);
+        return isset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorRepository(): self
     {
         assert($this->hasDoctrineDBALConnectionDecoratorRepository(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository is not set.'));
-        unset($this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorRepository);
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorRepository);
 
         return $this;
     }
