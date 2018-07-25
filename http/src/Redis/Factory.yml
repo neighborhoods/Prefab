@@ -1,0 +1,12 @@
+parameters:
+  neighborhoods.~.redis_port: '%env(REDIS_PORT)%'
+  neighborhoods.~.redis_host: '%env(REDIS_HOST)%'
+services:
+  Neighborhoods\~\Redis\FactoryInterface:
+    class: Neighborhoods\~\Redis\Factory
+    public: false
+    shared: true
+    calls:
+      - [addOption, [!php/const \Redis::OPT_READ_TIMEOUT, '-1']]
+      - [setHost, ['%neighborhoods.~.redis_host%']]
+      - [setPort, ['%neighborhoods.~.redis_port%']]

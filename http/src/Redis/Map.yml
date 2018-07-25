@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\~\Redis\MapInterface:
+    class: Neighborhoods\~\Redis\Map
+    public: false
+    shared: false

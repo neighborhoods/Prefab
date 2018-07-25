@@ -1,0 +1,8 @@
+services:
+  Neighborhoods\~\Redis\RepositoryInterface:
+    class: Neighborhoods\~\Redis\Repository
+    public: false
+    shared: true
+    calls:
+      - [setRedisFactory, ['@Neighborhoods\~\Redis\FactoryInterface']]
+      - [setRedisMap, ['@Neighborhoods\~\Redis\MapInterface']]
