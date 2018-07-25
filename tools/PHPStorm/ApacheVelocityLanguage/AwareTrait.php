@@ -15,18 +15,22 @@ use ${NAMESPACE}Interface;
 trait AwareTrait
 {
     protected ${DS}${awarePropertyName};
-    
+
     public function set${truncatedClassPath}(${unqualifiedClassName}Interface ${DS}$camelCaseArgumentName): self
     {
-        assert(!${DS}this->has${truncatedClassPath}(), new \LogicException('${awarePropertyName} is already set.'));
+        if(${DS}this->has${truncatedClassPath}()) {
+            throw new \LogicException('${awarePropertyName} is already set.');
+        }
         ${DS}this->${awarePropertyName} = ${DS}$camelCaseArgumentName;
-        
+
         return ${DS}this;
     }
 
     protected function get${truncatedClassPath}(): ${unqualifiedClassName}Interface
     {
-        assert(${DS}this->has${truncatedClassPath}(), new \LogicException('${awarePropertyName} is not set.'));
+        if(!${DS}this->has${truncatedClassPath}()) {
+            throw new \LogicException('${awarePropertyName} is not set.');
+        }
 
         return ${DS}this->${awarePropertyName};
     }
@@ -38,7 +42,9 @@ trait AwareTrait
 
     protected function unset${truncatedClassPath}(): self
     {
-        assert(${DS}this->has${truncatedClassPath}(), new \LogicException('${awarePropertyName} is not set.'));
+        if(!${DS}this->has${truncatedClassPath}()) {
+            throw new \LogicException('${awarePropertyName} is not set.');
+        }
         unset(${DS}this->${awarePropertyName});
 
         return ${DS}this;
