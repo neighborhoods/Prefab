@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Symfony\Component\DependencyInjection\ContainerBuilder;
+namespace neighborhoods\~~PROJECT NAME~~\Symfony\Component\DependencyInjection\ContainerBuilder;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection;
 
 use Doctrine\DBAL\Connection;
-use Neighborhoods\Radar\PDO\Builder\FactoryInterface;
+use Neighborhoods\~~PROJECT NAME~~\PDO\Builder\FactoryInterface;
 
 interface DecoratorInterface
 {

@@ -1,5 +1,5 @@
 services:
-  Neighborhoods\~\Redis\MapInterface:
-    class: Neighborhoods\~\Redis\Map
+  neighborhoods\~~PROJECT NAME~~\Redis\MapInterface:
+    class: neighborhoods\~~PROJECT NAME~~\Redis\Map
     public: false
     shared: false

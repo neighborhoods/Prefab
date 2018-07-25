@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArray\Factory;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArray\Factory;
 
-use Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArray\FactoryInterface;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArray\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory;
+    protected $Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory;
 
     public function setDoctrineDBALConnectionDecoratorArrayFactory(
         FactoryInterface $doctrineDBALConnectionDecoratorArrayFactory
     ): self {
         assert(!$this->hasDoctrineDBALConnectionDecoratorArrayFactory(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory is already set.'));
-        $this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory = $doctrineDBALConnectionDecoratorArrayFactory;
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory = $doctrineDBALConnectionDecoratorArrayFactory;
 
         return $this;
     }
@@ -23,21 +23,21 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorArrayFactory(): FactoryInterface
     {
         assert($this->hasDoctrineDBALConnectionDecoratorArrayFactory(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory is not set.'));
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory is not set.'));
 
-        return $this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory;
+        return $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorArrayFactory(): bool
     {
-        return isset($this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory);
+        return isset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorArrayFactory(): self
     {
         assert($this->hasDoctrineDBALConnectionDecoratorArrayFactory(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory is not set.'));
-        unset($this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArrayFactory);
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArrayFactory);
 
         return $this;
     }

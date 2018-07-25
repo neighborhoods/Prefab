@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Symfony\Component\DependencyInjection\ContainerBuilder;
+namespace neighborhoods\~~PROJECT NAME~~\Symfony\Component\DependencyInjection\ContainerBuilder;
 
-use Neighborhoods\~\Symfony\Component\Finder\FinderArray;
-use Neighborhoods\~\Symfony\Component\Finder\FinderArrayInterface;
+use neighborhoods\~~PROJECT NAME~~\Symfony\Component\Finder\FinderArray;
+use neighborhoods\~~PROJECT NAME~~\Symfony\Component\Finder\FinderArrayInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\RepeatedPass;

@@ -1,5 +1,5 @@
 services:
-  neighborhoods.radar.doctrine.dbal.connection.decorator_array:
-    class: Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArray
+  neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator_array:
+    class: Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArray
     public: false
     shared: false

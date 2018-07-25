@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Redis;
+namespace neighborhoods\~~PROJECT NAME~~\Redis;
 
 class Factory implements FactoryInterface
 {

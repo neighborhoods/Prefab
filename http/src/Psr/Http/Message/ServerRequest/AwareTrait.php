@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Psr\Http\Message\ServerRequest;
+namespace neighborhoods\~~PROJECT NAME~~\Psr\Http\Message\ServerRequest;
 
 use Psr\Http\Message\ServerRequestInterface;
 

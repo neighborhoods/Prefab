@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Redis\Map;
+namespace neighborhoods\~~PROJECT NAME~~\Redis\Map;
 
-use Neighborhoods\~\Redis\MapInterface;
+use neighborhoods\~~PROJECT NAME~~\Redis\MapInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface

@@ -1,40 +1,40 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\PDO\Builder\Factory;
+namespace Neighborhoods\~~PROJECT NAME~~\PDO\Builder\Factory;
 
-use Neighborhoods\Radar\PDO\Builder\FactoryInterface;
+use Neighborhoods\~~PROJECT NAME~~\PDO\Builder\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsRadarPDOBuilderFactory;
+    protected $Neighborhoods~~PROJECT NAME~~PDOBuilderFactory;
 
     public function setPDOBuilderFactory(FactoryInterface $pDOBuilderFactory): self
     {
         assert(!$this->hasPDOBuilderFactory(),
-            new \LogicException('NeighborhoodsRadarPDOBuilderFactory is already set.'));
-        $this->NeighborhoodsRadarPDOBuilderFactory = $pDOBuilderFactory;
+            new \LogicException('Neighborhoods~~PROJECT NAME~~PDOBuilderFactory is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~PDOBuilderFactory = $pDOBuilderFactory;
 
         return $this;
     }
 
     protected function getPDOBuilderFactory(): FactoryInterface
     {
-        assert($this->hasPDOBuilderFactory(), new \LogicException('NeighborhoodsRadarPDOBuilderFactory is not set.'));
+        assert($this->hasPDOBuilderFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~PDOBuilderFactory is not set.'));
 
-        return $this->NeighborhoodsRadarPDOBuilderFactory;
+        return $this->Neighborhoods~~PROJECT NAME~~PDOBuilderFactory;
     }
 
     protected function hasPDOBuilderFactory(): bool
     {
-        return isset($this->NeighborhoodsRadarPDOBuilderFactory);
+        return isset($this->Neighborhoods~~PROJECT NAME~~PDOBuilderFactory);
     }
 
     protected function unsetPDOBuilderFactory(): self
     {
-        assert($this->hasPDOBuilderFactory(), new \LogicException('NeighborhoodsRadarPDOBuilderFactory is not set.'));
-        unset($this->NeighborhoodsRadarPDOBuilderFactory);
+        assert($this->hasPDOBuilderFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~PDOBuilderFactory is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~PDOBuilderFactory);
 
         return $this;
     }

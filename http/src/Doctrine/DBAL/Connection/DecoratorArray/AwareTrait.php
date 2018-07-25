@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArray;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArray;
 
-use Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorArrayInterface;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorArrayInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray;
+    protected $Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray;
 
     public function setDoctrineDBALConnectionDecoratorArray(
         DecoratorArrayInterface $doctrineDBALConnectionDecoratorArray
     ): self {
         assert(!$this->hasDoctrineDBALConnectionDecoratorArray(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray is already set.'));
-        $this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray = $doctrineDBALConnectionDecoratorArray;
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray = $doctrineDBALConnectionDecoratorArray;
 
         return $this;
     }
@@ -23,21 +23,21 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorArray(): DecoratorArrayInterface
     {
         assert($this->hasDoctrineDBALConnectionDecoratorArray(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray is not set.'));
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray is not set.'));
 
-        return $this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray;
+        return $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorArray(): bool
     {
-        return isset($this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray);
+        return isset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorArray(): self
     {
         assert($this->hasDoctrineDBALConnectionDecoratorArray(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray is not set.'));
-        unset($this->NeighborhoodsRadarDoctrineDBALConnectionDecoratorArray);
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecoratorArray);
 
         return $this;
     }

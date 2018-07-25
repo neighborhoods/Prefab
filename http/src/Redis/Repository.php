@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Redis;
+namespace neighborhoods\~~PROJECT NAME~~\Redis;
 
-use Neighborhoods\~\Redis;
+use neighborhoods\~~PROJECT NAME~~\Redis;
 
 class Repository implements RepositoryInterface
 {

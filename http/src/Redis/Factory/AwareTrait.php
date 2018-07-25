@@ -1,39 +1,39 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Redis\Factory;
+namespace neighborhoods\~~PROJECT NAME~~\Redis\Factory;
 
-use Neighborhoods\~\Redis\FactoryInterface;
+use neighborhoods\~~PROJECT NAME~~\Redis\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $Neighborhoods~RedisFactory;
+    protected $Neighborhoods~~PROJECT NAME~~RedisFactory;
 
     public function setRedisFactory(FactoryInterface $redisFactory): self
     {
-        assert(!$this->hasRedisFactory(), new \LogicException('Neighborhoods~RedisFactory is already set.'));
-        $this->Neighborhoods~RedisFactory = $redisFactory;
+        assert(!$this->hasRedisFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~RedisFactory is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~RedisFactory = $redisFactory;
 
         return $this;
     }
 
     protected function getRedisFactory(): FactoryInterface
     {
-        assert($this->hasRedisFactory(), new \LogicException('Neighborhoods~RedisFactory is not set.'));
+        assert($this->hasRedisFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~RedisFactory is not set.'));
 
-        return $this->Neighborhoods~RedisFactory;
+        return $this->Neighborhoods~~PROJECT NAME~~RedisFactory;
     }
 
     protected function hasRedisFactory(): bool
     {
-        return isset($this->Neighborhoods~RedisFactory);
+        return isset($this->Neighborhoods~~PROJECT NAME~~RedisFactory);
     }
 
     protected function unsetRedisFactory(): self
     {
-        assert($this->hasRedisFactory(), new \LogicException('Neighborhoods~RedisFactory is not set.'));
-        unset($this->Neighborhoods~RedisFactory);
+        assert($this->hasRedisFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~RedisFactory is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~RedisFactory);
 
         return $this;
     }

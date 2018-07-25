@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection\Decorator;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Schema;
-use Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorInterface;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorInterface;
 
 interface RepositoryInterface
 {

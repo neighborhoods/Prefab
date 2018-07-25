@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\Doctrine\DBAL\Connection\Decorator;
+namespace Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator;
 
-use Neighborhoods\Radar\Doctrine\DBAL\Connection\DecoratorInterface;
+use Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\DecoratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsRadarDoctrineDBALConnectionDecorator;
+    protected $Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator;
 
     public function setDoctrineDBALConnectionDecorator(DecoratorInterface $doctrineDBALConnectionDecorator): self
     {
         assert(!$this->hasDoctrineDBALConnectionDecorator(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecorator is already set.'));
-        $this->NeighborhoodsRadarDoctrineDBALConnectionDecorator = $doctrineDBALConnectionDecorator;
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator = $doctrineDBALConnectionDecorator;
 
         return $this;
     }
@@ -22,21 +22,21 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecorator(): DecoratorInterface
     {
         assert($this->hasDoctrineDBALConnectionDecorator(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecorator is not set.'));
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator is not set.'));
 
-        return $this->NeighborhoodsRadarDoctrineDBALConnectionDecorator;
+        return $this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator;
     }
 
     protected function hasDoctrineDBALConnectionDecorator(): bool
     {
-        return isset($this->NeighborhoodsRadarDoctrineDBALConnectionDecorator);
+        return isset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator);
     }
 
     protected function unsetDoctrineDBALConnectionDecorator(): self
     {
         assert($this->hasDoctrineDBALConnectionDecorator(),
-            new \LogicException('NeighborhoodsRadarDoctrineDBALConnectionDecorator is not set.'));
-        unset($this->NeighborhoodsRadarDoctrineDBALConnectionDecorator);
+            new \LogicException('Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~DoctrineDBALConnectionDecorator);
 
         return $this;
     }

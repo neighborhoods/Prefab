@@ -1,8 +1,8 @@
 services:
-  Neighborhoods\~\Redis\RepositoryInterface:
-    class: Neighborhoods\~\Redis\Repository
+  neighborhoods\~~PROJECT NAME~~\Redis\RepositoryInterface:
+    class: neighborhoods\~~PROJECT NAME~~\Redis\Repository
     public: false
     shared: true
     calls:
-      - [setRedisFactory, ['@Neighborhoods\~\Redis\FactoryInterface']]
-      - [setRedisMap, ['@Neighborhoods\~\Redis\MapInterface']]
+      - [setRedisFactory, ['@neighborhoods\~~PROJECT NAME~~\Redis\FactoryInterface']]
+      - [setRedisMap, ['@neighborhoods\~~PROJECT NAME~~\Redis\MapInterface']]

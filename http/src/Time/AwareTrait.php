@@ -1,39 +1,39 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Time;
+namespace neighborhoods\~~PROJECT NAME~~\Time;
 
-use Neighborhoods\~\TimeInterface;
+use neighborhoods\~~PROJECT NAME~~\TimeInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $Neighborhoods~Time;
+    protected $Neighborhoods~~PROJECT NAME~~Time;
 
     public function setTime(TimeInterface $time): self
     {
-        assert(!$this->hasTime(), new \LogicException('Neighborhoods~Time is already set.'));
-        $this->Neighborhoods~Time = $time;
+        assert(!$this->hasTime(), new \LogicException('Neighborhoods~~PROJECT NAME~~Time is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~Time = $time;
 
         return $this;
     }
 
     protected function getTime(): TimeInterface
     {
-        assert($this->hasTime(), new \LogicException('Neighborhoods~Time is not set.'));
+        assert($this->hasTime(), new \LogicException('Neighborhoods~~PROJECT NAME~~Time is not set.'));
 
-        return $this->Neighborhoods~Time;
+        return $this->Neighborhoods~~PROJECT NAME~~Time;
     }
 
     protected function hasTime(): bool
     {
-        return isset($this->Neighborhoods~Time);
+        return isset($this->Neighborhoods~~PROJECT NAME~~Time);
     }
 
     protected function unsetTime(): self
     {
-        assert($this->hasTime(), new \LogicException('Neighborhoods~Time is not set.'));
-        unset($this->Neighborhoods~Time);
+        assert($this->hasTime(), new \LogicException('Neighborhoods~~PROJECT NAME~~Time is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~Time);
 
         return $this;
     }

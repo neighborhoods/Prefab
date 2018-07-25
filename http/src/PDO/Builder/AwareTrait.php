@@ -1,39 +1,39 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\PDO\Builder;
+namespace Neighborhoods\~~PROJECT NAME~~\PDO\Builder;
 
-use Neighborhoods\Radar\PDO\BuilderInterface;
+use Neighborhoods\~~PROJECT NAME~~\PDO\BuilderInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsRadarPDOBuilder;
+    protected $Neighborhoods~~PROJECT NAME~~PDOBuilder;
 
     public function setPDOBuilder(BuilderInterface $pDOBuilder): self
     {
-        assert(!$this->hasPDOBuilder(), new \LogicException('NeighborhoodsRadarPDOBuilder is already set.'));
-        $this->NeighborhoodsRadarPDOBuilder = $pDOBuilder;
+        assert(!$this->hasPDOBuilder(), new \LogicException('Neighborhoods~~PROJECT NAME~~PDOBuilder is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~PDOBuilder = $pDOBuilder;
 
         return $this;
     }
 
     protected function getPDOBuilder(): BuilderInterface
     {
-        assert($this->hasPDOBuilder(), new \LogicException('NeighborhoodsRadarPDOBuilder is not set.'));
+        assert($this->hasPDOBuilder(), new \LogicException('Neighborhoods~~PROJECT NAME~~PDOBuilder is not set.'));
 
-        return $this->NeighborhoodsRadarPDOBuilder;
+        return $this->Neighborhoods~~PROJECT NAME~~PDOBuilder;
     }
 
     protected function hasPDOBuilder(): bool
     {
-        return isset($this->NeighborhoodsRadarPDOBuilder);
+        return isset($this->Neighborhoods~~PROJECT NAME~~PDOBuilder);
     }
 
     protected function unsetPDOBuilder(): self
     {
-        assert($this->hasPDOBuilder(), new \LogicException('NeighborhoodsRadarPDOBuilder is not set.'));
-        unset($this->NeighborhoodsRadarPDOBuilder);
+        assert($this->hasPDOBuilder(), new \LogicException('Neighborhoods~~PROJECT NAME~~PDOBuilder is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~PDOBuilder);
 
         return $this;
     }

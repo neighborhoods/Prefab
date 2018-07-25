@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Exception\Runtime;
+namespace neighborhoods\~~PROJECT NAME~~\Exception\Runtime;
 
 interface ExceptionInterface extends \Throwable, \JsonSerializable
 {

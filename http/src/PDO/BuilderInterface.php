@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Radar\PDO;
+namespace Neighborhoods\~~PROJECT NAME~~\PDO;
 
 interface BuilderInterface
 {

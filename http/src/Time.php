@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~;
+namespace Neighborhoods\~~PROJECT NAME~~;
 
 class Time implements TimeInterface
 {

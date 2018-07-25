@@ -1,39 +1,39 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\~\Redis\Map\Factory;
+namespace neighborhoods\~~PROJECT NAME~~\Redis\Map\Factory;
 
-use Neighborhoods\~\Redis\Map\FactoryInterface;
+use neighborhoods\~~PROJECT NAME~~\Redis\Map\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $Neighborhoods~RedisMapFactory;
+    protected $Neighborhoods~~PROJECT NAME~~RedisMapFactory;
 
     public function setRedisMapFactory(FactoryInterface $redisMapFactory): self
     {
-        assert(!$this->hasRedisMapFactory(), new \LogicException('Neighborhoods~RedisMapFactory is already set.'));
-        $this->Neighborhoods~RedisMapFactory = $redisMapFactory;
+        assert(!$this->hasRedisMapFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~RedisMapFactory is already set.'));
+        $this->Neighborhoods~~PROJECT NAME~~RedisMapFactory = $redisMapFactory;
 
         return $this;
     }
 
     protected function getRedisMapFactory(): FactoryInterface
     {
-        assert($this->hasRedisMapFactory(), new \LogicException('Neighborhoods~RedisMapFactory is not set.'));
+        assert($this->hasRedisMapFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~RedisMapFactory is not set.'));
 
-        return $this->Neighborhoods~RedisMapFactory;
+        return $this->Neighborhoods~~PROJECT NAME~~RedisMapFactory;
     }
 
     protected function hasRedisMapFactory(): bool
     {
-        return isset($this->Neighborhoods~RedisMapFactory);
+        return isset($this->Neighborhoods~~PROJECT NAME~~RedisMapFactory);
     }
 
     protected function unsetRedisMapFactory(): self
     {
-        assert($this->hasRedisMapFactory(), new \LogicException('Neighborhoods~RedisMapFactory is not set.'));
-        unset($this->Neighborhoods~RedisMapFactory);
+        assert($this->hasRedisMapFactory(), new \LogicException('Neighborhoods~~PROJECT NAME~~RedisMapFactory is not set.'));
+        unset($this->Neighborhoods~~PROJECT NAME~~RedisMapFactory);
 
         return $this;
     }
