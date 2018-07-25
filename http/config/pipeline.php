@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Definition;
@@ -11,6 +10,8 @@ use Zend\Expressive\Router\Middleware\ImplicitHeadMiddleware;
 use Zend\Expressive\Router\Middleware\ImplicitOptionsMiddleware;
 use Zend\Expressive\Router\Middleware\MethodNotAllowedMiddleware;
 use Zend\Expressive\Router\Middleware\RouteMiddleware;
+use Zend\ProblemDetails\ProblemDetailsMiddleware;
+use Zend\ProblemDetails\ProblemDetailsNotFoundHandler;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
 return function (Definition $applicationServiceDefinition): void {
@@ -18,6 +19,7 @@ return function (Definition $applicationServiceDefinition): void {
     // all Exceptions.
     $applicationServiceDefinition->addMethodCall('pipe', [ErrorHandler::class]);
     $applicationServiceDefinition->addMethodCall('pipe', [ServerUrlMiddleware::class]);
+    $applicationServiceDefinition->addMethodCall('pipe', [ProblemDetailsMiddleware::class]);
 
     // Pipe more middleware here that you want to execute on every request:
     // - bootstrapping
@@ -67,5 +69,6 @@ return function (Definition $applicationServiceDefinition): void {
     // At this point, if no Response is returned by any middleware, the
     // NotFoundHandler kicks in; alternately, you can provide other fallback
     // middleware to execute.
+    $applicationServiceDefinition->addMethodCall('pipe', [ProblemDetailsNotFoundHandler::class]);
     $applicationServiceDefinition->addMethodCall('pipe', [NotFoundHandler::class]);
 };
