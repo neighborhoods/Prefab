@@ -3,9 +3,11 @@ declare(strict_types=1);
 ini_set('assert.exception', '1');
 error_reporting(E_ALL);
 
-use Neighborhoods\Pylon\DependencyInjection\ContainerBuilder\Facade;
+use Neighborhoods\~~PROJECT NAME~~\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\Finder\Finder;
+use Zend\Expressive\Application;
 
 // Delegate static file requests back to the PHP built-in webserver
 if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
@@ -13,7 +15,7 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 }
 
 chdir(dirname(__DIR__));
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
  * Self-called anonymous function that creates its own scope and keep the global namespace clean.
@@ -24,24 +26,18 @@ require __DIR__ . '/../vendor/autoload.php';
         require_once $containerCacheFilePath;
         $containerBuilder = new ProjectServiceContainer();
     } else {
-        /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
+        /** @var ContainerBuilder $containerBuilder */
         $containerBuilder = require __DIR__ . '/../config/container.php';
-        $applicationServiceDefinition = $containerBuilder->findDefinition(\Zend\Expressive\Application::class);
-        (require __DIR__ . '/../config/pipeline.php')($applicationServiceDefinition);
-        $discoverableDirectories[] = __DIR__ . '/../src';
-        $finder = new Finder();
-        $finder->name('*.yml');
-        $finder->files()->in($discoverableDirectories);
-        $containerBuilderFacade = new Facade();
-        $containerBuilderFacade->setContainerBuilder($containerBuilder);
-        $containerBuilderFacade->addFinder($finder);
+        $applicationServiceDefinition = $containerBuilder->findDefinition(Application::class);
+        (require_once __DIR__ . '/../config/pipeline.php')($applicationServiceDefinition);
+        $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
+        $containerBuilderFacade->addFinder((new Finder())->name('*.yml')->files()->in([__DIR__ . '/../src']));
         $containerBuilderFacade->assembleYaml();
-        (require __DIR__ . '/../config/routes.php')($applicationServiceDefinition, $containerBuilder);
+        (require_once __DIR__ . '/../config/routes.php')($applicationServiceDefinition, $containerBuilder);
         $containerBuilderFacade->build();
-        $dumper = new PhpDumper($containerBuilder);
-        file_put_contents($containerCacheFilePath, $dumper->dump());
+        file_put_contents($containerCacheFilePath, (new PhpDumper($containerBuilder))->dump());
     }
-    /** @var \Zend\Expressive\Application $app */
-    $application = $containerBuilder->get(\Zend\Expressive\Application::class);
+    /** @var Application $app */
+    $application = $containerBuilder->get(Application::class);
     $application->run();
 })();
