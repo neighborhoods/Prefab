@@ -33,7 +33,7 @@ Room for improvement includes:
     * `ReplaceWithYourProductName` - use the same casing and this does not include `Neighborhoods`.
 
 # Configuring your PHPStorm
-* Use PHPStorm >= 2018.2 (correctly auto-formats YAML)
+* Use PHPStorm >= 2018.2 (correctly auto-formats YAML, auto-completes traits)
 * Get the Symfony plugin.
 * Change the plugin to generate the `PSR-4` interface DI service names by context clicking a `PHP` file > `Create Service` (at the bottom) > `Settings` > copy and paste the following > `Save`.
 ```javascript
