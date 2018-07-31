@@ -1,7 +1,0 @@
-services:
-  neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator:
-    class: Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator
-    public: false
-    shared: false
-    calls:
-      - [setPDOBuilderFactory, ['@neighborhoods.~~PROJECT NAME~~.pdo.builder.factory']]

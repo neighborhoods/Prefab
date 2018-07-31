@@ -3,7 +3,7 @@ declare(strict_types=1);
 ini_set('assert.exception', '1');
 error_reporting(E_ALL);
 
-use Neighborhoods\~~PROJECT NAME~~\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\Finder\Finder;
