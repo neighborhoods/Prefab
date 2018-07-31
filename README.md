@@ -56,3 +56,9 @@ return className+'Interface';
     * `test-fab`
 * Configure your TODO parser to read team notes by navigating to `Preferences` > `Editor` > `TODO` and add the following:
     * `\bteam\b.*`
+
+# Manual Fabrication Process
+* Create your DAO and DAOInterface using the AVLTs
+* Create the class machinery using teh AVLTs and appropriate directory structure.
+* Start creating the DI YAML from the DAO.
+* note - Repositories, Factories, Builders are the only non-shared actors, i.e. - all other DI service directives need `shared: false`.
