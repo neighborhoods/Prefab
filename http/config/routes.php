@@ -9,17 +9,16 @@ use Symfony\Component\DependencyInjection\Definition;
 return function (Definition $applicationServiceDefinition, ContainerBuilder $containerBuilder): void {
     // @team - delete me
     // mv1/DAO example
-//    $mv1AreaHandlerServiceDefinition = $containerBuilder->findDefinition(MV1\DAO\HandlerInterface::class);
+//    $mv1DAOHandlerServiceDefinition = $containerBuilder->findDefinition(MV1\DAO\HandlerInterface::class);
 //    $applicationServiceDefinition->addMethodCall(
 //        'get',
-//        ['/mv1/dao/{id:\d+}', $mv1AreaHandlerServiceDefinition, 'area']
+//        ['/mv1/dao/{id:\d+}', $mv1DAOHandlerServiceDefinition, 'dao']
 //    );
 
     // @team - delete me
     // mv1/DAOs example
-//    $mv1AreaAbbreviatedHandlerServiceDefinition = $containerBuilder->findDefinition(MV1\DAO\HandlerInterface::class);
 //    $applicationServiceDefinition->addMethodCall(
-//        'get',
-//        ['/mv1/daos/{uris:}', $mv1AreaAbbreviatedHandlerServiceDefinition, 'areas']
+//        'getMapByUris',
+//        ['/mv1/daos/{uris:}', $mv1DAOHandlerServiceDefinition, 'daos']
 //    );
 };
