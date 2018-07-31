@@ -28,8 +28,8 @@ Room for improvement includes:
 # Manual Fabrication
 * copy the contents of the `http` directory into your project.
 * use PHPStorm to find and replace the following
-    * `Replace with your product description.`
-    * `replace-with-your-product-name` - use the same hyphenation.
+    * `Replace this with the description of your product.`
+    * `replace-this-with-the-name-of-your-product` - use the same hyphenation.
     * `ReplaceWithYourProductName` - use the same casing and this does not include `Neighborhoods`.
 
 # Configuring your PHPStorm

@@ -1,10 +1,10 @@
 {
-  "name": "neighborhoods/replace-with-your-product-name",
-  "description": "Replace with your product description.",
+  "name": "neighborhoods/replace-this-with-the-name-of-your-product",
+  "description": "Replace this with the description of your product.",
   "type": "project",
   "license": "proprietary",
   "keywords": [
-    "area service"
+    "ReplaceThisWithTheNameOfYourProduct"
   ],
   "config": {
     "sort-packages": true
