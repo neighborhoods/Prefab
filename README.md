@@ -61,4 +61,4 @@ return className+'Interface';
 * Create your DAO and DAOInterface using the AVLTs
 * Create the class machinery using teh AVLTs and appropriate directory structure.
 * Start creating the DI YAML from the DAO.
-* note - Repositories, Factories, Builders are the only non-shared actors, i.e. - all other DI service directives need `shared: false`.
+* note - Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
