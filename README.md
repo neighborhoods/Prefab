@@ -47,10 +47,10 @@ var absolutePath = args.absolutePath;
 
 return className+'Interface';
 ```
-* Configure the following to map to `Neighborhoods\ReplaceWithYourProductName` for the following including generated sources by navigating to `Preferences` > `Directories` > choose the appropriate directory > edit properties:
+* Configure the following to map to `Neighborhoods\ReplaceWithYourProductName\` for the following including generated sources by navigating to `Preferences` > `Directories` > choose the appropriate directory > edit properties:
     * `src`
     * `fab`
-* Configure the following to map to `Neighborhoods\ReplaceWithYourProductNameTest` for the following including generated sources by navigating to `Preferences` > `Directories` > choose the appropriate directory > edit properties:
+* Configure the following to map to `Neighborhoods\ReplaceWithYourProductNameTest\` for the following including generated sources by navigating to `Preferences` > `Directories` > choose the appropriate directory > edit properties:
     * `test`
     * `test-fab`
 * Configure your TODO parser to read team notes by navigating to `Preferences` > `TODO` and add the following:
