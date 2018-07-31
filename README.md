@@ -22,8 +22,7 @@ Room for improvement includes:
 * Ingesting the files within PHPStorm, without using the filesystem directly.
 
 ### Example File System Structure
-![exmaple-fs-structure](images/example-fs-structure.png)
-
+Review the Protean Architecture Specification.
 
 # Manual Fabrication
 * copy the contents of the `http` directory into your project.
