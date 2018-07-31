@@ -1,7 +1,0 @@
-services:
-  neighborhoods.~~PROJECT NAME~~.pdo.builder.factory:
-    class: Neighborhoods\~~PROJECT NAME~~\PDO\Builder\Factory
-    public: false
-    shared: true
-    calls:
-      - [setPDOBuilder, ['@neighborhoods.~~PROJECT NAME~~.pdo.builder']]

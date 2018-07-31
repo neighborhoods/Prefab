@@ -1,45 +1,32 @@
 {
-  "name": "neighborhoods/PROJECT",
-  "description": "PROJECT NAME",
+  "name": "neighborhoods/replace-with-your-product-name",
+  "description": "Replace with your product description.",
   "type": "project",
   "license": "proprietary",
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://satis.neighborhoods.com"
-    }
+  "keywords": [
+    "area service"
   ],
   "config": {
     "sort-packages": true
   },
-  "extra": {
-    "zf": {
-      "component-whitelist": [
-        "zendframework/zend-expressive",
-        "zendframework/zend-expressive-helpers",
-        "zendframework/zend-expressive-router",
-        "zendframework/zend-httphandlerrunner",
-        "zendframework/zend-expressive-fastroute"
-      ]
-    }
-  },
   "require": {
     "php": "^7.1",
+    "doctrine/dbal": "^2.7",
+    "jsoumelidis/zend-sf-di-config": "^0.3",
+    "symfony/config": "^4.0",
+    "symfony/dependency-injection": "^4.0",
+    "symfony/expression-language": "^4.0",
+    "symfony/filesystem": "^4.0",
+    "symfony/finder": "^4.0",
+    "symfony/yaml": "^4.0",
     "zendframework/zend-component-installer": "^2.1.1",
     "zendframework/zend-config-aggregator": "^1.0",
     "zendframework/zend-diactoros": "^1.7.1",
     "zendframework/zend-expressive": "^3.0.1",
-    "zendframework/zend-expressive-helpers": "^5.0",
-    "zendframework/zend-stdlib": "^3.1",
-    "jsoumelidis/zend-sf-di-config": "^0.3",
     "zendframework/zend-expressive-fastroute": "^3.0",
-    "symfony/filesystem": "^4.0",
-    "symfony/config": "^4.0",
-    "symfony/yaml": "^4.0",
-    "symfony/dependency-injection": "^4.0",
-    "symfony/expression-language": "^4.0",
-    "doctrine/dbal": "^2.7",
-    "neighborhoods/pylon": "dev-feature/container-builder-facade-improvements"
+    "zendframework/zend-expressive-helpers": "^5.0",
+    "zendframework/zend-problem-details": "^1.0",
+    "zendframework/zend-stdlib": "^3.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0.1",
@@ -51,33 +38,18 @@
   },
   "autoload": {
     "psr-4": {
-      "Neighborhoods\\~~PROJECT NAME~~\\": "src"
+      "Neighborhoods\\ReplaceThisWithTheNameOfYourProduct\\": [
+        "src/",
+        "fab/"
+      ]
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "AppTest\\": "test/AppTest/"
+      "Neighborhoods\\ReplaceThisWithTheNameOfYourProductTest\\": [
+        "src/",
+        "test-fab/"
+      ]
     }
-  },
-  "scripts": {
-    "post-create-project-cmd": [
-      "@development-enable"
-    ],
-    "development-disable": "zf-development-mode disable",
-    "development-enable": "zf-development-mode enable",
-    "development-status": "zf-development-mode status",
-    "expressive": "expressive --ansi",
-    "check": [
-      "@cs-check",
-      "@test",
-      "@analyze"
-    ],
-    "analyze": "phpstan analyze -l max -c ./phpstan.installer.neon ./src ./config",
-    "clear-config-cache": "php bin/clear-config-cache.php",
-    "cs-check": "phpcs",
-    "cs-fix": "phpcbf",
-    "serve": "php -S 0.0.0.0:8080 -t public/",
-    "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
   }
 }
