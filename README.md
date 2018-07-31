@@ -4,7 +4,7 @@ A code generation tool.
 
 ## Apache Velocity Template Language Files
 
-In an effort to produce pattern consistency and increase contributor velocity, we are using the Apache VTL file integration with PHPStorm as a workaround until `prefab` is in `>=` `1.0.0`.
+In an effort to produce pattern consistency and increase contributor velocity, we are using the Apache VTL file integration with PHPStorm as a workaround until `prefab` is in `>=` `4.0.0`.
 
 Currently, while PHPStorm is not running,
 
