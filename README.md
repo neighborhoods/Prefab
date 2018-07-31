@@ -29,7 +29,7 @@ Review the Protean Architecture Specification.
 * use PHPStorm to find and replace the following
     * `Replace this with the description of your product.`
     * `replace-this-with-the-name-of-your-product` - use the same hyphenation.
-    * `ReplaceWithYourProductName` - use the same casing and this does not include `Neighborhoods`.
+    * `ReplaceThisWithTheNameOfYourProduct` - use the same casing and this does not include `Neighborhoods`.
 
 # Configuring your PHPStorm
 * Use PHPStorm >= 2018.2 (correctly auto-formats YAML, auto-completes traits)
