@@ -33,10 +33,11 @@ Review the Protean Architecture Specification.
 
 # Configuring your PHPStorm
 * Use PHPStorm >= 2018.2 (correctly auto-formats YAML, auto-completes traits)
-* Get the Symfony plugin.
-* Make sure that it is enabled in your PHPStorm settings.
-* Enable the plugin in `File` > `Settings` > `Languages & Framework` > `PHP` > `Symfony`
-* Change the plugin to generate the `PSR-4` interface DI service names by context clicking a `PHP` file > `Create Service` (at the bottom) > `Settings` > copy and paste the following > `Save`.
+
+## Setup the Symfony plugin.
+1. Make sure that it is enabled in your PHPStorm settings.
+1. Enable the plugin in `File` > `Settings` > `Languages & Framework` > `PHP` > `Symfony`
+1. Change the plugin to generate the `PSR-4` interface DI service names by context clicking a `PHP` file > `Create Service` (at the bottom) > `Settings` > copy and paste the following > `Save`.
 ```javascript
 var className = args.className;
 var projectName = args.projectName;
@@ -49,6 +50,7 @@ var absolutePath = args.absolutePath;
 
 return className+'Interface';
 ```
+
 ## Configure the context of project directories as `Sources` or `Tests`
 1. Open the PHPStorm menu `Preferences` > `Directories`. 
 1. Select the directory and click sources then click the Mark as: `Sources` or `Test`. 
@@ -57,7 +59,7 @@ return className+'Interface';
 Your settings should look something like this after configuring `src`, `fab`, `test`, and `test-fab`:
 ![sources and tests](https://user-images.githubusercontent.com/1881846/43653556-05c566d0-970e-11e8-8353-93b4055efc58.png) 
     
-    
+## Setup custom TODO tags    
 * Configure your TODO parser to read team notes by navigating to `Preferences` > `Editor` > `TODO` and add the following:
     * `\bteam\b.*`
 
