@@ -56,7 +56,7 @@ return className+'Interface';
 1. Select the directory and click sources then click the Mark as: `Sources` or `Test`. 
 1. Click the "P" symbol in the right panel to define a prefix as `Neighborhoods\ReplaceWithYourProductName\`, and check the "For Generated Sources". 
 
-Your settings should look something like this after configuring `src`, and `fab` as **Sources**, then `test`, and `test-fab` as **Tests**:
+Your settings should resemble this after configuring `src`, and `fab` as **Sources**, then `test`, and `test-fab` as **Tests**:
 ![sources and tests](https://user-images.githubusercontent.com/1881846/43653556-05c566d0-970e-11e8-8353-93b4055efc58.png) 
     
 ### Setup custom TODO tags    
