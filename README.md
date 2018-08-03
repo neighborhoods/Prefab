@@ -49,7 +49,8 @@ var absolutePath = args.absolutePath;
 
 return className+'Interface';
 ```
-1. Configure the context of project directories as `Sources` or `Tests` using the PHPStorm menu `Preferences` > `Directories`. 
+## Configure the context of project directories as `Sources` or `Tests`
+1. Open the PHPStorm menu `Preferences` > `Directories`. 
 1. Select the directory and click sources then click the Mark as: `Sources` or `Test`. 
 1. Click the "P" symbol in the right panel to define a prefix as `Neighborhoods\ReplaceWithYourProductName\`, and check the "For Generated Sources". 
 
