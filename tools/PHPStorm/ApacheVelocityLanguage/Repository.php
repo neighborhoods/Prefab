@@ -60,7 +60,7 @@ class Repository implements RepositoryInterface
         ${DS}${daoLower}s = [];
         foreach (${DS}records as ${DS}record) {
             ${DS}${daoLower} = ${DS}this->createBuilder()->setRecord(${DS}record)->build();
-            ${DS}${daoLower}s[${DS}body->getId()] = ${DS}${daoLower};
+            ${DS}${daoLower}s[${DS}${daoLower}->getId()] = ${DS}${daoLower};
         }
 
         return ${DS}this->get${truncatedClassPath}MapFactory()->create()->hydrate(${DS}${daoLower}s);
