@@ -13,7 +13,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use ${namespacePrefix}Doctrine;
 use ${namespacePrefix}Doctrine\DBAL\Connection\DecoratorInterface;
 use ${NAMESPACE};
-use ${namespacePrefix}Repository\Exception;
+use ${NAMESPACE}\Repository\Exception;
 use ${NAMESPACE}Interface;
 
 class Repository implements RepositoryInterface
