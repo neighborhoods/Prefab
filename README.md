@@ -34,7 +34,7 @@ Review the Protean Architecture Specification.
 # Configuring your PHPStorm
 * Use PHPStorm >= 2018.2 (correctly auto-formats YAML, auto-completes traits)
 
-## Setup the Symfony plugin.
+### Setup the Symfony plugin.
 1. Make sure that it is enabled in your PHPStorm settings.
 1. Enable the plugin in `File` > `Settings` > `Languages & Framework` > `PHP` > `Symfony`
 1. Change the plugin to generate the `PSR-4` interface DI service names by context clicking a `PHP` file > `Create Service` (at the bottom) > `Settings` > copy and paste the following > `Save`.
