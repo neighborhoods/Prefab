@@ -49,7 +49,11 @@ var absolutePath = args.absolutePath;
 
 return className+'Interface';
 ```
-* Configure the context of project directories as `Sources` or `Tests` using the PHPStorm menu `Preferences` > `Directories`. Select the directory and click sources then click the Mark as: `Sources` or `Test`. Once the directory is marked, click the "P" symbol to define a prefix as `Neighborhoods\ReplaceWithYourProductName\`, and check the "For Generated Sources". Your settings should look something like this after configuring `src`, `fab`, `test`, and `test-fab`:
+* Configure the context of project directories as `Sources` or `Tests` using the PHPStorm menu `Preferences` > `Directories`. 
+1. Select the directory and click sources then click the Mark as: `Sources` or `Test`. 
+2. Click the "P" symbol in the right panel to define a prefix as `Neighborhoods\ReplaceWithYourProductName\`, and check the "For Generated Sources". 
+
+Your settings should look something like this after configuring `src`, `fab`, `test`, and `test-fab`:
 ![sources and tests](https://user-images.githubusercontent.com/1881846/43653556-05c566d0-970e-11e8-8353-93b4055efc58.png) 
     
     
