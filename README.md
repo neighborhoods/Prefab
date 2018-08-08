@@ -12,7 +12,7 @@ Currently, while PHPStorm is not running,
 
 should be able to be copied to (below is an example, ensure the path you use is the correct path for your PHPStorm version)
 
-`~/Library/Preferences/PhpStorm{2018.2}/fileTemplates`
+`~/Library/Preferences/PhpStorm{2018.2}/fileTemplates` (note, you may need to put the templates from that directory inside a `code/` dir.)
 
 and the copied templates will be ingested by PHPStorm when it is subsequently started.
 
