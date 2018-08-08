@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // @team - delete me
-use Neighborhoods\ReplaceWithYourProductName\MV1;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\MV1;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
