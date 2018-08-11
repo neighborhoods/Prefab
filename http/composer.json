@@ -39,16 +39,16 @@
   "autoload": {
     "psr-4": {
       "Neighborhoods\\ReplaceThisWithTheNameOfYourProduct\\": [
-        "src/",
-        "fab/"
+        "fab/",
+        "src/"
       ]
     }
   },
   "autoload-dev": {
     "psr-4": {
       "Neighborhoods\\ReplaceThisWithTheNameOfYourProductTest\\": [
-        "test/",
-        "test-fab/"
+        "test-fab/",
+        "test/"
       ]
     }
   }
