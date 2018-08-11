@@ -18,7 +18,7 @@ return function (Definition $applicationServiceDefinition, ContainerBuilder $con
     // @team - delete me
     // mv1/DAOs example
 //    $applicationServiceDefinition->addMethodCall(
-//        'getMapByUris',
-//        ['/mv1/daos/{uris:}', $mv1DAOHandlerServiceDefinition, 'daos']
+//        'get',
+//        ['/mv1/daos/{searchCriteria:}', $mv1DAOHandlerServiceDefinition, MV1\DAO\HandlerInterface::ROUTE_NAME_DAOS]
 //    );
 };
