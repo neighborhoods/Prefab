@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\Factory
+    calls:
+    - [setSearchCriteriaSortOrder, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrderInterface']]
