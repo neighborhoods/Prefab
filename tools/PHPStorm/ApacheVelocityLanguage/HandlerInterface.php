@@ -1,3 +1,6 @@
+#set($daoAllUpperHandlerContext = "")
+#set($daoLowerHandlerContext = "")
+#parse("truncated classpath")
 <?php
 declare(strict_types=1);
 
@@ -9,4 +12,5 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 interface HandlerInterface extends RequestHandlerInterface
 {
+    public const ROUTE_NAME_${daoAllUpperHandlerContext}S = '${daoLowerHandlerContext}s';
 }

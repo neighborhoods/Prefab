@@ -9,13 +9,11 @@ declare(strict_types=1);
 
 namespace ${NAMESPACE};
 
-use ${NAMESPACE}Interface;
+use ${namespacePrefix}SearchCriteriaInterface;
 
 interface RepositoryInterface
 {
     public function createBuilder(): BuilderInterface;
-
-    public function get(int ${DS}id): ${daoUpper}Interface;
 
     public function save(${daoUpper}Interface ${DS}${daoLower}): RepositoryInterface;
 
@@ -23,5 +21,5 @@ interface RepositoryInterface
 
     public function detach(${daoUpper}Interface ${DS}${daoLower}): RepositoryInterface;
 
-    public function getMap(): MapInterface;
+    public function getMap(SearchCrtieriaInterface ${DS}searchCriteria): MapInterface;
 }

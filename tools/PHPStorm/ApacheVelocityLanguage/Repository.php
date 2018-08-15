@@ -9,54 +9,32 @@ declare(strict_types=1);
 
 namespace ${NAMESPACE};
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use ${namespacePrefix}Doctrine;
-use ${namespacePrefix}Doctrine\DBAL\Connection\DecoratorInterface;
 use ${NAMESPACE};
-use ${NAMESPACE}\Repository\Exception;
 use ${NAMESPACE}Interface;
+use ${namespacePrefix}SearchCriteria;
+use ${namespacePrefix}SearchCriteriaInterface;
 
 class Repository implements RepositoryInterface
 {
     use Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
-    use ${daoUpper}\Factory\AwareTrait;
     use ${daoUpper}\Builder\Factory\AwareTrait;
     use ${daoUpper}\Map\Factory\AwareTrait;
     use ${daoUpper}\Map\AwareTrait;
-    
+    use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
+
     public function createBuilder(): BuilderInterface
     {
         return ${DS}this->get${truncatedClassPath}BuilderFactory()->create();
     }
 
-    public function get(int ${DS}id): ${daoUpper}Interface
+    public function getMap(SearchCriteriaInterface ${DS}searchCriteria): MapInterface
     {
-        // Use Doctrine Connection Decorator Repository to retrieve your DAO from storage.
-        // DO NOT MEMO-IZE.
-        ${DS}queryBuilder = ${DS}this->getNewQueryBuilder();
-        ${DS}queryBuilder->where(${DS}queryBuilder->expr()->eq(
-            ${daoUpper}Interface::FIELD_ID,
-            ${DS}queryBuilder->createNamedParameter(${DS}id))
-        );
-        ${DS}record = ${DS}queryBuilder->execute()->fetchAll();
-        if (isset(${DS}record[0])) {
-            if (!isset(${DS}record[1])) {
-                ${DS}${daoLower} = ${DS}this->createBuilder()->setRecord(${DS}record[0])->build();
-            } else {
-                throw (new Exception())->setCode(Exception::CODE_MULTIPLE_RECORDS_RETRIEVED);
-            }
-        } else {
-            throw (new Exception())->setCode(Exception::CODE_NO_DATA_LOADED);
-        }
-
-        return ${DS}${daoLower};
-    }
-
-    public function getMap(): MapInterface
-    {
-        // Use Doctrine Connection Decorator Repository to retrieve your DAOs from storage
-        // Optionally by a strongly typed criteria object.
-        ${DS}records = ${DS}this->getNewQueryBuilder()->execute()->fetchAll();
+        ${DS}queryBuilderBuilder = ${DS}this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
+        ${DS}queryBuilderBuilder->setSearchCriteria(${DS}searchCriteria);
+        ${DS}queryBuilder = ${DS}queryBuilderBuilder->build();
+        ${DS}queryBuilder->from(${daoUpper}Interface::TABLE_NAME)->select('*');
+        ${DS}records = ${DS}queryBuilder->execute()->fetchAll();
         ${DS}${daoLower}s = [];
         foreach (${DS}records as ${DS}record) {
             ${DS}${daoLower} = ${DS}this->createBuilder()->setRecord(${DS}record)->build();
@@ -77,7 +55,7 @@ class Repository implements RepositoryInterface
     {
         ${DS}id = ${DS}${daoLower}->getId();
         if (isset(${DS}this->get${truncatedClassPath}Map()[${DS}id])) {
-            throw new \LogicException("${daoUpper} with ID[${DS}] is already attached.");
+            throw new \LogicException("${daoUpper} with ID[${DS}id] is already attached.");
         } else {
             ${DS}this->get${truncatedClassPath}Map()[${DS}id] = ${DS}${daoLower};
         }
@@ -99,13 +77,5 @@ class Repository implements RepositoryInterface
         }
 
         return ${DS}this;
-    }
-
-    protected function getNewQueryBuilder(): QueryBuilder
-    {
-        ${DS}doctrineConnectionDecoratorRepository = ${DS}this->getDoctrineDBALConnectionDecoratorRepository();
-        ${DS}queryBuilder = ${DS}doctrineConnectionDecoratorRepository->createQueryBuilder(DecoratorInterface::ID_CORE);
-
-        return ${DS}queryBuilder->from(${daoUpper}Interface::TABLE_NAME)->select('*');
     }
 }
