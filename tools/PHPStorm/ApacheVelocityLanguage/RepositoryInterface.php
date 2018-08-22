@@ -18,5 +18,5 @@ interface RepositoryInterface
 
     public function get(SearchCriteriaInterface ${DS}searchCriteria): MapInterface;
     
-    public function save(MapInterface $map): RepositoryInterface;
+    public function save(MapInterface ${DS}map): RepositoryInterface;
 }
