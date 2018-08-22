@@ -18,7 +18,7 @@ class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
     /** @var array */
-    protected $record;
+    protected ${DS}record;
 
     public function build(): ${unqualifiedClassName}Interface
     {
