@@ -12,5 +12,5 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 interface HandlerInterface extends RequestHandlerInterface
 {
-    public const ROUTE_NAME_${daoAllUpperHandlerContext}S = '${daoLowerHandlerContext}s';
+    public const ROUTE_NAME_${daoAllUpperHandlerContext} = '${daoLowerHandlerContext}';
 }

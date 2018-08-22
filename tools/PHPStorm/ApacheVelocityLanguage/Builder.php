@@ -17,6 +17,8 @@ use ${NAMESPACE}Interface;
 class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
+    /** @var array */
+    protected $record;
 
     public function build(): ${unqualifiedClassName}Interface
     {
@@ -24,5 +26,25 @@ class Builder implements BuilderInterface
         // @TODO - build the object.
 
         return ${DS}${daoName};
+    }
+
+    protected function getRecord(): array
+    {
+        if (${DS}this->record === null) {
+            throw new \LogicException('Builder record has not been set.');
+        }
+
+        return ${DS}this->record;
+    }
+
+    public function setRecord(array ${DS}record): BuilderInterface
+    {
+        if (${DS}this->record !== null) {
+            throw new \LogicException('Builder record is already set.');
+        }
+
+        ${DS}this->record = ${DS}record;
+
+        return ${DS}this;
     }
 }

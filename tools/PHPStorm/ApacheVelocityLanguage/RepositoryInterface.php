@@ -16,11 +16,7 @@ interface RepositoryInterface
 {
     public function createBuilder(): BuilderInterface;
 
-    public function save(${daoUpper}Interface ${DS}${daoLower}): RepositoryInterface;
-
-    public function attach(${daoUpper}Interface ${DS}${daoLower}): RepositoryInterface;
-
-    public function detach(${daoUpper}Interface ${DS}${daoLower}): RepositoryInterface;
-
-    public function getMap(SearchCriteriaInterface ${DS}searchCriteria): MapInterface;
+    public function get(SearchCriteriaInterface ${DS}searchCriteria): MapInterface;
+    
+    public function save(MapInterface $map): RepositoryInterface;
 }

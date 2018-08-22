@@ -40,4 +40,4 @@
     #end
   #set($awarePropertyName = $awarePropertyName.concat($part))
 #end
-#set($daoMapInterfaceHandlerContext = $daoMapInterfaceHandlerContext.concat($daoUpperHandlerContext).concat("\MapInterface"))
+#set($daoMapInterfaceHandlerContext = $daoMapInterfaceHandlerContext.concat($daoUpperHandlerContext).concat("Interface"))

@@ -21,7 +21,7 @@ class Visitor implements VisitorInterface
         foreach ($filter->getValues() as $value) {
             $values[] = $this->getQueryBuilder()->createNamedParameter($value);
         }
-        $field = $this->getQueryBuilder()->createNamedParameter($filter->getField());
+        $field = $filter->getField();
         switch ($filter->getCondition()) {
             case 'in':
                 $where = $this->getQueryBuilder()->expr()->in($field, $values);
@@ -30,28 +30,28 @@ class Visitor implements VisitorInterface
                 $where = $this->getQueryBuilder()->expr()->notIn($field, $values);
                 break;
             case 'eq':
-                $where = $this->getQueryBuilder()->expr()->eq($field, $values);
+                $where = $this->getQueryBuilder()->expr()->eq($field, $values[0]);
                 break;
             case 'neq':
-                $where = $this->getQueryBuilder()->expr()->neq($field, $values);
+                $where = $this->getQueryBuilder()->expr()->neq($field, $values[0]);
                 break;
             case 'lt':
-                $where = $this->getQueryBuilder()->expr()->lt($field, $values);
+                $where = $this->getQueryBuilder()->expr()->lt($field, $values[0]);
                 break;
             case 'lte':
-                $where = $this->getQueryBuilder()->expr()->lte($field, $values);
+                $where = $this->getQueryBuilder()->expr()->lte($field, $values[0]);
                 break;
             case 'gt':
-                $where = $this->getQueryBuilder()->expr()->gt($field, $values);
+                $where = $this->getQueryBuilder()->expr()->gt($field, $values[0]);
                 break;
             case 'gte':
-                $where = $this->getQueryBuilder()->expr()->gte($field, $values);
+                $where = $this->getQueryBuilder()->expr()->gte($field, $values[0]);
                 break;
             case 'like':
-                $where = $this->getQueryBuilder()->expr()->like($field, $values);
+                $where = $this->getQueryBuilder()->expr()->like($field, $values[0]);
                 break;
             case 'nlike':
-                $where = $this->getQueryBuilder()->expr()->notLike($field, $values);
+                $where = $this->getQueryBuilder()->expr()->notLike($field, $values[0]);
                 break;
             case 'st_contains':
                 $where = sprintf("ST_Contains('%s', %s)", $values[0], $field);
