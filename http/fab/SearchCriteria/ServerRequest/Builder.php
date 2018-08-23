@@ -78,7 +78,7 @@ class Builder implements BuilderInterface
                     $value = $filterQuery[self::VALUES];
                     if (is_array($value)) {
                         $values = [];
-                        foreach ($value as $key =>$valueItem) {
+                        foreach ($value as $key => $valueItem) {
                             $values[$key] = $this->cast($valueItem);
                         }
                         $filter->setValues($values);
