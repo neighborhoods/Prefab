@@ -44,7 +44,7 @@ class Builder implements BuilderInterface
 
     protected function cast(string $string)
     {
-        if (is_numeric($string)) {
+        if (is_numeric($string) & (int)$string < PHP_INT_MAX) {
             if (ctype_digit($string)) {
                 return (int)$string;
             } else {
