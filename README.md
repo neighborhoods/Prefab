@@ -26,7 +26,7 @@ Review the Protean Architecture Specification.
 
 # Manual Fabrication
 * copy the contents of the `http` directory into your project.
-* use PHPStorm to find and replace the following
+* use PHPStorm to find and replace the following (on *all* files copied)
     * `Replace this with the description of your product.`
     * `replace-this-with-the-name-of-your-product` - use the same hyphenation.
     * `ReplaceThisWithTheNameOfYourProduct` - use the same casing and this does not include `Neighborhoods`.
