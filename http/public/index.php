@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-ini_set('assert.exception', '1');
 error_reporting(E_ALL);
 
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;

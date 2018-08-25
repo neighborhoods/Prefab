@@ -8,14 +8,14 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\Builder\FactoryInterfa
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory;
+    protected $NeighborhoodsAreaServicePDOBuilderFactory;
 
     public function setPDOBuilderFactory(FactoryInterface $pDOBuilderFactory): self
     {
         if ($this->hasPDOBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory is already set.');
+            throw new \LogicException('NeighborhoodsAreaServicePDOBuilderFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory = $pDOBuilderFactory;
+        $this->NeighborhoodsAreaServicePDOBuilderFactory = $pDOBuilderFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getPDOBuilderFactory(): FactoryInterface
     {
         if (!$this->hasPDOBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory is not set.');
+            throw new \LogicException('NeighborhoodsAreaServicePDOBuilderFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory;
+        return $this->NeighborhoodsAreaServicePDOBuilderFactory;
     }
 
     protected function hasPDOBuilderFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory);
+        return isset($this->NeighborhoodsAreaServicePDOBuilderFactory);
     }
 
     protected function unsetPDOBuilderFactory(): self
     {
         if (!$this->hasPDOBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory is not set.');
+            throw new \LogicException('NeighborhoodsAreaServicePDOBuilderFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory);
+        unset($this->NeighborhoodsAreaServicePDOBuilderFactory);
 
         return $this;
     }

@@ -1,0 +1,4 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNSInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS
+    shared: false
