@@ -79,6 +79,6 @@ class DNS implements DNSInterface
 
     protected function getCacheFilePath()
     {
-        return $this->getCacheDirectoryPath() . '.php';
+        return $this->getCacheDirectoryPath() . $this->getHost() . '.php';
     }
 }
