@@ -10,12 +10,11 @@ class DNS implements DNSInterface
     /** @var string */
     protected $host;
 
-    protected function set($key, $val): DNSInterface
+    protected function set($key, $value): DNSInterface
     {
-        $val = var_export($val, true);
-        $tmp = $this->getCacheDirectoryPath() . $key . uniqid('', true) . '.tmp';
-        file_put_contents($tmp, '<?php $val = ' . $val . ';');
-        rename($tmp, $this->getCacheFilePath());
+        $temporaryFileName = $this->getCacheDirectoryPath() . $key . uniqid('', true) . '.tmp';
+        file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';');
+        rename($temporaryFileName, $this->getCacheFilePath());
 
         return $this;
     }
@@ -24,7 +23,7 @@ class DNS implements DNSInterface
     {
         @include $this->getCacheFilePath();
 
-        return isset($val) ? $val : false;
+        return $value ?? false;
     }
 
     public function flush(): DNSInterface
