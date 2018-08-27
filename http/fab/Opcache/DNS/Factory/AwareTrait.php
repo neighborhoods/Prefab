@@ -8,14 +8,14 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\FactoryInterfa
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsAreaServiceOpcacheDNSFactory;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory;
 
     public function setOpcacheDNSFactory(FactoryInterface $opcacheDNSFactory): self
     {
         if ($this->hasOpcacheDNSFactory()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNSFactory is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is already set.');
         }
-        $this->NeighborhoodsAreaServiceOpcacheDNSFactory = $opcacheDNSFactory;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory = $opcacheDNSFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getOpcacheDNSFactory(): FactoryInterface
     {
         if (!$this->hasOpcacheDNSFactory()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNSFactory is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is not set.');
         }
 
-        return $this->NeighborhoodsAreaServiceOpcacheDNSFactory;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory;
     }
 
     protected function hasOpcacheDNSFactory(): bool
     {
-        return isset($this->NeighborhoodsAreaServiceOpcacheDNSFactory);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory);
     }
 
     protected function unsetOpcacheDNSFactory(): self
     {
         if (!$this->hasOpcacheDNSFactory()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNSFactory is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is not set.');
         }
-        unset($this->NeighborhoodsAreaServiceOpcacheDNSFactory);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory);
 
         return $this;
     }

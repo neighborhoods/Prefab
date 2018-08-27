@@ -8,14 +8,14 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNSInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsAreaServiceOpcacheDNS;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS;
 
     public function setOpcacheDNS(DNSInterface $opcacheDNS): self
     {
         if ($this->hasOpcacheDNS()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNS is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS is already set.');
         }
-        $this->NeighborhoodsAreaServiceOpcacheDNS = $opcacheDNS;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS = $opcacheDNS;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getOpcacheDNS(): DNSInterface
     {
         if (!$this->hasOpcacheDNS()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNS is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS is not set.');
         }
 
-        return $this->NeighborhoodsAreaServiceOpcacheDNS;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS;
     }
 
     protected function hasOpcacheDNS(): bool
     {
-        return isset($this->NeighborhoodsAreaServiceOpcacheDNS);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS);
     }
 
     protected function unsetOpcacheDNS(): self
     {
         if (!$this->hasOpcacheDNS()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNS is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS is not set.');
         }
-        unset($this->NeighborhoodsAreaServiceOpcacheDNS);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS);
 
         return $this;
     }

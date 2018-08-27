@@ -8,14 +8,14 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\BuilderInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsAreaServicePDOBuilder;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder;
 
     public function setPDOBuilder(BuilderInterface $pDOBuilder): self
     {
         if ($this->hasPDOBuilder()) {
-            throw new \LogicException('NeighborhoodsAreaServicePDOBuilder is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder is already set.');
         }
-        $this->NeighborhoodsAreaServicePDOBuilder = $pDOBuilder;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder = $pDOBuilder;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getPDOBuilder(): BuilderInterface
     {
         if (!$this->hasPDOBuilder()) {
-            throw new \LogicException('NeighborhoodsAreaServicePDOBuilder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder is not set.');
         }
 
-        return $this->NeighborhoodsAreaServicePDOBuilder;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder;
     }
 
     protected function hasPDOBuilder(): bool
     {
-        return isset($this->NeighborhoodsAreaServicePDOBuilder);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder);
     }
 
     protected function unsetPDOBuilder(): self
     {
         if (!$this->hasPDOBuilder()) {
-            throw new \LogicException('NeighborhoodsAreaServicePDOBuilder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder is not set.');
         }
-        unset($this->NeighborhoodsAreaServicePDOBuilder);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder);
 
         return $this;
     }

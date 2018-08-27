@@ -8,14 +8,14 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\ErrorHandlerIn
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsAreaServiceOpcacheDNSErrorHandler;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler;
 
     public function setOpcacheDNSErrorHandler(ErrorHandlerInterface $opcacheDNSErrorHandler): self
     {
         if ($this->hasOpcacheDNSErrorHandler()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNSErrorHandler is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is already set.');
         }
-        $this->NeighborhoodsAreaServiceOpcacheDNSErrorHandler = $opcacheDNSErrorHandler;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler = $opcacheDNSErrorHandler;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getOpcacheDNSErrorHandler(): ErrorHandlerInterface
     {
         if (!$this->hasOpcacheDNSErrorHandler()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNSErrorHandler is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is not set.');
         }
 
-        return $this->NeighborhoodsAreaServiceOpcacheDNSErrorHandler;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler;
     }
 
     protected function hasOpcacheDNSErrorHandler(): bool
     {
-        return isset($this->NeighborhoodsAreaServiceOpcacheDNSErrorHandler);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler);
     }
 
     protected function unsetOpcacheDNSErrorHandler(): self
     {
         if (!$this->hasOpcacheDNSErrorHandler()) {
-            throw new \LogicException('NeighborhoodsAreaServiceOpcacheDNSErrorHandler is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is not set.');
         }
-        unset($this->NeighborhoodsAreaServiceOpcacheDNSErrorHandler);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler);
 
         return $this;
     }

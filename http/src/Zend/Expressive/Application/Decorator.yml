@@ -1,0 +1,13 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\Expressive\Application\DecoratorInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\Expressive\Application\Decorator
+    decorates: Zend\Expressive\Application
+    calls:
+    - [setZendExpressiveApplication, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\Expressive\Application\DecoratorInterface.inner']]
+    # Example GET HTTP request.
+    - [get, [
+          !php/const \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\MV1\FFP\Area\Amenity\Group\Map\Repository\HandlerInterface::ROUTE_PATH_MAP,
+          '@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\MV1\FFP\Area\Amenity\Group\Map\Repository\HandlerInterface',
+          !php/const \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\MV1\NHDS\Area\Repository\HandlerInterface::ROUTE_NAME_AREAS
+        ]
+      ]

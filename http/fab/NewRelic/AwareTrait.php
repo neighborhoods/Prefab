@@ -8,14 +8,14 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelicInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsAreaServiceNewRelic;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic;
 
     public function setNewRelic(NewRelicInterface $newRelic): self
     {
         if ($this->hasNewRelic()) {
-            throw new \LogicException('NeighborhoodsAreaServiceNewRelic is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic is already set.');
         }
-        $this->NeighborhoodsAreaServiceNewRelic = $newRelic;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic = $newRelic;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getNewRelic(): NewRelicInterface
     {
         if (!$this->hasNewRelic()) {
-            throw new \LogicException('NeighborhoodsAreaServiceNewRelic is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic is not set.');
         }
 
-        return $this->NeighborhoodsAreaServiceNewRelic;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic;
     }
 
     protected function hasNewRelic(): bool
     {
-        return isset($this->NeighborhoodsAreaServiceNewRelic);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic);
     }
 
     protected function unsetNewRelic(): self
     {
         if (!$this->hasNewRelic()) {
-            throw new \LogicException('NeighborhoodsAreaServiceNewRelic is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic is not set.');
         }
-        unset($this->NeighborhoodsAreaServiceNewRelic);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic);
 
         return $this;
     }
