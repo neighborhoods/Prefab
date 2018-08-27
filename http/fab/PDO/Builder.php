@@ -8,18 +8,17 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache;
 class Builder implements BuilderInterface
 {
     use Opcache\DNS\AwareTrait;
-    public const DSN_PART_DBNAME = ':dbname=';
-    public const DSN_PART_HOST = ';host=';
+    /** @link https://docstore.mik.ua/orelly/java-ent/jenut/ch08_06.htm */
+    public const SQLSTATE_CONNECTION_FAILURE = 'SQLSTATE[08006]';
     protected $pdo;
     protected $database_host;
     protected $database_adapter;
     protected $database_name;
-    protected $data_source_name;
     protected $user_name;
     protected $password;
     protected $options;
-
-    protected $data_source_name_from_ip;
+    protected $data_source_name;
+    protected $data_source_name_from_opcache_dns;
 
     public function getPdo(): \PDO
     {
@@ -32,9 +31,15 @@ class Builder implements BuilderInterface
                 $options = [];
             }
             try {
-                $this->pdo = new \PDO($this->getDataSourceNameFromIp(), $userName, $password, $options);
+                $this->pdo = new \PDO($this->getDataSourceNameFromOpcacheDNS(), $userName, $password, $options);
             } catch (\PDOException $PDOException) {
-                $this->getOpcacheDNS()->flush();
+                if (strstr($PDOException->getMessage(), self::SQLSTATE_CONNECTION_FAILURE)) {
+                    $this->getOpcacheDNS()->flush();
+                    $this->pdo = new \PDO($this->getDataSourceName(), $userName, $password, $options);
+                } else {
+                    throw $PDOException;
+                }
+            } catch (Opcache\DNS\Exception $opcacheDNSException) {
                 $this->pdo = new \PDO($this->getDataSourceName(), $userName, $password, $options);
             }
         }
@@ -42,7 +47,7 @@ class Builder implements BuilderInterface
         return $this->pdo;
     }
 
-    public function getDatabaseHost()
+    public function getDatabaseHost(): string
     {
         if ($this->database_host === null) {
             throw new \LogicException('Builder database_host has not been set.');
@@ -51,7 +56,7 @@ class Builder implements BuilderInterface
         return $this->database_host;
     }
 
-    public function setDatabaseHost($database_host): BuilderInterface
+    public function setDatabaseHost(string $database_host): BuilderInterface
     {
         if ($this->database_host !== null) {
             throw new \LogicException('Builder database_host is already set.');
@@ -61,7 +66,7 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    public function getDatabaseAdapter()
+    public function getDatabaseAdapter(): string
     {
         if ($this->database_adapter === null) {
             throw new \LogicException('Builder database_adapter has not been set.');
@@ -70,7 +75,7 @@ class Builder implements BuilderInterface
         return $this->database_adapter;
     }
 
-    public function setDatabaseAdapter($database_adapter): BuilderInterface
+    public function setDatabaseAdapter(string $database_adapter): BuilderInterface
     {
         if ($this->database_adapter !== null) {
             throw new \LogicException('Builder database_adapter is already set.');
@@ -80,7 +85,7 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    public function getDatabaseName()
+    public function getDatabaseName(): string
     {
         if ($this->database_name === null) {
             throw new \LogicException('Builder database_name has not been set.');
@@ -89,7 +94,7 @@ class Builder implements BuilderInterface
         return $this->database_name;
     }
 
-    public function setDatabaseName($database_name): BuilderInterface
+    public function setDatabaseName(string $database_name): BuilderInterface
     {
         if ($this->database_name !== null) {
             throw new \LogicException('Builder database_name is already set.');
@@ -99,29 +104,30 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function getDataSourceNameFromIp(): string
+    protected function getDataSourceNameFromOpcacheDNS(): string
     {
-        if ($this->data_source_name_from_ip === null) {
-            $dsn = $this->getDatabaseAdapter();
-            $dsn .= self::DSN_PART_DBNAME . $this->getDatabaseName();
-            $dsn .= self::DSN_PART_HOST . $this->getOpcacheDNS()->setHost($this->getDatabaseHost())->getIp();
-            $this->data_source_name_from_ip = $dsn;
+        if ($this->data_source_name_from_opcache_dns === null) {
+            $ip = $this->getOpcacheDNS()->setHost($this->getDatabaseHost())->getIp();
+            $dsn = $this->generateDSN($this->getDatabaseAdapter(), $this->getDatabaseName(), $ip);
+            $this->data_source_name_from_opcache_dns = $dsn;
         }
 
-        return $this->data_source_name_from_ip;
+        return $this->data_source_name_from_opcache_dns;
     }
-
 
     protected function getDataSourceName(): string
     {
         if ($this->data_source_name === null) {
-            $dsn = $this->getDatabaseAdapter();
-            $dsn .= self::DSN_PART_DBNAME . $this->getDatabaseName();
-            $dsn .= self::DSN_PART_HOST . $this->getDatabaseHost();
+            $dsn = $this->generateDSN($this->getDatabaseAdapter(), $this->getDatabaseName(), $this->getDatabaseHost());
             $this->data_source_name = $dsn;
         }
 
         return $this->data_source_name;
+    }
+
+    protected function generateDSN(string $adapter, string $name, string $host): string
+    {
+        return sprintf('%s:dbname=%s;host=%s', $adapter, $name, $host);
     }
 
     public function setUserName(string $userName): BuilderInterface

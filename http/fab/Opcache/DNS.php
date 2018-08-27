@@ -3,25 +3,42 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\Exception;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic;
+
 class DNS implements DNSInterface
 {
+    use Opcache\DNS\ErrorHandler\AwareTrait;
+    use NewRelic\AwareTrait;
     /** @var string */
     protected $ip;
     /** @var string */
     protected $host;
 
-    protected function set($key, $value): DNSInterface
+    protected function set(string $key, string $value): DNSInterface
     {
         $temporaryFileName = $this->getCacheDirectoryPath() . $key . uniqid('', true) . '.tmp';
-        file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';');
-        rename($temporaryFileName, $this->getCacheFilePath());
+        try {
+            if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
+                throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
+            } else {
+                if (rename($temporaryFileName, $this->getCacheFilePath()) === false) {
+                    throw (new Exception())->setCode(Exception::CODE_RENAME_FAILED);
+                }
+            }
+        } catch (Exception $exception) {
+            $this->getNewRelic()->noticeThrowable($exception);
+        }
 
         return $this;
     }
 
     protected function get()
     {
-        @include $this->getCacheFilePath();
+        set_error_handler($this->getOpcacheDNSErrorHandler());
+        include $this->getCacheFilePath();
+        restore_error_handler();
 
         return $value ?? false;
     }
@@ -40,7 +57,11 @@ class DNS implements DNSInterface
             $ip = $this->get();
             if ($ip === false) {
                 $this->ip = gethostbyname($this->getHost());
-                $this->set($this->getHost(), $this->ip);
+                if ($this->ip !== $this->getHost()) {
+                    $this->set($this->getHost(), $this->ip);
+                } else {
+                    throw (new Exception())->setCode(Exception::CODE_GET_HOST_BY_NAME_FAILED);
+                }
             } else {
                 $this->ip = $ip;
             }
