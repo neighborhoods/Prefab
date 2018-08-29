@@ -1,6 +1,8 @@
 # Neighborhoods Prefab
-A code generation tool.
+A code generation tool. Takes the busywork out of building [Protean](https://github.com/neighborhoods/protean)-compliant applications.
 
+## Protean Docs and FAQs
+Protean is an application architecture specification. The specification is canonically defined in https://github.com/neighborhoods/protean. Docs and FAQs can be bound there.
 
 ## Apache Velocity Template Language Files
 
