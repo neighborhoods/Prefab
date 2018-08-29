@@ -1,6 +1,10 @@
+### NOTE
+**`master` is currently very outdated. In the meantime, [4.x](https://github.com/neighborhoods/prefab/tree/4.x) is a work in progress, but getting very close to completion. Please use that branch for all needs, including documentation.**
+
+---
+
 # Neighborhoods Prefab
 A code generation tool.
-
 
 ## Apache Velocity Template Language Files
 
