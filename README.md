@@ -55,9 +55,6 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 * Configure your TODO parser to read team notes by navigating to `Preferences` > `Editor` > `TODO` and add the following:
     * `\bteam\b.*`
 
-### Example File System Structure
-Review the Protean Architecture Specification.
-
 # Manual Fabrication
 
 ## Project Setup
