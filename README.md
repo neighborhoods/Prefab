@@ -68,11 +68,14 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 * Create your DAO and DAOInterface using the AVLTs
 * Create the class machinery using teh AVLTs and appropriate directory structure.
 * Start creating the DI YAML from the DAO.
-* note - Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
-    * Repository - MUST NOT add a shared directive
-    * Factory - MUST NOT add a shared directive
-    * Builder - MUST add a `shared: false` directive
-    * DAO - MUST add a `shared: false` directive
-    * Map - MUST add a `shared: false` directive
-    * Handler - MUST add a `shared: false` directive
-    * Any other actor you have to understand whether or not it should be a Singleton, without `shared: false` Symfony DI will inject THE SAME instance of an object into all of it's declared dependents!
+
+Note: 
+Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
+
+* Repository - MUST NOT add a shared directive
+* Factory - MUST NOT add a shared directive
+* Builder - MUST add a `shared: false` directive
+* DAO - MUST add a `shared: false` directive
+* Map - MUST add a `shared: false` directive
+* Handler - MUST add a `shared: false` directive
+* Any other actor you have to understand whether or not it should be a Singleton, without `shared: false` Symfony DI will inject THE SAME instance of an object into all of it's declared dependents!
