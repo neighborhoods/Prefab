@@ -57,11 +57,22 @@ class Builder implements BuilderInterface
 
     protected function assertValidFilterQuery(array $filterQuery): BuilderInterface
     {
-        if (!isset($filterQuery[self::FIELD])
-            || !isset($filterQuery[self::VALUES])
-            || !isset($filterQuery[self::CONDITION])
-            || !isset($filterQuery[self::GLUE])) {
-            throw new \LogicException('A filter property is not set.');
+        $requiredFilterProperties = [
+            self::FIELD,
+            self::VALUES,
+            self::CONDITION,
+            self::GLUE,
+        ];
+        $missingRequiredFilterProperties = [];
+
+        foreach ($requiredFilterProperties as $requiredFilterProperty) {
+            if (!isset($filterQuery[$requiredFilterProperty])) {
+                $missingRequiredFilterProperties[] = $requiredFilterProperty;
+            }
+        }
+
+        if (!empty($missingRequiredFilterProperties)) {
+            throw new \LogicException('Filter property not set: ' . implode(', ', $missingRequiredFilterProperties));
         }
 
         return $this;
