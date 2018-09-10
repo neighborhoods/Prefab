@@ -26,12 +26,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Neighborhoods\\prefab\\": "src"
+      "Neighborhoods\\Prefab\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Neighborhoods\\prefabTest\\": "test"
+      "Neighborhoods\\PrefabTest\\": "test"
     }
   }
 }
