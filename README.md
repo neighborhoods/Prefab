@@ -66,7 +66,7 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 
 ## Manual Fabrication Process
 * Create your DAO and DAOInterface using the AVLTs
-* Create the class machinery using teh AVLTs and appropriate directory structure.
+* Create the class machinery using the AVLTs and appropriate directory structure.
 * Start creating the DI YAML from the DAO.
 
 ### Service Creation Order (and their references)
