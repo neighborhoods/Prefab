@@ -69,6 +69,32 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 * Create the class machinery using teh AVLTs and appropriate directory structure.
 * Start creating the DI YAML from the DAO.
 
+### Service Creation Order (and their references)
+- src/.../Class.yml
+	- no other calls
+- fab/.../Class/Map.yml
+	- no other calls
+- fab/.../Class/Factory.yml
+	- Class
+- fab/.../Class/Map/Factory.yml
+	- Class\Map
+- src/.../Class/Builder.yml
+	- Class\Factory
+- fab/.../Class/Builder/Factory.yml
+	- Class\Builder
+- src/.../Class/Map/Builder.yml
+	- Class\Builder\Factory
+	- Class\Map\Factory
+- fab/.../Class/Map/Builder/Factory.yml
+	- Class\Map\Builder
+- src/.../Class/Map/Repository.yml
+	- Doctrine\DBAL\Connection\Decorator\Repository
+	- SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory
+	- Class\Map\Builder\Factory
+- src/.../Class/Map/Repository/Handler.yml
+	- Class\Map\Repository
+	- SearchCriteria\ServerRequest\Builder\Factory
+
 Note: 
 Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
 
