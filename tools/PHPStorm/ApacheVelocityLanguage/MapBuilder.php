@@ -19,7 +19,7 @@ class Builder implements BuilderInterface
     use Factory\AwareTrait;
     use // Replace with reference to non-Map version of Builder\Factory\AwareTrait;
     /** @var array */
-    protected ${DS}record;
+    protected ${DS}records;
 
     public function build(): ${unqualifiedClassName}Interface
     {
@@ -31,20 +31,20 @@ class Builder implements BuilderInterface
 
     protected function getRecords(): array
     {
-        if (${DS}this->record === null) {
-            throw new \LogicException('Builder record has not been set.');
+        if (${DS}this->records === null) {
+            throw new \LogicException('Builder records has not been set.');
         }
 
-        return ${DS}this->record;
+        return ${DS}this->records;
     }
 
-    public function setRecords(array ${DS}record): BuilderInterface
+    public function setRecords(array ${DS}records): BuilderInterface
     {
-        if (${DS}this->record !== null) {
-            throw new \LogicException('Builder record is already set.');
+        if (${DS}this->records !== null) {
+            throw new \LogicException('Builder records is already set.');
         }
 
-        ${DS}this->record = ${DS}record;
+        ${DS}this->records = ${DS}records;
 
         return ${DS}this;
     }
