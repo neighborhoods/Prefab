@@ -66,7 +66,7 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 
 ## Manual Fabrication Process
 * Create your DAO and DAOInterface using the AVLTs
-* Create the class machinery using teh AVLTs and appropriate directory structure.
+* Create the class machinery using the AVLTs and appropriate directory structure.
 * Start creating the DI YAML from the DAO.
 
 ### Service Creation Order (and their references)
@@ -101,7 +101,7 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 	- shared: false
 
 Note: 
-Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
+Repositories and Factories are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
 
 * Repository - MUST NOT add a shared directive
 * Factory - MUST NOT add a shared directive
