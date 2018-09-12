@@ -96,7 +96,7 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 	- SearchCriteria\ServerRequest\Builder\Factory
 
 Note: 
-Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
+Repositories and Factories are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
 
 * Repository - MUST NOT add a shared directive
 * Factory - MUST NOT add a shared directive
