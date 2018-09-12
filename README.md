@@ -72,19 +72,23 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 ### Service Creation Order (and their references)
 - src/.../Class.yml
 	- no other calls
+	- shared: false
 - fab/.../Class/Map.yml
 	- no other calls
+	- shared: false
 - fab/.../Class/Factory.yml
 	- Class
 - fab/.../Class/Map/Factory.yml
 	- Class\Map
 - src/.../Class/Builder.yml
 	- Class\Factory
+	- shared: false
 - fab/.../Class/Builder/Factory.yml
 	- Class\Builder
 - src/.../Class/Map/Builder.yml
 	- Class\Builder\Factory
 	- Class\Map\Factory
+	- shared: false
 - fab/.../Class/Map/Builder/Factory.yml
 	- Class\Map\Builder
 - src/.../Class/Map/Repository.yml
@@ -94,6 +98,7 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 - src/.../Class/Map/Repository/Handler.yml
 	- Class\Map\Repository
 	- SearchCriteria\ServerRequest\Builder\Factory
+	- shared: false
 
 Note: 
 Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
