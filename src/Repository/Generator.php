@@ -29,9 +29,13 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setName(self::CLASS_NAME);
         $this->getGenerator()->setNamespaceName($this->namespace);
 
-        $this->getGenerator()->addTrait('Neighborhoods\\'. $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait');
-        $this->getGenerator()->addTrait('Neighborhoods\\' . $this->getProjectName() .'\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait');
-        $this->getGenerator()->addTrait('Neighborhoods\\' . $this->getProjectName() .'\SearchCriteriaInterface');
+        $this->getGenerator()->addTraits(
+            [
+                'Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait',
+                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait',
+                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteriaInterface',
+            ]
+        );
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
@@ -167,9 +171,6 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    /**
-     * @param $builtFile
-     */
     protected function saveClass($builtFile) : void
     {
         $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
