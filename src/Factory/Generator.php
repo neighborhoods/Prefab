@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\AwareTrait;
+namespace Neighborhoods\Prefab\Factory;
 
 use Symfony\Component\Finder\SplFileInfo;
+use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -16,17 +17,17 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
 
-    protected const TRAIT_NAME = 'AwareTrait';
+    protected const CLASS_NAME = 'Factory';
 
     public function generate(SplFileInfo $dao) : GeneratorInterface
     {
         $this->setDaoName(basename($dao->getFilename(), '.php'));
-        $this->setVarName(implode('', explode('\\', $this->namespace)));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
-
-        $this->getGenerator()->setName(self::TRAIT_NAME);
+        $this->getGenerator()->addTrait('AwareTrait');
+        $this->getGenerator()->setImplementedInterfaces([$this->getNamespace() . '\FactoryInterface']);
+        $this->getGenerator()->setName(self::CLASS_NAME);
         $this->getGenerator()->setNamespaceName($this->namespace);
         $this->replaceReturnTypePlaceHolders();
 
@@ -35,13 +36,13 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $mapDirectory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
+        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
 
-        if (!is_dir($mapDirectory)) {
-            mkdir($mapDirectory, 0777, true);
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
         }
 
-        file_put_contents($mapDirectory . $this->getGenerator()->getName() . '.php', $builtFile);
+        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
 
         return $this;
     }
@@ -61,8 +62,8 @@ class Generator implements GeneratorInterface
     protected function replaceEntityPlaceholders($fileContent) : string
     {
         $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
-        $fileContent = str_replace('VARNAMEPLACEHOLDER', $this->getVarName(), $fileContent);
-
+        $methodVarName = implode('', explode('\\', $this->getNamespace()));
+        $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
         return $fileContent;
     }
 
@@ -86,11 +87,11 @@ class Generator implements GeneratorInterface
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
-        $this->generator = TraitGenerator::fromReflection($template);
+        $this->generator = ClassGenerator::fromReflection($template);
         return $this;
     }
 
-    protected function getGenerator() : TraitGenerator
+    protected function getGenerator() : ClassGenerator
     {
         if ($this->generator === null) {
             throw new \LogicException('Generator generator has not been set');
@@ -113,23 +114,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator namespace is already set.');
         }
         $this->namespace = $namespace;
-        return $this;
-    }
-
-    public function getProjectName() : string
-    {
-        if ($this->projectName === null) {
-            throw new \LogicException('Generator projectName has not been set.');
-        }
-        return $this->projectName;
-    }
-
-    public function setProjectName(string $projectName) : GeneratorInterface
-    {
-        if ($this->projectName !== null) {
-            throw new \LogicException('Generator projectName is already set.');
-        }
-        $this->projectName = $projectName;
         return $this;
     }
 
