@@ -20,11 +20,11 @@ class Map
         $this->version = 'MV2';
 
         $finder = new Finder();
-        $finder->files()->in('/var/www/html/area_service.neighborhoods.com/src/DAO');
+        $finder->files()->in('/var/www/html/prefab_examples.neighborhoods.com/JakeService/src');
 
         foreach ($finder as $dao) {
             $this->generateMap($dao);
-            $this->generateMapInterface($dao);
+//            $this->generateMapInterface($dao);
         }
     }
 
@@ -33,7 +33,7 @@ class Map
         $parent = $dao->getRelativePath();
         $daoName = basename($dao->getFilename(),'.php');
 
-        $mapTemplate = new ClassReflection(\Neighborhoods\AreaService\ZFC\Template\Map::class);
+        $mapTemplate = new ClassReflection(\Neighborhoods\Prefab\Map\Template::class);
         $generator = ClassGenerator::fromReflection($mapTemplate);
 
         $fullNamespace = $this->rootNamespace . $this->version . ($parent ? '\\'.$parent:'') . '\\' . $daoName;
@@ -74,7 +74,7 @@ class Map
         $parent = $dao->getRelativePath();
         $daoName = basename($dao->getFilename(),'.php');
 
-        $mapInterfaceTemplate = new ClassReflection(\Neighborhoods\AreaService\ZFC\Template\MapInterface::class);
+        $mapInterfaceTemplate = new ClassReflection(\Neighborhoods\Prefab\MapInterface\Template::class);
         $generator = InterfaceGenerator::fromReflection($mapInterfaceTemplate);
 
         $fullNamespace = $this->rootNamespace . $this->version . ($parent ? '\\'.$parent:'') . '\\' . $daoName;
@@ -116,199 +116,4 @@ class Map
         $fileContent = str_replace('ZFC\Template', $this->version, $fileContent);
         return $fileContent;
     }
-
-
-//    protected function generateConstructorMethod(): MethodGenerator
-//    {
-//        $pluralDao = strtolower($this->getDaoName()).'s';
-//        $constructorMethod = new MethodGenerator();
-//        $constructorMethod->setDocBlock(DocBlockGenerator::fromArray([
-//            'shortDescription' => null,
-//            'longDescription'  => null,
-//            'tags'             => [
-//                new ParamTag($pluralDao, $this->getDaoName().'Interface', null, true)
-//            ],
-//        ]));
-//        $constructorMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $constructorMethod->setName('__construct');
-//        $constructorMethod->setParameter([
-//            'name' => $pluralDao,
-//            'type' => 'array',
-//            'defaultvalue' => []
-//        ]);
-//        $constructorMethod->setParameter([
-//            'name' => 'flags',
-//            'type' => 'int',
-//            'defaultvalue' => 0
-//        ]);
-//        $constructorMethod->setBody($this->generateConstructorBody());
-//
-//        return $constructorMethod;
-//    }
-//
-//    protected function generateConstructorBody()
-//    {
-//        $pluralDao = strtolower($this->getDaoName()).'s';
-//
-//        $content = 'if ($this->count() !== 0) {
-//    throw new \LogicException(\'Map is not empty.\');
-//}
-//
-//if (!empty($'.$pluralDao.')) {
-//    $this->assertValidArrayType(...array_values($'.$pluralDao.'));
-//}
-//
-//parent::__construct($'.$pluralDao.', $flags);
-//';
-//
-//        return $content;
-//    }
-//
-//    protected function generateOffsetGetMethod(): MethodGenerator
-//    {
-//        $offsetGetMethod = new MethodGenerator();
-//        $offsetGetMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $offsetGetMethod->setName('offsetGet');
-//        $offsetGetMethod->setParameter(['name' => 'index']);
-//        $offsetGetMethod->setBody('return $this->assertValidArrayItemType(parent::offsetGet($index));');
-//        $offsetGetMethod->setReturnType($this->getDaoName().'Interface');
-//
-//        return $offsetGetMethod;
-//    }
-//
-//    protected function generateOffsetSetMethod(): MethodGenerator
-//    {
-//        $offsetSetMethod = new MethodGenerator();
-//        $offsetSetMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $offsetSetMethod->setName('offsetSet');
-//        $offsetSetMethod->setDocBlock(DocBlockGenerator::fromArray([
-//            'shortDescription' => null,
-//            'longDescription'  => null,
-//            'tags'             => [
-//                new ParamTag(strtolower($this->getDaoName()), $this->getDaoName().'Interface')
-//            ],
-//        ]));
-//        $offsetSetMethod->setParameter(['name' => 'index']);
-//        $offsetSetMethod->setParameter(['name' => 'area']);
-//        $offsetSetMethod->setBody(
-//            'parent::offsetSet($index, $this->assertValidArrayItemType($'.strtolower($this->getDaoName()).'));');
-//
-//        return $offsetSetMethod;
-//    }
-//
-//    protected function generateAppendMethod(): MethodGenerator
-//    {
-//        $appendMethod = new MethodGenerator();
-//        $appendMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $appendMethod->setName('append');
-//        $appendMethod->setDocBlock(DocBlockGenerator::fromArray([
-//            'shortDescription' => null,
-//            'longDescription'  => null,
-//            'tags'             => [
-//                new ParamTag(strtolower($this->getDaoName()), $this->getDaoName().'Interface')
-//            ],
-//        ]));
-//        $appendMethod->setParameter(['name' => 'area']);
-//        $appendMethod->setBody('$this->assertValidArrayItemType($area);
-//parent::append($area);');
-//
-//        return $appendMethod;
-//    }
-//
-//    protected function generateCurrentMethod(): MethodGenerator
-//    {
-//        $currentMethod = new MethodGenerator();
-//        $currentMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $currentMethod->setName('current');
-//        $currentMethod->setBody('return parent::current();');
-//        $currentMethod->setReturnType($this->getDaoName().'Interface');
-//
-//        return $currentMethod;
-//    }
-//
-//    protected function generateAssertValidArrayItemTypeMethod(): MethodGenerator
-//    {
-//        $assertValidArrayItemTypeMethod = new MethodGenerator();
-//        $assertValidArrayItemTypeMethod->setFlags(MethodGenerator::FLAG_PROTECTED);
-//        $assertValidArrayItemTypeMethod->setName('assertValidArrayItemType');
-//
-//        $parameter = new ParameterGenerator();
-//        $parameter->setName('area');
-//        $parameter->setType($this->getDaoName().'Interface');
-//
-//        $assertValidArrayItemTypeMethod->setParameter($parameter);
-//        $assertValidArrayItemTypeMethod->setBody('return $' . strtolower($this->getDaoName()) . ';');
-//
-//        return $assertValidArrayItemTypeMethod;
-//    }
-//
-//    protected function generateAssertValidArrayTypeMethod(): MethodGenerator
-//    {
-//        $assertValidArrayTypeMethod = new MethodGenerator();
-//        $assertValidArrayTypeMethod->setFlags(MethodGenerator::FLAG_PROTECTED);
-//        $assertValidArrayTypeMethod->setName('assertValidArrayType');
-//
-//        $parameter = new ParameterGenerator();
-//        $parameter->setName(strtolower($this->getDaoName()));
-//        $parameter->setType($this->getDaoName().'Interface');
-//        $parameter->setVariadic(true);
-//
-//        $assertValidArrayTypeMethod->setParameter($parameter);
-//        $assertValidArrayTypeMethod->setBody('return $this;');
-//        $assertValidArrayTypeMethod->setReturnType('MapInterface');
-//
-//        return $assertValidArrayTypeMethod;
-//    }
-//
-//    protected function generateGetArrayCopyMethod(): MethodGenerator
-//    {
-//        $getArrayCopyMethod = new MethodGenerator();
-//        $getArrayCopyMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $getArrayCopyMethod->setName('getArrayCopy');
-//        $getArrayCopyMethod->setBody('return new self(parent::getArrayCopy(), (int)$this->getFlags());');
-//        $getArrayCopyMethod->setReturnType('MapInterface');
-//
-//        return $getArrayCopyMethod;
-//    }
-//
-//    protected function generateToArrayMethod(): MethodGenerator
-//    {
-//        $getArrayCopyMethod = new MethodGenerator();
-//        $getArrayCopyMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $getArrayCopyMethod->setName('toArray');
-//        $getArrayCopyMethod->setBody('return (array)$this;');
-//        $getArrayCopyMethod->setReturnType('array');
-//
-//        return $getArrayCopyMethod;
-//    }
-//
-//    protected function generateHydrateMethod(): MethodGenerator
-//    {
-//        $hydrateMethod = new MethodGenerator();
-//        $hydrateMethod->setFlags(MethodGenerator::FLAG_PUBLIC);
-//        $hydrateMethod->setName('hydrate');
-//
-//        $parameter = new ParameterGenerator();
-//        $parameter->setName('array');
-//        $parameter->setType('array');
-//        $hydrateMethod->setParameter($parameter);
-//        $hydrateMethod->setBody('$this->__construct($array);
-//
-//return $this;');
-//        $hydrateMethod->setReturnType('MapInterface');
-//
-//        return $hydrateMethod;
-//    }
-//
-//    protected function fixImplementedInterfaces($fileContent)
-//    {
-//        $fileContent = str_replace(') : \\', '): ',$fileContent);
-//        return $fileContent;
-//    }
-//
-//    protected function fixReturnTypes($fileContent)
-//    {
-//        $fileContent = str_replace('implements \\', 'implements ',$fileContent);
-//        return $fileContent;
-//    }
 }
