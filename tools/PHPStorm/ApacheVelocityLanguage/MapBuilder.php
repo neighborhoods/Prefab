@@ -24,7 +24,11 @@ class Builder implements BuilderInterface
     public function build(): ${unqualifiedClassName}Interface
     {
         ${DS}${daoName} = ${DS}this->get${truncatedClassPath}Factory()->create();
-        // @TODO - build the object.
+        foreach($this->getRecords() as $record) {
+            $builder = $this->getDORClassBuilderFactory()->create(); // replace DORClass w/ e.g. DOR0Listing, MV1Area
+            $item = $builder->setRecord($record)->build();
+            $map[$item->getId()] = $item;
+        }
 
         return ${DS}${daoName};
     }

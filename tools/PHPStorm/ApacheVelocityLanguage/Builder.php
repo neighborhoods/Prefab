@@ -23,7 +23,10 @@ class Builder implements BuilderInterface
     public function build(): ${unqualifiedClassName}Interface
     {
         ${DS}${daoName} = ${DS}this->get${truncatedClassPath}Factory()->create();
-        // @TODO - build the object.
+        $record = $this->getRecord();
+
+        ${DS}${daoName}->setId($record[${DS}${daoName}::FIELD_ID]);
+        // etc.
 
         return ${DS}${daoName};
     }
