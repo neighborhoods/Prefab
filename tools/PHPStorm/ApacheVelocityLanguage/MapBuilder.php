@@ -17,7 +17,7 @@ use ${NAMESPACE}Interface;
 class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
-    use /*Replace with reference to non-Map version of Builder\Factory\AwareTrait*/;
+    use /* Replace with reference to non-Map version of Builder\Factory\AwareTrait */;
 
     /** @var array */
     protected ${DS}records;
