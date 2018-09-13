@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Factory;
+namespace Neighborhoods\Prefab\FactoryInterface;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
+use Zend\Code\Generator\InterfaceGenerator;
+use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
@@ -16,7 +18,7 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
 
-    protected const CLASS_NAME = 'Factory';
+    protected const INTERFACE_NAME = 'FactoryInterface';
 
     public function generate(SplFileInfo $dao) : GeneratorInterface
     {
@@ -24,9 +26,7 @@ class Generator implements GeneratorInterface
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
-        $this->getGenerator()->addTrait('AwareTrait');
-        $this->getGenerator()->setImplementedInterfaces([$this->getNamespace() . '\FactoryInterface']);
-        $this->getGenerator()->setName(self::CLASS_NAME);
+        $this->getGenerator()->setName(self::INTERFACE_NAME);
         $this->getGenerator()->setNamespaceName($this->namespace);
         $this->replaceReturnTypePlaceHolders();
 
@@ -86,11 +86,11 @@ class Generator implements GeneratorInterface
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
-        $this->generator = ClassGenerator::fromReflection($template);
+        $this->generator = InterfaceGenerator::fromReflection($template);
         return $this;
     }
 
-    protected function getGenerator() : ClassGenerator
+    protected function getGenerator() : InterfaceGenerator
     {
         if ($this->generator === null) {
             throw new \LogicException('Generator generator has not been set');

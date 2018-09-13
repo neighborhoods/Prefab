@@ -6,7 +6,7 @@ namespace Neighborhoods\PrefabFitness\Factory;
 use Neighborhoods\PrefabFitness\FactoryInterface;
 
 /** @codeCoverageIgnore */
-trait Factory
+trait AwareTrait
 {
     protected $NeighborhoodsPrefabFitnessFactory;
 
