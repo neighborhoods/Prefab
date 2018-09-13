@@ -25,7 +25,7 @@ class Builder implements BuilderInterface
         ${DS}${daoName} = ${DS}this->get${truncatedClassPath}Factory()->create();
         $record = $this->getRecord();
 
-        ${DS}${daoName}->setId($record[${DS}${daoName}::FIELD_ID]);
+        ${DS}${daoName}->setId($record[${unqualifiedClassName}Interface::FIELD_ID]);
         // etc.
 
         return ${DS}${daoName};
