@@ -66,11 +66,42 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 
 ## Manual Fabrication Process
 * Create your DAO and DAOInterface using the AVLTs
-* Create the class machinery using teh AVLTs and appropriate directory structure.
+* Create the class machinery using the AVLTs and appropriate directory structure.
 * Start creating the DI YAML from the DAO.
 
+### Service Creation Order (and their references)
+- src/.../Class.yml
+	- no other calls
+	- shared: false
+- fab/.../Class/Map.yml
+	- no other calls
+	- shared: false
+- fab/.../Class/Factory.yml
+	- Class
+- fab/.../Class/Map/Factory.yml
+	- Class\Map
+- src/.../Class/Builder.yml
+	- Class\Factory
+	- shared: false
+- fab/.../Class/Builder/Factory.yml
+	- Class\Builder
+- src/.../Class/Map/Builder.yml
+	- Class\Builder\Factory
+	- Class\Map\Factory
+	- shared: false
+- fab/.../Class/Map/Builder/Factory.yml
+	- Class\Map\Builder
+- src/.../Class/Map/Repository.yml
+	- Doctrine\DBAL\Connection\Decorator\Repository
+	- SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory
+	- Class\Map\Builder\Factory
+- src/.../Class/Map/Repository/Handler.yml
+	- Class\Map\Repository
+	- SearchCriteria\ServerRequest\Builder\Factory
+	- shared: false
+
 Note: 
-Repositories, Factories, Builders are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
+Repositories and Factories are the only shared actors, i.e. - all other DI service directives are NOT shared and REQUIRE `shared: false`.
 
 * Repository - MUST NOT add a shared directive
 * Factory - MUST NOT add a shared directive
