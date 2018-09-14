@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Console;
 
-use Neighborhoods\Prefab\RepositoryInterface\Generator;
+use Neighborhoods\Prefab\HandlerInterface\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,7 +25,7 @@ class GenerateFabCommand extends Command
         $generator = new Generator();
         $finder = new Finder();
 
-        $generator->setNamespace('Neighborhoods\PrefabFitnessJakeService\Jake');
+        $generator->setNamespace('Neighborhoods\PrefabFitnessJakeService\Jake\Repository');
         $generator->setVersion('MV1');
 
         $daos = $finder->files()->depth(0)->in($daoLocation);
