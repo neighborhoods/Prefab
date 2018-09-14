@@ -5,7 +5,7 @@ namespace Neighborhoods\Prefab\BuilderInterface;
 
 interface Template
 {
-    public function build() : \DAONAMEPLACEHOLDER\RepositoryInterface;
+    public function build() : \DAONAMEPLACEHOLDERInterface;
 
     public function setRecord(array $record) : \DAONAMEPLACEHOLDER\BuilderInterface;
 }

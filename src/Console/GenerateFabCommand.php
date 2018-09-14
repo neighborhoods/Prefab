@@ -25,7 +25,7 @@ class GenerateFabCommand extends Command
         $generator = new Generator();
         $finder = new Finder();
 
-        $generator->setNamespace('Neighborhoods\PrefabFitnessJakeService\Jake\Repository');
+        $generator->setNamespace('Neighborhoods\PrefabFitnessJakeService\Jake');
         $generator->setVersion('MV1');
 
         $daos = $finder->files()->depth(0)->in($daoLocation);
