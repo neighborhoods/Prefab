@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Repository;
+namespace Neighborhoods\Prefab\RepositoryInterface;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
+use Zend\Code\Generator\InterfaceGenerator;
+use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
@@ -17,7 +19,7 @@ class Generator implements GeneratorInterface
     protected $varName;
     protected $projectName;
 
-    protected const CLASS_NAME = 'Repository';
+    protected const INTERFACE_NAME = 'RepositoryInterface';
 
     public function generate(SplFileInfo $dao) : GeneratorInterface
     {
@@ -25,24 +27,22 @@ class Generator implements GeneratorInterface
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
-        $this->getGenerator()->setImplementedInterfaces([$this->getNamespace() . '\RepositoryInterface']);
-        $this->getGenerator()->setName(self::CLASS_NAME);
+        $this->getGenerator()->setName(self::INTERFACE_NAME);
         $this->getGenerator()->setNamespaceName($this->namespace);
-
-        $this->getGenerator()->addTraits(
-            [
-                'Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait',
-                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait',
-                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteriaInterface',
-            ]
-        );
+        $this->replaceReturnTypePlaceHolders();
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->saveClass($builtFile);
+        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
 
         return $this;
     }
@@ -65,8 +65,6 @@ class Generator implements GeneratorInterface
         $methodVarName = implode('', explode('\\', $this->getNamespace()));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
         $fileContent = str_replace('PROJECTNAMEPLACEHOLDER', $this->getProjectName(), $fileContent);
-        $fileContent = str_replace('NAMESPACEPLACEHOLDER', $this->getNamespace(), $fileContent);
-
         return $fileContent;
     }
 
@@ -90,11 +88,11 @@ class Generator implements GeneratorInterface
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
-        $this->generator = ClassGenerator::fromReflection($template);
+        $this->generator = InterfaceGenerator::fromReflection($template);
         return $this;
     }
 
-    protected function getGenerator() : ClassGenerator
+    protected function getGenerator() : InterfaceGenerator
     {
         if ($this->generator === null) {
             throw new \LogicException('Generator generator has not been set');
@@ -160,17 +158,6 @@ class Generator implements GeneratorInterface
             $this->projectName = explode('\\', $this->getNamespace())[1];
         }
         return $this->projectName;
-    }
-
-    protected function saveClass($builtFile) : void
-    {
-        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        }
-
-        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
     }
 
 }
