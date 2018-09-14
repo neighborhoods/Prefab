@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Console;
 
-use Neighborhoods\Prefab\Builder\Generator;
+use Neighborhoods\Prefab\BuilderInterface\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
