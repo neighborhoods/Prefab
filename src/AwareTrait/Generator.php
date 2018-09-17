@@ -20,15 +20,14 @@ class Generator implements GeneratorInterface
 
     protected const TRAIT_NAME = 'AwareTrait';
 
-    public function generate(SplFileInfo $dao) : GeneratorInterface
+    public function generate() : GeneratorInterface
     {
-        $this->setVarName(implode('', explode('\\', $this->namespace)));
+        $this->setVarName(implode('', explode('\\', $this->getNamespace())));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
-
         $this->getGenerator()->setName(self::TRAIT_NAME);
-        $this->getGenerator()->setNamespaceName($this->namespace);
+
         $this->replaceReturnTypePlaceHolders();
 
         $file = new FileGenerator();
@@ -81,7 +80,7 @@ class Generator implements GeneratorInterface
         return $this->generator;
     }
 
-    public function getNamespace() : string
+    protected function getNamespace() : string
     {
         if ($this->namespace === null) {
             throw new \LogicException('Generator namespace has not been set.');
@@ -99,7 +98,7 @@ class Generator implements GeneratorInterface
     }
 
 
-    public function getVarName() : string
+    protected function getVarName() : string
     {
         if ($this->varName === null) {
             throw new \LogicException('Generator varName has not been set.');
@@ -116,7 +115,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getClassSaver() : ClassSaverInterface
+    protected function getClassSaver() : ClassSaverInterface
     {
         if ($this->classSaver === null) {
             throw new \LogicException('Generator classSaver has not been set.');

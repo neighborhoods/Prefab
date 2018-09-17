@@ -7,5 +7,5 @@ use Symfony\Component\Finder\SplFileInfo;
 
 interface GeneratorInterface
 {
-    public function generate(SplFileInfo $dao);
+    public function generate();
 }

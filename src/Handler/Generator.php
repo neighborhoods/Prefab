@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Handler;
 
 use Neighborhoods\Prefab\ClassSaverInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -18,22 +17,21 @@ class Generator implements GeneratorInterface
     protected $varName;
     protected $projectName;
     protected $classSaver;
+    protected $entityName;
 
     protected const CLASS_NAME = 'Handler';
 
-    public function generate(SplFileInfo $dao) : GeneratorInterface
+    public function generate() : GeneratorInterface
     {
-        $this->setDaoName(basename($dao->getFilename(), '.php'));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
         $this->getGenerator()->setImplementedInterfaces([$this->getNamespace() . '\HandlerInterface']);
         $this->getGenerator()->setName(self::CLASS_NAME);
-        $this->getGenerator()->setNamespaceName($this->namespace);
 
         $this->getGenerator()->addTraits(
             [
-                'Neighborhoods\\' . $this->getProjectName() . $this->getDaoName() . '\Repository\AwareTrait',
+                'Neighborhoods\\' . $this->getProjectName() . $this->getEntityName() . '\Repository\AwareTrait',
                 'Neighborhoods\\' . $this->getProjectName() . '\Psr\Http\Message\ServerRequest\AwareTrait',
                 'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait',
             ]
@@ -53,7 +51,17 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getProjectName() : string
+    protected function getEntityName() : string
+    {
+        if ($this->entityName === null) {
+           $namespaceArray = explode('\\', $this->getNamespace()) ;
+           $this->entityName = $namespaceArray[count($namespaceArray) - 1];
+        }
+
+        return $this->entityName;
+    }
+
+    protected function getProjectName() : string
     {
         if ($this->projectName === null) {
             $this->projectName = explode('\\', $this->getNamespace())[1];

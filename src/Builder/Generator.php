@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Builder;
 
 use Neighborhoods\Prefab\ClassSaverInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -21,9 +20,8 @@ class Generator implements GeneratorInterface
 
     protected const CLASS_NAME = 'Builder';
 
-    public function generate(SplFileInfo $dao) : GeneratorInterface
+    public function generate() : GeneratorInterface
     {
-        $this->setDaoName(basename($dao->getFilename(), '.php'));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
@@ -65,7 +63,9 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $fileContent = str_replace('TRUNCATEDDOANAMEPLACEHOLDER', $this->getDaoName(), $fileContent);
+        $namespaceArray = explode('\\', $this->getNamespace());
+        $entityName = strtolower(end($namespaceArray));
+        $fileContent = str_replace('TRUNCATEDDOANAMEPLACEHOLDER', $entityName, $fileContent);
         $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
         $methodVarName = implode('', explode('\\', $this->getNamespace()));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);

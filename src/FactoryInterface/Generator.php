@@ -20,14 +20,13 @@ class Generator implements GeneratorInterface
 
     protected const INTERFACE_NAME = 'FactoryInterface';
 
-    public function generate(SplFileInfo $dao) : GeneratorInterface
+    public function generate() : GeneratorInterface
     {
-        $this->setDaoName(basename($dao->getFilename(), '.php'));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
         $this->getGenerator()->setName(self::INTERFACE_NAME);
-        $this->getGenerator()->setNamespaceName($this->namespace);
+
         $this->replaceReturnTypePlaceHolders();
 
         $file = new FileGenerator();
@@ -64,23 +63,6 @@ class Generator implements GeneratorInterface
         return $fileContent;
     }
 
-    protected function getVersion() : string
-    {
-        if ($this->version === null) {
-            throw new \LogicException('Generator version has not been set.');
-        }
-        return $this->version;
-    }
-
-    public function setVersion(string $version) : GeneratorInterface
-    {
-        if ($this->version !== null) {
-            throw new \LogicException('Generator version is already set.');
-        }
-        $this->version = $version;
-        return $this;
-    }
-
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
@@ -97,7 +79,7 @@ class Generator implements GeneratorInterface
         return $this->generator;
     }
 
-    public function getNamespace() : string
+    protected function getNamespace() : string
     {
         if ($this->namespace === null) {
             throw new \LogicException('Generator namespace has not been set.');
@@ -111,40 +93,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator namespace is already set.');
         }
         $this->namespace = $namespace;
-        return $this;
-    }
-
-    protected function getDaoName() : string
-    {
-        if ($this->daoName === null) {
-            throw new \LogicException('Generator daoName has not been set.');
-        }
-        return $this->daoName;
-    }
-
-    public function setDaoName(string $daoName) : GeneratorInterface
-    {
-        if ($this->daoName !== null) {
-            throw new \LogicException('Generator daoName is already set.');
-        }
-        $this->daoName = $daoName;
-        return $this;
-    }
-
-    public function getVarName() : string
-    {
-        if ($this->varName === null) {
-            throw new \LogicException('Generator varName has not been set.');
-        }
-        return $this->varName;
-    }
-
-    public function setVarName(string $varName) : GeneratorInterface
-    {
-        if ($this->varName !== null) {
-            throw new \LogicException('Generator varName is already set.');
-        }
-        $this->varName = $varName;
         return $this;
     }
 

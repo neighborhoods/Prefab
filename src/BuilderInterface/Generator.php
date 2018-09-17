@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\BuilderInterface;
 
 use Neighborhoods\Prefab\ClassSaverInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -20,9 +19,8 @@ class Generator implements GeneratorInterface
 
     protected const INTERFACE_NAME = 'BuilderInterface';
 
-    public function generate(SplFileInfo $dao) : GeneratorInterface
+    public function generate() : GeneratorInterface
     {
-        $this->setDaoName(basename($dao->getFilename(), '.php'));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
@@ -58,7 +56,9 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $this->getDaoName(), $fileContent);
+        $namespaceArray = explode('\\', $this->getNamespace());
+        $entityName = strtolower(end($namespaceArray));
+        $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $entityName, $fileContent);
         $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
         $methodVarName = implode('', explode('\\', $this->getNamespace()));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
@@ -95,23 +95,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator namespace is already set.');
         }
         $this->namespace = $namespace;
-        return $this;
-    }
-
-    protected function getDaoName() : string
-    {
-        if ($this->daoName === null) {
-            throw new \LogicException('Generator daoName has not been set.');
-        }
-        return $this->daoName;
-    }
-
-    protected function setDaoName(string $daoName) : GeneratorInterface
-    {
-        if ($this->daoName !== null) {
-            throw new \LogicException('Generator daoName is already set.');
-        }
-        $this->daoName = $daoName;
         return $this;
     }
 

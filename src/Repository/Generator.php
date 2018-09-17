@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Repository;
 
 use Neighborhoods\Prefab\ClassSaverInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -21,15 +20,13 @@ class Generator implements GeneratorInterface
 
     protected const CLASS_NAME = 'Repository';
 
-    public function generate(SplFileInfo $dao) : GeneratorInterface
+    public function generate() : GeneratorInterface
     {
-        $this->setDaoName(basename($dao->getFilename(), '.php'));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getNamespace());
         $this->getGenerator()->setImplementedInterfaces([$this->getNamespace() . '\RepositoryInterface']);
         $this->getGenerator()->setName(self::CLASS_NAME);
-        $this->getGenerator()->setNamespaceName($this->namespace);
 
         $this->getGenerator()->addTraits(
             [
@@ -76,7 +73,7 @@ class Generator implements GeneratorInterface
         return $fileContent;
     }
 
-    public function getProjectName() : string
+    protected function getProjectName() : string
     {
         if ($this->projectName === null) {
             $this->projectName = explode('\\', $this->getNamespace())[1];
@@ -100,7 +97,7 @@ class Generator implements GeneratorInterface
         return $this->generator;
     }
 
-    public function getNamespace() : string
+    protected function getNamespace() : string
     {
         if ($this->namespace === null) {
             throw new \LogicException('Generator namespace has not been set.');
@@ -114,23 +111,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator namespace is already set.');
         }
         $this->namespace = $namespace;
-        return $this;
-    }
-
-    public function getVarName() : string
-    {
-        if ($this->varName === null) {
-            throw new \LogicException('Generator varName has not been set.');
-        }
-        return $this->varName;
-    }
-
-    public function setVarName(string $varName) : GeneratorInterface
-    {
-        if ($this->varName !== null) {
-            throw new \LogicException('Generator varName is already set.');
-        }
-        $this->varName = $varName;
         return $this;
     }
 
