@@ -28,7 +28,7 @@ class Builder implements BuilderInterface
         foreach(${DS}this->getRecords() as ${DS}record) {
             ${DS}builder = ${DS}this->getDORClassBuilderFactory()->create(); // replace DORClass w/ e.g. DOR0Listing, MV1Area
             ${DS}item = ${DS}builder->setRecord(${DS}record)->build();
-            ${DS}${daoName}[${DS}item->getId()] = ${DS}item;
+            ${DS}${daoName}[/*${DS}item->getId()*/] = ${DS}item; // remove or change index field as desired
         }
 
         return ${DS}${daoName};
