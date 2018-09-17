@@ -55,7 +55,7 @@ class Generator implements GeneratorInterface
     {
         if ($this->entityName === null) {
            $namespaceArray = explode('\\', $this->getNamespace()) ;
-           $this->entityName = $namespaceArray[count($namespaceArray) - 1];
+           $this->entityName = $namespaceArray[count($namespaceArray) - 2];
         }
 
         return $this->entityName;

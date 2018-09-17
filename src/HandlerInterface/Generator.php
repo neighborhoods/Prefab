@@ -16,6 +16,7 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
     protected $classSaver;
+    protected $entityName;
 
     protected const INTERFACE_NAME = 'HandlerInterface';
 
@@ -56,9 +57,7 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $namespaceArray = explode('\\', $this->getNamespace());
-        $entityName = strtolower(end($namespaceArray));
-        $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $entityName, $fileContent);
+        $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $this->getEntityName(), $fileContent);
         $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
         $methodVarName = implode('', explode('\\', $this->getNamespace()));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
@@ -70,6 +69,17 @@ class Generator implements GeneratorInterface
             $fileContent
         );
         return $fileContent;
+    }
+
+
+    protected function getEntityName() : string
+    {
+        if ($this->entityName === null) {
+            $namespaceArray = explode('\\', $this->getNamespace()) ;
+            $this->entityName = $namespaceArray[count($namespaceArray) - 2];
+        }
+
+        return $this->entityName;
     }
 
     protected function setGenerator() : GeneratorInterface
