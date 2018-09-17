@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\FactoryInterface;
 
+use Neighborhoods\Prefab\ClassSaverInterface;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\InterfaceGenerator;
-use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
@@ -17,6 +16,7 @@ class Generator implements GeneratorInterface
     protected $generator;
     protected $daoName;
     protected $varName;
+    protected $classSaver;
 
     protected const INTERFACE_NAME = 'FactoryInterface';
 
@@ -35,13 +35,11 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        }
-
-        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
+        $this->getClassSaver()
+            ->setNamespace($this->getNamespace())
+            ->setClassName(self::INTERFACE_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
 
         return $this;
     }
@@ -147,6 +145,23 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator varName is already set.');
         }
         $this->varName = $varName;
+        return $this;
+    }
+
+    protected function getClassSaver() : ClassSaverInterface
+    {
+        if ($this->classSaver === null) {
+            throw new \LogicException('Generator classSaver has not been set.');
+        }
+        return $this->classSaver;
+    }
+
+    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
+    {
+        if ($this->classSaver !== null) {
+            throw new \LogicException('Generator classSaver is already set.');
+        }
+        $this->classSaver = $classSaver;
         return $this;
     }
 

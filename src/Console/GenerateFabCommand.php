@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Console;
 
-use Neighborhoods\Prefab\BuilderInterface\Generator;
+use Neighborhoods\Prefab\AwareTrait\Generator;
+use Neighborhoods\Prefab\ClassSaver;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,8 +27,7 @@ class GenerateFabCommand extends Command
         $finder = new Finder();
 
         $generator->setNamespace('Neighborhoods\PrefabFitnessJakeService\Jake');
-        $generator->setVersion('MV1');
-
+        $generator->setClassSaver(new ClassSaver());
         $daos = $finder->files()->depth(0)->in($daoLocation);
 
         /** @var SplFileInfo $dao */

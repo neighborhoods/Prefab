@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Builder;
 
+use Neighborhoods\Prefab\ClassSaverInterface;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
@@ -16,6 +17,7 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
     protected $projectName;
+    protected $classSaver;
 
     protected const CLASS_NAME = 'Builder';
 
@@ -40,7 +42,11 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->saveClass($builtFile);
+        $this->getClassSaver()
+            ->setNamespace($this->getNamespace())
+            ->setClassName(self::CLASS_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
 
         return $this;
     }
@@ -161,15 +167,21 @@ class Generator implements GeneratorInterface
         return $this->projectName;
     }
 
-    protected function saveClass($builtFile) : void
+    public function getClassSaver() : ClassSaverInterface
     {
-        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+        if ($this->classSaver === null) {
+            throw new \LogicException('Generator classSaver has not been set.');
         }
+        return $this->classSaver;
+    }
 
-        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
+    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
+    {
+        if ($this->classSaver !== null) {
+            throw new \LogicException('Generator classSaver is already set.');
+        }
+        $this->classSaver = $classSaver;
+        return $this;
     }
 
 }

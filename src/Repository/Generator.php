@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Repository;
 
+use Neighborhoods\Prefab\ClassSaverInterface;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
@@ -16,6 +17,7 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
     protected $projectName;
+    protected $classSaver;
 
     protected const CLASS_NAME = 'Repository';
 
@@ -42,7 +44,11 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->saveClass($builtFile);
+        $this->getClassSaver()
+            ->setNamespace($this->getNamespace())
+            ->setClassName(self::CLASS_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
 
         return $this;
     }
@@ -70,21 +76,12 @@ class Generator implements GeneratorInterface
         return $fileContent;
     }
 
-    protected function getVersion() : string
+    public function getProjectName() : string
     {
-        if ($this->version === null) {
-            throw new \LogicException('Generator version has not been set.');
+        if ($this->projectName === null) {
+            $this->projectName = explode('\\', $this->getNamespace())[1];
         }
-        return $this->version;
-    }
-
-    public function setVersion(string $version) : GeneratorInterface
-    {
-        if ($this->version !== null) {
-            throw new \LogicException('Generator version is already set.');
-        }
-        $this->version = $version;
-        return $this;
+        return $this->projectName;
     }
 
     protected function setGenerator() : GeneratorInterface
@@ -120,23 +117,6 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function getDaoName() : string
-    {
-        if ($this->daoName === null) {
-            throw new \LogicException('Generator daoName has not been set.');
-        }
-        return $this->daoName;
-    }
-
-    public function setDaoName(string $daoName) : GeneratorInterface
-    {
-        if ($this->daoName !== null) {
-            throw new \LogicException('Generator daoName is already set.');
-        }
-        $this->daoName = $daoName;
-        return $this;
-    }
-
     public function getVarName() : string
     {
         if ($this->varName === null) {
@@ -154,23 +134,20 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getProjectName() : string
+    protected function getClassSaver() : ClassSaverInterface
     {
-        if ($this->projectName === null) {
-            $this->projectName = explode('\\', $this->getNamespace())[1];
+        if ($this->classSaver === null) {
+            throw new \LogicException('Generator classSaver has not been set.');
         }
-        return $this->projectName;
+        return $this->classSaver;
     }
 
-    protected function saveClass($builtFile) : void
+    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
     {
-        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+        if ($this->classSaver !== null) {
+            throw new \LogicException('Generator classSaver is already set.');
         }
-
-        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
+        $this->classSaver = $classSaver;
+        return $this;
     }
-
 }

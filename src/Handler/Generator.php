@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Handler;
 
+use Neighborhoods\Prefab\ClassSaverInterface;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
@@ -16,6 +17,7 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
     protected $projectName;
+    protected $classSaver;
 
     protected const CLASS_NAME = 'Handler';
 
@@ -42,9 +44,21 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->saveClass($builtFile);
+        $this->getClassSaver()
+            ->setNamespace($this->getNamespace())
+            ->setClassName(self::CLASS_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
 
         return $this;
+    }
+
+    public function getProjectName() : string
+    {
+        if ($this->projectName === null) {
+            $this->projectName = explode('\\', $this->getNamespace())[1];
+        }
+        return $this->projectName;
     }
 
     protected function replaceReturnTypePlaceHolders()
@@ -154,23 +168,20 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getProjectName() : string
+    protected function getClassSaver() : ClassSaverInterface
     {
-        if ($this->projectName === null) {
-            $this->projectName = explode('\\', $this->getNamespace())[1];
+        if ($this->classSaver === null) {
+            throw new \LogicException('Generator classSaver has not been set.');
         }
-        return $this->projectName;
+        return $this->classSaver;
     }
 
-    protected function saveClass($builtFile) : void
+    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
     {
-        $directory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . $this->getDaoName() . DIRECTORY_SEPARATOR;
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+        if ($this->classSaver !== null) {
+            throw new \LogicException('Generator classSaver is already set.');
         }
-
-        file_put_contents($directory . $this->getGenerator()->getName() . '.php', $builtFile);
+        $this->classSaver = $classSaver;
+        return $this;
     }
-
 }
