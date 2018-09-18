@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Factory;
 
-use Neighborhoods\Prefab\ClassSaverInterface;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\ClassSaver;
 
 class Generator implements GeneratorInterface
 {
+    use ClassSaver\AwareTrait;
+
     protected $namespace;
     protected $version;
     protected $generator;
@@ -92,23 +94,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator namespace is already set.');
         }
         $this->namespace = $namespace;
-        return $this;
-    }
-
-    protected function getClassSaver() : ClassSaverInterface
-    {
-        if ($this->classSaver === null) {
-            throw new \LogicException('Generator classSaver has not been set.');
-        }
-        return $this->classSaver;
-    }
-
-    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
-    {
-        if ($this->classSaver !== null) {
-            throw new \LogicException('Generator classSaver is already set.');
-        }
-        $this->classSaver = $classSaver;
         return $this;
     }
 }

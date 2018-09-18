@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Builder;
 
-use Neighborhoods\Prefab\ClassSaverInterface;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\ClassSaver;
 
 class Generator implements GeneratorInterface
 {
@@ -19,6 +19,8 @@ class Generator implements GeneratorInterface
     protected $classSaver;
 
     protected const CLASS_NAME = 'Builder';
+
+    use ClassSaver\AwareTrait;
 
     public function generate() : GeneratorInterface
     {
@@ -166,22 +168,4 @@ class Generator implements GeneratorInterface
         }
         return $this->projectName;
     }
-
-    public function getClassSaver() : ClassSaverInterface
-    {
-        if ($this->classSaver === null) {
-            throw new \LogicException('Generator classSaver has not been set.');
-        }
-        return $this->classSaver;
-    }
-
-    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
-    {
-        if ($this->classSaver !== null) {
-            throw new \LogicException('Generator classSaver is already set.');
-        }
-        $this->classSaver = $classSaver;
-        return $this;
-    }
-
 }

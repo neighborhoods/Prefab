@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AwareTrait;
 
-use Neighborhoods\Prefab\ClassSaverInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\ClassSaver;
 
 class Generator implements GeneratorInterface
 {
@@ -19,6 +18,8 @@ class Generator implements GeneratorInterface
     protected $classSaver;
 
     protected const TRAIT_NAME = 'AwareTrait';
+
+    use ClassSaver\AwareTrait;
 
     public function generate() : GeneratorInterface
     {
@@ -112,23 +113,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator varName is already set.');
         }
         $this->varName = $varName;
-        return $this;
-    }
-
-    protected function getClassSaver() : ClassSaverInterface
-    {
-        if ($this->classSaver === null) {
-            throw new \LogicException('Generator classSaver has not been set.');
-        }
-        return $this->classSaver;
-    }
-
-    public function setClassSaver(ClassSaverInterface $classSaver) : GeneratorInterface
-    {
-        if ($this->classSaver !== null) {
-            throw new \LogicException('Generator classSaver is already set.');
-        }
-        $this->classSaver = $classSaver;
         return $this;
     }
 }

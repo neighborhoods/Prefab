@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\AwareTrait\GeneratorInterface:
+    class: Neighborhoods\Prefab\AwareTrait\Generator
+    calls:
+    - [setClassSaver, ['@Neighborhoods\Prefab\ClassSaverInterface']]
