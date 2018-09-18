@@ -17,14 +17,19 @@ use ${NAMESPACE}Interface;
 class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
-    use // Replace with reference to non-Map version of Builder\Factory\AwareTrait;
+    use /* Replace with reference to non-Map version of Builder\Factory\AwareTrait */;
+
     /** @var array */
     protected ${DS}records;
 
     public function build(): ${unqualifiedClassName}Interface
     {
         ${DS}${daoName} = ${DS}this->get${truncatedClassPath}Factory()->create();
-        // @TODO - build the object.
+        foreach(${DS}this->getRecords() as ${DS}record) {
+            ${DS}builder = ${DS}this->getDORClassBuilderFactory()->create(); // replace DORClass w/ e.g. DOR0Listing, MV1Area
+            ${DS}item = ${DS}builder->setRecord(${DS}record)->build();
+            ${DS}${daoName}[/*${DS}item->getId()*/] = ${DS}item; // remove or change index field as desired
+        }
 
         return ${DS}${daoName};
     }
