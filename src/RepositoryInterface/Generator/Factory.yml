@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\RepositoryInterface\Generator\FactoryInterface:
+    class: Neighborhoods\Prefab\RepositoryInterface\Generator\Factory
+    calls:
+    - [setRepositoryInterfaceGenerator, ['@Neighborhoods\Prefab\RepositoryInterface\GeneratorInterface']]
