@@ -1,0 +1,9 @@
+parameters:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\RepositoryInterface.id_core: !php/const \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\DecoratorInterface::ID_CORE
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\RepositoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Repository
+    calls:
+      - [setDoctrineDBALConnectionDecoratorMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\MapInterface']]
+      - [setDoctrineDBALConnectionDecoratorFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\FactoryInterface']]
+      - [create, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\RepositoryInterface.id_core%']]

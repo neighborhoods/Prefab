@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\Builder\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\Builder\Factory
+    public: false
+    shared: true
+    calls:
+      - [setPDOBuilder, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\BuilderInterface']]
