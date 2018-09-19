@@ -16,6 +16,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class GenerateFabCommand extends Command
 {
+    use AwareTrait\Generator\Factory\AwareTrait;
+    use Builder\Generator\Factory\AwareTrait;
+    use Factory\Generator\Factory\AwareTrait;
+    use Map\Generator\Factory\AwareTrait;
+    use Repository\Generator\Factory\AwareTrait;
+    use GeneratorMeta\Factory\AwareTrait;
+
     const FORWARD_SLASH = '/';
     const BACKSLASH = '\\';
 
@@ -126,7 +133,7 @@ class GenerateFabCommand extends Command
         $nextLevelNamespace = $this->getDaoNamespace() . self::BACKSLASH . $this->getDaoName();
         $nextLevelFilePath = $filePath . self::FORWARD_SLASH . $this->getDaoName();
 
-        $nextLevelMeta = new GeneratorMeta();
+        $nextLevelMeta = $this->getConsoleGeneratorMetaFactory()->create();
         $nextLevelMeta->setActorNamespace($nextLevelNamespace);
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
         $nextLevelMeta->setDaoName($this->getDaoName());
@@ -149,7 +156,7 @@ class GenerateFabCommand extends Command
 
     protected function addAwareTraitToList(GeneratorMetaInterface $meta): self
     {
-        $awareTraitGenerator = new AwareTrait\Generator();
+        $awareTraitGenerator = $this->getAwareTraitGeneratorFactory()->create();
         $awareTraitGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($awareTraitGenerator);
 
@@ -158,7 +165,7 @@ class GenerateFabCommand extends Command
 
     protected function addBuilderToList(GeneratorMetaInterface $builderMeta): self
     {
-        $builderGenerator = new Builder\Generator();
+        $builderGenerator = $this->getBuilderGeneratorFactory()->create();
         $builderGenerator->setMeta($builderMeta);
         $this->appendGeneratorToBuildPlan($builderGenerator);
 
@@ -172,7 +179,7 @@ class GenerateFabCommand extends Command
 
     protected function addFactoryToList(GeneratorMetaInterface $factoryMeta): self
     {
-        $factoryGenerator = new Factory\Generator();
+        $factoryGenerator = $this->getFactoryGeneratorFactory()->create();
         $factoryGenerator->setMeta($factoryMeta);
         $this->appendGeneratorToBuildPlan($factoryGenerator);
 
@@ -185,7 +192,7 @@ class GenerateFabCommand extends Command
 
     protected function addMapToList(GeneratorMetaInterface $mapMeta): self
     {
-        $mapGenerator = new Map\Generator();
+        $mapGenerator = $this->getMapGeneratorFactory()->create();
         $mapGenerator->setMeta($mapMeta);
         $this->appendGeneratorToBuildPlan($mapGenerator);
 
@@ -200,7 +207,7 @@ class GenerateFabCommand extends Command
 
     protected function addRepositoryToList(GeneratorMetaInterface $repositoryMeta): self
     {
-        $repositoryGenerator = new Repository\Generator();
+        $repositoryGenerator = $this->getRepositoryGeneratorFactory()->create();
         $repositoryGenerator->setMeta($repositoryMeta);
         $this->appendGeneratorToBuildPlan($repositoryGenerator);
 
@@ -218,7 +225,7 @@ class GenerateFabCommand extends Command
         $nextLevelNamespace = $parentMeta->getActorNamespace() . self::BACKSLASH . $actorName;
         $nextLevelFilePath = $parentMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
 
-        $nextLevelMeta = new GeneratorMeta();
+        $nextLevelMeta = $this->getConsoleGeneratorMetaFactory()->create();
         $nextLevelMeta->setActorNamespace($nextLevelNamespace);
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
         $nextLevelMeta->setDaoName($this->getDaoName());

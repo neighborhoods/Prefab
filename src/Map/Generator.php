@@ -13,7 +13,7 @@ use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
 {
-    use ClassSaver\AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
 
     public const CLASS_NAME = 'Map';
 
@@ -41,7 +41,7 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->getClassSaver()
+        $this->getClassSaverFactory()->create()
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)

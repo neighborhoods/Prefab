@@ -2,4 +2,4 @@ services:
   Neighborhoods\Prefab\Builder\GeneratorInterface:
     class: Neighborhoods\Prefab\Builder\Generator
     calls:
-    - [setClassSaver, ['@Neighborhoods\Prefab\ClassSaverInterface']]
+    - [setClassSaverFactory, ['@Neighborhoods\Prefab\ClassSaver\FactoryInterface']]

@@ -19,7 +19,7 @@ class Generator implements GeneratorInterface
 
     protected const INTERFACE_NAME = 'BuilderInterface';
 
-    use ClassSaver\AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
 
     public function generate() : GeneratorInterface
     {
@@ -35,7 +35,7 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->getClassSaver()
+        $this->getClassSaverFactory()->create()
             ->setNamespace($this->getNamespace())
             ->setClassName(self::INTERFACE_NAME)
             ->setGeneratedClass($builtFile)

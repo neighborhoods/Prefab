@@ -11,7 +11,7 @@ use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
 {
-    use ClassSaver\AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
 
     public const CLASS_NAME = 'MapInterface';
 

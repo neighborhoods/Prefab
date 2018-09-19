@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Builder;
 
+use Neighborhoods\Prefab\ClassSaver\Factory\AwareTrait;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
-use Neighborhoods\Prefab\ClassSaver;
 
 class Generator implements GeneratorInterface
 {
-    use ClassSaver\AwareTrait;
+    use AwareTrait;
 
     public const CLASS_NAME = 'Builder';
 
@@ -42,7 +42,7 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->getClassSaver()
+        $this->getClassSaverFactory()->create()
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)

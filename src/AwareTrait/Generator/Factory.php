@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AwareTrait\Generator;
 
-use Neighborhoods\Prefab\AwareTrait\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 /** @codeCoverageIgnore */
 class Factory implements FactoryInterface

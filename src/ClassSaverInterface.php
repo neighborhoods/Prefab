@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jacobmalachowski
- * Date: 9/17/18
- * Time: 10:37 AM
- */
 
 namespace Neighborhoods\Prefab;
-
 
 interface ClassSaverInterface
 {

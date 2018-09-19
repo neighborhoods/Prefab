@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Builder\Generator;
+namespace Neighborhoods\Prefab\Map\Generator;
 
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 
@@ -10,8 +10,8 @@ class Factory implements FactoryInterface
 {
     use AwareTrait;
 
-    public function create() : GeneratorInterface
+    public function create(): GeneratorInterface
     {
-        return clone $this->getBuilderGenerator();
+        return clone $this->getMapGenerator();
     }
 }

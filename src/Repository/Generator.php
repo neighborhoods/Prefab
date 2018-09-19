@@ -12,7 +12,7 @@ use Neighborhoods\Prefab\ClassSaver;
 
 class Generator implements GeneratorInterface
 {
-    use ClassSaver\AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
 
     public const CLASS_NAME = 'Repository';
 
@@ -44,7 +44,7 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->getClassSaver()
+        $this->getClassSaverFactory()->create()
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)

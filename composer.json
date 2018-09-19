@@ -30,8 +30,8 @@
   "autoload": {
     "psr-4": {
       "Neighborhoods\\Prefab\\": [
-        "src",
-        "fab"
+        "fab",
+        "src"
       ]
     }
   },

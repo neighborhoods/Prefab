@@ -1,3 +1,10 @@
 services:
   Neighborhoods\Prefab\Console\GenerateFabCommandInterface:
     class: Neighborhoods\Prefab\Console\GenerateFabCommand
+    calls:
+    - [setConsoleGeneratorMetaFactory, ['@Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface']]
+    - [setBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Builder\Generator\FactoryInterface']]
+    - [setAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\AwareTrait\Generator\FactoryInterface']]
+    - [setMapGeneratorFactory, ['@Neighborhoods\Prefab\Map\Generator\FactoryInterface']]
+    - [setRepositoryGeneratorFactory, ['@Neighborhoods\Prefab\Repository\Generator\FactoryInterface']]
+    - [setFactoryGeneratorFactory, ['@Neighborhoods\Prefab\Factory\Generator\FactoryInterface']]

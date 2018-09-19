@@ -8,5 +8,5 @@ use Neighborhoods\Prefab\ClassSaverInterface;
 /** @codeCoverageIgnore */
 interface FactoryInterface
 {
-    public function create() : ClassSaverInterface;
+    public function create(): ClassSaverInterface;
 }

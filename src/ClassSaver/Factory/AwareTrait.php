@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\ClassSaver\Generator\Factory;
+namespace Neighborhoods\Prefab\ClassSaver\Factory;
 
 use Neighborhoods\Prefab\ClassSaver\FactoryInterface;
 
@@ -10,7 +10,7 @@ trait AwareTrait
 {
     protected $NeighborhoodsPrefabClassSaverFactory;
 
-    public function setClassSaverFactory(FactoryInterface $classSaverFactory) : self
+    public function setClassSaverFactory(FactoryInterface $classSaverFactory): self
     {
         if ($this->hasClassSaverFactory()) {
             throw new \LogicException('NeighborhoodsPrefabClassSaverFactory is already set.');
@@ -20,7 +20,7 @@ trait AwareTrait
         return $this;
     }
 
-    protected function getClassSaverFactory() : FactoryInterface
+    protected function getClassSaverFactory(): FactoryInterface
     {
         if (!$this->hasClassSaverFactory()) {
             throw new \LogicException('NeighborhoodsPrefabClassSaverFactory is not set.');
@@ -29,12 +29,12 @@ trait AwareTrait
         return $this->NeighborhoodsPrefabClassSaverFactory;
     }
 
-    protected function hasClassSaverFactory() : bool
+    protected function hasClassSaverFactory(): bool
     {
         return isset($this->NeighborhoodsPrefabClassSaverFactory);
     }
 
-    protected function unsetClassSaverFactory() : self
+    protected function unsetClassSaverFactory(): self
     {
         if (!$this->hasClassSaverFactory()) {
             throw new \LogicException('NeighborhoodsPrefabClassSaverFactory is not set.');

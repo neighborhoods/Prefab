@@ -10,7 +10,7 @@ use Neighborhoods\Prefab\ClassSaver;
 
 class Generator implements GeneratorInterface
 {
-    use ClassSaver\AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
 
     protected $namespace;
     protected $version;
@@ -35,7 +35,7 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->getClassSaver()
+        $this->getClassSaverFactory()->create()
             ->setNamespace($this->getNamespace())
             ->setClassName(self::INTERFACE_NAME)
             ->setGeneratedClass($builtFile)

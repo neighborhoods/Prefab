@@ -12,7 +12,7 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 class Generator implements GeneratorInterface
 {
-    use ClassSaver\AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
 
     protected const TRAIT_NAME = 'AwareTrait';
 
@@ -20,7 +20,6 @@ class Generator implements GeneratorInterface
     protected $meta;
     protected $generator;
     protected $varName;
-    protected $classSaver;
 
     public function generate() : GeneratorInterface
     {
@@ -37,7 +36,7 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $this->getClassSaver()
+        $this->getClassSaverFactory()->create()
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::TRAIT_NAME)
             ->setGeneratedClass($builtFile)

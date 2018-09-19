@@ -10,7 +10,7 @@ class Factory implements FactoryInterface
 {
     use AwareTrait;
 
-    public function create() : ClassSaverInterface
+    public function create(): ClassSaverInterface
     {
         return clone $this->getClassSaver();
     }

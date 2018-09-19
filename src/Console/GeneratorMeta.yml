@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\Prefab\Console\GeneratorMetaInterface:
+    class: Neighborhoods\Prefab\Console\GeneratorMeta

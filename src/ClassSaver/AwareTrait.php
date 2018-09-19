@@ -10,7 +10,7 @@ trait AwareTrait
 {
     protected $NeighborhoodsPrefabClassSaver;
 
-    public function setClassSaver(ClassSaverInterface $classSaver) : self
+    public function setClassSaver(ClassSaverInterface $classSaver): self
     {
         if ($this->hasClassSaver()) {
             throw new \LogicException('NeighborhoodsPrefabClassSaver is already set.');
@@ -20,7 +20,7 @@ trait AwareTrait
         return $this;
     }
 
-    protected function getClassSaver() : ClassSaverInterface
+    protected function getClassSaver(): ClassSaverInterface
     {
         if (!$this->hasClassSaver()) {
             throw new \LogicException('NeighborhoodsPrefabClassSaver is not set.');
@@ -29,12 +29,12 @@ trait AwareTrait
         return $this->NeighborhoodsPrefabClassSaver;
     }
 
-    protected function hasClassSaver() : bool
+    protected function hasClassSaver(): bool
     {
         return isset($this->NeighborhoodsPrefabClassSaver);
     }
 
-    protected function unsetClassSaver() : self
+    protected function unsetClassSaver(): self
     {
         if (!$this->hasClassSaver()) {
             throw new \LogicException('NeighborhoodsPrefabClassSaver is not set.');
