@@ -29,7 +29,7 @@ class GeneratorMeta implements GeneratorMetaInterface
         return $this;
     }
 
-    public function getActorFilepath(): string
+    public function getActorFilePath(): string
     {
         if ($this->actorFilePath === null) {
             throw new \LogicException('GeneratorMeta actorFilePath has not been set.');
@@ -37,7 +37,7 @@ class GeneratorMeta implements GeneratorMetaInterface
         return $this->actorFilePath;
     }
 
-    public function setActorFilepath(string $actorFilePath): GeneratorMetaInterface
+    public function setActorFilePath(string $actorFilePath): GeneratorMetaInterface
     {
         if ($this->actorFilePath !== null) {
             throw new \LogicException('GeneratorMeta actorFilePath is already set.');
@@ -46,5 +46,21 @@ class GeneratorMeta implements GeneratorMetaInterface
         return $this;
     }
 
+    public function getDaoName(): string
+    {
+        if ($this->daoName === null) {
+            throw new \LogicException('GeneratorMeta daoName has not been set.');
+        }
+        return $this->daoName;
+    }
+
+    public function setDaoName(string $daoName): GeneratorMetaInterface
+    {
+        if ($this->daoName !== null) {
+            throw new \LogicException('GeneratorMeta daoName is already set.');
+        }
+        $this->daoName = $daoName;
+        return $this;
+    }
 
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Factory;
 
+use Neighborhoods\Prefab\Console\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -17,7 +19,32 @@ class Generator implements GeneratorInterface
     protected $generator;
     protected $classSaver;
 
-    protected const CLASS_NAME = 'Factory';
+    public const CLASS_NAME = 'Factory';
+
+    /** @var GeneratorMetaInterface */
+    protected $meta;
+
+    public function getMeta(): GeneratorMetaInterface
+    {
+        if ($this->meta === null) {
+            throw new \LogicException('Generator meta has not been set.');
+        }
+        return $this->meta;
+    }
+
+    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
+    {
+        if ($this->meta !== null) {
+            throw new \LogicException('Generator meta is already set.');
+        }
+        $this->meta = $meta;
+        return $this;
+    }
+
+    public function getActorName(): string
+    {
+        return self::CLASS_NAME;
+    }
 
     public function generate() : GeneratorInterface
     {

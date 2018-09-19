@@ -13,6 +13,8 @@ use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
 {
+    public const CLASS_NAME = 'Map';
+
     /** @var GeneratorMetaInterface */
     protected $meta;
 
@@ -31,6 +33,11 @@ class Generator implements GeneratorInterface
         }
         $this->meta = $meta;
         return $this;
+    }
+
+    public function getActorName(): string
+    {
+        return self::CLASS_NAME;
     }
 
     public function generate(): GeneratorInterface

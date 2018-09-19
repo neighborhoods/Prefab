@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Console;
 
-use Neighborhoods\Prefab\Console\GeneratorInterface;
-use Neighborhoods\Prefab\Map\Generator;
+use Neighborhoods\Prefab\AwareTrait;
+use Neighborhoods\Prefab\Builder;
+use Neighborhoods\Prefab\Factory;
+use Neighborhoods\Prefab\Map;
+use Neighborhoods\Prefab\Repository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,7 +48,25 @@ class GenerateFabCommand extends Command
         $this->assembleBuildPlan();
         $output->writeln('Build plan complete.');
 
+        $output->writeln('Generating prefab machinery.');
+        $this->generatePrefab();
+        $output->writeln('Prefab generation complete.');
 
+        return $this;
+    }
+
+    protected function assembleBuildPlan()
+    {
+        $daoAnnotationPattern = '#@neighborhoods\\\prefab:DAO\n#s';
+
+        $finder = new Finder();
+        $daos = $finder->files()->contains($daoAnnotationPattern)->in($this->srcLocation);
+
+        foreach ($daos as $dao) {
+            $this->generateDaoMeta($dao);
+            $this->addDaoToList();
+            $this->unsetDaoMeta();
+        }
 
         return $this;
     }
@@ -61,24 +82,22 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function assembleBuildPlan()
-    {
-        $daoAnnotationPattern = '#@neighborhoods\\\prefab:DAO\n#s';
-
-        $finder = new Finder();
-        $daos = $finder->files()->contains($daoAnnotationPattern)->in($this->srcLocation);
-
-        foreach ($daos as $dao) {
-            $this->generateDaoMeta($dao);
-            $this->addDaoToList();
-        }
-    }
-
     protected function generateDaoMeta(SplFileInfo $dao)
     {
         $this->setDaoName($dao->getBasename('.php'));
         $this->setDaoRelativePath($dao->getRelativePath());
         $this->setDaoNamespace($this->getDaoNamespaceFromFile($dao));
+
+        return $this;
+    }
+
+    protected function unsetDaoMeta()
+    {
+        $this->unsetDaoName();
+        $this->unsetDaoRelativePath();
+        $this->unsetDaoNamespace();
+
+        return $this;
     }
 
     protected function getDaoNamespaceFromFile(SplFileInfo $dao)
@@ -98,9 +117,9 @@ class GenerateFabCommand extends Command
     {
         $filePath = $this->fabLocation . self::FORWARD_SLASH . $this->getDaoRelativePath();
 
-        $daoMeta = new GeneratorMeta();
-        $daoMeta->setActorNamespace($this->getDaoNamespace());
-        $daoMeta->setActorFilepath($filePath);
+//        $daoMeta = new GeneratorMeta();
+//        $daoMeta->setActorNamespace($this->getDaoNamespace());
+//        $daoMeta->setActorFilepath($filePath);
 
         /** @todo DAO generator logic + Service.yml */
 
@@ -110,8 +129,9 @@ class GenerateFabCommand extends Command
         $nextLevelMeta = new GeneratorMeta();
         $nextLevelMeta->setActorNamespace($nextLevelNamespace);
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
+        $nextLevelMeta->setDaoName($this->getDaoName());
 
-        $this->addServiceToList($daoMeta);
+        //$this->addServiceToList($daoMeta);
         $this->addAwareTraitToList($nextLevelMeta);
         $this->addFactoryToList($nextLevelMeta);
         $this->addMapToList($nextLevelMeta);
@@ -129,23 +149,20 @@ class GenerateFabCommand extends Command
 
     protected function addAwareTraitToList(GeneratorMetaInterface $meta): self
     {
-        /** @todo AwareTrait generator logic */
+        $awareTraitGenerator = new AwareTrait\Generator();
+        $awareTraitGenerator->setMeta($meta);
+        $this->appendGeneratorToBuildPlan($awareTraitGenerator);
 
         return $this;
     }
 
     protected function addBuilderToList(GeneratorMetaInterface $builderMeta): self
     {
-        $actorName = 'Builder';
+        $builderGenerator = new Builder\Generator();
+        $builderGenerator->setMeta($builderMeta);
+        $this->appendGeneratorToBuildPlan($builderGenerator);
 
-        /** @todo Builder generator logic */
-
-        $nextLevelNamespace = $builderMeta->getActorNamespace() . self::BACKSLASH . $actorName;
-        $nextLevelFilePath = $builderMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
-
-        $nextLevelMeta = new GeneratorMeta();
-        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
-        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
+        $nextLevelMeta = $this->getNextLevelMeta($builderGenerator);
 
         $this->addAwareTraitToList($nextLevelMeta);
         $this->addFactoryToList($nextLevelMeta);
@@ -155,16 +172,11 @@ class GenerateFabCommand extends Command
 
     protected function addFactoryToList(GeneratorMetaInterface $factoryMeta): self
     {
-        $actorName = 'Factory';
+        $factoryGenerator = new Factory\Generator();
+        $factoryGenerator->setMeta($factoryMeta);
+        $this->appendGeneratorToBuildPlan($factoryGenerator);
 
-        /** @todo Factory generator logic */
-
-        $nextLevelNamespace = $factoryMeta->getActorNamespace() . self::BACKSLASH . $actorName;
-        $nextLevelFilePath = $factoryMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
-
-        $nextLevelMeta = new GeneratorMeta();
-        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
-        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
+        $nextLevelMeta = $this->getNextLevelMeta($factoryGenerator);
 
         $this->addAwareTraitToList($nextLevelMeta);
 
@@ -173,18 +185,11 @@ class GenerateFabCommand extends Command
 
     protected function addMapToList(GeneratorMetaInterface $mapMeta): self
     {
-        $actorName = 'Map';
-
-        $mapGenerator = new Generator();
+        $mapGenerator = new Map\Generator();
         $mapGenerator->setMeta($mapMeta);
         $this->appendGeneratorToBuildPlan($mapGenerator);
 
-        $nextLevelNamespace = $mapMeta->getActorNamespace() . self::BACKSLASH . $actorName;
-        $nextLevelFilePath = $mapMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
-
-        $nextLevelMeta = new GeneratorMeta();
-        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
-        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
+        $nextLevelMeta = $this->getNextLevelMeta($mapGenerator);
 
         $this->addAwareTraitToList($nextLevelMeta);
         $this->addBuilderToList($nextLevelMeta);
@@ -195,29 +200,39 @@ class GenerateFabCommand extends Command
 
     protected function addRepositoryToList(GeneratorMetaInterface $repositoryMeta): self
     {
-        $actorName = 'Repository';
+        $repositoryGenerator = new Repository\Generator();
+        $repositoryGenerator->setMeta($repositoryMeta);
+        $this->appendGeneratorToBuildPlan($repositoryGenerator);
 
-        /** @todo Repository generator logic */
-
-        $nextLevelNamespace = $repositoryMeta->getActorNamespace() . self::BACKSLASH . $actorName;
-        $nextLevelFilePath = $repositoryMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
-
-        $nextLevelMeta = new GeneratorMeta();
-        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
-        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
+        $nextLevelMeta = $this->getNextLevelMeta($repositoryGenerator);
 
         $this->addAwareTraitToList($nextLevelMeta);
 
         return $this;
     }
 
-    public function appendGeneratorToBuildPlan(GeneratorInterface $generator)
+    protected function getNextLevelMeta(GeneratorInterface $parentGenerator): GeneratorMetaInterface
+    {
+        $parentMeta = $parentGenerator->getMeta();
+        $actorName = $parentGenerator->getActorName();
+        $nextLevelNamespace = $parentMeta->getActorNamespace() . self::BACKSLASH . $actorName;
+        $nextLevelFilePath = $parentMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
+
+        $nextLevelMeta = new GeneratorMeta();
+        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
+        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
+        $nextLevelMeta->setDaoName($this->getDaoName());
+
+        return $nextLevelMeta;
+    }
+
+    protected function appendGeneratorToBuildPlan(GeneratorInterface $generator)
     {
         $this->buildPlan[] = $generator;
         return $this;
     }
 
-    public function getBuildPlan(): array
+    protected function getBuildPlan(): array
     {
         if ($this->buildPlan === null) {
             throw new \LogicException('GenerateFabCommand buildPlan has not been set.');
@@ -225,7 +240,7 @@ class GenerateFabCommand extends Command
         return $this->buildPlan;
     }
 
-    public function getDaoName(): string
+    protected function getDaoName(): string
     {
         if ($this->daoName === null) {
             throw new \LogicException('GenerateFabCommand daoName has not been set.');
@@ -233,7 +248,7 @@ class GenerateFabCommand extends Command
         return $this->daoName;
     }
 
-    public function setDaoName(string $daoName)
+    protected function setDaoName(string $daoName)
     {
         if ($this->daoName !== null) {
             throw new \LogicException('GenerateFabCommand daoName is already set.');
@@ -242,7 +257,16 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    public function getDaoNamespace(): string
+    protected function unsetDaoName()
+    {
+        if ($this->daoName === null) {
+            throw new \LogicException('GenerateFabCommand daoName has not been set.');
+        }
+        $this->daoName = null;
+        return $this;
+    }
+
+    protected function getDaoNamespace(): string
     {
         if ($this->daoNamespace === null) {
             throw new \LogicException('GenerateFabCommand daoNamespace has not been set.');
@@ -250,7 +274,7 @@ class GenerateFabCommand extends Command
         return $this->daoNamespace;
     }
 
-    public function setDaoNamespace(string $daoNamespace)
+    protected function setDaoNamespace(string $daoNamespace)
     {
         if ($this->daoNamespace !== null) {
             throw new \LogicException('GenerateFabCommand daoNamespace is already set.');
@@ -259,7 +283,16 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    public function getDaoRelativePath(): string
+    protected function unsetDaoNamespace()
+    {
+        if ($this->daoNamespace === null) {
+            throw new \LogicException('GenerateFabCommand daoNamespace has not been set.');
+        }
+        $this->daoNamespace = null;
+        return $this;
+    }
+
+    protected function getDaoRelativePath(): string
     {
         if ($this->daoRelativePath === null) {
             throw new \LogicException('GenerateFabCommand daoRelativePath has not been set.');
@@ -267,12 +300,21 @@ class GenerateFabCommand extends Command
         return $this->daoRelativePath;
     }
 
-    public function setDaoRelativePath(string $daoRelativePath)
+    protected function setDaoRelativePath(string $daoRelativePath)
     {
         if ($this->daoRelativePath !== null) {
             throw new \LogicException('GenerateFabCommand daoRelativePath is already set.');
         }
         $this->daoRelativePath = $daoRelativePath;
+        return $this;
+    }
+
+    protected function unsetDaoRelativePath()
+    {
+        if ($this->daoRelativePath === null) {
+            throw new \LogicException('GenerateFabCommand daoRelativePath has not been set.');
+        }
+        $this->daoRelativePath = null;
         return $this;
     }
 }

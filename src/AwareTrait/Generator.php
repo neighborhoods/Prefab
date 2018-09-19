@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AwareTrait;
 
+use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
 use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 class Generator implements GeneratorInterface
 {
@@ -20,6 +22,31 @@ class Generator implements GeneratorInterface
     protected const TRAIT_NAME = 'AwareTrait';
 
     use ClassSaver\AwareTrait;
+
+    /** @var GeneratorMetaInterface */
+    protected $meta;
+
+    public function getMeta(): GeneratorMetaInterface
+    {
+        if ($this->meta === null) {
+            throw new \LogicException('Generator meta has not been set.');
+        }
+        return $this->meta;
+    }
+
+    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
+    {
+        if ($this->meta !== null) {
+            throw new \LogicException('Generator meta is already set.');
+        }
+        $this->meta = $meta;
+        return $this;
+    }
+
+    public function getActorName(): string
+    {
+        return self::TRAIT_NAME;
+    }
 
     public function generate() : GeneratorInterface
     {

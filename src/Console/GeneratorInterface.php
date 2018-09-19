@@ -9,4 +9,7 @@ interface GeneratorInterface
 
     public function setMeta(GeneratorMetaInterface $generatorMeta): GeneratorInterface;
 
+    public function getMeta(): GeneratorMetaInterface;
+
+    public function getActorName(): string;
 }
