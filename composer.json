@@ -29,7 +29,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Neighborhoods\\Prefab\\": "src"
+      "Neighborhoods\\Prefab\\": [
+        "src",
+        "fab"
+      ]
     }
   },
   "autoload-dev": {

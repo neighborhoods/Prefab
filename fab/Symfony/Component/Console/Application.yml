@@ -1,0 +1,6 @@
+services:
+  Symfony\Component\Console\ApplicationInterface:
+    class: \Symfony\Component\Console\Application
+    public: true
+    calls:
+      - ['add', ['@Neighborhoods\Prefab\Console\GenerateFabCommandInterface']]

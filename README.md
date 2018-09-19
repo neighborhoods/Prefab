@@ -62,7 +62,7 @@ Your settings should resemble this after configuring `src`, and `fab` as **Sourc
 * use PHPStorm to find and replace the following (on *all* files copied)
     * `Replace this with the description of your product.`
     * `replace-this-with-the-name-of-your-product` - use the same hyphenation.
-    * `ReplaceThisWithTheNameOfYourProduct` - use the same casing (this does not include `Neighborhoods`. e.g. `AreaService` not `NeighborhoodsAreaService`).
+    * `Prefab` - use the same casing (this does not include `Neighborhoods`. e.g. `AreaService` not `NeighborhoodsAreaService`).
 
 ## Manual Fabrication Process
 * Create your DAO and DAOInterface using the AVLTs

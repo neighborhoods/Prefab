@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\Prefab\Console\GenerateFabCommandInterface:
+    class: Neighborhoods\Prefab\Console\GenerateFabCommand
