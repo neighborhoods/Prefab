@@ -1,14 +1,25 @@
 #!/usr/bin/env php
 <?php
 declare(strict_types=1);
-error_reporting(E_ALL);
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__ . '/../../../../vendor/autoload.php';
 
-use Neighborhoods\Prefab\Console\GenerateFabCommand;
-use Symfony\Component\Console\Application;
+use Neighborhoods\Prefab\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Finder\Finder;
 
-$application = new Application();
-$application->add(new GenerateFabCommand());
-$application->run();
+$containerBuilder = new ContainerBuilder();
 
+$discoverableDirectories[] = __DIR__ . '/..';
+
+$finder = new Finder();
+$finder->name('*.yml');
+$finder->files()->in($discoverableDirectories);
+$containerBuilderFacade = new Facade();
+$containerBuilderFacade->setContainerBuilder($containerBuilder);
+$containerBuilderFacade->addFinder($finder);
+$containerBuilderFacade->assembleYaml();
+$containerBuilderFacade->build();
+
+$console = $containerBuilder->get('Symfony\Component\Console\ApplicationInterface');
+$console->run();
