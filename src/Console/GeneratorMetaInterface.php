@@ -12,4 +12,8 @@ interface GeneratorMetaInterface
     public function getActorFilePath(): string;
 
     public function setActorFilePath(string $actorFilePath): GeneratorMetaInterface;
+
+    public function getDaoName(): string;
+
+    public function setDaoName(string $daoName): GeneratorMetaInterface;
 }

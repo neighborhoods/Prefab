@@ -12,48 +12,22 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 class Generator implements GeneratorInterface
 {
-    protected $namespace;
-    protected $version;
-    protected $generator;
-    protected $daoName;
-    protected $varName;
-    protected $classSaver;
+    use ClassSaver\AwareTrait;
 
     protected const TRAIT_NAME = 'AwareTrait';
 
-    use ClassSaver\AwareTrait;
-
     /** @var GeneratorMetaInterface */
     protected $meta;
-
-    public function getMeta(): GeneratorMetaInterface
-    {
-        if ($this->meta === null) {
-            throw new \LogicException('Generator meta has not been set.');
-        }
-        return $this->meta;
-    }
-
-    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
-    {
-        if ($this->meta !== null) {
-            throw new \LogicException('Generator meta is already set.');
-        }
-        $this->meta = $meta;
-        return $this;
-    }
-
-    public function getActorName(): string
-    {
-        return self::TRAIT_NAME;
-    }
+    protected $generator;
+    protected $varName;
+    protected $classSaver;
 
     public function generate() : GeneratorInterface
     {
-        $this->setVarName(implode('', explode('\\', $this->getNamespace())));
+        $this->setVarName(implode('', explode('\\', $this->getMeta()->getActorNamespace())));
         $this->setGenerator();
 
-        $this->getGenerator()->setNamespaceName($this->getNamespace());
+        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
         $this->getGenerator()->setName(self::TRAIT_NAME);
 
         $this->replaceReturnTypePlaceHolders();
@@ -64,7 +38,7 @@ class Generator implements GeneratorInterface
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
         $this->getClassSaver()
-            ->setNamespace($this->getNamespace())
+            ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::TRAIT_NAME)
             ->setGeneratedClass($builtFile)
             ->saveClass();
@@ -79,14 +53,14 @@ class Generator implements GeneratorInterface
         foreach ($methods as $method) {
             $returnType = $method->getReturnType();
             if ($returnType && strpos($returnType->generate(), 'DAONAMEPLACEHOLDERInterface')) {
-                $method->setReturnType($this->getNamespace() . 'Interface');
+                $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
             }
         }
     }
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
+        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
         $fileContent = str_replace('VARNAMEPLACEHOLDER', $this->getVarName(), $fileContent);
 
         return $fileContent;
@@ -108,24 +82,6 @@ class Generator implements GeneratorInterface
         return $this->generator;
     }
 
-    protected function getNamespace() : string
-    {
-        if ($this->namespace === null) {
-            throw new \LogicException('Generator namespace has not been set.');
-        }
-        return $this->namespace;
-    }
-
-    public function setNamespace(string $namespace) : GeneratorInterface
-    {
-        if ($this->namespace !== null) {
-            throw new \LogicException('Generator namespace is already set.');
-        }
-        $this->namespace = $namespace;
-        return $this;
-    }
-
-
     protected function getVarName() : string
     {
         if ($this->varName === null) {
@@ -141,5 +97,27 @@ class Generator implements GeneratorInterface
         }
         $this->varName = $varName;
         return $this;
+    }
+
+    public function getMeta(): GeneratorMetaInterface
+    {
+        if ($this->meta === null) {
+            throw new \LogicException('Generator meta has not been set.');
+        }
+        return $this->meta;
+    }
+
+    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
+    {
+        if ($this->meta !== null) {
+            throw new \LogicException('Generator meta is already set.');
+        }
+        $this->meta = $meta;
+        return $this;
+    }
+
+    public function getActorName(): string
+    {
+        return self::TRAIT_NAME;
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Factory;
 
+use Neighborhoods\Prefab\ClassSaverInterface;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\ClassGenerator;
@@ -14,15 +15,75 @@ class Generator implements GeneratorInterface
 {
     use ClassSaver\AwareTrait;
 
-    protected $namespace;
-    protected $version;
-    protected $generator;
-    protected $classSaver;
-
     public const CLASS_NAME = 'Factory';
 
+    /** @var ClassGenerator */
+    protected $generator;
+    /** @var ClassSaverInterface */
+    protected $classSaver;
     /** @var GeneratorMetaInterface */
     protected $meta;
+
+    public function generate() : GeneratorInterface
+    {
+        $this->setGenerator();
+
+        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
+        $this->getGenerator()->addTrait('AwareTrait');
+        $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\FactoryInterface']);
+        $this->getGenerator()->setName(self::CLASS_NAME);
+
+        $this->replaceReturnTypePlaceHolders();
+
+        $file = new FileGenerator();
+        $file->setClass($this->getGenerator());
+
+        $builtFile = $this->replaceEntityPlaceholders($file->generate());
+
+        $this->getClassSaver()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setClassName(self::CLASS_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
+
+        return $this;
+    }
+
+    protected function replaceReturnTypePlaceHolders()
+    {
+        $methods = $this->getGenerator()->getMethods();
+
+        foreach ($methods as $method) {
+            $returnType = $method->getReturnType();
+            if ($returnType && strpos($returnType->generate(), 'DAONAMEPLACEHOLDERInterface')) {
+                $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
+            }
+        }
+    }
+
+    protected function replaceEntityPlaceholders($fileContent) : string
+    {
+        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
+        $methodVarName = implode('', explode('\\', $this->getMeta()->getActorNamespace()));
+        $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
+        return $fileContent;
+    }
+
+    protected function setGenerator() : GeneratorInterface
+    {
+        $template = new ClassReflection(Template::class);
+        $this->generator = ClassGenerator::fromReflection($template);
+        return $this;
+    }
+
+    protected function getGenerator() : ClassGenerator
+    {
+        if ($this->generator === null) {
+            throw new \LogicException('Generator generator has not been set');
+        }
+
+        return $this->generator;
+    }
 
     public function getMeta(): GeneratorMetaInterface
     {
@@ -44,83 +105,5 @@ class Generator implements GeneratorInterface
     public function getActorName(): string
     {
         return self::CLASS_NAME;
-    }
-
-    public function generate() : GeneratorInterface
-    {
-        $this->setGenerator();
-
-        $this->getGenerator()->setNamespaceName($this->getNamespace());
-        $this->getGenerator()->addTrait('AwareTrait');
-        $this->getGenerator()->setImplementedInterfaces([$this->getNamespace() . '\FactoryInterface']);
-        $this->getGenerator()->setName(self::CLASS_NAME);
-
-        $this->replaceReturnTypePlaceHolders();
-
-        $file = new FileGenerator();
-        $file->setClass($this->getGenerator());
-
-        $builtFile = $this->replaceEntityPlaceholders($file->generate());
-
-        $this->getClassSaver()
-            ->setNamespace($this->getNamespace())
-            ->setClassName(self::CLASS_NAME)
-            ->setGeneratedClass($builtFile)
-            ->saveClass();
-
-        return $this;
-    }
-
-    protected function replaceReturnTypePlaceHolders()
-    {
-        $methods = $this->getGenerator()->getMethods();
-
-        foreach ($methods as $method) {
-            $returnType = $method->getReturnType();
-            if ($returnType && strpos($returnType->generate(), 'DAONAMEPLACEHOLDERInterface')) {
-                $method->setReturnType($this->getNamespace() . 'Interface');
-            }
-        }
-    }
-
-    protected function replaceEntityPlaceholders($fileContent) : string
-    {
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
-        $methodVarName = implode('', explode('\\', $this->getNamespace()));
-        $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
-        return $fileContent;
-    }
-
-    protected function setGenerator() : GeneratorInterface
-    {
-        $template = new ClassReflection(Template::class);
-        $this->generator = ClassGenerator::fromReflection($template);
-        return $this;
-    }
-
-    protected function getGenerator() : ClassGenerator
-    {
-        if ($this->generator === null) {
-            throw new \LogicException('Generator generator has not been set');
-        }
-
-        return $this->generator;
-    }
-
-    protected function getNamespace() : string
-    {
-        if ($this->namespace === null) {
-            throw new \LogicException('Generator namespace has not been set.');
-        }
-        return $this->namespace;
-    }
-
-    public function setNamespace(string $namespace) : GeneratorInterface
-    {
-        if ($this->namespace !== null) {
-            throw new \LogicException('Generator namespace is already set.');
-        }
-        $this->namespace = $namespace;
-        return $this;
     }
 }
