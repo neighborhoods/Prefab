@@ -150,6 +150,7 @@ class GenerateFabCommand extends Command
         $this->addAwareTraitToList($nextLevelMeta);
         $this->addFactoryToList($nextLevelMeta);
 
+        return $this;
     }
 
     protected function addFactoryToList(GeneratorMetaInterface $factoryMeta): self
