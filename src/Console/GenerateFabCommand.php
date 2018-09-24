@@ -71,10 +71,18 @@ class GenerateFabCommand extends Command
         $finder = new Finder();
         $daos = $finder->files()->contains($daoAnnotationPattern)->in($this->srcLocation);
 
+        /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-            $this->generateDaoMeta($dao);
-            $this->addDaoToList();
-            $this->unsetDaoMeta();
+            $daoName = $dao->getBasename('.php');
+            $daoFilePath = $this->fabLocation . self::FORWARD_SLASH . $dao->getRelativePath();
+            $daoNamespace = $this->getDaoNamespaceFromFile($dao);
+
+            $daoMeta = $this->getConsoleGeneratorMetaFactory()->create();
+            $daoMeta->setDaoName($daoName);
+            $daoMeta->setActorNamespace($daoNamespace);
+            $daoMeta->setActorFilePath($daoFilePath);
+
+            $this->addDaoToPlan($daoMeta);
         }
 
         return $this;
@@ -122,7 +130,7 @@ class GenerateFabCommand extends Command
         return $annotations[1];
     }
 
-    protected function addDaoToList(): self
+    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta): self
     {
         $filePath = $this->fabLocation . self::FORWARD_SLASH . $this->getDaoRelativePath();
 
@@ -132,31 +140,24 @@ class GenerateFabCommand extends Command
 
         /** @todo DAO generator logic + Service.yml */
 
-        $nextLevelNamespace = $this->getDaoNamespace() . self::BACKSLASH . $this->getDaoName();
-        $nextLevelFilePath = $filePath . self::FORWARD_SLASH . $this->getDaoName();
+        $nextLevelNamespace = $daoMeta->getActorNamespace() . self::BACKSLASH . $daoMeta->getDaoName();
+        $nextLevelFilePath = $filePath . self::FORWARD_SLASH . $daoMeta->getDaoName();
 
         $nextLevelMeta = $this->getConsoleGeneratorMetaFactory()->create();
         $nextLevelMeta->setActorNamespace($nextLevelNamespace);
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
         $nextLevelMeta->setDaoName($this->getDaoName());
 
-        //$this->addServiceToList($daoMeta);
-//        $this->addAwareTraitToList($nextLevelMeta);
-//        $this->addFactoryToList($nextLevelMeta);
-        $this->addMapToList($nextLevelMeta);
-//        $this->addRepositoryToList($nextLevelMeta);
+        //$this->addServiceToPlan($daoMeta);
+//        $this->addAwareTraitToPlan($nextLevelMeta);
+//        $this->addFactoryToPlan($nextLevelMeta);
+        $this->addMapToPlan($nextLevelMeta);
+//        $this->addRepositoryToPlan($nextLevelMeta);
 
         return $this;
     }
 
-    protected function addServiceToList(GeneratorMetaInterface $serviceMeta): self
-    {
-        /** @todo Service generator logic */
-
-        return $this;
-    }
-
-    protected function addAwareTraitToList(GeneratorMetaInterface $meta): self
+    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta): self
     {
         $awareTraitGenerator = $this->getAwareTraitGeneratorFactory()->create();
         $awareTraitGenerator->setMeta($meta);
@@ -165,7 +166,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addBuilderToList(GeneratorMetaInterface $builderMeta): self
+    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta): self
     {
         $builderGenerator = $this->getBuilderGeneratorFactory()->create();
         $builderGenerator->setMeta($builderMeta);
@@ -173,13 +174,20 @@ class GenerateFabCommand extends Command
 
         $nextLevelMeta = $this->getNextLevelMeta($builderGenerator);
 
-        $this->addAwareTraitToList($nextLevelMeta);
-        $this->addFactoryToList($nextLevelMeta);
+        $this->addAwareTraitToPlan($nextLevelMeta);
+        $this->addFactoryToPlan($nextLevelMeta);
 
         return $this;
     }
 
-    protected function addFactoryToList(GeneratorMetaInterface $factoryMeta): self
+    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta): self
+    {
+
+
+        return $this;
+    }
+
+    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta): self
     {
         $factoryGenerator = $this->getFactoryGeneratorFactory()->create();
         $factoryGenerator->setMeta($factoryMeta);
@@ -187,27 +195,45 @@ class GenerateFabCommand extends Command
 
         $nextLevelMeta = $this->getNextLevelMeta($factoryGenerator);
 
-        $this->addAwareTraitToList($nextLevelMeta);
+        $this->addAwareTraitToPlan($nextLevelMeta);
 
         return $this;
     }
 
-    protected function addMapToList(GeneratorMetaInterface $mapMeta): self
+    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryMeta): self
+    {
+
+        return $this;
+    }
+
+    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta): self
+    {
+
+        return $this;
+    }
+
+    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta): self
+    {
+
+        return $this;
+    }
+
+    protected function addMapToPlan(GeneratorMetaInterface $mapMeta): self
     {
         $mapGenerator = $this->getMapGeneratorFactory()->create();
         $mapGenerator->setMeta($mapMeta);
         $this->appendGeneratorToBuildPlan($mapGenerator);
-        $this->addMapInterfaceToList($mapMeta);
+        $this->addMapInterfaceToPlan($mapMeta);
 
         $nextLevelMeta = $this->getNextLevelMeta($mapGenerator);
-        $this->addAwareTraitToList($nextLevelMeta);
-        $this->addBuilderToList($nextLevelMeta);
-        $this->addFactoryToList($nextLevelMeta);
+        $this->addAwareTraitToPlan($nextLevelMeta);
+        $this->addBuilderToPlan($nextLevelMeta);
+        $this->addFactoryToPlan($nextLevelMeta);
 
         return $this;
     }
 
-    protected function addMapInterfaceToList(GeneratorMetaInterface $mapInterfaceMeta): self
+    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta): self
     {
         $mapInterfaceGenerator = $this->getMapInterfaceGeneratorFactory()->create();
         $mapInterfaceGenerator->setMeta($mapInterfaceMeta);
@@ -217,7 +243,7 @@ class GenerateFabCommand extends Command
     }
 
 
-    protected function addRepositoryToList(GeneratorMetaInterface $repositoryMeta): self
+    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta): self
     {
         $repositoryGenerator = $this->getRepositoryGeneratorFactory()->create();
         $repositoryGenerator->setMeta($repositoryMeta);
@@ -225,7 +251,19 @@ class GenerateFabCommand extends Command
 
         $nextLevelMeta = $this->getNextLevelMeta($repositoryGenerator);
 
-        $this->addAwareTraitToList($nextLevelMeta);
+        $this->addAwareTraitToPlan($nextLevelMeta);
+
+        return $this;
+    }
+
+    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta): self
+    {
+
+    }
+
+    protected function addServiceToPlan(GeneratorMetaInterface $serviceMeta): self
+    {
+        /** @todo Service generator logic */
 
         return $this;
     }
