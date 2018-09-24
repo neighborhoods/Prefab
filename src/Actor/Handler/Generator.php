@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\Handler;
 
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;

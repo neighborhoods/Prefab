@@ -8,38 +8,38 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabAwareTraitGenerator;
+    protected $NeighborhoodsPrefabActorAwareTraitGenerator;
 
-    public function setAwareTraitGenerator(GeneratorInterface $awareTraitGenerator) : self
+    public function setActorAwareTraitGenerator(GeneratorInterface $actorAwareTraitGenerator): self
     {
-        if ($this->hasAwareTraitGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabAwareTraitGenerator is already set.');
+        if ($this->hasActorAwareTraitGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorAwareTraitGenerator is already set.');
         }
-        $this->NeighborhoodsPrefabAwareTraitGenerator = $awareTraitGenerator;
+        $this->NeighborhoodsPrefabActorAwareTraitGenerator = $actorAwareTraitGenerator;
 
         return $this;
     }
 
-    protected function getAwareTraitGenerator() : GeneratorInterface
+    protected function getActorAwareTraitGenerator(): GeneratorInterface
     {
-        if (!$this->hasAwareTraitGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabAwareTraitGenerator is not set.');
+        if (!$this->hasActorAwareTraitGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorAwareTraitGenerator is not set.');
         }
 
-        return $this->NeighborhoodsPrefabAwareTraitGenerator;
+        return $this->NeighborhoodsPrefabActorAwareTraitGenerator;
     }
 
-    protected function hasAwareTraitGenerator() : bool
+    protected function hasActorAwareTraitGenerator(): bool
     {
-        return isset($this->NeighborhoodsPrefabAwareTraitGenerator);
+        return isset($this->NeighborhoodsPrefabActorAwareTraitGenerator);
     }
 
-    protected function unsetAwareTraitGenerator() : self
+    protected function unsetActorAwareTraitGenerator(): self
     {
-        if (!$this->hasAwareTraitGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabAwareTraitGenerator is not set.');
+        if (!$this->hasActorAwareTraitGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorAwareTraitGenerator is not set.');
         }
-        unset($this->NeighborhoodsPrefabAwareTraitGenerator);
+        unset($this->NeighborhoodsPrefabActorAwareTraitGenerator);
 
         return $this;
     }

@@ -2,10 +2,15 @@ services:
   Neighborhoods\Prefab\Console\GenerateFabCommandInterface:
     class: Neighborhoods\Prefab\Console\GenerateFabCommand
     calls:
-    - [setConsoleGeneratorMetaFactory, ['@Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface']]
-    - [setBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Builder\Generator\FactoryInterface']]
-    - [setAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\Actor\AwareTrait\Generator\FactoryInterface']]
+    - [setActorBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Builder\Generator\FactoryInterface']]
+    - [setActorRepositoryInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\RepositoryInterface\Generator\FactoryInterface']]
+    - [setActorFactoryGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Factory\Generator\FactoryInterface']]
+    - [setActorBuilderInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\BuilderInterface\Generator\FactoryInterface']]
     - [setMapGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Map\Generator\FactoryInterface']]
+    - [setActorHandlerInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\HandlerInterface\Generator\FactoryInterface']]
+    - [setActorHandlerGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Handler\Generator\FactoryInterface']]
+    - [setActorAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\Actor\AwareTrait\Generator\FactoryInterface']]
+    - [setActorRepositoryGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Repository\Generator\FactoryInterface']]
+    - [setConsoleGeneratorMetaFactory, ['@Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface']]
+    - [setActorFactoryInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\FactoryInterface\Generator\FactoryInterface']]
     - [setMapInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\MapInterface\Generator\FactoryInterface']]
-    - [setRepositoryGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Repository\Generator\FactoryInterface']]
-    - [setFactoryGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Factory\Generator\FactoryInterface']]

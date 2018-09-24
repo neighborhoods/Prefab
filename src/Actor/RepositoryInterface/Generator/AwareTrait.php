@@ -3,43 +3,43 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\RepositoryInterface\Generator;
 
-use Neighborhoods\Prefab\Actor\RepositoryInterface\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabRepositoryInterfaceGenerator;
+    protected $NeighborhoodsPrefabActorRepositoryInterfaceGenerator;
 
-    public function setRepositoryInterfaceGenerator(GeneratorInterface $repositoryInterfaceGenerator) : self
+    public function setActorRepositoryInterfaceGenerator(GeneratorInterface $actorRepositoryInterfaceGenerator): self
     {
-        if ($this->hasRepositoryInterfaceGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabRepositoryInterfaceGenerator is already set.');
+        if ($this->hasActorRepositoryInterfaceGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorRepositoryInterfaceGenerator is already set.');
         }
-        $this->NeighborhoodsPrefabRepositoryInterfaceGenerator = $repositoryInterfaceGenerator;
+        $this->NeighborhoodsPrefabActorRepositoryInterfaceGenerator = $actorRepositoryInterfaceGenerator;
 
         return $this;
     }
 
-    protected function getRepositoryInterfaceGenerator() : GeneratorInterface
+    protected function getActorRepositoryInterfaceGenerator(): GeneratorInterface
     {
-        if (!$this->hasRepositoryInterfaceGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabRepositoryInterfaceGenerator is not set.');
+        if (!$this->hasActorRepositoryInterfaceGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorRepositoryInterfaceGenerator is not set.');
         }
 
-        return $this->NeighborhoodsPrefabRepositoryInterfaceGenerator;
+        return $this->NeighborhoodsPrefabActorRepositoryInterfaceGenerator;
     }
 
-    protected function hasRepositoryInterfaceGenerator() : bool
+    protected function hasActorRepositoryInterfaceGenerator(): bool
     {
-        return isset($this->NeighborhoodsPrefabRepositoryInterfaceGenerator);
+        return isset($this->NeighborhoodsPrefabActorRepositoryInterfaceGenerator);
     }
 
-    protected function unsetRepositoryInterfaceGenerator() : self
+    protected function unsetActorRepositoryInterfaceGenerator(): self
     {
-        if (!$this->hasRepositoryInterfaceGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabRepositoryInterfaceGenerator is not set.');
+        if (!$this->hasActorRepositoryInterfaceGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorRepositoryInterfaceGenerator is not set.');
         }
-        unset($this->NeighborhoodsPrefabRepositoryInterfaceGenerator);
+        unset($this->NeighborhoodsPrefabActorRepositoryInterfaceGenerator);
 
         return $this;
     }

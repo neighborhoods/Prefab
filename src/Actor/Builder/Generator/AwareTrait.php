@@ -8,38 +8,38 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabBuilderGenerator;
+    protected $NeighborhoodsPrefabActorBuilderGenerator;
 
-    public function setBuilderGenerator(GeneratorInterface $builderGenerator) : self
+    public function setActorBuilderGenerator(GeneratorInterface $actorBuilderGenerator): self
     {
-        if ($this->hasBuilderGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabBuilderGenerator is already set.');
+        if ($this->hasActorBuilderGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorBuilderGenerator is already set.');
         }
-        $this->NeighborhoodsPrefabBuilderGenerator = $builderGenerator;
+        $this->NeighborhoodsPrefabActorBuilderGenerator = $actorBuilderGenerator;
 
         return $this;
     }
 
-    protected function getBuilderGenerator() : GeneratorInterface
+    protected function getActorBuilderGenerator(): GeneratorInterface
     {
-        if (!$this->hasBuilderGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabBuilderGenerator is not set.');
+        if (!$this->hasActorBuilderGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorBuilderGenerator is not set.');
         }
 
-        return $this->NeighborhoodsPrefabBuilderGenerator;
+        return $this->NeighborhoodsPrefabActorBuilderGenerator;
     }
 
-    protected function hasBuilderGenerator() : bool
+    protected function hasActorBuilderGenerator(): bool
     {
-        return isset($this->NeighborhoodsPrefabBuilderGenerator);
+        return isset($this->NeighborhoodsPrefabActorBuilderGenerator);
     }
 
-    protected function unsetBuilderGenerator() : self
+    protected function unsetActorBuilderGenerator(): self
     {
-        if (!$this->hasBuilderGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabBuilderGenerator is not set.');
+        if (!$this->hasActorBuilderGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorBuilderGenerator is not set.');
         }
-        unset($this->NeighborhoodsPrefabBuilderGenerator);
+        unset($this->NeighborhoodsPrefabActorBuilderGenerator);
 
         return $this;
     }

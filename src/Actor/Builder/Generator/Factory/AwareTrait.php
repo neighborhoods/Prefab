@@ -8,38 +8,38 @@ use Neighborhoods\Prefab\Actor\Builder\Generator\FactoryInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabBuilderGeneratorFactory;
+    protected $NeighborhoodsPrefabActorBuilderGeneratorFactory;
 
-    public function setBuilderGeneratorFactory(FactoryInterface $builderGeneratorFactory) : self
+    public function setActorBuilderGeneratorFactory(FactoryInterface $actorBuilderGeneratorFactory): self
     {
-        if ($this->hasBuilderGeneratorFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabBuilderGeneratorFactory is already set.');
+        if ($this->hasActorBuilderGeneratorFactory()) {
+            throw new \LogicException('NeighborhoodsPrefabActorBuilderGeneratorFactory is already set.');
         }
-        $this->NeighborhoodsPrefabBuilderGeneratorFactory = $builderGeneratorFactory;
+        $this->NeighborhoodsPrefabActorBuilderGeneratorFactory = $actorBuilderGeneratorFactory;
 
         return $this;
     }
 
-    protected function getBuilderGeneratorFactory() : FactoryInterface
+    protected function getActorBuilderGeneratorFactory(): FactoryInterface
     {
-        if (!$this->hasBuilderGeneratorFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabBuilderGeneratorFactory is not set.');
+        if (!$this->hasActorBuilderGeneratorFactory()) {
+            throw new \LogicException('NeighborhoodsPrefabActorBuilderGeneratorFactory is not set.');
         }
 
-        return $this->NeighborhoodsPrefabBuilderGeneratorFactory;
+        return $this->NeighborhoodsPrefabActorBuilderGeneratorFactory;
     }
 
-    protected function hasBuilderGeneratorFactory() : bool
+    protected function hasActorBuilderGeneratorFactory(): bool
     {
-        return isset($this->NeighborhoodsPrefabBuilderGeneratorFactory);
+        return isset($this->NeighborhoodsPrefabActorBuilderGeneratorFactory);
     }
 
-    protected function unsetBuilderGeneratorFactory() : self
+    protected function unsetActorBuilderGeneratorFactory(): self
     {
-        if (!$this->hasBuilderGeneratorFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabBuilderGeneratorFactory is not set.');
+        if (!$this->hasActorBuilderGeneratorFactory()) {
+            throw new \LogicException('NeighborhoodsPrefabActorBuilderGeneratorFactory is not set.');
         }
-        unset($this->NeighborhoodsPrefabBuilderGeneratorFactory);
+        unset($this->NeighborhoodsPrefabActorBuilderGeneratorFactory);
 
         return $this;
     }

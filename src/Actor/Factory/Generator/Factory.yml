@@ -2,4 +2,4 @@ services:
   Neighborhoods\Prefab\Actor\Factory\Generator\FactoryInterface:
     class: Neighborhoods\Prefab\Actor\Factory\Generator\Factory
     calls:
-    - [setFactoryGenerator, ['@Neighborhoods\Prefab\Actor\Factory\GeneratorInterface']]
+    - [setActorFactoryGenerator, ['@Neighborhoods\Prefab\Actor\Factory\GeneratorInterface']]

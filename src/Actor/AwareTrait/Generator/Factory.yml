@@ -2,4 +2,4 @@ services:
   Neighborhoods\Prefab\Actor\AwareTrait\Generator\FactoryInterface:
     class: Neighborhoods\Prefab\Actor\AwareTrait\Generator\Factory
     calls:
-    - [setAwareTraitGenerator, ['@Neighborhoods\Prefab\Actor\AwareTrait\GeneratorInterface']]
+    - [setActorAwareTraitGenerator, ['@Neighborhoods\Prefab\Actor\AwareTrait\GeneratorInterface']]

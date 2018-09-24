@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\BuilderInterface\Generator;
 
-use Neighborhoods\Prefab\Actor\BuilderInterface\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 /** @codeCoverageIgnore */
 class Factory implements FactoryInterface
 {
     use AwareTrait;
 
-    public function create() : GeneratorInterface
+    public function create(): GeneratorInterface
     {
-        return clone $this->getBuilderInterfaceGenerator();
+        return clone $this->getActorBuilderInterfaceGenerator();
     }
 }
