@@ -36,7 +36,6 @@ class GenerateFabCommand extends Command
     protected $daoNamespace;
     /** @var string */
     protected $daoRelativePath;
-
     /** @var string */
     protected $fabLocation;
     /** @var string */
@@ -47,8 +46,9 @@ class GenerateFabCommand extends Command
         $this->setName('gen:fab')
             ->setDescription('Generate Protean Machinery');
 
-        $this->srcLocation = '/var/www/html/prefab_fitness.neighborhoods.com/JakeService/src';
-        $this->fabLocation = '/var/www/html/prefab_fitness.neighborhoods.com/JakeService/fab';
+        // We should probably do something better than this
+        $this->srcLocation = __DIR__ . '/../../../../../src';
+        $this->fabLocation = __DIR__ . '/../../../../../fab';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
