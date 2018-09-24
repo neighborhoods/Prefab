@@ -33,7 +33,7 @@ class Generator implements GeneratorInterface
 
         $this->getGenerator()->addTraits(
             [
-                $this->getMeta()->getActorNamespace() . '\Factory\AwareTrait',
+                '\\' . $this->getMeta()->getActorNamespace() . '\Factory\AwareTrait',
             ]
         );
 
