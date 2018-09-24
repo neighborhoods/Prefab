@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\AwareTrait\Generator\FactoryInterface:
-    class: Neighborhoods\Prefab\AwareTrait\Generator\Factory
-    calls:
-    - [setAwareTraitGenerator, ['@Neighborhoods\Prefab\AwareTrait\GeneratorInterface']]

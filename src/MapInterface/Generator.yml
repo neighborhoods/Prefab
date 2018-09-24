@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\MapInterface\GeneratorInterface:
-    class: Neighborhoods\Prefab\MapInterface\Generator
-    calls:
-    - [setClassSaverFactory, ['@Neighborhoods\Prefab\ClassSaver\FactoryInterface']]

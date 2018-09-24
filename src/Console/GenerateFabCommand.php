@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Console;
 
-use Neighborhoods\Prefab\AwareTrait;
-use Neighborhoods\Prefab\Builder;
-use Neighborhoods\Prefab\Factory;
-use Neighborhoods\Prefab\Map;
-use Neighborhoods\Prefab\MapInterface;
-use Neighborhoods\Prefab\Repository;
+use Neighborhoods\Prefab\Actor\AwareTrait;
+use Neighborhoods\Prefab\Actor\Builder;
+use Neighborhoods\Prefab\Actor\Factory;
+use Neighborhoods\Prefab\Actor\Map;
+use Neighborhoods\Prefab\Actor\MapInterface;
+use Neighborhoods\Prefab\Actor\Repository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\Actor\HandlerInterface\Generator\FactoryInterface:
+    class: Neighborhoods\Prefab\Actor\HandlerInterface\Generator\Factory
+    calls:
+    - [setHandlerInterfaceGenerator, ['@Neighborhoods\Prefab\Actor\HandlerInterface\GeneratorInterface']]

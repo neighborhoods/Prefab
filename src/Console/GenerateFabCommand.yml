@@ -3,9 +3,9 @@ services:
     class: Neighborhoods\Prefab\Console\GenerateFabCommand
     calls:
     - [setConsoleGeneratorMetaFactory, ['@Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface']]
-    - [setBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Builder\Generator\FactoryInterface']]
-    - [setAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\AwareTrait\Generator\FactoryInterface']]
-    - [setMapGeneratorFactory, ['@Neighborhoods\Prefab\Map\Generator\FactoryInterface']]
-    - [setMapInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\MapInterface\Generator\FactoryInterface']]
-    - [setRepositoryGeneratorFactory, ['@Neighborhoods\Prefab\Repository\Generator\FactoryInterface']]
-    - [setFactoryGeneratorFactory, ['@Neighborhoods\Prefab\Factory\Generator\FactoryInterface']]
+    - [setBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Builder\Generator\FactoryInterface']]
+    - [setAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\Actor\AwareTrait\Generator\FactoryInterface']]
+    - [setMapGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Map\Generator\FactoryInterface']]
+    - [setMapInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\MapInterface\Generator\FactoryInterface']]
+    - [setRepositoryGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Repository\Generator\FactoryInterface']]
+    - [setFactoryGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Factory\Generator\FactoryInterface']]
