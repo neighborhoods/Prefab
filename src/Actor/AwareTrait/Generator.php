@@ -23,7 +23,8 @@ class Generator implements GeneratorInterface
 
     public function generate() : GeneratorInterface
     {
-        $this->setVarName(implode('', explode('\\', $this->getMeta()->getActorNamespace())));
+        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+        $this->setVarName(implode('', array_slice($namespaceArray, 2)));
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
@@ -98,7 +99,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getMeta(): GeneratorMetaInterface
+    public function getMeta() : GeneratorMetaInterface
     {
         if ($this->meta === null) {
             throw new \LogicException('Generator meta has not been set.');
@@ -106,7 +107,7 @@ class Generator implements GeneratorInterface
         return $this->meta;
     }
 
-    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
+    public function setMeta(GeneratorMetaInterface $meta) : GeneratorInterface
     {
         if ($this->meta !== null) {
             throw new \LogicException('Generator meta is already set.');
@@ -115,7 +116,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getActorName(): string
+    public function getActorName() : string
     {
         return self::TRAIT_NAME;
     }
