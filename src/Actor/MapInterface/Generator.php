@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Actor\MapInterface;
 
 use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\CodeGen\ClassGenerator;
+use Neighborhoods\Prefab\CodeGen\FileGenerator;
+use Neighborhoods\Prefab\CodeGen\InterfaceGenerator;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\FileGenerator;
-use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
@@ -53,8 +53,7 @@ class Generator implements GeneratorInterface
         $entityItemName = strtolower($entityName);
         $fileContent = str_replace('REPLACE_DAO_NAME', $entityName, $fileContent);
         $fileContent = str_replace('REPLACE_DAO_VAR', $entityItemName, $fileContent);
-        $fileContent = str_replace('\Neighborhoods\Prefab\MapInterface\\', '', $fileContent);
-        $fileContent = substr_replace($fileContent, "declare(strict_types=1);\n", 6, 0);
+        $fileContent = str_replace('\Neighborhoods\Prefab\Actor\MapInterface\\', '', $fileContent);
         return $fileContent;
     }
 
@@ -65,7 +64,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function getGenerator() : ClassGenerator
+    protected function getGenerator()
     {
         if ($this->generator === null) {
             throw new \LogicException('Generator generator has not been set');
