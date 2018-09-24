@@ -33,9 +33,8 @@ class Generator implements GeneratorInterface
 
         $this->getGenerator()->addTraits(
             [
-                'Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait',
-                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait',
-                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteriaInterface',
+                '\Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait',
+                '\Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait',
             ]
         );
 
