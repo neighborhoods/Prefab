@@ -141,10 +141,10 @@ class GenerateFabCommand extends Command
         $nextLevelMeta->setDaoName($this->getDaoName());
 
         //$this->addServiceToList($daoMeta);
-//        $this->addAwareTraitToList($nextLevelMeta);
-//        $this->addFactoryToList($nextLevelMeta);
+        $this->addAwareTraitToList($nextLevelMeta);
+        $this->addFactoryToList($nextLevelMeta);
         $this->addMapToList($nextLevelMeta);
-//        $this->addRepositoryToList($nextLevelMeta);
+        $this->addRepositoryToList($nextLevelMeta);
 
         return $this;
     }

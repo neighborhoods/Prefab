@@ -14,7 +14,7 @@ class Template // implements RepositoryInterface
 //    use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 //    use DAONAMEPLACEHOLDER\Builder\Factory\AwareTrait;
 
-    public function createBuilder() : BuilderInterface
+    public function createBuilder() : NAMESPACEPLACEHOLDER\BuilderInterface
     {
         return $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create();
     }
