@@ -6,7 +6,6 @@ namespace Neighborhoods\Prefab\Map;
 use Neighborhoods\Prefab\ClassSaver;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
-use Symfony\Component\Yaml\Yaml;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;

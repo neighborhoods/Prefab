@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\HandlerInterface;
 
+use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -19,6 +20,7 @@ class Generator implements GeneratorInterface
     protected $varName;
     protected $classSaver;
     protected $entityName;
+    protected $meta;
 
     protected const INTERFACE_NAME = 'HandlerInterface';
 
@@ -26,7 +28,7 @@ class Generator implements GeneratorInterface
     {
         $this->setGenerator();
 
-        $this->getGenerator()->setNamespaceName($this->getNamespace());
+        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
         $this->getGenerator()->setName(self::INTERFACE_NAME);
         $this->getGenerator()->setNamespaceName($this->namespace);
         $this->replaceReturnTypePlaceHolders();
@@ -37,7 +39,7 @@ class Generator implements GeneratorInterface
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
         $this->getClassSaverFactory()->create()
-            ->setNamespace($this->getNamespace())
+            ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::INTERFACE_NAME)
             ->setGeneratedClass($builtFile)
             ->saveClass();
@@ -52,7 +54,7 @@ class Generator implements GeneratorInterface
         foreach ($methods as $method) {
             $returnType = $method->getReturnType();
             if ($returnType && strpos($returnType->generate(), 'DAONAMEPLACEHOLDERInterface')) {
-                $method->setReturnType($this->getNamespace() . 'Interface');
+                $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
             }
         }
     }
@@ -60,8 +62,8 @@ class Generator implements GeneratorInterface
     protected function replaceEntityPlaceholders($fileContent) : string
     {
         $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $this->getEntityName(), $fileContent);
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
-        $methodVarName = implode('', explode('\\', $this->getNamespace()));
+        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
+        $methodVarName = implode('', explode('\\', $this->getMeta()->getActorNamespace()));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
         // Because Zend Code just ignores extended interfaces altogether, we need to do this
         // This is temporary (tm) until we can build our own, more robust, code generator
@@ -77,7 +79,7 @@ class Generator implements GeneratorInterface
     protected function getEntityName() : string
     {
         if ($this->entityName === null) {
-            $namespaceArray = explode('\\', $this->getNamespace()) ;
+            $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
             $this->entityName = $namespaceArray[count($namespaceArray) - 2];
         }
 
@@ -115,5 +117,27 @@ class Generator implements GeneratorInterface
         }
         $this->namespace = $namespace;
         return $this;
+    }
+
+    public function getMeta() : GeneratorMetaInterface
+    {
+        if ($this->meta === null) {
+            throw new \LogicException('Generator meta has not been set.');
+        }
+        return $this->meta;
+    }
+
+    public function setMeta(GeneratorMetaInterface $meta) : GeneratorInterface
+    {
+        if ($this->meta !== null) {
+            throw new \LogicException('Generator meta is already set.');
+        }
+        $this->meta = $meta;
+        return $this;
+    }
+
+    public function getActorName() : string
+    {
+        return self::INTERFACE_NAME;
     }
 }

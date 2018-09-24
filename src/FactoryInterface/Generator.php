@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\FactoryInterface;
 
+use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -18,6 +19,7 @@ class Generator implements GeneratorInterface
     protected $daoName;
     protected $varName;
     protected $classSaver;
+    protected $meta;
 
     protected const INTERFACE_NAME = 'FactoryInterface';
 
@@ -25,7 +27,7 @@ class Generator implements GeneratorInterface
     {
         $this->setGenerator();
 
-        $this->getGenerator()->setNamespaceName($this->getNamespace());
+        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
         $this->getGenerator()->setName(self::INTERFACE_NAME);
 
         $this->replaceReturnTypePlaceHolders();
@@ -36,7 +38,7 @@ class Generator implements GeneratorInterface
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
         $this->getClassSaverFactory()->create()
-            ->setNamespace($this->getNamespace())
+            ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::INTERFACE_NAME)
             ->setGeneratedClass($builtFile)
             ->saveClass();
@@ -51,15 +53,15 @@ class Generator implements GeneratorInterface
         foreach ($methods as $method) {
             $returnType = $method->getReturnType();
             if ($returnType && strpos($returnType->generate(), 'DAONAMEPLACEHOLDERInterface')) {
-                $method->setReturnType($this->getNamespace() . 'Interface');
+                $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
             }
         }
     }
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getNamespace(), $fileContent);
-        $methodVarName = implode('', explode('\\', $this->getNamespace()));
+        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
+        $methodVarName = implode('', explode('\\', $this->getMeta()->getActorNamespace()));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
         return $fileContent;
     }
@@ -95,5 +97,27 @@ class Generator implements GeneratorInterface
         }
         $this->namespace = $namespace;
         return $this;
+    }
+
+    public function getMeta() : GeneratorMetaInterface
+    {
+        if ($this->meta === null) {
+            throw new \LogicException('Generator meta has not been set.');
+        }
+        return $this->meta;
+    }
+
+    public function setMeta(GeneratorMetaInterface $meta) : GeneratorInterface
+    {
+        if ($this->meta !== null) {
+            throw new \LogicException('Generator meta is already set.');
+        }
+        $this->meta = $meta;
+        return $this;
+    }
+
+    public function getActorName(): string
+    {
+        return self::INTERFACE_NAME;
     }
 }
