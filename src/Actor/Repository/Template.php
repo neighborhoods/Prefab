@@ -24,7 +24,7 @@ class Template // implements RepositoryInterface
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
         $queryBuilder = $queryBuilderBuilder->build();
-        $queryBuilder->from(DAONAMEPLACEHOLDERInterface::TABLE_NAME)->select('*');
+        $queryBuilder->from(\DAONAMEPLACEHOLDERInterface::TABLE_NAME)->select('*');
         $records = $queryBuilder->execute()->fetchAll();
 
         return $this->createBuilder()->setRecords($records)->build();
