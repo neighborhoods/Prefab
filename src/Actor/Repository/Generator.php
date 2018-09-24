@@ -31,13 +31,8 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\RepositoryInterface']);
         $this->getGenerator()->setName(self::CLASS_NAME);
 
-        $this->getGenerator()->addTraits(
-            [
-                '\Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait',
-                '\Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait',
-            ]
-        );
-
+        $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Builder\Factory\AwareTrait');
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
 
@@ -68,8 +63,11 @@ class Generator implements GeneratorInterface
     {
         $namespace = $this->getMeta()->getActorNamespace();
         $fileContent = str_replace('DAONAMEPLACEHOLDER', $namespace, $fileContent);
-        $methodVarName = implode('', explode('\\', $namespace));
+
+        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+        $methodVarName = implode('', array_slice($namespaceArray, 2));
         $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
+
         $fileContent = str_replace('PROJECTNAMEPLACEHOLDER', $this->getProjectName(), $fileContent);
         $fileContent = str_replace('NAMESPACEPLACEHOLDER', $namespace, $fileContent);
 
