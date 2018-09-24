@@ -5,49 +5,49 @@ namespace Neighborhoods\Prefab\Map;
 
 class Template
 {
-    /** @param RPL_ENTITY_NAMEInterface ...$RPL_ENTITY_ITEMs */
-    public function __construct(array $RPL_ENTITY_ITEMs = array(), int $flags = 0)
+    /** @param REPLACE_DAO_NAMEInterface ...$REPLACE_DAO_VARs */
+    public function __construct(array $REPLACE_DAO_VARs = array(), int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($RPL_ENTITY_ITEMs)) {
-            $this->assertValidArrayType(...array_values($RPL_ENTITY_ITEMs));
+        if (!empty($REPLACE_DAO_VARs)) {
+            $this->assertValidArrayType(...array_values($REPLACE_DAO_VARs));
         }
 
-        parent::__construct($RPL_ENTITY_ITEMs, $flags);
+        parent::__construct($REPLACE_DAO_VARs, $flags);
     }
 
-    public function offsetGet($index): RPL_ENTITY_NAMEInterface
+    public function offsetGet($index): REPLACE_DAO_NAMEInterface
     {
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param RPL_ENTITY_NAMEInterface $RPL_ENTITY_ITEM */
-    public function offsetSet($index, $RPL_ENTITY_ITEM)
+    /** @param REPLACE_DAO_NAMEInterface $REPLACE_DAO_VAR */
+    public function offsetSet($index, $REPLACE_DAO_VAR)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($RPL_ENTITY_ITEM));
+        parent::offsetSet($index, $this->assertValidArrayItemType($REPLACE_DAO_VAR));
     }
 
-    /** @param RPL_ENTITY_NAMEInterface $RPL_ENTITY_ITEM */
-    public function append($RPL_ENTITY_ITEM)
+    /** @param REPLACE_DAO_NAMEInterface $REPLACE_DAO_VAR */
+    public function append($REPLACE_DAO_VAR)
     {
-        $this->assertValidArrayItemType($RPL_ENTITY_ITEM);
-        parent::append($RPL_ENTITY_ITEM);
+        $this->assertValidArrayItemType($REPLACE_DAO_VAR);
+        parent::append($REPLACE_DAO_VAR);
     }
 
-    public function current(): RPL_ENTITY_NAMEInterface
+    public function current(): REPLACE_DAO_NAMEInterface
     {
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(RPL_ENTITY_NAMEInterface $RPL_ENTITY_ITEM)
+    protected function assertValidArrayItemType(REPLACE_DAO_NAMEInterface $REPLACE_DAO_VAR)
     {
-        return $RPL_ENTITY_ITEM;
+        return $REPLACE_DAO_VAR;
     }
 
-    protected function assertValidArrayType(RPL_ENTITY_NAMEInterface ...$RPL_ENTITY_ITEMs): MapInterface
+    protected function assertValidArrayType(REPLACE_DAO_NAMEInterface ...$REPLACE_DAO_VARs): MapInterface
     {
         return $this;
     }

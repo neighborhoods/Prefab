@@ -7,6 +7,8 @@ use Neighborhoods\Prefab\ClassSaver;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\ClassGenerator;
+use Zend\Code\Generator\FileGenerator;
+use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
 class Generator implements GeneratorInterface
@@ -22,56 +24,25 @@ class Generator implements GeneratorInterface
 
     public function generate(): GeneratorInterface
     {
-        $parent = $dao->getRelativePath();
-        $daoName = basename($dao->getFilename(),'.php');
+        $this->setGenerator();
 
-        $mapInterfaceTemplate = new ClassReflection(\Neighborhoods\AreaService\ZFC\Template\MapInterface::class);
-        $generator = InterfaceGenerator::fromReflection($mapInterfaceTemplate);
+        $meta = $this->getMeta();
 
-        $fullNamespace = $this->rootNamespace . $this->version . ($parent ? '\\'.$parent:'') . '\\' . $daoName;
-        $this->mapInterfaceNamespace = $fullNamespace;
-
-        $generator->setName('MapInterface');
-        $generator->setNamespaceName($fullNamespace);
-        $generator->addUse($fullNamespace . 'Interface');
-        $generator->setExtendedClass('SeekableIterator');
-
-        $methods = $generator->getMethods();
-        foreach ($methods as $method) {
-            $returnType = $method->getReturnType();
-            if ($returnType && strpos($returnType->generate(), 'REPLACE_DAO_NAMEInterface')) {
-                $method->setReturnType($fullNamespace.'Interface');
-            }
-        }
+        $this->getGenerator()->setName('MapInterface');
+        $this->getGenerator()->setNamespaceName($meta->getActorNamespace());
+        $this->getGenerator()->addUse($meta->getActorNamespace() . 'Interface');
+        $this->getGenerator()->setExtendedClass('\SeekableIterator, \ArrayAccess, \Serializable, \Countable');
 
         $file = new FileGenerator();
-        $file->setClass($generator);
+        $file->setClass($this->getGenerator());
 
-        $fileContent = $file->generate();
-        $builtFile = $this->replaceEntityPlaceholders($fileContent, $daoName);
+        $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-        $mapDirectory = 'fab/' . $this->version . DIRECTORY_SEPARATOR . ($parent ? $parent.DIRECTORY_SEPARATOR : '')
-            . $daoName . DIRECTORY_SEPARATOR;
-        if (!is_dir($mapDirectory)) {
-            mkdir($mapDirectory,0777,true);
-        }
-
-        file_put_contents($mapDirectory . $generator->getName() . '.php', $builtFile);
-
-        return $this;
-    }
-
-    protected function replaceReturnTypePlaceHolders()
-    {
-        $meta = $this->getMeta();
-        $methods = $this->getGenerator()->getMethods();
-
-        foreach ($methods as $method) {
-            $returnType = $method->getReturnType();
-            if ($returnType && strpos($returnType->generate(), 'REPLACE_DAO_NAMEInterface')) {
-                $method->setReturnType($meta->getActorNamespace() . '\\' . $meta->getDaoName() . 'Interface');
-            }
-        }
+        $this->getClassSaverFactory()->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setClassName(self::CLASS_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
 
         return $this;
     }
@@ -82,13 +53,15 @@ class Generator implements GeneratorInterface
         $entityItemName = strtolower($entityName);
         $fileContent = str_replace('REPLACE_DAO_NAME', $entityName, $fileContent);
         $fileContent = str_replace('REPLACE_DAO_VAR', $entityItemName, $fileContent);
+        $fileContent = str_replace('\Neighborhoods\Prefab\MapInterface\\', '', $fileContent);
+        $fileContent = substr_replace($fileContent, "declare(strict_types=1);\n", 6, 0);
         return $fileContent;
     }
 
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
-        $this->generator = ClassGenerator::fromReflection($template);
+        $this->generator = InterfaceGenerator::fromReflection($template);
         return $this;
     }
 

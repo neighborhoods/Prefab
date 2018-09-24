@@ -6,5 +6,6 @@ services:
     - [setBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Builder\Generator\FactoryInterface']]
     - [setAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\AwareTrait\Generator\FactoryInterface']]
     - [setMapGeneratorFactory, ['@Neighborhoods\Prefab\Map\Generator\FactoryInterface']]
+    - [setMapInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\MapInterface\Generator\FactoryInterface']]
     - [setRepositoryGeneratorFactory, ['@Neighborhoods\Prefab\Repository\Generator\FactoryInterface']]
     - [setFactoryGeneratorFactory, ['@Neighborhoods\Prefab\Factory\Generator\FactoryInterface']]

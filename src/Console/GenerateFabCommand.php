@@ -7,6 +7,7 @@ use Neighborhoods\Prefab\AwareTrait;
 use Neighborhoods\Prefab\Builder;
 use Neighborhoods\Prefab\Factory;
 use Neighborhoods\Prefab\Map;
+use Neighborhoods\Prefab\MapInterface;
 use Neighborhoods\Prefab\Repository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,6 +21,7 @@ class GenerateFabCommand extends Command
     use Builder\Generator\Factory\AwareTrait;
     use Factory\Generator\Factory\AwareTrait;
     use Map\Generator\Factory\AwareTrait;
+    use MapInterface\Generator\Factory\AwareTrait;
     use Repository\Generator\Factory\AwareTrait;
     use GeneratorMeta\Factory\AwareTrait;
 
@@ -139,10 +141,10 @@ class GenerateFabCommand extends Command
         $nextLevelMeta->setDaoName($this->getDaoName());
 
         //$this->addServiceToList($daoMeta);
-        $this->addAwareTraitToList($nextLevelMeta);
-        $this->addFactoryToList($nextLevelMeta);
+//        $this->addAwareTraitToList($nextLevelMeta);
+//        $this->addFactoryToList($nextLevelMeta);
         $this->addMapToList($nextLevelMeta);
-        $this->addRepositoryToList($nextLevelMeta);
+//        $this->addRepositoryToList($nextLevelMeta);
 
         return $this;
     }
@@ -195,15 +197,25 @@ class GenerateFabCommand extends Command
         $mapGenerator = $this->getMapGeneratorFactory()->create();
         $mapGenerator->setMeta($mapMeta);
         $this->appendGeneratorToBuildPlan($mapGenerator);
+        $this->addMapInterfaceToList($mapMeta);
 
         $nextLevelMeta = $this->getNextLevelMeta($mapGenerator);
-
         $this->addAwareTraitToList($nextLevelMeta);
         $this->addBuilderToList($nextLevelMeta);
         $this->addFactoryToList($nextLevelMeta);
 
         return $this;
     }
+
+    protected function addMapInterfaceToList(GeneratorMetaInterface $mapInterfaceMeta): self
+    {
+        $mapInterfaceGenerator = $this->getMapInterfaceGeneratorFactory()->create();
+        $mapInterfaceGenerator->setMeta($mapInterfaceMeta);
+        $this->appendGeneratorToBuildPlan($mapInterfaceGenerator);
+
+        return $this;
+    }
+
 
     protected function addRepositoryToList(GeneratorMetaInterface $repositoryMeta): self
     {

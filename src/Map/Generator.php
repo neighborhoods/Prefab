@@ -7,6 +7,8 @@ use Neighborhoods\Prefab\ClassSaver;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\ClassGenerator;
+use Zend\Code\Generator\DocBlock\Tag;
+use Zend\Code\Generator\DocBlockGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
@@ -31,9 +33,15 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setNamespaceName($meta->getActorNamespace());
         $this->getGenerator()->setExtendedClass('\ArrayIterator');
         $this->getGenerator()->setImplementedInterfaces([$meta->getActorNamespace() . '\MapInterface']);
-        $this->getGenerator()->addUse($meta->getActorNamespace() . '\MapInterface');
+        $this->getGenerator()->addUse($meta->getActorNamespace() . 'Interface');
 
-        $this->replaceReturnTypePlaceHolders();
+        $tag = new Tag\GenericTag();
+        $tag->setName('codeCoverageIgnore');
+
+        $classDocBlock = new DocBlockGenerator();
+        $classDocBlock->setTag($tag);
+
+        $this->getGenerator()->setDocBlock($classDocBlock);
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
@@ -49,7 +57,56 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-//
+    protected function replaceEntityPlaceholders($fileContent)
+    {
+        $entityName = $this->getMeta()->getDaoName();
+        $entityItemName = strtolower($entityName);
+        $fileContent = str_replace('REPLACE_DAO_NAME', $entityName, $fileContent);
+        $fileContent = str_replace('REPLACE_DAO_VAR', $entityItemName, $fileContent);
+        $fileContent = str_replace('\Neighborhoods\Prefab\Map\\', '', $fileContent);
+        $fileContent = substr_replace($fileContent, "declare(strict_types=1);\n", 6, 0);
+        return $fileContent;
+    }
+
+    protected function setGenerator() : GeneratorInterface
+    {
+        $template = new ClassReflection(Template::class);
+        $this->generator = ClassGenerator::fromReflection($template);
+        return $this;
+    }
+
+    protected function getGenerator() : ClassGenerator
+    {
+        if ($this->generator === null) {
+            throw new \LogicException('Generator generator has not been set');
+        }
+
+        return $this->generator;
+    }
+
+    public function getMeta(): GeneratorMetaInterface
+    {
+        if ($this->meta === null) {
+            throw new \LogicException('Generator meta has not been set.');
+        }
+        return $this->meta;
+    }
+
+    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
+    {
+        if ($this->meta !== null) {
+            throw new \LogicException('Generator meta is already set.');
+        }
+        $this->meta = $meta;
+        return $this;
+    }
+
+    public function getActorName(): string
+    {
+        return self::CLASS_NAME;
+    }
+
+    //
 //    protected function generateMapService()
 //    {
 //        $yaml = Yaml::parseFile('/var/www/html/area_service.neighborhoods.com/VendorPrefab/src/Map/Service.yml');
@@ -105,66 +162,4 @@ class Generator implements GeneratorInterface
 //
 //        return $this;
 //    }
-
-    protected function replaceReturnTypePlaceHolders()
-    {
-        $meta = $this->getMeta();
-        $methods = $this->getGenerator()->getMethods();
-
-        foreach ($methods as $method) {
-            $returnType = $method->getReturnType();
-            if ($returnType && strpos($returnType->generate(), 'REPLACE_DAO_NAMEInterface')) {
-                $method->setReturnType($meta->getActorNamespace() . '\\' . $meta->getDaoName() . 'Interface');
-            }
-        }
-
-        return $this;
-    }
-
-    protected function replaceEntityPlaceholders($fileContent)
-    {
-        $entityName = $this->getMeta()->getDaoName();
-        $entityItemName = strtolower($entityName);
-        $fileContent = str_replace('REPLACE_DAO_NAME', $entityName, $fileContent);
-        $fileContent = str_replace('REPLACE_DAO_VAR', $entityItemName, $fileContent);
-        return $fileContent;
-    }
-
-    protected function setGenerator() : GeneratorInterface
-    {
-        $template = new ClassReflection(Template::class);
-        $this->generator = ClassGenerator::fromReflection($template);
-        return $this;
-    }
-
-    protected function getGenerator() : ClassGenerator
-    {
-        if ($this->generator === null) {
-            throw new \LogicException('Generator generator has not been set');
-        }
-
-        return $this->generator;
-    }
-
-    public function getMeta(): GeneratorMetaInterface
-    {
-        if ($this->meta === null) {
-            throw new \LogicException('Generator meta has not been set.');
-        }
-        return $this->meta;
-    }
-
-    public function setMeta(GeneratorMetaInterface $meta): GeneratorInterface
-    {
-        if ($this->meta !== null) {
-            throw new \LogicException('Generator meta is already set.');
-        }
-        $this->meta = $meta;
-        return $this;
-    }
-
-    public function getActorName(): string
-    {
-        return self::CLASS_NAME;
-    }
 }
