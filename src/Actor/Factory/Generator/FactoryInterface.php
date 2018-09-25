@@ -8,5 +8,5 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 /** @codeCoverageIgnore */
 interface FactoryInterface
 {
-    public function create() : GeneratorInterface;
+    public function create(): GeneratorInterface;
 }

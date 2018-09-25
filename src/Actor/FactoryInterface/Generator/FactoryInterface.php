@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\FactoryInterface\Generator;
 
-use Neighborhoods\Prefab\Actor\FactoryInterface\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface
 {
-    public function create() : GeneratorInterface;
+    public function create(): GeneratorInterface;
 }

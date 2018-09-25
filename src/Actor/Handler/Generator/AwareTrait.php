@@ -3,43 +3,43 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\Handler\Generator;
 
-use Neighborhoods\Prefab\Actor\Handler\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabHandlerGenerator;
+    protected $NeighborhoodsPrefabActorHandlerGenerator;
 
-    public function setHandlerGenerator(GeneratorInterface $handlerGenerator) : self
+    public function setActorHandlerGenerator(GeneratorInterface $actorHandlerGenerator): self
     {
-        if ($this->hasHandlerGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabHandlerGenerator is already set.');
+        if ($this->hasActorHandlerGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorHandlerGenerator is already set.');
         }
-        $this->NeighborhoodsPrefabHandlerGenerator = $handlerGenerator;
+        $this->NeighborhoodsPrefabActorHandlerGenerator = $actorHandlerGenerator;
 
         return $this;
     }
 
-    protected function getHandlerGenerator() : GeneratorInterface
+    protected function getActorHandlerGenerator(): GeneratorInterface
     {
-        if (!$this->hasHandlerGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabHandlerGenerator is not set.');
+        if (!$this->hasActorHandlerGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorHandlerGenerator is not set.');
         }
 
-        return $this->NeighborhoodsPrefabHandlerGenerator;
+        return $this->NeighborhoodsPrefabActorHandlerGenerator;
     }
 
-    protected function hasHandlerGenerator() : bool
+    protected function hasActorHandlerGenerator(): bool
     {
-        return isset($this->NeighborhoodsPrefabHandlerGenerator);
+        return isset($this->NeighborhoodsPrefabActorHandlerGenerator);
     }
 
-    protected function unsetHandlerGenerator() : self
+    protected function unsetActorHandlerGenerator(): self
     {
-        if (!$this->hasHandlerGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabHandlerGenerator is not set.');
+        if (!$this->hasActorHandlerGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorHandlerGenerator is not set.');
         }
-        unset($this->NeighborhoodsPrefabHandlerGenerator);
+        unset($this->NeighborhoodsPrefabActorHandlerGenerator);
 
         return $this;
     }

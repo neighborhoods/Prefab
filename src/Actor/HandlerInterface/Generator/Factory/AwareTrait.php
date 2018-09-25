@@ -3,43 +3,43 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\HandlerInterface\Generator\Factory;
 
-use Neighborhoods\Prefab\Actor\HandlerInterface\FactoryInterface;
+use Neighborhoods\Prefab\Actor\HandlerInterface\Generator\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabHandlerInterfaceFactory;
+    protected $NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory;
 
-    public function setHandlerInterfaceFactory(FactoryInterface $handlerInterfaceFactory) : self
+    public function setActorHandlerInterfaceGeneratorFactory(FactoryInterface $actorHandlerInterfaceGeneratorFactory): self
     {
-        if ($this->hasHandlerInterfaceFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabHandlerInterfaceFactory is already set.');
+        if ($this->hasActorHandlerInterfaceGeneratorFactory()) {
+            throw new \LogicException('NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory is already set.');
         }
-        $this->NeighborhoodsPrefabHandlerInterfaceFactory = $handlerInterfaceFactory;
+        $this->NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory = $actorHandlerInterfaceGeneratorFactory;
 
         return $this;
     }
 
-    protected function getHandlerInterfaceFactory() : FactoryInterface
+    protected function getActorHandlerInterfaceGeneratorFactory(): FactoryInterface
     {
-        if (!$this->hasHandlerInterfaceFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabHandlerInterfaceFactory is not set.');
+        if (!$this->hasActorHandlerInterfaceGeneratorFactory()) {
+            throw new \LogicException('NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory is not set.');
         }
 
-        return $this->NeighborhoodsPrefabHandlerInterfaceFactory;
+        return $this->NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory;
     }
 
-    protected function hasHandlerInterfaceFactory() : bool
+    protected function hasActorHandlerInterfaceGeneratorFactory(): bool
     {
-        return isset($this->NeighborhoodsPrefabHandlerInterfaceFactory);
+        return isset($this->NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory);
     }
 
-    protected function unsetHandlerInterfaceFactory() : self
+    protected function unsetActorHandlerInterfaceGeneratorFactory(): self
     {
-        if (!$this->hasHandlerInterfaceFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabHandlerInterfaceFactory is not set.');
+        if (!$this->hasActorHandlerInterfaceGeneratorFactory()) {
+            throw new \LogicException('NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory is not set.');
         }
-        unset($this->NeighborhoodsPrefabHandlerInterfaceFactory);
+        unset($this->NeighborhoodsPrefabActorHandlerInterfaceGeneratorFactory);
 
         return $this;
     }

@@ -8,38 +8,38 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabRepositoryGenerator;
+    protected $NeighborhoodsPrefabActorRepositoryGenerator;
 
-    public function setRepositoryGenerator(GeneratorInterface $repositoryGenerator) : self
+    public function setActorRepositoryGenerator(GeneratorInterface $actorRepositoryGenerator): self
     {
-        if ($this->hasRepositoryGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabRepositoryGenerator is already set.');
+        if ($this->hasActorRepositoryGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorRepositoryGenerator is already set.');
         }
-        $this->NeighborhoodsPrefabRepositoryGenerator = $repositoryGenerator;
+        $this->NeighborhoodsPrefabActorRepositoryGenerator = $actorRepositoryGenerator;
 
         return $this;
     }
 
-    protected function getRepositoryGenerator() : GeneratorInterface
+    protected function getActorRepositoryGenerator(): GeneratorInterface
     {
-        if (!$this->hasRepositoryGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabRepositoryGenerator is not set.');
+        if (!$this->hasActorRepositoryGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorRepositoryGenerator is not set.');
         }
 
-        return $this->NeighborhoodsPrefabRepositoryGenerator;
+        return $this->NeighborhoodsPrefabActorRepositoryGenerator;
     }
 
-    protected function hasRepositoryGenerator() : bool
+    protected function hasActorRepositoryGenerator(): bool
     {
-        return isset($this->NeighborhoodsPrefabRepositoryGenerator);
+        return isset($this->NeighborhoodsPrefabActorRepositoryGenerator);
     }
 
-    protected function unsetRepositoryGenerator() : self
+    protected function unsetActorRepositoryGenerator(): self
     {
-        if (!$this->hasRepositoryGenerator()) {
-            throw new \LogicException('NeighborhoodsPrefabRepositoryGenerator is not set.');
+        if (!$this->hasActorRepositoryGenerator()) {
+            throw new \LogicException('NeighborhoodsPrefabActorRepositoryGenerator is not set.');
         }
-        unset($this->NeighborhoodsPrefabRepositoryGenerator);
+        unset($this->NeighborhoodsPrefabActorRepositoryGenerator);
 
         return $this;
     }

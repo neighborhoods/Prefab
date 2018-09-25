@@ -10,8 +10,8 @@ class Factory implements FactoryInterface
 {
     use AwareTrait;
 
-    public function create() : GeneratorInterface
+    public function create(): GeneratorInterface
     {
-        return clone $this->getBuilderGenerator();
+        return clone $this->getActorBuilderGenerator();
     }
 }
