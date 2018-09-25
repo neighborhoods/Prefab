@@ -51,10 +51,10 @@ class StringReplacer implements StringReplacerInterface
 
     protected function setPlaceholderValues()
     {
+        $this->placeholdersToReplace[self::TRUNCATED_DAO_NAME_PLACEHOLDER] = $this->getTruncatedDaoName();
         $this->placeholdersToReplace[self::DAO_NAME_PLACEHOLDER] = $this->getDaoName();
         $this->placeholdersToReplace[self::DAO_VAR_NAME_PLACEHOLDER] = $this->getDaoVarName();
         $this->placeholdersToReplace[self::PROJECT_NAME_PLACEHOLDER] = $this->getProjectName();
-        $this->placeholdersToReplace[self::TRUNCATED_DAO_NAME_PLACEHOLDER] = $this->getTruncatedDaoName();
         $this->placeholdersToReplace[self::NAMESPACE_PLACEHOLDER] = $this->getNamespace();
 
     }

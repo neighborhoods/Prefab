@@ -72,17 +72,6 @@ class Generator implements GeneratorInterface
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setFile($fileContent)
             ->replacePlaceholders();
-
-        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
-        $entityName = end($namespaceArray);
-        $fileContent = str_replace('TRUNCATEDDOANAMEPLACEHOLDER', $entityName, $fileContent);
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
-        $methodVarName = implode('', explode('\\', $this->getMeta()->getActorNamespace()));
-        $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
-        $fileContent = str_replace('PROJECTNAMEPLACEHOLDER', $this->getProjectName(), $fileContent);
-        $fileContent = str_replace('NAMESPACEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
-
-        return $fileContent;
     }
 
     protected function setGenerator() : GeneratorInterface

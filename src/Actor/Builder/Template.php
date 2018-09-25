@@ -5,16 +5,16 @@ namespace Neighborhoods\Prefab\Actor\Builder;
 
 class Template
 {
-//    use DOANAMEPLACEHOLDER\Factory\AwareTrait;
+//    use DAONAMEPLACEHOLDER\Factory\AwareTrait;
     /** @var array */
     protected $record;
 
     public function build() : \DAONAMEPLACEHOLDERInterface
     {
-        $TRUNCATEDDOANAMEPLACEHOLDER = $this->getTRUNCATEDDOANAMEPLACEHOLDERFactory()->create();
+        $TRUNCATEDDAONAMEPLACEHOLDER = $this->getDAOVARNAMEPLACEHOLDERFactory()->create();
         // @TODO - build the object.
 
-        return $TRUNCATEDDOANAMEPLACEHOLDER;
+        return $TRUNCATEDDAONAMEPLACEHOLDER;
     }
 
     protected function getRecord() : array

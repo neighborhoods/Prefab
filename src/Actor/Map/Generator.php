@@ -61,12 +61,13 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent)
     {
-        $entityName = $this->getMeta()->getDaoName();
-        $entityItemName = strtolower($entityName);
-        $fileContent = str_replace('REPLACE_DAO_NAME', $entityName, $fileContent);
-        $fileContent = str_replace('REPLACE_DAO_VAR', $entityItemName, $fileContent);
         $fileContent = str_replace('\Neighborhoods\Prefab\Actor\Map\\', '', $fileContent);
-        return $fileContent;
+
+        return $this->getStringReplacerFactory()
+            ->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setFile($fileContent)
+            ->replacePlaceholders();
     }
 
     protected function setGenerator() : GeneratorInterface

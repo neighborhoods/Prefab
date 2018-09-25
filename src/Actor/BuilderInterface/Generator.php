@@ -62,13 +62,11 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
-        $entityName = strtolower(end($namespaceArray));
-        $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $entityName, $fileContent);
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
-        $methodVarName = implode('', explode('\\', $this->getMeta()->getActorNamespace()));
-        $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
-        return $fileContent;
+        return $this->getStringReplacerFactory()
+            ->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setFile($fileContent)
+            ->replacePlaceholders();
     }
 
     protected function setGenerator() : GeneratorInterface

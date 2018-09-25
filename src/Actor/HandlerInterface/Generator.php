@@ -64,10 +64,6 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
-        $fileContent = str_replace('TRUNCATEDDAONAMEPLACEHOLDER', $this->getEntityName(), $fileContent);
-        $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
-        $methodVarName = implode('', explode('\\', $this->getMeta()->getActorNamespace()));
-        $fileContent = str_replace('DAOVARNAMEPLACEHOLDER', $methodVarName, $fileContent);
         // Because Zend Code just ignores extended interfaces altogether, we need to do this
         // This is temporary (tm) until we can build our own, more robust, code generator
         $fileContent = str_replace(
@@ -75,7 +71,12 @@ class Generator implements GeneratorInterface
             'interface HandlerInterface extends \Psr\Http\Server\RequestHandlerInterface',
             $fileContent
         );
-        return $fileContent;
+
+        return $this->getStringReplacerFactory()
+            ->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setFile($fileContent)
+            ->replacePlaceholders();
     }
 
 
