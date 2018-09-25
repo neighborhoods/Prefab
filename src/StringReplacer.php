@@ -67,7 +67,10 @@ class StringReplacer implements StringReplacerInterface
     protected function getDaoVarName() : string
     {
 
-        return implode('', explode('\\', $this->getNamespace()));
+        $namespaceArray =  explode('\\', $this->getNamespace());
+        unset($namespaceArray[0]);
+        unset($namespaceArray[1]);
+        return implode('', $namespaceArray);
     }
 
     protected function getProjectName() : string
