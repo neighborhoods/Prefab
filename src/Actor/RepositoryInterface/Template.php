@@ -11,5 +11,5 @@ interface Template
 
     public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDER\MapInterface;
 
-    public function save(MapInterface $map) : \DAONAMEPLACEHOLDER\RepositoryInterface;
+    public function save(\NAMESPACEPLACEHOLDER\MapInterface $map) : \DAONAMEPLACEHOLDER\RepositoryInterface;
 }

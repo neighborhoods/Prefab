@@ -5,49 +5,49 @@ namespace Neighborhoods\Prefab\Actor\Map;
 
 class Template
 {
-    /** @param REPLACE_DAO_NAMEInterface ...$REPLACE_DAO_VARs */
-    public function __construct(array $REPLACE_DAO_VARs = array(), int $flags = 0)
+    /** @param \DAONAMEPLACEHOLDERInterface ...$DAOVARNAMEPLACEHOLDERs */
+    public function __construct(array $DAOVARNAMEPLACEHOLDERs = array(), int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($REPLACE_DAO_VARs)) {
-            $this->assertValidArrayType(...array_values($REPLACE_DAO_VARs));
+        if (!empty($DAOVARNAMEPLACEHOLDERs)) {
+            $this->assertValidArrayType(...array_values($DAOVARNAMEPLACEHOLDERs));
         }
 
-        parent::__construct($REPLACE_DAO_VARs, $flags);
+        parent::__construct($DAOVARNAMEPLACEHOLDERs, $flags);
     }
 
-    public function offsetGet($index): REPLACE_DAO_NAMEInterface
+    public function offsetGet($index): \DAONAMEPLACEHOLDERInterface
     {
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param REPLACE_DAO_NAMEInterface $REPLACE_DAO_VAR */
-    public function offsetSet($index, $REPLACE_DAO_VAR)
+    /** @param \DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER */
+    public function offsetSet($index, $DAOVARNAMEPLACEHOLDER)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($REPLACE_DAO_VAR));
+        parent::offsetSet($index, $this->assertValidArrayItemType($DAOVARNAMEPLACEHOLDER));
     }
 
-    /** @param REPLACE_DAO_NAMEInterface $REPLACE_DAO_VAR */
-    public function append($REPLACE_DAO_VAR)
+    /** @param \DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER */
+    public function append($DAOVARNAMEPLACEHOLDER)
     {
-        $this->assertValidArrayItemType($REPLACE_DAO_VAR);
-        parent::append($REPLACE_DAO_VAR);
+        $this->assertValidArrayItemType($DAOVARNAMEPLACEHOLDER);
+        parent::append($DAOVARNAMEPLACEHOLDER);
     }
 
-    public function current(): REPLACE_DAO_NAMEInterface
+    public function current(): \DAONAMEPLACEHOLDERInterface
     {
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(REPLACE_DAO_NAMEInterface $REPLACE_DAO_VAR)
+    protected function assertValidArrayItemType(\DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER)
     {
-        return $REPLACE_DAO_VAR;
+        return $DAOVARNAMEPLACEHOLDER;
     }
 
-    protected function assertValidArrayType(REPLACE_DAO_NAMEInterface ...$REPLACE_DAO_VARs): MapInterface
+    protected function assertValidArrayType(\DAONAMEPLACEHOLDERInterface ...$DAOVARNAMEPLACEHOLDERs): MapInterface
     {
         return $this;
     }
