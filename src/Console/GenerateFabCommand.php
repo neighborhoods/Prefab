@@ -145,6 +145,7 @@ class GenerateFabCommand extends Command
         $this->addFactoryToList($nextLevelMeta);
         $this->addMapToList($nextLevelMeta);
         $this->addRepositoryToList($nextLevelMeta);
+        $this->addBuilderToList($nextLevelMeta);
 
         return $this;
     }
