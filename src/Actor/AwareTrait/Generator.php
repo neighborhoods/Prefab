@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Actor\AwareTrait;
 
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
+use Neighborhoods\Prefab\StringReplacer;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\TraitGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -13,6 +14,7 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 class Generator implements GeneratorInterface
 {
     use ClassSaver\Factory\AwareTrait;
+    use StringReplacer\Factory\AwareTrait;
 
     protected const TRAIT_NAME = 'AwareTrait';
 
@@ -60,6 +62,12 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
+        return $this->getStringReplacerFactory()
+            ->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setFile($fileContent)
+            ->replacePlaceholders();
+
         $fileContent = str_replace('DAONAMEPLACEHOLDER', $this->getMeta()->getActorNamespace(), $fileContent);
         $fileContent = str_replace('VARNAMEPLACEHOLDER', $this->getVarName(), $fileContent);
 
