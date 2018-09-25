@@ -9,10 +9,12 @@ use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
 use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
 {
     use ClassSaver\Factory\AwareTrait;
+    use StringReplacer\Factory\AwareTrait;
 
     public const CLASS_NAME = 'Repository';
 

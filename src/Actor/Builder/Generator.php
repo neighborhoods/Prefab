@@ -9,10 +9,12 @@ use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
 {
     use AwareTrait;
+    use StringReplacer\Factory\AwareTrait;
 
     public const CLASS_NAME = 'Builder';
 
@@ -65,6 +67,12 @@ class Generator implements GeneratorInterface
 
     protected function replaceEntityPlaceholders($fileContent) : string
     {
+        return $this->getStringReplacerFactory()
+            ->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setFile($fileContent)
+            ->replacePlaceholders();
+
         $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
         $entityName = end($namespaceArray);
         $fileContent = str_replace('TRUNCATEDDOANAMEPLACEHOLDER', $entityName, $fileContent);

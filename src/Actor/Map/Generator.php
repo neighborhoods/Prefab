@@ -11,10 +11,12 @@ use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Generator\DocBlock\Tag;
 use Zend\Code\Generator\DocBlockGenerator;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
 {
     use ClassSaver\Factory\AwareTrait;
+    use StringReplacer\Factory\AwareTrait;
 
     public const CLASS_NAME = 'Map';
 

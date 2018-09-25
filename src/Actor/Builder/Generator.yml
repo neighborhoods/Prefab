@@ -3,3 +3,4 @@ services:
     class: Neighborhoods\Prefab\Actor\Builder\Generator
     calls:
     - [setClassSaverFactory, ['@Neighborhoods\Prefab\ClassSaver\FactoryInterface']]
+    - [setStringReplacerFactory, ['@Neighborhoods\Prefab\StringReplacer\FactoryInterface']]

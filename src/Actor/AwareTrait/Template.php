@@ -6,38 +6,38 @@ namespace Neighborhoods\Prefab\Actor\AwareTrait;
 /** @codeCoverageIgnore */
 class Template
 {
-    protected $VARNAMEPLACEHOLDER;
+    protected $DAOVARNAMEPLACEHOLDER;
 
-    public function setVARNAMEPLACEHOLDER(\DAONAMEPLACEHOLDERInterface $VARNAMEPLACEHOLDER) : DAONAMEPLACEHOLDERInterface
+    public function setDAOVARNAMEPLACEHOLDER(\DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER) : DAONAMEPLACEHOLDERInterface
     {
-        if ($this->hasVARNAMEPLACEHOLDER()) {
-            throw new \LogicException('VARNAMEPLACEHOLDER is already set.');
+        if ($this->hasDAOVARNAMEPLACEHOLDER()) {
+            throw new \LogicException('DAOVARNAMEPLACEHOLDER is already set.');
         }
-        $this->VARNAMEPLACEHOLDER = $VARNAMEPLACEHOLDER;
+        $this->DAOVARNAMEPLACEHOLDER = $DAOVARNAMEPLACEHOLDER;
 
         return $this;
     }
 
-    protected function getVARNAMEPLACEHOLDER() : DAONAMEPLACEHOLDERInterface
+    protected function getDAOVARNAMEPLACEHOLDER() : DAONAMEPLACEHOLDERInterface
     {
-        if (!$this->hasVARNAMEPLACEHOLDER()) {
-            throw new \LogicException('VARNAMEPLACEHOLDER is not set.');
+        if (!$this->hasDAOVARNAMEPLACEHOLDER()) {
+            throw new \LogicException('DAOVARNAMEPLACEHOLDER is not set.');
         }
 
-        return $this->VARNAMEPLACEHOLDER;
+        return $this->DAOVARNAMEPLACEHOLDER;
     }
 
-    protected function hasVARNAMEPLACEHOLDER() : bool
+    protected function hasDAOVARNAMEPLACEHOLDER() : bool
     {
-        return isset($this->VARNAMEPLACEHOLDER);
+        return isset($this->DAOVARNAMEPLACEHOLDER);
     }
 
-    protected function unsetVARNAMEPLACEHOLDER() : DAONAMEPLACEHOLDERInterface
+    protected function unsetDAOVARNAMEPLACEHOLDER() : DAONAMEPLACEHOLDERInterface
     {
-        if (!$this->hasVARNAMEPLACEHOLDER()) {
-            throw new \LogicException('VARNAMEPLACEHOLDER is not set.');
+        if (!$this->hasDAOVARNAMEPLACEHOLDER()) {
+            throw new \LogicException('DAOVARNAMEPLACEHOLDER is not set.');
         }
-        unset($this->VARNAMEPLACEHOLDER);
+        unset($this->DAOVARNAMEPLACEHOLDER);
 
         return $this;
     }

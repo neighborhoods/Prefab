@@ -9,6 +9,7 @@ use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
 use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
 {
@@ -23,6 +24,7 @@ class Generator implements GeneratorInterface
     protected const INTERFACE_NAME = 'BuilderInterface';
 
     use ClassSaver\Factory\AwareTrait;
+    use StringReplacer\Factory\AwareTrait;
 
     public function generate() : GeneratorInterface
     {

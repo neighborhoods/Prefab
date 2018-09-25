@@ -10,10 +10,12 @@ use Neighborhoods\Prefab\CodeGen\InterfaceGenerator;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
 {
     use ClassSaver\Factory\AwareTrait;
+    use StringReplacer\Factory\AwareTrait;
 
     public const CLASS_NAME = 'MapInterface';
 

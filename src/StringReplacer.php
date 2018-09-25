@@ -36,13 +36,7 @@ class StringReplacer implements StringReplacerInterface
      */
     protected const NAMESPACE_PLACEHOLDER = 'NAMESPACEPLACEHOLDER';
 
-    protected $placeholdersToReplace = [
-        self::DAO_NAME_PLACEHOLDER,
-        self::DAO_VAR_NAME_PLACEHOLDER,
-        self::PROJECT_NAME_PLACEHOLDER,
-        self::TRUNCATED_DAO_NAME_PLACEHOLDER,
-        self::NAMESPACE_PLACEHOLDER
-    ];
+    protected $placeholdersToReplace = [];
 
     public function replacePlaceholders() : string
     {
@@ -84,7 +78,7 @@ class StringReplacer implements StringReplacerInterface
     protected function getTruncatedDaoName() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return $namespaceArray[count($namespaceArray) - 2];
+        return $namespaceArray[count($namespaceArray) - 1];
     }
 
     protected function getFile() : string
