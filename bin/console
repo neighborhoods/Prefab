@@ -15,6 +15,7 @@ $discoverableDirectories[] = __DIR__ . '/../fab';
 
 $finder = new Finder();
 $finder->name('*.yml');
+$finder->notName('Service.yml');
 $finder->files()->in($discoverableDirectories);
 $containerBuilderFacade = new Facade();
 $containerBuilderFacade->setContainerBuilder($containerBuilder);
