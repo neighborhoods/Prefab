@@ -17,13 +17,13 @@ class Template // implements HandlerInterface
         return new \Zend\Diactoros\Response\JsonResponse($this->getMap());
     }
 
-    protected function getMap() : \NAMESPACEPLACEHOLDER\MapInterface
+    protected function getMap() : \PARENTNAMESPACEPLACEHOLDER\MapInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         $searchCriteria = $searchCriteriaBuilder->build();
 
-        return $this->getJakeRepository()->get($searchCriteria);
+        return $this->getDAOVARNAMEPLACEHOLDER()->get($searchCriteria);
     }
 
     protected function getRouteResult() : \Zend\Expressive\Router\RouteResult

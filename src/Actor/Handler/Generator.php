@@ -36,13 +36,9 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\HandlerInterface']);
         $this->getGenerator()->setName(self::CLASS_NAME);
 
-        $this->getGenerator()->addTraits(
-            [
-                'Neighborhoods\\' . $this->getProjectName() . $this->getEntityName() . '\Repository\AwareTrait',
-                'Neighborhoods\\' . $this->getProjectName() . '\Psr\Http\Message\ServerRequest\AwareTrait',
-                'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait',
-            ]
-        );
+        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . 'Neighborhoods\\' . $this->getProjectName() . '\Psr\Http\Message\ServerRequest\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . 'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait');
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());

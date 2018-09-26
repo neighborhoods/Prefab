@@ -138,10 +138,11 @@ class GenerateFabCommand extends Command
         //$this->addServiceToPlan($daoMeta);
         $this->addAwareTraitToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
-        //$this->addHandlerToPlan($nextLevelMeta);
         $this->addMapToPlan($nextLevelMeta);
         $this->addRepositoryToPlan($nextLevelMeta);
+        $this->addRepositoryInterfaceToPlan($nextLevelMeta);
         $this->addBuilderToPlan($nextLevelMeta);
+        $this->addBuilderInterfaceToPlan($nextLevelMeta);
 
         return $this;
     }
@@ -202,7 +203,12 @@ class GenerateFabCommand extends Command
 
     protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta): self
     {
+        $handlerGenerator = $this->getActorHandlerGeneratorFactory()->create();
+        $handlerGenerator->setMeta($handlerMeta);
+        $this->appendGeneratorToBuildPlan($handlerGenerator);
 
+        $nextLevelMeta = $this->getNextLevelMeta($handlerGenerator);
+        $this->addAwareTraitToPlan($nextLevelMeta);
         return $this;
     }
 
@@ -224,6 +230,7 @@ class GenerateFabCommand extends Command
         $nextLevelMeta = $this->getNextLevelMeta($mapGenerator);
         $this->addAwareTraitToPlan($nextLevelMeta);
         $this->addBuilderToPlan($nextLevelMeta);
+        $this->addBuilderInterfaceToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
 
         return $this;
@@ -249,6 +256,8 @@ class GenerateFabCommand extends Command
         $nextLevelMeta = $this->getNextLevelMeta($repositoryGenerator);
 
         $this->addAwareTraitToPlan($nextLevelMeta);
+        $this->addHandlerToPlan($nextLevelMeta);
+        $this->addHandlerInterfaceToPlan($nextLevelMeta);
 
         return $this;
     }
