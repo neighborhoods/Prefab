@@ -8,6 +8,7 @@ use Neighborhoods\Prefab\CodeGen\ClassGenerator;
 use Neighborhoods\Prefab\CodeGen\FileGenerator;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
+use Symfony\Component\Yaml\Yaml;
 use Zend\Code\Generator\DocBlock\Tag;
 use Zend\Code\Generator\DocBlockGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -55,6 +56,8 @@ class Generator implements GeneratorInterface
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)
             ->saveClass();
+
+        $this->generateService();
 
         return $this;
     }
@@ -108,60 +111,24 @@ class Generator implements GeneratorInterface
         return self::CLASS_NAME;
     }
 
-    //
-//    protected function generateMapService()
-//    {
-//        $yaml = Yaml::parseFile('/var/www/html/area_service.neighborhoods.com/VendorPrefab/src/Map/Service.yml');
-//
-//        $mapClass = $this->mapNamespace . '\\Map';
-//        $mapInterface = $this->mapNamespace . '\\MapInterface';
-//
-//        $yaml['services'][$mapInterface] = $yaml['services']['REPLACE_DAO_MAP_INTERFACE'];
-//        unset($yaml['services']['REPLACE_DAO_MAP_INTERFACE']);
-//
-//        $yaml['services'][$mapInterface]['class'] = $mapClass;
-//
-//        $preparedYaml = Yaml::dump($yaml,3,2);
-//
-//        file_put_contents($this->mapDirectory.'/Map.yml', $preparedYaml);
-//
-//        return $this;
-//    }
-//
-//    protected function generateRepositoryService(SplFileInfo $dao)
-//    {
-//        $parent = $dao->getRelativePath();
-//        $daoName = basename($dao->getFilename(),'.php');
-//
-//        $yaml = Yaml::parseFile('/var/www/html/area_service.neighborhoods.com/VendorPrefab/src/Repository/Service.yml');
-//
-//        $repositoryClass = $this->mapNamespace . '\\Repository';
-//        $repositoryInterface = $this->mapNamespace . '\\RepositoryInterface';
-//
-//        $yaml['services'][$repositoryInterface] = $yaml['services']['REPLACE_DAO_REPOSITORY_INTERFACE'];
-//        unset($yaml['services']['REPLACE_DAO_REPOSITORY_INTERFACE']);
-//
-//        $yaml['services'][$repositoryInterface]['class'] = $repositoryClass;
-//
-//        $calls = $yaml['services'][$repositoryInterface]['calls'];
-//        $replacedCalls = [];
-//
-//        $versionedDaoName = $this->version.$parent.$daoName;
-//        $fullDaoName = ($parent) ? $parent."\\\\".$daoName : $daoName;
-//        foreach ($calls as $call) {
-//            $json = json_encode($call);
-//            $json = str_replace('REPLACE_VERSIONED_DAO_NAME', $versionedDaoName,$json);
-//            $json = str_replace('REPLACE_DAO_VERSION', $this->version,$json);
-//            $json = str_replace('REPLACE_DAO_NAME', $fullDaoName,$json);
-//            $call = json_decode($json,true);
-//            $replacedCalls[] = $call;
-//        }
-//        $yaml['services'][$repositoryInterface]['calls'] = $replacedCalls;
-//
-//        $preparedYaml = Yaml::dump($yaml,4,2);
-//
-//        file_put_contents($this->mapDirectory.'/Repository.yml', $preparedYaml);
-//
-//        return $this;
-//    }
+    protected function generateService()
+    {
+        $class = $this->getMeta()->getActorNamespace() . '\\Map';
+        $interface = $this->getMeta()->getActorNamespace() . '\\MapInterface';
+
+        $yaml = [
+            'services' => [
+                $interface => [
+                    'class' => $class,
+                    'public' => false,
+                    'shared' => false,
+                ]
+            ]
+        ];
+
+        $preparedYaml = Yaml::dump($yaml, 4, 2);
+        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
+
+        return $this;
+    }
 }

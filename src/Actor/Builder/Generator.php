@@ -51,7 +51,7 @@ class Generator implements GeneratorInterface
             ->setGeneratedClass($builtFile)
             ->saveClass();
 
-        $this->generateBuilderService();
+        $this->generateService();
 
         return $this;
     }
@@ -77,27 +77,28 @@ class Generator implements GeneratorInterface
             ->replacePlaceholders();
     }
 
-    protected function generateBuilderService()
+    protected function generateService()
     {
         $class = $this->getMeta()->getActorNamespace() . '\\Builder';
         $interface = $this->getMeta()->getActorNamespace() . '\\BuilderInterface';
 
         $factoryPrefix = $this->getTruncatedNamespace();
 
-        $yaml = [];
-        $yaml['services']
-            [$interface] =
-                [
+        $yaml = [
+            'services' => [
+                $interface => [
                     'class' => $class,
                     'public' => false,
                     'shared' => false,
                     'calls' => [
                         [ "set{$factoryPrefix}Factory", ["@{$this->getMeta()->getActorNamespace()}\\FactoryInterface" ]]
                     ]
-                ];
+                ]
+            ]
+        ];
 
         $preparedYaml = Yaml::dump($yaml, 4, 2);
-        file_put_contents($this->getMeta()->getActorFilePath() . '/Builder.yml', $preparedYaml);
+        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
 
         return $this;
     }

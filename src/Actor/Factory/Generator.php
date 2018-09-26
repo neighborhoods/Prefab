@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\Actor\Factory;
 use Neighborhoods\Prefab\ClassSaverInterface;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
+use Symfony\Component\Yaml\Yaml;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -48,7 +49,43 @@ class Generator implements GeneratorInterface
             ->setGeneratedClass($builtFile)
             ->saveClass();
 
+        $this->generateService();
+
         return $this;
+    }
+
+    protected function generateService()
+    {
+        $class = $this->getMeta()->getActorNamespace() . '\\Factory';
+        $interface = $this->getMeta()->getActorNamespace() . '\\FactoryInterface';
+
+        $factoryPrefix = $this->getTruncatedNamespace();
+
+        $yaml = [
+            'services' => [
+                $interface => [
+                    'class' => $class,
+                    'public' => false,
+                    'shared' => true,
+                    'calls' => [
+                        [ "set{$factoryPrefix}", ["@{$this->getMeta()->getActorNamespace()}Interface" ]]
+                    ]
+                ]
+            ]
+        ];
+
+        $preparedYaml = Yaml::dump($yaml, 4, 2);
+        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
+
+        return $this;
+    }
+
+    protected function getTruncatedNamespace() : string
+    {
+        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+        unset($namespaceArray[0]);
+        unset($namespaceArray[1]);
+        return implode('', $namespaceArray);
     }
 
     protected function replaceReturnTypePlaceHolders()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Actor\Handler;
 
 use Neighborhoods\Prefab\Console\GeneratorInterface;
+use Symfony\Component\Yaml\Yaml;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Reflection\ClassReflection;
@@ -51,8 +52,46 @@ class Generator implements GeneratorInterface
             ->setGeneratedClass($builtFile)
             ->saveClass();
 
+        $this->generateService();
+
         return $this;
     }
+
+    protected function generateService()
+    {
+        $class = $this->getMeta()->getActorNamespace() . '\\Handler';
+        $interface = $this->getMeta()->getActorNamespace() . '\\HandlerInterface';
+
+        $methodName = $this->getTruncatedNamespace();
+
+        $yaml = [
+            'services' => [
+                $interface => [
+                    'class' => $class,
+                    'public' => false,
+                    'shared' => false,
+                    'calls' => [
+                        [ "set{$methodName}", ["@{$this->getMeta()->getActorNamespace()}Interface" ]],
+                        [ 'setSearchCriteriaServerRequestBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\SearchCriteria\ServerRequest\Builder\FactoryInterface' ]]
+                    ]
+                ]
+            ]
+        ];
+
+        $preparedYaml = Yaml::dump($yaml, 4, 2);
+        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
+
+        return $this;
+    }
+
+    protected function getTruncatedNamespace() : string
+    {
+        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+        unset($namespaceArray[0]);
+        unset($namespaceArray[1]);
+        return implode('', $namespaceArray);
+    }
+
 
     protected function getEntityName() : string
     {
