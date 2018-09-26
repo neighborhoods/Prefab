@@ -57,6 +57,12 @@ class StringReplacer implements StringReplacerInterface
      */
     protected const UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER = 'UCTRUNCATEDPARENTNAMESPACEPLACEHOLDER';
 
+    /**
+     * Self return type. Requires a leading slash otherwise zend will fully namespace the word selfplaceholder
+     * @example self
+     */
+    protected const SELF_PLACEHOLDER = '\SELFPLACEHOLDER';
+
     protected $placeholdersToReplace = [];
 
     public function replacePlaceholders() : string
@@ -85,6 +91,12 @@ class StringReplacer implements StringReplacerInterface
         $this->placeholdersToReplace[self::NAMESPACE_PLACEHOLDER] = $this->getNamespace();
         $this->placeholdersToReplace[self::TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getTruncatedParentNamespace();
         $this->placeholdersToReplace[self::UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getUcTruncatedParentNamespace();
+        $this->placeholdersToReplace[self::SELF_PLACEHOLDER] = $this->getSelf();
+    }
+
+    protected function getSelf() : string
+    {
+        return 'self';
     }
 
     protected function getUcTruncatedParentNamespace() : string

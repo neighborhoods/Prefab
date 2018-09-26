@@ -8,7 +8,7 @@ class Template
 {
     protected $DAOVARNAMEPLACEHOLDER;
 
-    public function setDAOVARNAMEPLACEHOLDER(\DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER) : DAONAMEPLACEHOLDERInterface
+    public function setDAOVARNAMEPLACEHOLDER(\DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER) : \SELFPLACEHOLDER
     {
         if ($this->hasDAOVARNAMEPLACEHOLDER()) {
             throw new \LogicException('DAOVARNAMEPLACEHOLDER is already set.');

@@ -33,7 +33,6 @@ class Generator implements GeneratorInterface
 
         $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
         $this->getGenerator()->setName(self::INTERFACE_NAME);
-        $this->getGenerator()->setNamespaceName($this->namespace);
         $this->replaceReturnTypePlaceHolders();
 
         $file = new FileGenerator();

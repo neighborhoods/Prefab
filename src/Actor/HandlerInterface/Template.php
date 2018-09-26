@@ -6,5 +6,5 @@ namespace Neighborhoods\Prefab\Actor\HandlerInterface;
 
 interface Template //extends RequestHandlerInterface
 {
-    public const ROUTE_NAME_UCTRUNCATEDPARENTNAMESPACEPLACEHOLDER = 'TRUNCATEDPARENTNAMESPACEPLACEHOLDERs';
+    public const ROUTE_NAME_UCTRUNCATEDPARENTNAMESPACEPLACEHOLDERS = 'TRUNCATEDPARENTNAMESPACEPLACEHOLDERs';
 }

@@ -14,10 +14,10 @@ class Template // implements HandlerInterface
     {
         $this->setPsrHttpMessageServerRequest($request);
 
-        return new \Zend\Diactoros\Response\JsonResponse($this->getMap());
+        return new \Zend\Diactoros\Response\JsonResponse($this->get());
     }
 
-    protected function getMap() : \PARENTNAMESPACEPLACEHOLDER\MapInterface
+    protected function get() : \PARENTNAMESPACEPLACEHOLDERInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());

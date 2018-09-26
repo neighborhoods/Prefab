@@ -19,15 +19,15 @@ class Template // implements RepositoryInterface
         return $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : \NAMESPACEPLACEHOLDER\MapInterface
+    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDERInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
         $queryBuilder = $queryBuilderBuilder->build();
         $queryBuilder->from(\DAONAMEPLACEHOLDERInterface::TABLE_NAME)->select('*');
-        $records = $queryBuilder->execute()->fetchAll();
+        $records = $queryBuilder->execute()->fetch();
 
-        return $this->createBuilder()->setRecords($records)->build();
+        return $this->createBuilder()->setRecord($records)->build();
     }
 
     public function save(\NAMESPACEPLACEHOLDER\MapInterface $map) : \NAMESPACEPLACEHOLDER\RepositoryInterface
