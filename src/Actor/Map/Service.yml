@@ -1,5 +1,0 @@
-services:
-  REPLACE_DAO_MAP_INTERFACE:
-    class: REPLACE_DAO_MAP_CLASS
-    public: false
-    shared: false
