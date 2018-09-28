@@ -19,6 +19,7 @@ use Neighborhoods\Prefab\Actor\RepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -51,9 +52,17 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     /** @var string */
     protected $daoRelativePath;
     /** @var string */
+    protected $httpSrcDir;
+    /** @var string */
+    protected $stagedHttpDir;
+    /** @var string */
+    protected $projectDir;
+    /** @var string */
     protected $fabLocation;
     /** @var string */
     protected $srcLocation;
+    /** @var string */
+    protected $projectName;
 
     protected function configure() : GenerateFabCommandInterface
     {
@@ -61,6 +70,9 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             ->setDescription('Generate Protean Machinery');
 
         // We should probably do something better than this
+        $this->httpSrcDir = __DIR__ . '/../../http';
+        $this->stagedHttpDir = __DIR__ . '/../../stagedHttp';
+        $this->projectDir = __DIR__ . '/../../../../../';
         $this->srcLocation = __DIR__ . '/../../../../../src';
         $this->fabLocation = __DIR__ . '/../../../../../fab';
 
@@ -69,13 +81,88 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function execute(InputInterface $input, OutputInterface $output) : GenerateFabCommandInterface
     {
+        $output->writeln('Copying HTTP skeleton.');
+        $this->copyHttpSkeleton();
+
         $output->writeln('Assembling Prefab build plan.');
         $this->assembleBuildPlan();
-        $output->writeln('Build plan complete.');
 
         $output->writeln('Generating prefab machinery.');
         $this->generatePrefab();
-        $output->writeln('Prefab generation complete.');
+
+        $output->writeln('Protean prefab complete.');
+
+        return $this;
+    }
+
+    protected function copyHttpSkeleton()
+    {
+        $fileSystem = new Filesystem();
+
+        $options['override'] = true;
+
+        $fileSystem->mkdir($this->stagedHttpDir);
+        $fileSystem->mirror($this->httpSrcDir,$this->stagedHttpDir,null,$options);
+
+        $this->determineProjectNameFromComposer();
+        $this->setProjectNameInStagedHttpFiles();
+
+        $finder = new Finder();
+        $httpDirs = $finder->directories()->in($this->stagedHttpDir);
+
+        /** @var SplFileInfo $dir */
+        foreach ($httpDirs as $dir) {
+            $dirName = $this->projectDir . $dir->getFilename();
+            if ($fileSystem->exists($dirName)) {
+                $fileSystem->remove($dirName);
+            };
+        }
+
+        $fileSystem->mirror($this->stagedHttpDir,$this->projectDir,null,$options);
+        $fileSystem->remove($this->stagedHttpDir);
+
+        return $this;
+    }
+
+    protected function determineProjectNameFromComposer()
+    {
+        $finder = new Finder();
+        $finder->name('composer.json')->in($this->projectDir)->exclude('vendor');
+
+        $matchCount = $finder->count();
+        if ($matchCount < 1) {
+            throw new \RuntimeException('Could not find composer file for project.');
+        } else if ($matchCount > 1) {
+            throw new \RuntimeException('Found too many composer files.');
+        } else {
+            $iterator = $finder->getIterator();
+            $iterator->rewind();
+            $composerFile = $iterator->current();
+        }
+
+        if (!$composerFile) {
+            throw new \RuntimeException('Could not access composer file for project.');
+        }
+
+        $composerContents = json_decode($composerFile->getContents(),true);
+        $fullNamespace = key($composerContents['autoload']['psr-4']);
+        $projectName = trim(str_replace('Neighborhoods','',$fullNamespace),'\\');
+
+        $this->setProjectName($projectName);
+
+        return $this;
+    }
+
+    protected function setProjectNameInStagedHttpFiles()
+    {
+        $finder = new Finder();
+        $finder->files()->in($this->stagedHttpDir);
+
+        foreach ($finder as $file) {
+            $contents = $file->getContents();
+            $modifiedContents = str_replace('ReplaceThisWithTheNameOfYourProduct',$this->getProjectName(),$contents);
+            file_put_contents($file->getRealPath(),$modifiedContents);
+        }
 
         return $this;
     }
@@ -334,5 +421,22 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             throw new \LogicException('GenerateFabCommand buildPlan has not been set.');
         }
         return $this->buildPlan;
+    }
+
+    public function getProjectName(): string
+    {
+        if ($this->projectName === null) {
+            throw new \LogicException('GenerateFabCommand projectName has not been set.');
+        }
+        return $this->projectName;
+    }
+
+    public function setProjectName(string $projectName)
+    {
+        if ($this->projectName !== null) {
+            throw new \LogicException('GenerateFabCommand projectName is already set.');
+        }
+        $this->projectName = $projectName;
+        return $this;
     }
 }
