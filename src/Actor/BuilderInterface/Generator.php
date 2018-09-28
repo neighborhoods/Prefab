@@ -48,7 +48,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function replaceReturnTypePlaceHolders()
+    protected function replaceReturnTypePlaceHolders() : GeneratorInterface
     {
         $methods = $this->getGenerator()->getMethods();
 
@@ -58,9 +58,11 @@ class Generator implements GeneratorInterface
                 $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
             }
         }
+
+        return $this;
     }
 
-    protected function replaceEntityPlaceholders($fileContent) : string
+    protected function replaceEntityPlaceholders(string $fileContent) : string
     {
         return $this->getStringReplacerFactory()
             ->create()

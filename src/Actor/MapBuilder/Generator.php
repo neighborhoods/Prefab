@@ -1,16 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Actor\Factory;
+namespace Neighborhoods\Prefab\Actor\MapBuilder;
 
-use Neighborhoods\Prefab\ClassSaverInterface;
+use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\CodeGen\ClassGenerator;
+use Neighborhoods\Prefab\CodeGen\FileGenerator;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Symfony\Component\Yaml\Yaml;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\FileGenerator;
+use Zend\Code\Generator\DocBlock\Tag;
+use Zend\Code\Generator\DocBlockGenerator;
 use Zend\Code\Reflection\ClassReflection;
-use Neighborhoods\Prefab\ClassSaver;
 use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
@@ -18,25 +19,31 @@ class Generator implements GeneratorInterface
     use ClassSaver\Factory\AwareTrait;
     use StringReplacer\Factory\AwareTrait;
 
-    public const CLASS_NAME = 'Factory';
+    public const CLASS_NAME = 'Map';
 
     /** @var ClassGenerator */
     protected $generator;
-    /** @var ClassSaverInterface */
-    protected $classSaver;
     /** @var GeneratorMetaInterface */
     protected $meta;
 
-    public function generate() : GeneratorInterface
+    public function generate(): GeneratorInterface
     {
         $this->setGenerator();
 
-        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
-        $this->getGenerator()->addTrait('AwareTrait');
-        $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\FactoryInterface']);
-        $this->getGenerator()->setName(self::CLASS_NAME);
 
-        $this->replaceReturnTypePlaceHolders();
+        $this->getGenerator()->setName(self::CLASS_NAME);
+        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
+        $this->getGenerator()->setExtendedClass('\ArrayIterator');
+        $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\MapInterface']);
+        $this->getGenerator()->addUse($this->getMeta()->getActorNamespace() . 'Interface');
+
+        $tag = new Tag\GenericTag();
+        $tag->setName('codeCoverageIgnore');
+
+        $classDocBlock = new DocBlockGenerator();
+        $classDocBlock->setTag($tag);
+
+        $this->getGenerator()->setDocBlock($classDocBlock);
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
@@ -54,56 +61,10 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function generateService()
-    {
-        $class = $this->getMeta()->getActorNamespace() . '\\Factory';
-        $interface = $this->getMeta()->getActorNamespace() . '\\FactoryInterface';
-
-        $factoryPrefix = $this->getTruncatedNamespace();
-
-        $yaml = [
-            'services' => [
-                $interface => [
-                    'class' => $class,
-                    'public' => false,
-                    'shared' => true,
-                    'calls' => [
-                        [ "set{$factoryPrefix}", ["@{$this->getMeta()->getActorNamespace()}Interface" ]]
-                    ]
-                ]
-            ]
-        ];
-
-        $preparedYaml = Yaml::dump($yaml, 4, 2);
-        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
-
-        return $this;
-    }
-
-    protected function getTruncatedNamespace() : string
-    {
-        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
-        unset($namespaceArray[0]);
-        unset($namespaceArray[1]);
-        return implode('', $namespaceArray);
-    }
-
-    protected function replaceReturnTypePlaceHolders() : GeneratorInterface
-    {
-        $methods = $this->getGenerator()->getMethods();
-
-        foreach ($methods as $method) {
-            $returnType = $method->getReturnType();
-            if ($returnType && strpos($returnType->generate(), 'DAONAMEPLACEHOLDERInterface')) {
-                $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
-            }
-        }
-
-        return $this;
-    }
-
     protected function replaceEntityPlaceholders(string $fileContent) : string
     {
+        $fileContent = str_replace('\Neighborhoods\Prefab\Actor\Map\\', '', $fileContent);
+
         return $this->getStringReplacerFactory()
             ->create()
             ->setNamespace($this->getMeta()->getActorNamespace())
@@ -147,5 +108,26 @@ class Generator implements GeneratorInterface
     public function getActorName(): string
     {
         return self::CLASS_NAME;
+    }
+
+    protected function generateService()
+    {
+        $class = $this->getMeta()->getActorNamespace() . '\\Map';
+        $interface = $this->getMeta()->getActorNamespace() . '\\MapInterface';
+
+        $yaml = [
+            'services' => [
+                $interface => [
+                    'class' => $class,
+                    'public' => false,
+                    'shared' => false,
+                ]
+            ]
+        ];
+
+        $preparedYaml = Yaml::dump($yaml, 4, 2);
+        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
+
+        return $this;
     }
 }

@@ -81,7 +81,7 @@ class StringReplacer implements StringReplacerInterface
         );
     }
 
-    protected function setPlaceholderValues()
+    protected function setPlaceholderValues() : StringReplacerInterface
     {
         $this->placeholdersToReplace[self::PARENT_NAMESPACE_PLACEHOLDER] = $this->getParentNamespace();
         $this->placeholdersToReplace[self::TRUNCATED_DAO_NAME_PLACEHOLDER] = $this->getTruncatedDaoName();
@@ -92,6 +92,8 @@ class StringReplacer implements StringReplacerInterface
         $this->placeholdersToReplace[self::TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getTruncatedParentNamespace();
         $this->placeholdersToReplace[self::UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getUcTruncatedParentNamespace();
         $this->placeholdersToReplace[self::SELF_PLACEHOLDER] = $this->getSelf();
+
+        return $this;
     }
 
     protected function getSelf() : string

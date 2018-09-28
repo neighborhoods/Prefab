@@ -45,18 +45,18 @@ class Generator implements GeneratorInterface
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
-//        $this->getClassSaverFactory()->create()
-//            ->setNamespace($this->getMeta()->getActorNamespace())
-//            ->setClassName(self::CLASS_NAME)
-//            ->setGeneratedClass($builtFile)
-//            ->saveClass();
+        $this->getClassSaverFactory()->create()
+            ->setNamespace($this->getMeta()->getActorNamespace())
+            ->setClassName(self::CLASS_NAME)
+            ->setGeneratedClass($builtFile)
+            ->saveClass();
 
         $this->generateService();
 
         return $this;
     }
 
-    protected function replaceReturnTypePlaceHolders()
+    protected function replaceReturnTypePlaceHolders() : GeneratorInterface
     {
         $methods = $this->getGenerator()->getMethods();
 
@@ -66,9 +66,11 @@ class Generator implements GeneratorInterface
                 $method->setReturnType($this->getMeta()->getActorNamespace() . 'Interface');
             }
         }
+
+        return $this;
     }
 
-    protected function replaceEntityPlaceholders($fileContent) : string
+    protected function replaceEntityPlaceholders(string $fileContent) : string
     {
         return $this->getStringReplacerFactory()
             ->create()

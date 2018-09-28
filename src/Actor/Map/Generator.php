@@ -62,7 +62,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function replaceEntityPlaceholders($fileContent)
+    protected function replaceEntityPlaceholders(string $fileContent) : string
     {
         $fileContent = str_replace('\Neighborhoods\Prefab\Actor\Map\\', '', $fileContent);
 
@@ -71,6 +71,7 @@ class Generator implements GeneratorInterface
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setFile($fileContent)
             ->replacePlaceholders();
+
     }
 
     protected function setGenerator() : GeneratorInterface

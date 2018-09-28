@@ -1,6 +1,8 @@
 services:
   Neighborhoods\Prefab\Actor\Builder\GeneratorInterface:
     class: Neighborhoods\Prefab\Actor\Builder\Generator
+    public: false
+    shared: false
     calls:
     - [setClassSaverFactory, ['@Neighborhoods\Prefab\ClassSaver\FactoryInterface']]
     - [setStringReplacerFactory, ['@Neighborhoods\Prefab\StringReplacer\FactoryInterface']]

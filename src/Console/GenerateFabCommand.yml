@@ -1,6 +1,7 @@
 services:
   Neighborhoods\Prefab\Console\GenerateFabCommandInterface:
     class: Neighborhoods\Prefab\Console\GenerateFabCommand
+    shared: false
     calls:
     - [setActorBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Actor\Builder\Generator\FactoryInterface']]
     - [setActorRepositoryInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\RepositoryInterface\Generator\FactoryInterface']]

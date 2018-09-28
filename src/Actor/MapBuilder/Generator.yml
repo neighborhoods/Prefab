@@ -1,6 +1,6 @@
 services:
-  Neighborhoods\Prefab\Actor\FactoryInterface\GeneratorInterface:
-    class: Neighborhoods\Prefab\Actor\FactoryInterface\Generator
+  Neighborhoods\Prefab\Actor\MapBuilder\GeneratorInterface:
+    class: Neighborhoods\Prefab\Actor\MapBuilder\Generator
     public: false
     shared: false
     calls:
