@@ -112,7 +112,7 @@ class Generator implements GeneratorInterface
         return self::CLASS_NAME;
     }
 
-    protected function generateService()
+    protected function generateService() : GeneratorInterface
     {
         $class = $this->getMeta()->getActorNamespace() . '\\Map';
         $interface = $this->getMeta()->getActorNamespace() . '\\MapInterface';

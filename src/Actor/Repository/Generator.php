@@ -55,7 +55,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function generateService()
+    protected function generateService() : GeneratorInterface
     {
         $class = $this->getMeta()->getActorNamespace() . '\\Repository';
         $interface = $this->getMeta()->getActorNamespace() . '\\RepositoryInterface';

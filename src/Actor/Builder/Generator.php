@@ -79,7 +79,7 @@ class Generator implements GeneratorInterface
             ->replacePlaceholders();
     }
 
-    protected function generateService()
+    protected function generateService() : GeneratorInterface
     {
         $class = $this->getMeta()->getActorNamespace() . '\\Builder';
         $interface = $this->getMeta()->getActorNamespace() . '\\BuilderInterface';
