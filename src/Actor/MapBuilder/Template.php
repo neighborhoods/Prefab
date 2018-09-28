@@ -1,70 +1,44 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Actor\Map;
+namespace Neighborhoods\Prefab\Actor\MapBuilder;
 
 class Template
 {
-    /** @param \DAONAMEPLACEHOLDERInterface ...$DAOVARNAMEPLACEHOLDERs */
-    public function __construct(array $DAOVARNAMEPLACEHOLDERs = array(), int $flags = 0)
+    // use Neighborhoods\UserService\MV1\User\Map\Factory\AwareTrait;
+    // use Neighborhoods\UserService\MV1\User\Builder\Factory\AwareTrait ;
+
+    /** @var array */
+    protected $records;
+
+    public function build() : \NAMESPACEPLACEHOLDER\BuilderInterface
     {
-        if ($this->count() !== 0) {
-            throw new \LogicException('Map is not empty.');
+        $map = $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create();
+        foreach ($this->getRecords() as $record) {
+            $builder = $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create(); // replace DORClass w/ e.g. DOR0Listing, MV1Area
+            $item = $builder->setRecords($record)->build();
+            $map[/*$item->getId()*/] = $item; // remove or change index field as desired
         }
 
-        if (!empty($DAOVARNAMEPLACEHOLDERs)) {
-            $this->assertValidArrayType(...array_values($DAOVARNAMEPLACEHOLDERs));
+        return $map;
+    }
+
+    protected function getRecords() : array
+    {
+        if ($this->records === null) {
+            throw new \LogicException('Builder records has not been set.');
         }
 
-        parent::__construct($DAOVARNAMEPLACEHOLDERs, $flags);
+        return $this->records;
     }
 
-    public function offsetGet($index): \DAONAMEPLACEHOLDERInterface
+    public function setRecords(array $records) : \NAMESPACEPLACEHOLDER\BuilderInterface
     {
-        return $this->assertValidArrayItemType(parent::offsetGet($index));
-    }
+        if ($this->records !== null) {
+            throw new \LogicException('Builder records is already set.');
+        }
 
-    /** @param \DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER */
-    public function offsetSet($index, $DAOVARNAMEPLACEHOLDER)
-    {
-        parent::offsetSet($index, $this->assertValidArrayItemType($DAOVARNAMEPLACEHOLDER));
-    }
-
-    /** @param \DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER */
-    public function append($DAOVARNAMEPLACEHOLDER)
-    {
-        $this->assertValidArrayItemType($DAOVARNAMEPLACEHOLDER);
-        parent::append($DAOVARNAMEPLACEHOLDER);
-    }
-
-    public function current(): \DAONAMEPLACEHOLDERInterface
-    {
-        return parent::current();
-    }
-
-    protected function assertValidArrayItemType(\DAONAMEPLACEHOLDERInterface $DAOVARNAMEPLACEHOLDER)
-    {
-        return $DAOVARNAMEPLACEHOLDER;
-    }
-
-    protected function assertValidArrayType(\DAONAMEPLACEHOLDERInterface ...$DAOVARNAMEPLACEHOLDERs): MapInterface
-    {
-        return $this;
-    }
-
-    public function getArrayCopy(): MapInterface
-    {
-        return new self(parent::getArrayCopy(), (int)$this->getFlags());
-    }
-
-    public function toArray(): array
-    {
-        return (array)$this;
-    }
-
-    public function hydrate(array $array): MapInterface
-    {
-        $this->__construct($array);
+        $this->records = $records;
 
         return $this;
     }

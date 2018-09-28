@@ -1,44 +1,39 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Actor\MapBuilder;
+namespace Neighborhoods\Prefab\Actor\MapBuilderInterface;
 
-use Neighborhoods\Prefab\ClassSaver\Factory\AwareTrait;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
-use Symfony\Component\Yaml\Yaml;
-use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;
+use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
+use Neighborhoods\Prefab\ClassSaver;
 use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
 {
-    use AwareTrait;
+    use ClassSaver\Factory\AwareTrait;
     use StringReplacer\Factory\AwareTrait;
 
-    public const CLASS_NAME = 'Builder';
-
+    protected $namespace;
+    protected $version;
     protected $generator;
+    protected $daoName;
     protected $varName;
-    protected $projectName;
     protected $classSaver;
-    /** @var GeneratorMetaInterface */
+    protected $entityName;
     protected $meta;
+
+    protected const INTERFACE_NAME = 'BuilderInterface';
 
     public function generate() : GeneratorInterface
     {
         $this->setGenerator();
 
         $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
-        $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\BuilderInterface']);
-        $this->getGenerator()->setName(self::CLASS_NAME);
-
-        $this->getGenerator()->addTraits(
-            [
-                '\\' . $this->getMeta()->getActorNamespace() . '\Builder\Factory\AwareTrait',
-            ]
-        );
+        $this->getGenerator()->setName(self::INTERFACE_NAME);
+        $this->replaceReturnTypePlaceHolders();
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
@@ -47,11 +42,9 @@ class Generator implements GeneratorInterface
 
         $this->getClassSaverFactory()->create()
             ->setNamespace($this->getMeta()->getActorNamespace())
-            ->setClassName(self::CLASS_NAME)
+            ->setClassName(self::INTERFACE_NAME)
             ->setGeneratedClass($builtFile)
             ->saveClass();
-
-        $this->generateService();
 
         return $this;
     }
@@ -79,48 +72,24 @@ class Generator implements GeneratorInterface
             ->replacePlaceholders();
     }
 
-    protected function generateService() : GeneratorInterface
+    protected function getEntityName() : string
     {
-        $class = $this->getMeta()->getActorNamespace() . '\\Builder';
-        $interface = $this->getMeta()->getActorNamespace() . '\\BuilderInterface';
+        if ($this->entityName === null) {
+            $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+            $this->entityName = $namespaceArray[count($namespaceArray) - 2];
+        }
 
-        $factoryPrefix = $this->getTruncatedNamespace();
-
-        $yaml = [
-            'services' => [
-                $interface => [
-                    'class' => $class,
-                    'public' => false,
-                    'shared' => false,
-                    'calls' => [
-                        [ "set{$factoryPrefix}Factory", ["@{$this->getMeta()->getActorNamespace()}\\FactoryInterface" ]]
-                    ]
-                ]
-            ]
-        ];
-
-        $preparedYaml = Yaml::dump($yaml, 4, 2);
-        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
-
-        return $this;
-    }
-
-    protected function getTruncatedNamespace() : string
-    {
-        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
-        unset($namespaceArray[0]);
-        unset($namespaceArray[1]);
-        return implode('', $namespaceArray);
+        return $this->entityName;
     }
 
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
-        $this->generator = ClassGenerator::fromReflection($template);
+        $this->generator = InterfaceGenerator::fromReflection($template);
         return $this;
     }
 
-    protected function getGenerator() : ClassGenerator
+    protected function getGenerator() : InterfaceGenerator
     {
         if ($this->generator === null) {
             throw new \LogicException('Generator generator has not been set');
@@ -129,29 +98,21 @@ class Generator implements GeneratorInterface
         return $this->generator;
     }
 
-    public function getVarName() : string
+    protected function getNamespace() : string
     {
-        if ($this->varName === null) {
-            throw new \LogicException('Generator varName has not been set.');
+        if ($this->namespace === null) {
+            throw new \LogicException('Generator namespace has not been set.');
         }
-        return $this->varName;
+        return $this->namespace;
     }
 
-    public function setVarName(string $varName) : GeneratorInterface
+    public function setNamespace(string $namespace) : GeneratorInterface
     {
-        if ($this->varName !== null) {
-            throw new \LogicException('Generator varName is already set.');
+        if ($this->namespace !== null) {
+            throw new \LogicException('Generator namespace is already set.');
         }
-        $this->varName = $varName;
+        $this->namespace = $namespace;
         return $this;
-    }
-
-    public function getProjectName() : string
-    {
-        if ($this->projectName === null) {
-            $this->projectName = explode('\\', $this->getMeta()->getActorNamespace())[1];
-        }
-        return $this->projectName;
     }
 
     public function getMeta() : GeneratorMetaInterface
@@ -173,6 +134,6 @@ class Generator implements GeneratorInterface
 
     public function getActorName() : string
     {
-        return self::CLASS_NAME;
+        return self::INTERFACE_NAME;
     }
 }

@@ -15,3 +15,5 @@ services:
     - [setConsoleGeneratorMetaFactory, ['@Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface']]
     - [setActorFactoryInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\FactoryInterface\Generator\FactoryInterface']]
     - [setMapInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\MapInterface\Generator\FactoryInterface']]
+    - [setActorMapBuilderGeneratorFactory, ['@Neighborhoods\Prefab\Actor\MapBuilder\Generator\FactoryInterface']]
+    - [setActorMapBuilderInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\MapBuilderInterface\Generator\FactoryInterface']]
