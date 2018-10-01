@@ -46,6 +46,12 @@ class StringReplacer implements StringReplacerInterface
     protected const PARENT_NAMESPACE_PLACEHOLDER = 'PARENTNAMESPACEPLACEHOLDER';
 
     /**
+     * Parent namespace
+     * @example Neighborhoods\MyService\MV1\MyDao
+     */
+    protected const PARENT_VARNAME_PLACEHOLDER = 'PARENTVARNAMEPLACEHOLDER';
+
+    /**
      * Parent name without leading namespace
      * @example MyDao
      */
@@ -89,6 +95,7 @@ class StringReplacer implements StringReplacerInterface
         $this->placeholdersToReplace[self::DAO_VAR_NAME_PLACEHOLDER] = $this->getDaoVarName();
         $this->placeholdersToReplace[self::PROJECT_NAME_PLACEHOLDER] = $this->getProjectName();
         $this->placeholdersToReplace[self::NAMESPACE_PLACEHOLDER] = $this->getNamespace();
+        $this->placeholdersToReplace[self::PARENT_VARNAME_PLACEHOLDER] = $this->getParentVarName();
         $this->placeholdersToReplace[self::TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getTruncatedParentNamespace();
         $this->placeholdersToReplace[self::UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getUcTruncatedParentNamespace();
         $this->placeholdersToReplace[self::SELF_PLACEHOLDER] = $this->getSelf();
@@ -142,6 +149,15 @@ class StringReplacer implements StringReplacerInterface
         unset($namespaceArray[count($namespaceArray) - 1]);
         return implode('\\', $namespaceArray);
     }
+
+    protected function getParentVarName() : string
+    {
+        $namespaceArray = explode('\\', $this->getNamespace());
+        unset($namespaceArray[count($namespaceArray) - 1]);
+        unset($namespaceArray[0], $namespaceArray[1]);
+        return implode('', $namespaceArray);
+    }
+
     protected function getFile() : string
     {
         if ($this->file === null) {

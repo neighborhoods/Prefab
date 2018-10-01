@@ -35,7 +35,7 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setName(self::CLASS_NAME);
 
         $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait');
-        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Builder\Factory\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Map\Builder\Factory\AwareTrait');
         $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Map\Factory\AwareTrait');
         $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait');
 
@@ -70,7 +70,7 @@ class Generator implements GeneratorInterface
                     'shared' => true,
                     'calls' => [
                         ["set{$methodName}MapFactory", ["@{$this->getMeta()->getActorNamespace()}\Map\FactoryInterface" ]],
-                        ["set{$methodName}BuilderFactory", ["@{$this->getMeta()->getActorNamespace()}\Builder\FactoryInterface" ]],
+                        ["set{$methodName}MapBuilderFactory", ["@{$this->getMeta()->getActorNamespace()}\Map\Builder\FactoryInterface" ]],
                         ['setDoctrineDBALConnectionDecoratorRepository', ["@Neighborhoods\\". $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\RepositoryInterface' ]],
                         ['setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface' ]],
                     ]

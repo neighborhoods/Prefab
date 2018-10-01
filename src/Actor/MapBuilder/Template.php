@@ -11,12 +11,12 @@ class Template
     /** @var array */
     protected $records;
 
-    public function build() : \NAMESPACEPLACEHOLDER\BuilderInterface
+    public function build() : \NAMESPACEPLACEHOLDERInterface
     {
-        $map = $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create();
+        $map = $this->getDAOVARNAMEPLACEHOLDERFactory()->create();
         foreach ($this->getRecords() as $record) {
-            $builder = $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create(); // replace DORClass w/ e.g. DOR0Listing, MV1Area
-            $item = $builder->setRecords($record)->build();
+            $builder = $this->getPARENTVARNAMEPLACEHOLDERBuilderFactory()->create();
+            $item = $builder->setRecord($record)->build();
             $map[/*$item->getId()*/] = $item; // remove or change index field as desired
         }
 

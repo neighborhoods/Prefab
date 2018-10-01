@@ -5,7 +5,7 @@ namespace Neighborhoods\Prefab\Actor\MapBuilderInterface;
 
 interface Template
 {
-    public function build() : \DAONAMEPLACEHOLDER\BuilderInterface;
+    public function build() : \DAONAMEPLACEHOLDERInterface;
 
     public function setRecords(array $record) : \NAMESPACEPLACEHOLDER\BuilderInterface;
 }

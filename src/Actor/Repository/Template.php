@@ -12,22 +12,22 @@ class Template // implements RepositoryInterface
 {
 //    use Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
 //    use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
-//    use DAONAMEPLACEHOLDER\Builder\Factory\AwareTrait;
+//    use DAONAMEPLACEHOLDER\Map\Builder\Factory\AwareTrait;
 
-    public function createBuilder() : \NAMESPACEPLACEHOLDER\BuilderInterface
+    public function createBuilder() : \NAMESPACEPLACEHOLDER\Map\BuilderInterface
     {
-        return $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create();
+        return $this->getDAOVARNAMEPLACEHOLDERMapBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDERInterface
+    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDER\MapInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
         $queryBuilder = $queryBuilderBuilder->build();
         $queryBuilder->from(\DAONAMEPLACEHOLDERInterface::TABLE_NAME)->select('*');
-        $records = $queryBuilder->execute()->fetch();
+        $records = $queryBuilder->execute()->fetchAll();
 
-        return $this->createBuilder()->setRecord($records)->build();
+        return $this->createBuilder()->setRecords($records)->build();
     }
 
     public function save(\NAMESPACEPLACEHOLDER\MapInterface $map) : \NAMESPACEPLACEHOLDER\RepositoryInterface

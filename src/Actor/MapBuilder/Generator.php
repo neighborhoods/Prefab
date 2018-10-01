@@ -36,7 +36,8 @@ class Generator implements GeneratorInterface
 
         $this->getGenerator()->addTraits(
             [
-                '\\' . $this->getMeta()->getActorNamespace() . '\Builder\Factory\AwareTrait',
+                '\\' . $this->getMeta()->getActorNamespace() . '\Factory\AwareTrait',
+                '\\PARENTNAMESPACEPLACEHOLDER\Builder\Factory\AwareTrait',
             ]
         );
 
@@ -84,7 +85,7 @@ class Generator implements GeneratorInterface
         $class = $this->getMeta()->getActorNamespace() . '\\Builder';
         $interface = $this->getMeta()->getActorNamespace() . '\\BuilderInterface';
 
-        $factoryPrefix = $this->getTruncatedNamespace();
+        $methodPrefix = $this->getTruncatedParentNamespace();
 
         $yaml = [
             'services' => [
@@ -93,7 +94,8 @@ class Generator implements GeneratorInterface
                     'public' => false,
                     'shared' => false,
                     'calls' => [
-                        [ "set{$factoryPrefix}Factory", ["@{$this->getMeta()->getActorNamespace()}\\FactoryInterface" ]]
+                        [ "set{$methodPrefix}MapFactory", ["@{$this->getMeta()->getActorNamespace()}\\FactoryInterface"]],
+                        [ "set{$methodPrefix}BuilderFactory", ["@{$this->getParentNamespace()}\\Builder\\FactoryInterface"]],
                     ]
                 ]
             ]
@@ -113,6 +115,21 @@ class Generator implements GeneratorInterface
         return implode('', $namespaceArray);
     }
 
+    protected function getTruncatedParentNamespace() : string
+    {
+        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+        unset($namespaceArray[count($namespaceArray) - 1]);
+        unset($namespaceArray[0]);
+        unset($namespaceArray[1]);
+        return implode('', $namespaceArray);
+    }
+
+    protected function getParentNamespace() : string
+    {
+        $namespaceArray = explode('\\', $this->getMeta()->getActorNamespace());
+        unset($namespaceArray[count($namespaceArray) - 1]);
+        return implode('\\', $namespaceArray);
+    }
     protected function setGenerator() : GeneratorInterface
     {
         $template = new ClassReflection(Template::class);
