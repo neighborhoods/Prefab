@@ -4,6 +4,9 @@
   "description": "Neighborhoods Prefab builds Protean machinery.",
   "license": "proprietary",
   "keywords": [],
+  "bin": [
+    "bin/console"
+  ],
   "authors": [
     {
       "name": "Brad Wilson",
@@ -26,7 +29,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Neighborhoods\\Prefab\\": "src"
+      "Neighborhoods\\Prefab\\": [
+        "fab",
+        "src"
+      ]
     }
   },
   "autoload-dev": {

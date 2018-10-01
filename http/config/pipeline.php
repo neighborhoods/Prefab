@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Definition;
 use Zend\Expressive\Handler\NotFoundHandler;
+use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
 use Zend\Expressive\Helper\ServerUrlMiddleware;
 use Zend\Expressive\Helper\UrlHelperMiddleware;
 use Zend\Expressive\Router\Middleware\DispatchMiddleware;
@@ -49,6 +50,7 @@ return function (Definition $applicationServiceDefinition): void {
     // - method not allowed
     // Order here matters; the MethodNotAllowedMiddleware should be placed
     // after the Implicit*Middleware.
+    $applicationServiceDefinition->addMethodCall('pipe', [BodyParamsMiddleware::class]);
     $applicationServiceDefinition->addMethodCall('pipe', [ImplicitHeadMiddleware::class]);
     $applicationServiceDefinition->addMethodCall('pipe', [ImplicitOptionsMiddleware::class]);
     $applicationServiceDefinition->addMethodCall('pipe', [MethodNotAllowedMiddleware::class]);

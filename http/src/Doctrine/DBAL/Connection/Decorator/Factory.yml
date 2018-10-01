@@ -1,7 +1,0 @@
-services:
-  neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator.factory:
-    class: Neighborhoods\~~PROJECT NAME~~\Doctrine\DBAL\Connection\Decorator\Factory
-    public: false
-    shared: true
-    calls:
-      - [setDoctrineDBALConnectionDecorator, ['@neighborhoods.~~PROJECT NAME~~.doctrine.dbal.connection.decorator']]

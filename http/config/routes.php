@@ -1,22 +1,28 @@
 <?php
 declare(strict_types=1);
 
-use Neighborhoods\~~PROJECT NAME~~\MV1;
+// @team - delete me
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\MV1;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
 return function (Definition $applicationServiceDefinition, ContainerBuilder $containerBuilder): void {
-    // mv1/dummy
-    $mv1DummyHandlerServiceDefinition = $containerBuilder->findDefinition(MV1\Dummy\HandlerInterface::class);
-    $applicationServiceDefinition->addMethodCall(
-        'get',
-        ['/mv1/dummy/{id:\d+}', $mv1DummyHandlerServiceDefinition, 'dummy']
-    );
+    // @team - delete me
+    // mv1/DAO example
+//    $mv1DAOHandlerServiceDefinition = $containerBuilder->findDefinition(MV1\DAO\Repository\HandlerInterface::class);
+//    $applicationServiceDefinition->addMethodCall(
+//        'get',
+//        ['/mv1/dao/{id:\d+}', $mv1DAOHandlerServiceDefinition, 'dao']
+//    );
 
-    // mv1/dummies
-    $mv1DummyAbbreviatedHandlerServiceDefinition = $containerBuilder->findDefinition(MV1\Dummy\Abbreviated\HandlerInterface::class);
-    $applicationServiceDefinition->addMethodCall(
-        'get',
-        ['/mv1/dummies/{uris:}', $mv1DummyAbbreviatedHandlerServiceDefinition, 'dummies']
-    );
+    // @team - delete me
+    // mv1/DAOs example
+//    $applicationServiceDefinition->addMethodCall(
+//        'get',
+//        [
+//            '/mv1/daos/{searchCriteria:}',
+//            $mv1DAOHandlerServiceDefinition,
+//            MV1\DAO\Repository\HandlerInterface::ROUTE_NAME_DAOS
+//        ]
+//    );
 };

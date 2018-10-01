@@ -17,4 +17,6 @@ use ${NAMESPACE}Interface;
 interface BuilderInterface
 {
     public function build(): ${unqualifiedClassName}Interface;
+    
+    public function setRecord(array ${DS}record): BuilderInterface;
 }

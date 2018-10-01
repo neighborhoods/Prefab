@@ -1,0 +1,9 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteriaInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria
+    calls:
+    - [setSearchCriteriaFilterMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\MapInterface']]
+    - [setSearchCriteriaSortOrderMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\MapInterface']]
+    - [setSearchCriteriaVisitorMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Visitor\MapInterface']]
+    - [addVisitor, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\VisitorInterface']]
+    shared: false
