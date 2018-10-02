@@ -1,0 +1,30 @@
+{
+  "name": "neighborhoods/PROJECTNAME",
+  "description": "Add a short description of your project here.",
+  "type": "project",
+  "license": "proprietary",
+  "keywords": [
+    "prefab"
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:neighborhoods/prefab.git"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^7.2",
+    "neighborhoods/prefab": "4.x-dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Neighborhoods\\PROJECTNAME\\": [
+        "src",
+        "fab"
+      ]
+    }
+  }
+}
