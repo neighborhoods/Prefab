@@ -8,10 +8,15 @@ class ClassSaver implements ClassSaverInterface
     protected $namespace;
     protected $generatedClass;
     protected $className;
+    protected $savePath;
 
     public function saveClass() : ClassSaverInterface
     {
-        file_put_contents($this->getFileLocation() . $this->getClassName() . '.php', $this->getGeneratedClass());
+        if (!file_exists($this->getSavePath())) {
+            mkdir($this->getSavePath(), 0777, true);
+        }
+
+        file_put_contents($this->getSavePath() . '/' . $this->getClassName() . '.php', $this->getGeneratedClass());
         return $this;
     }
 
@@ -49,18 +54,21 @@ class ClassSaver implements ClassSaverInterface
         return $this;
     }
 
-    protected function getFileLocation() : string
+    public function getSavePath() : string
     {
-        $namespaceArray = explode('\\', $this->getNamespace());
-        $namespaceArray = array_slice($namespaceArray, 2);
-
-        $directory = 'fab/' . implode('/', $namespaceArray) . '/';
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+        if ($this->savePath === null) {
+            throw new \LogicException('ClassSaver savePath has not been set.');
         }
+        return $this->savePath;
+    }
 
-        return $directory;
+    public function setSavePath(string $savePath) : ClassSaverInterface
+    {
+        if ($this->savePath !== null) {
+            throw new \LogicException('ClassSaver savePath is already set.');
+        }
+        $this->savePath = $savePath;
+        return $this;
     }
 
     protected function getClassName() : string

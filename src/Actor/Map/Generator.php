@@ -55,6 +55,7 @@ class Generator implements GeneratorInterface
             ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)
+            ->setSavePath($this->getMeta()->getActorFilePath())
             ->saveClass();
 
         $this->generateService();
