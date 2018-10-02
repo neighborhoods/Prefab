@@ -60,7 +60,7 @@ class GenerateFabCommand extends Command
     /** @var string */
     protected $projectName;
 
-    protected function configure()
+    protected function configure(): Command
     {
         $this->setName('gen:fab')
             ->setDescription('Generate Protean Machinery');
@@ -71,9 +71,11 @@ class GenerateFabCommand extends Command
         $this->projectDir = __DIR__ . '/../../../../../';
         $this->srcLocation = __DIR__ . '/../../../../../src';
         $this->fabLocation = __DIR__ . '/../../../../../fab';
+
+        return $this;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): Command
     {
         $output->writeln('Copying HTTP skeleton.');
         $this->copyHttpSkeleton();
@@ -89,14 +91,14 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function copyHttpSkeleton()
+    protected function copyHttpSkeleton(): Command
     {
         $fileSystem = new Filesystem();
 
         $options['override'] = true;
 
         $fileSystem->mkdir($this->stagedHttpDir);
-        $fileSystem->mirror($this->httpSrcDir,$this->stagedHttpDir,null,$options);
+        $fileSystem->mirror($this->httpSrcDir, $this->stagedHttpDir, null, $options);
 
         $this->determineProjectNameFromComposer();
         $this->setProjectNameInStagedHttpFiles();
@@ -112,13 +114,13 @@ class GenerateFabCommand extends Command
             };
         }
 
-        $fileSystem->mirror($this->stagedHttpDir,$this->projectDir,null,$options);
+        $fileSystem->mirror($this->stagedHttpDir, $this->projectDir, null, $options);
         $fileSystem->remove($this->stagedHttpDir);
 
         return $this;
     }
 
-    protected function determineProjectNameFromComposer()
+    protected function determineProjectNameFromComposer(): Command
     {
         $finder = new Finder();
         $finder->name('composer.json')->in($this->projectDir)->exclude('vendor');
@@ -138,30 +140,30 @@ class GenerateFabCommand extends Command
             throw new \RuntimeException('Could not access composer file for project.');
         }
 
-        $composerContents = json_decode($composerFile->getContents(),true);
+        $composerContents = json_decode($composerFile->getContents(), true);
         $fullNamespace = key($composerContents['autoload']['psr-4']);
-        $projectName = trim(str_replace('Neighborhoods','',$fullNamespace),'\\');
+        $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
         $this->setProjectName($projectName);
 
         return $this;
     }
 
-    protected function setProjectNameInStagedHttpFiles()
+    protected function setProjectNameInStagedHttpFiles(): Command
     {
         $finder = new Finder();
         $finder->files()->in($this->stagedHttpDir);
 
         foreach ($finder as $file) {
             $contents = $file->getContents();
-            $modifiedContents = str_replace('ReplaceThisWithTheNameOfYourProduct',$this->getProjectName(),$contents);
+            $modifiedContents = str_replace('ReplaceThisWithTheNameOfYourProduct', $this->getProjectName(), $contents);
             file_put_contents($file->getRealPath(),$modifiedContents);
         }
 
         return $this;
     }
 
-    protected function assembleBuildPlan()
+    protected function assembleBuildPlan(): Command
     {
         $daoAnnotationPattern = '#@neighborhoods\\\prefab:DAO\n#s';
 
@@ -185,7 +187,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function generatePrefab()
+    protected function generatePrefab(): Command
     {
         $generatorList = $this->getBuildPlan();
         /** @var GeneratorInterface $generator */
@@ -196,7 +198,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function getDaoNamespaceFromFile(SplFileInfo $dao)
+    protected function getDaoNamespaceFromFile(SplFileInfo $dao): string
     {
         preg_match('#namespace (.*?);#s', $dao->getContents(), $namespace);
 
@@ -209,7 +211,7 @@ class GenerateFabCommand extends Command
         return $annotations[1];
     }
 
-    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta): self
+    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta): Command
     {
         /** @todo DAO generator logic + Service.yml */
 
@@ -234,7 +236,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta): self
+    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta): Command
     {
         $awareTraitGenerator = $this->getActorAwareTraitGeneratorFactory()->create();
         $awareTraitGenerator->setMeta($meta);
@@ -243,7 +245,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta): self
+    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta): Command
     {
         $builderGenerator = $this->getActorBuilderGeneratorFactory()->create();
         $builderGenerator->setMeta($builderMeta);
@@ -257,7 +259,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta): self
+    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta): Command
     {
         $builderInterfaceGenerator = $this->getActorBuilderInterfaceGeneratorFactory()->create();
         $builderInterfaceGenerator->setMeta($builderInterfaceMeta);
@@ -266,7 +268,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta): self
+    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta): Command
     {
         $factoryGenerator = $this->getActorFactoryGeneratorFactory()->create();
         $factoryGenerator->setMeta($factoryMeta);
@@ -280,7 +282,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta): self
+    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta): Command
     {
         $factoryInterfaceGenerator = $this->getActorFactoryInterfaceGeneratorFactory()->create();
         $factoryInterfaceGenerator->setMeta($factoryInterfaceMeta);
@@ -288,7 +290,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta): self
+    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta): Command
     {
         $handlerGenerator = $this->getActorHandlerGeneratorFactory()->create();
         $handlerGenerator->setMeta($handlerMeta);
@@ -299,7 +301,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta): self
+    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta): Command
     {
         $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
         $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
@@ -307,7 +309,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addMapToPlan(GeneratorMetaInterface $mapMeta): self
+    protected function addMapToPlan(GeneratorMetaInterface $mapMeta): Command
     {
         $mapGenerator = $this->getMapGeneratorFactory()->create();
         $mapGenerator->setMeta($mapMeta);
@@ -323,7 +325,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta): self
+    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta): Command
     {
         $mapInterfaceGenerator = $this->getMapInterfaceGeneratorFactory()->create();
         $mapInterfaceGenerator->setMeta($mapInterfaceMeta);
@@ -333,7 +335,7 @@ class GenerateFabCommand extends Command
     }
 
 
-    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta): self
+    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta): Command
     {
         $repositoryGenerator = $this->getActorRepositoryGeneratorFactory()->create();
         $repositoryGenerator->setMeta($repositoryMeta);
@@ -349,18 +351,11 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta): self
+    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta): Command
     {
         $repositoryInterfaceGenerator = $this->getActorRepositoryInterfaceGeneratorFactory()->create();
         $repositoryInterfaceGenerator->setMeta($repositoryInterfaceMeta);
         $this->appendGeneratorToBuildPlan($repositoryInterfaceGenerator);
-
-        return $this;
-    }
-
-    protected function addServiceToPlan(GeneratorMetaInterface $serviceMeta): self
-    {
-        /** @todo Service generator logic */
 
         return $this;
     }
@@ -380,7 +375,7 @@ class GenerateFabCommand extends Command
         return $nextLevelMeta;
     }
 
-    protected function appendGeneratorToBuildPlan(GeneratorInterface $generator)
+    protected function appendGeneratorToBuildPlan(GeneratorInterface $generator): Command
     {
         $this->buildPlan[] = $generator;
         return $this;
@@ -402,7 +397,7 @@ class GenerateFabCommand extends Command
         return $this->projectName;
     }
 
-    public function setProjectName(string $projectName)
+    public function setProjectName(string $projectName): Command
     {
         if ($this->projectName !== null) {
             throw new \LogicException('GenerateFabCommand projectName is already set.');
