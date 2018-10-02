@@ -95,14 +95,14 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function copyHttpSkeleton()
+    protected function copyHttpSkeleton(): GenerateFabCommandInterface
     {
         $fileSystem = new Filesystem();
 
         $options['override'] = true;
 
         $fileSystem->mkdir($this->stagedHttpDir);
-        $fileSystem->mirror($this->httpSrcDir,$this->stagedHttpDir,null,$options);
+        $fileSystem->mirror($this->httpSrcDir, $this->stagedHttpDir, null, $options);
 
         $this->determineProjectNameFromComposer();
         $this->setProjectNameInStagedHttpFiles();
@@ -118,13 +118,13 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             };
         }
 
-        $fileSystem->mirror($this->stagedHttpDir,$this->projectDir,null,$options);
+        $fileSystem->mirror($this->stagedHttpDir, $this->projectDir, null, $options);
         $fileSystem->remove($this->stagedHttpDir);
 
         return $this;
     }
 
-    protected function determineProjectNameFromComposer()
+    protected function determineProjectNameFromComposer(): GenerateFabCommandInterface
     {
         $finder = new Finder();
         $finder->name('composer.json')->in($this->projectDir)->exclude('vendor');
@@ -144,30 +144,30 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             throw new \RuntimeException('Could not access composer file for project.');
         }
 
-        $composerContents = json_decode($composerFile->getContents(),true);
+        $composerContents = json_decode($composerFile->getContents(), true);
         $fullNamespace = key($composerContents['autoload']['psr-4']);
-        $projectName = trim(str_replace('Neighborhoods','',$fullNamespace),'\\');
+        $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
         $this->setProjectName($projectName);
 
         return $this;
     }
 
-    protected function setProjectNameInStagedHttpFiles()
+    protected function setProjectNameInStagedHttpFiles(): GenerateFabCommandInterface
     {
         $finder = new Finder();
         $finder->files()->in($this->stagedHttpDir);
 
         foreach ($finder as $file) {
             $contents = $file->getContents();
-            $modifiedContents = str_replace('ReplaceThisWithTheNameOfYourProduct',$this->getProjectName(),$contents);
+            $modifiedContents = str_replace('ReplaceThisWithTheNameOfYourProduct', $this->getProjectName(), $contents);
             file_put_contents($file->getRealPath(),$modifiedContents);
         }
 
         return $this;
     }
 
-    protected function assembleBuildPlan() : GenerateFabCommandInterface
+    protected function assembleBuildPlan(): GenerateFabCommandInterface
     {
         $daoAnnotationPattern = '#@neighborhoods\\\prefab:DAO\n#s';
 
@@ -191,7 +191,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function generatePrefab() : GenerateFabCommandInterface
+    protected function generatePrefab(): GenerateFabCommandInterface
     {
         $generatorList = $this->getBuildPlan();
         /** @var GeneratorInterface $generator */
@@ -202,7 +202,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function getDaoNamespaceFromFile(SplFileInfo $dao) : string
+    protected function getDaoNamespaceFromFile(SplFileInfo $dao): string
     {
         preg_match('#namespace (.*?);#s', $dao->getContents(), $namespace);
 
@@ -215,7 +215,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $annotations[1];
     }
 
-    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta) : GenerateFabCommandInterface
+    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta): GenerateFabCommandInterface
     {
         /** @todo DAO generator logic + Service.yml */
 
@@ -240,7 +240,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta) : GenerateFabCommandInterface
+    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta): GenerateFabCommandInterface
     {
         $awareTraitGenerator = $this->getActorAwareTraitGeneratorFactory()->create();
         $awareTraitGenerator->setMeta($meta);
@@ -249,7 +249,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta) : GenerateFabCommandInterface
+    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta): GenerateFabCommandInterface
     {
         $builderGenerator = $this->getActorBuilderGeneratorFactory()->create();
         $builderGenerator->setMeta($builderMeta);
@@ -286,7 +286,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta) : GenerateFabCommandInterface
+    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta): GenerateFabCommandInterface
     {
         $builderInterfaceGenerator = $this->getActorBuilderInterfaceGeneratorFactory()->create();
         $builderInterfaceGenerator->setMeta($builderInterfaceMeta);
@@ -295,7 +295,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta) : GenerateFabCommandInterface
+    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta): GenerateFabCommandInterface
     {
         $factoryGenerator = $this->getActorFactoryGeneratorFactory()->create();
         $factoryGenerator->setMeta($factoryMeta);
@@ -309,7 +309,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta) : GenerateFabCommandInterface
+    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta): GenerateFabCommandInterface
     {
         $factoryInterfaceGenerator = $this->getActorFactoryInterfaceGeneratorFactory()->create();
         $factoryInterfaceGenerator->setMeta($factoryInterfaceMeta);
@@ -317,7 +317,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta) : GenerateFabCommandInterface
+    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta): GenerateFabCommandInterface
     {
         $handlerGenerator = $this->getActorHandlerGeneratorFactory()->create();
         $handlerGenerator->setMeta($handlerMeta);
@@ -328,7 +328,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta) : GenerateFabCommandInterface
+    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta): GenerateFabCommandInterface
     {
         $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
         $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
@@ -336,7 +336,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addMapToPlan(GeneratorMetaInterface $mapMeta) : GenerateFabCommandInterface
+    protected function addMapToPlan(GeneratorMetaInterface $mapMeta): GenerateFabCommandInterface
     {
         $mapGenerator = $this->getMapGeneratorFactory()->create();
         $mapGenerator->setMeta($mapMeta);
@@ -352,7 +352,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta) : GenerateFabCommandInterface
+    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta): GenerateFabCommandInterface
     {
         $mapInterfaceGenerator = $this->getMapInterfaceGeneratorFactory()->create();
         $mapInterfaceGenerator->setMeta($mapInterfaceMeta);
@@ -362,7 +362,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     }
 
 
-    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta) : GenerateFabCommandInterface
+    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta): GenerateFabCommandInterface
     {
         $repositoryGenerator = $this->getActorRepositoryGeneratorFactory()->create();
         $repositoryGenerator->setMeta($repositoryMeta);
@@ -378,7 +378,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta) : GenerateFabCommandInterface
+    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta): GenerateFabCommandInterface
     {
         $repositoryInterfaceGenerator = $this->getActorRepositoryInterfaceGeneratorFactory()->create();
         $repositoryInterfaceGenerator->setMeta($repositoryInterfaceMeta);
@@ -394,7 +394,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this;
     }
 
-    protected function getNextLevelMeta(GeneratorInterface $parentGenerator) : GeneratorMetaInterface
+    protected function getNextLevelMeta(GeneratorInterface $parentGenerator): GeneratorMetaInterface
     {
         $parentMeta = $parentGenerator->getMeta();
         $actorName = $parentGenerator->getActorName();
@@ -409,7 +409,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $nextLevelMeta;
     }
 
-    protected function appendGeneratorToBuildPlan(GeneratorInterface $generator)
+    protected function appendGeneratorToBuildPlan(GeneratorInterface $generator): GenerateFabCommandInterface
     {
         $this->buildPlan[] = $generator;
         return $this;
@@ -431,7 +431,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         return $this->projectName;
     }
 
-    public function setProjectName(string $projectName)
+    public function setProjectName(string $projectName): GenerateFabCommandInterface
     {
         if ($this->projectName !== null) {
             throw new \LogicException('GenerateFabCommand projectName is already set.');
