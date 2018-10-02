@@ -5,7 +5,7 @@
   "license": "proprietary",
   "keywords": [],
   "bin": [
-    "bin/console"
+    "bin/prefab"
   ],
   "authors": [
     {
