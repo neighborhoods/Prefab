@@ -20,23 +20,6 @@ class ClassSaver implements ClassSaverInterface
         return $this;
     }
 
-    protected function getNamespace() : string
-    {
-        if ($this->namespace === null) {
-            throw new \LogicException('ClassSaver namespace has not been set.');
-        }
-        return $this->namespace;
-    }
-
-    public function setNamespace(string $namespace) : ClassSaverInterface
-    {
-        if ($this->namespace !== null) {
-            throw new \LogicException('ClassSaver namespace is already set.');
-        }
-        $this->namespace = $namespace;
-        return $this;
-    }
-
     protected function getGeneratedClass() : string
     {
         if ($this->generatedClass === null) {

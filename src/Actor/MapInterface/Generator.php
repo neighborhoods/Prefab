@@ -41,7 +41,6 @@ class Generator implements GeneratorInterface
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
         $this->getClassSaverFactory()->create()
-            ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)
             ->setSavePath($this->getMeta()->getActorFilePath())
