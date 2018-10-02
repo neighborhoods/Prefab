@@ -13,3 +13,9 @@ Protean is an application architecture specification. The specification is canon
 
 ### Notes
 - Builders are not fully code generated yet. Add your working builder to `src/` to override the generated builder
+
+## Reporting issues and requesting features
+
+In order to ensure we get as much feedback as possible, we wanted to make it easy for you to submit bugs and request new functionality
+- If you find a bug, please [submit and issue on Github](https://github.com/neighborhoods/prefab/issues).
+- If you have a request for new functionality, please add it to the [feature request spreadsheet](https://docs.google.com/spreadsheets/d/1QjHGekzFeH8WKreOsiKjciGnbEKLbHjlfT9HhpI6S6w/edit?usp=sharing).
