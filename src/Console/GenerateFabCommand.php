@@ -10,6 +10,8 @@ use Neighborhoods\Prefab\Actor\Factory;
 use Neighborhoods\Prefab\Actor\FactoryInterface;
 use Neighborhoods\Prefab\Actor\Handler;
 use Neighborhoods\Prefab\Actor\HandlerInterface;
+use Neighborhoods\Prefab\Actor\MapBuilder;
+use Neighborhoods\Prefab\Actor\MapBuilderInterface;
 use Neighborhoods\Prefab\Actor\Map;
 use Neighborhoods\Prefab\Actor\MapInterface;
 use Neighborhoods\Prefab\Actor\Repository;
@@ -20,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class GenerateFabCommand extends Command
+class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 {
     use AwareTrait\Generator\Factory\AwareTrait;
     use Builder\Generator\Factory\AwareTrait;
@@ -30,6 +32,8 @@ class GenerateFabCommand extends Command
     use Handler\Generator\Factory\AwareTrait;
     use HandlerInterface\Generator\Factory\AwareTrait;
     use Map\Generator\Factory\AwareTrait;
+    use MapBuilder\Generator\Factory\AwareTrait;
+    use MapBuilderInterface\Generator\Factory\AwareTrait;
     use MapInterface\Generator\Factory\AwareTrait;
     use Repository\Generator\Factory\AwareTrait;
     use RepositoryInterface\Generator\Factory\AwareTrait;
@@ -51,7 +55,7 @@ class GenerateFabCommand extends Command
     /** @var string */
     protected $srcLocation;
 
-    protected function configure()
+    protected function configure() : GenerateFabCommandInterface
     {
         $this->setName('gen:fab')
             ->setDescription('Generate Protean Machinery');
@@ -59,9 +63,11 @@ class GenerateFabCommand extends Command
         // We should probably do something better than this
         $this->srcLocation = __DIR__ . '/../../../../../src';
         $this->fabLocation = __DIR__ . '/../../../../../fab';
+
+        return $this;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output) : GenerateFabCommandInterface
     {
         $output->writeln('Assembling Prefab build plan.');
         $this->assembleBuildPlan();
@@ -74,7 +80,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function assembleBuildPlan()
+    protected function assembleBuildPlan() : GenerateFabCommandInterface
     {
         $daoAnnotationPattern = '#@neighborhoods\\\prefab:DAO\n#s';
 
@@ -98,7 +104,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function generatePrefab()
+    protected function generatePrefab() : GenerateFabCommandInterface
     {
         $generatorList = $this->getBuildPlan();
         /** @var GeneratorInterface $generator */
@@ -109,20 +115,20 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function getDaoNamespaceFromFile(SplFileInfo $dao)
+    protected function getDaoNamespaceFromFile(SplFileInfo $dao) : string
     {
         preg_match('#namespace (.*?);#s', $dao->getContents(), $namespace);
 
         return $namespace[1];
     }
 
-    protected function getPrefabAnnotations(SplFileInfo $file): array
+    protected function getPrefabAnnotations(SplFileInfo $file) : array
     {
         preg_match_all('#@neighborhoods\\\prefab:(.*?)\n#s', $file->getContents(), $annotations);
         return $annotations[1];
     }
 
-    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta): self
+    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta) : GenerateFabCommandInterface
     {
         /** @todo DAO generator logic + Service.yml */
 
@@ -147,7 +153,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta): self
+    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta) : GenerateFabCommandInterface
     {
         $awareTraitGenerator = $this->getActorAwareTraitGeneratorFactory()->create();
         $awareTraitGenerator->setMeta($meta);
@@ -156,7 +162,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta): self
+    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta) : GenerateFabCommandInterface
     {
         $builderGenerator = $this->getActorBuilderGeneratorFactory()->create();
         $builderGenerator->setMeta($builderMeta);
@@ -170,7 +176,30 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta): self
+    protected function addMapBuilderToPlan(GeneratorMetaInterface $builderMeta) : GenerateFabCommandInterface
+    {
+        $builderGenerator = $this->getActorMapBuilderGeneratorFactory()->create();
+        $builderGenerator->setMeta($builderMeta);
+        $this->appendGeneratorToBuildPlan($builderGenerator);
+
+        $nextLevelMeta = $this->getNextLevelMeta($builderGenerator);
+
+        $this->addAwareTraitToPlan($nextLevelMeta);
+        $this->addFactoryToPlan($nextLevelMeta);
+
+        return $this;
+    }
+
+    protected function addMapBuilderInterfaceToPlan(GeneratorMetaInterface $builderMeta) : GenerateFabCommandInterface
+    {
+        $builderGenerator = $this->getActorMapBuilderInterfaceGeneratorFactory()->create();
+        $builderGenerator->setMeta($builderMeta);
+        $this->appendGeneratorToBuildPlan($builderGenerator);
+
+        return $this;
+    }
+
+    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta) : GenerateFabCommandInterface
     {
         $builderInterfaceGenerator = $this->getActorBuilderInterfaceGeneratorFactory()->create();
         $builderInterfaceGenerator->setMeta($builderInterfaceMeta);
@@ -179,7 +208,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta): self
+    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta) : GenerateFabCommandInterface
     {
         $factoryGenerator = $this->getActorFactoryGeneratorFactory()->create();
         $factoryGenerator->setMeta($factoryMeta);
@@ -193,7 +222,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta): self
+    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta) : GenerateFabCommandInterface
     {
         $factoryInterfaceGenerator = $this->getActorFactoryInterfaceGeneratorFactory()->create();
         $factoryInterfaceGenerator->setMeta($factoryInterfaceMeta);
@@ -201,7 +230,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta): self
+    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta) : GenerateFabCommandInterface
     {
         $handlerGenerator = $this->getActorHandlerGeneratorFactory()->create();
         $handlerGenerator->setMeta($handlerMeta);
@@ -212,7 +241,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta): self
+    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta) : GenerateFabCommandInterface
     {
         $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
         $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
@@ -220,7 +249,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addMapToPlan(GeneratorMetaInterface $mapMeta): self
+    protected function addMapToPlan(GeneratorMetaInterface $mapMeta) : GenerateFabCommandInterface
     {
         $mapGenerator = $this->getMapGeneratorFactory()->create();
         $mapGenerator->setMeta($mapMeta);
@@ -229,14 +258,14 @@ class GenerateFabCommand extends Command
 
         $nextLevelMeta = $this->getNextLevelMeta($mapGenerator);
         $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addBuilderToPlan($nextLevelMeta);
-        $this->addBuilderInterfaceToPlan($nextLevelMeta);
+        $this->addMapBuilderToPlan($nextLevelMeta);
+        $this->addMapBuilderInterfaceToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
 
         return $this;
     }
 
-    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta): self
+    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta) : GenerateFabCommandInterface
     {
         $mapInterfaceGenerator = $this->getMapInterfaceGeneratorFactory()->create();
         $mapInterfaceGenerator->setMeta($mapInterfaceMeta);
@@ -246,7 +275,7 @@ class GenerateFabCommand extends Command
     }
 
 
-    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta): self
+    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta) : GenerateFabCommandInterface
     {
         $repositoryGenerator = $this->getActorRepositoryGeneratorFactory()->create();
         $repositoryGenerator->setMeta($repositoryMeta);
@@ -262,7 +291,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta): self
+    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta) : GenerateFabCommandInterface
     {
         $repositoryInterfaceGenerator = $this->getActorRepositoryInterfaceGeneratorFactory()->create();
         $repositoryInterfaceGenerator->setMeta($repositoryInterfaceMeta);
@@ -271,14 +300,14 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function addServiceToPlan(GeneratorMetaInterface $serviceMeta): self
+    protected function addServiceToPlan(GeneratorMetaInterface $serviceMeta) : GenerateFabCommandInterface
     {
         /** @todo Service generator logic */
 
         return $this;
     }
 
-    protected function getNextLevelMeta(GeneratorInterface $parentGenerator): GeneratorMetaInterface
+    protected function getNextLevelMeta(GeneratorInterface $parentGenerator) : GeneratorMetaInterface
     {
         $parentMeta = $parentGenerator->getMeta();
         $actorName = $parentGenerator->getActorName();
@@ -299,7 +328,7 @@ class GenerateFabCommand extends Command
         return $this;
     }
 
-    protected function getBuildPlan(): array
+    protected function getBuildPlan() : array
     {
         if ($this->buildPlan === null) {
             throw new \LogicException('GenerateFabCommand buildPlan has not been set.');

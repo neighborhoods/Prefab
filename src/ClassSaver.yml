@@ -1,3 +1,4 @@
 services:
   Neighborhoods\Prefab\ClassSaverInterface:
     class: Neighborhoods\Prefab\ClassSaver
+    shared: false
