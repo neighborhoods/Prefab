@@ -6,8 +6,8 @@ Protean is an application architecture specification. The specification is canon
 
 ## Running Prefab
 - In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
-- Create your DAO Interface with all of your getters, setters, and hasers
-- At the top of your DAO Interface, add the annotation `@neighborhoods\prefab:DAO`
+- Create your DAO and DAO Interface (soon to be only DAO Interface) with all of your getters, setters, and hasers defined
+- At the top of your DAO, add the annotation `@neighborhoods\prefab:DAO`
 - From the root of your project run `./vendor/bin/prefab gen:fab`
     - This will add all of the supporting files needed to create a working API endpoint
 
