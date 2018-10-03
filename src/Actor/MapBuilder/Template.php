@@ -17,7 +17,7 @@ class Template
         foreach ($this->getRecords() as $record) {
             $builder = $this->getPARENTVARNAMEPLACEHOLDERBuilderFactory()->create();
             $item = $builder->setRecord($record)->build();
-            $map[/*$item->getId()*/] = $item; // remove or change index field as desired
+            $map[$item->getId()] = $item; // remove or change index field as desired
         }
 
         return $map;
