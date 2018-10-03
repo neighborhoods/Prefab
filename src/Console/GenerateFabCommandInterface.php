@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jacobmalachowski
- * Date: 10/1/18
- * Time: 1:47 PM
- */
 
 namespace Neighborhoods\Prefab\Console;
 
@@ -19,36 +13,37 @@ use Neighborhoods\Prefab\Actor\MapBuilderInterface;
 use Neighborhoods\Prefab\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\Actor\Handler;
 use Neighborhoods\Prefab\Actor\BuilderInterface;
-use Neighborhoods\Prefab\Actor\HandlerInterface;
 use Neighborhoods\Prefab\Actor\FactoryInterface;
 
 interface GenerateFabCommandInterface
 {
-    public function setActorFactoryInterfaceGeneratorFactory(FactoryInterface\Generator\FactoryInterface $actorFactoryInterfaceGeneratorFactory) : GenerateFabCommand;
+    public function setActorFactoryInterfaceGeneratorFactory(FactoryInterface\Generator\FactoryInterface $actorFactoryInterfaceGeneratorFactory);
 
-    public function setMapInterfaceGeneratorFactory(MapInterface\Generator\FactoryInterface $mapInterfaceGeneratorFactory) : GenerateFabCommand;
+    public function setMapInterfaceGeneratorFactory(MapInterface\Generator\FactoryInterface $mapInterfaceGeneratorFactory);
 
-    public function setActorRepositoryGeneratorFactory(Repository\Generator\FactoryInterface $actorRepositoryGeneratorFactory) : GenerateFabCommand;
+    public function setActorRepositoryGeneratorFactory(Repository\Generator\FactoryInterface $actorRepositoryGeneratorFactory);
 
-    public function setActorBuilderGeneratorFactory(Builder\Generator\FactoryInterface $actorBuilderGeneratorFactory) : GenerateFabCommand;
+    public function setActorBuilderGeneratorFactory(Builder\Generator\FactoryInterface $actorBuilderGeneratorFactory);
 
-    public function setConsoleGeneratorMetaFactory(GeneratorMeta\FactoryInterface $consoleGeneratorMetaFactory) : GenerateFabCommand;
+    public function setConsoleGeneratorMetaFactory(GeneratorMeta\FactoryInterface $consoleGeneratorMetaFactory);
 
-    public function setMapGeneratorFactory(Map\Generator\FactoryInterface $mapGeneratorFactory) : GenerateFabCommand;
+    public function setMapGeneratorFactory(Map\Generator\FactoryInterface $mapGeneratorFactory);
 
-    public function setActorMapBuilderInterfaceGeneratorFactory(MapBuilderInterface\Generator\FactoryInterface $actorMapBuilderInterfaceGeneratorFactory) : GenerateFabCommand;
+    public function setActorMapBuilderInterfaceGeneratorFactory(MapBuilderInterface\Generator\FactoryInterface $actorMapBuilderInterfaceGeneratorFactory);
 
-    public function setActorRepositoryInterfaceGeneratorFactory(RepositoryInterface\Generator\FactoryInterface $actorRepositoryInterfaceGeneratorFactory) : GenerateFabCommand;
+    public function setActorRepositoryInterfaceGeneratorFactory(RepositoryInterface\Generator\FactoryInterface $actorRepositoryInterfaceGeneratorFactory);
 
-    public function setActorFactoryGeneratorFactory(Factory\Generator\FactoryInterface $actorFactoryGeneratorFactory) : GenerateFabCommand;
+    public function setActorFactoryGeneratorFactory(Factory\Generator\FactoryInterface $actorFactoryGeneratorFactory);
 
-    public function setActorHandlerGeneratorFactory(Handler\Generator\FactoryInterface $actorHandlerGeneratorFactory) : GenerateFabCommand;
+    public function setActorHandlerGeneratorFactory(Handler\Generator\FactoryInterface $actorHandlerGeneratorFactory);
 
-    public function setActorBuilderInterfaceGeneratorFactory(BuilderInterface\Generator\FactoryInterface $actorBuilderInterfaceGeneratorFactory) : GenerateFabCommand;
+    public function setActorBuilderInterfaceGeneratorFactory(BuilderInterface\Generator\FactoryInterface $actorBuilderInterfaceGeneratorFactory);
 
-    public function setActorHandlerInterfaceGeneratorFactory(HandlerInterface\Generator\FactoryInterface $actorHandlerInterfaceGeneratorFactory) : GenerateFabCommand;
+    public function setActorMapBuilderGeneratorFactory(MapBuilder\Generator\FactoryInterface $actorMapBuilderGeneratorFactory);
 
-    public function setActorMapBuilderGeneratorFactory(MapBuilder\Generator\FactoryInterface $actorMapBuilderGeneratorFactory) : GenerateFabCommand;
+    public function setActorAwareTraitGeneratorFactory(AwareTrait\Generator\FactoryInterface $actorAwareTraitGeneratorFactory);
 
-    public function setActorAwareTraitGeneratorFactory(AwareTrait\Generator\FactoryInterface $actorAwareTraitGeneratorFactory) : GenerateFabCommand;
+    public function getProjectName(): string;
+
+    public function setProjectName(string $projectName): GenerateFabCommandInterface;
 }
