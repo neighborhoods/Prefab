@@ -11,10 +11,10 @@ class Template
 
     public function build() : \DAONAMEPLACEHOLDERInterface
     {
-        $TRUNCATEDDAONAMEPLACEHOLDER = $this->getDAOVARNAMEPLACEHOLDERFactory()->create();
-        // @TODO - build the object.
-
-        return $TRUNCATEDDAONAMEPLACEHOLDER;
+        $TRUNCATEDDAONAMEPLACEHOLDER =
+            $this->getDAOVARNAMEPLACEHOLDERFactory()
+                ->create();
+        return $TRUNCATEDDAONAMEPLACEHOLDERBUILDERBUILDMETHODPLACEHOLDER;
     }
 
     protected function getRecord() : array

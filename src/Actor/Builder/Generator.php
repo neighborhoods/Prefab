@@ -19,11 +19,12 @@ class Generator implements GeneratorInterface
 
     public const CLASS_NAME = 'Builder';
 
+    protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
+    protected const METHOD_PATTERN = "->set%s(\$this->record['%s'])\n";
     protected $generator;
     protected $varName;
     protected $projectName;
     protected $classSaver;
-    /** @var GeneratorMetaInterface */
     protected $meta;
 
     public function generate() : GeneratorInterface
@@ -44,6 +45,7 @@ class Generator implements GeneratorInterface
         $file->setClass($this->getGenerator());
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
+        $builtFile = $this->addBuilderMethod($builtFile);
 
         $this->getClassSaverFactory()->create()
             ->setClassName(self::CLASS_NAME)
@@ -54,6 +56,26 @@ class Generator implements GeneratorInterface
         $this->generateService();
 
         return $this;
+    }
+
+    protected function addBuilderMethod(string $builtFile) : string
+    {
+        $methodString = '';
+
+        foreach ($this->getMeta()->getDatabaseProperties() as $key => $value) {
+            $itemName = '';
+
+            $keyArray = explode('_', $key);
+            unset($keyArray[0]);
+
+            foreach ($keyArray as $keyPart) {
+                $itemName .= ucfirst(strtolower($keyPart));
+            }
+
+            $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value);
+        }
+
+        return str_replace(self::BUILDER_BUILD_METHOD_PLACEHOLDER, $methodString, $builtFile);
     }
 
     protected function replaceReturnTypePlaceHolders() : GeneratorInterface
