@@ -115,7 +115,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             $dirName = $this->projectDir . $dir->getFilename();
             if ($fileSystem->exists($dirName)) {
                 $fileSystem->remove($dirName);
-            };
+            }
         }
 
         $fileSystem->mirror($this->stagedHttpDir, $this->projectDir, null, $options);
