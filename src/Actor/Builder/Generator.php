@@ -63,19 +63,26 @@ class Generator implements GeneratorInterface
         $methodString = '';
 
         foreach ($this->getMeta()->getDatabaseProperties() as $key => $value) {
-            $itemName = '';
-
-            $keyArray = explode('_', $key);
-            unset($keyArray[0]);
-
-            foreach ($keyArray as $keyPart) {
-                $itemName .= ucfirst(strtolower($keyPart));
-            }
+            $itemName = $this->getCamelCasePropertyName($key);
 
             $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value);
         }
 
         return str_replace(self::BUILDER_BUILD_METHOD_PLACEHOLDER, $methodString, $builtFile);
+    }
+
+    protected function getCamelCasePropertyName(string $property) : string
+    {
+        $itemName = '';
+        $keyArray = explode('_', $property);
+
+        // Remove the leading PROP_ from the constant name
+        unset($keyArray[0]);
+
+        foreach ($keyArray as $keyPart) {
+            $itemName .= ucfirst(strtolower($keyPart));
+        }
+        return $itemName;
     }
 
     protected function replaceReturnTypePlaceHolders() : GeneratorInterface
@@ -197,4 +204,5 @@ class Generator implements GeneratorInterface
     {
         return self::CLASS_NAME;
     }
+
 }
