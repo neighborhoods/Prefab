@@ -19,4 +19,8 @@ interface BuildConfigurationInterface
     public function getDaoProperties() : array;
 
     public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface;
+
+    public function getDaoFileLocation() : string;
+
+    public function setDaoFileLocation(string $projectDirectory) : BuildConfigurationInterface;
 }

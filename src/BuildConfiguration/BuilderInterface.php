@@ -10,4 +10,5 @@ interface BuilderInterface
 {
     public function build() : BuildConfigurationInterface;
     public function setYamlFilePath(string $yamlFilePath) : BuilderInterface;
+    public function setDaoFileLocation($projectDirectory) : BuilderInterface;
 }

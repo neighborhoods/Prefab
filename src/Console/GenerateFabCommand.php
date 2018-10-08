@@ -9,8 +9,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Yaml\Yaml;
 
 class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 {
@@ -44,7 +42,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         // We should probably do something better than this
         $this->httpSrcDir = __DIR__ . '/../../http';
         $this->stagedHttpDir = __DIR__ . '/../../stagedHttp';
-        $this->projectDir = __DIR__ . '/../../../../../';
+        $this->setProjectDir(__DIR__ . '/../../../../../');
         $this->srcLocation = $this->projectDir . 'src/';
         $this->fabLocation = $this->projectDir . 'fab/';
 
@@ -79,6 +77,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         foreach ($daos as $dao) {
             $configurations[] = $this->getBuildConfigurationBuilderFactory()->create()
                 ->setYamlFilePath($dao->getPath() . '/' . $dao->getFilename())
+                ->setDaoFileLocation($this->getProjectDir())
                 ->build();
         }
     }
@@ -156,6 +155,23 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             throw new \LogicException('GenerateFabCommand projectName is already set.');
         }
         $this->projectName = $projectName;
+        return $this;
+    }
+
+    protected function getProjectDir() : string
+    {
+        if ($this->projectDir === null) {
+            throw new \LogicException('GenerateFabCommand projectDir has not been set.');
+        }
+        return $this->projectDir;
+    }
+
+    protected function setProjectDir(string $projectDir) : GenerateFabCommandInterface
+    {
+        if ($this->projectDir !== null) {
+            throw new \LogicException('GenerateFabCommand projectDir is already set.');
+        }
+        $this->projectDir = $projectDir;
         return $this;
     }
 }

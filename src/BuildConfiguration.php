@@ -13,6 +13,8 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $daoIdentityField;
     // TODO: Make this a map instead of an array.
     protected $daoProperties = [];
+    /** @var string */
+    protected $daoFileLocation;
 
     public function getDaoName() : string
     {
@@ -77,6 +79,23 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface
     {
         $this->daoProperties[$propertyName] = $values;
+        return $this;
+    }
+
+    public function getDaoFileLocation() : string
+    {
+        if ($this->daoFileLocation === null) {
+            throw new \LogicException('BuildConfiguration projectDirectory has not been set.');
+        }
+        return $this->daoFileLocation;
+    }
+
+    public function setDaoFileLocation(string $daoFileLocation) : BuildConfigurationInterface
+    {
+        if ($this->daoFileLocation !== null) {
+            throw new \LogicException('BuildConfiguration projectDirectory is already set.');
+        }
+        $this->daoFileLocation = $daoFileLocation;
         return $this;
     }
 }

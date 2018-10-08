@@ -12,6 +12,7 @@ class Builder implements BuilderInterface
     use BuildConfiguration\Factory\AwareTrait;
 
     protected $yamlFilePath;
+    protected $daoFileLocation;
 
     public function build() : BuildConfigurationInterface
     {
@@ -20,7 +21,8 @@ class Builder implements BuilderInterface
 
         $buildConfiguration->setDaoName($configArray['dao']['name'])
             ->setTableName($configArray['dao']['table_name'])
-            ->setDaoIdentityField($configArray['dao']['identity_field']);
+            ->setDaoIdentityField($configArray['dao']['identity_field'])
+            ->setDaoFileLocation($this->getDaoFileLocation());
 
         foreach ($configArray['dao']['properties'] as $key => $values) {
             $buildConfiguration->appendDaoProperty($key, $values);
@@ -50,4 +52,22 @@ class Builder implements BuilderInterface
         $this->yamlFilePath = $yamlFilePath;
         return $this;
     }
+
+    protected function getDaoFileLocation()
+    {
+        if ($this->daoFileLocation === null) {
+            throw new \LogicException('Builder projectDirectory has not been set.');
+        }
+        return $this->daoFileLocation;
+    }
+
+    public function setDaoFileLocation($daoFileLocation) : BuilderInterface
+    {
+        if ($this->daoFileLocation !== null) {
+            throw new \LogicException('Builder projectDirectory is already set.');
+        }
+        $this->daoFileLocation = $daoFileLocation;
+        return $this;
+    }
+
 }
