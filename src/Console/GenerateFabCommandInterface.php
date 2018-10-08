@@ -17,32 +17,6 @@ use Neighborhoods\Prefab\Actor\FactoryInterface;
 
 interface GenerateFabCommandInterface
 {
-    public function setActorFactoryInterfaceGeneratorFactory(FactoryInterface\Generator\FactoryInterface $actorFactoryInterfaceGeneratorFactory);
-
-    public function setMapInterfaceGeneratorFactory(MapInterface\Generator\FactoryInterface $mapInterfaceGeneratorFactory);
-
-    public function setActorRepositoryGeneratorFactory(Repository\Generator\FactoryInterface $actorRepositoryGeneratorFactory);
-
-    public function setActorBuilderGeneratorFactory(Builder\Generator\FactoryInterface $actorBuilderGeneratorFactory);
-
-    public function setConsoleGeneratorMetaFactory(GeneratorMeta\FactoryInterface $consoleGeneratorMetaFactory);
-
-    public function setMapGeneratorFactory(Map\Generator\FactoryInterface $mapGeneratorFactory);
-
-    public function setActorMapBuilderInterfaceGeneratorFactory(MapBuilderInterface\Generator\FactoryInterface $actorMapBuilderInterfaceGeneratorFactory);
-
-    public function setActorRepositoryInterfaceGeneratorFactory(RepositoryInterface\Generator\FactoryInterface $actorRepositoryInterfaceGeneratorFactory);
-
-    public function setActorFactoryGeneratorFactory(Factory\Generator\FactoryInterface $actorFactoryGeneratorFactory);
-
-    public function setActorHandlerGeneratorFactory(Handler\Generator\FactoryInterface $actorHandlerGeneratorFactory);
-
-    public function setActorBuilderInterfaceGeneratorFactory(BuilderInterface\Generator\FactoryInterface $actorBuilderInterfaceGeneratorFactory);
-
-    public function setActorMapBuilderGeneratorFactory(MapBuilder\Generator\FactoryInterface $actorMapBuilderGeneratorFactory);
-
-    public function setActorAwareTraitGeneratorFactory(AwareTrait\Generator\FactoryInterface $actorAwareTraitGeneratorFactory);
-
     public function getProjectName(): string;
 
     public function setProjectName(string $projectName): GenerateFabCommandInterface;

@@ -11,6 +11,25 @@ class GeneratorMeta implements GeneratorMetaInterface
     protected $actorFilePath;
     /** @var string */
     protected $daoName;
+    /** @var array */
+    protected $daoProperties;
+
+    public function getDaoProperties() : array
+    {
+        if ($this->daoProperties === null) {
+            throw new \LogicException('GeneratorMeta daoProperties has not been set.');
+        }
+        return $this->daoProperties;
+    }
+
+    public function setDaoProperties(array $daoProperties) : GeneratorMetaInterface
+    {
+        if ($this->daoProperties !== null) {
+            throw new \LogicException('GeneratorMeta daoProperties is already set.');
+        }
+        $this->daoProperties = $daoProperties;
+        return $this;
+    }
 
     public function getActorNamespace(): string
     {
@@ -62,5 +81,6 @@ class GeneratorMeta implements GeneratorMetaInterface
         $this->daoName = $daoName;
         return $this;
     }
+
 
 }

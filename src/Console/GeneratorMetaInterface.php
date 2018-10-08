@@ -16,4 +16,8 @@ interface GeneratorMetaInterface
     public function getDaoName(): string;
 
     public function setDaoName(string $daoName): GeneratorMetaInterface;
+
+    public function getDaoProperties() : array;
+
+    public function setDaoProperties(array $daoProperties) : GeneratorMetaInterface;
 }
