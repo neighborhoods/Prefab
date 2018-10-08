@@ -5,3 +5,4 @@ services:
     calls:
     - [setHttpSkeletonGeneratorFactory, ['@Neighborhoods\Prefab\HttpSkeleton\Generator\FactoryInterface']]
     - [setBuildConfigurationBuilderFactory, ['@Neighborhoods\Prefab\BuildConfiguration\Builder\FactoryInterface']]
+    - [setBuildPlanBuilderFactory, ['@Neighborhoods\Prefab\BuildPlan\Builder\FactoryInterface']]

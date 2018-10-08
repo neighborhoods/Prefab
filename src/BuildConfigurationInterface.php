@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Neighborhoods\Prefab;
 
@@ -20,7 +21,15 @@ interface BuildConfigurationInterface
 
     public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface;
 
-    public function getDaoFileLocation() : string;
+    public function getRootSaveLocation() : string;
 
-    public function setDaoFileLocation(string $projectDirectory) : BuildConfigurationInterface;
+    public function setRootSaveLocation(string $projectDirectory) : BuildConfigurationInterface;
+
+    public function getProjectName() : string;
+
+    public function setProjectName(string $projectName) : BuildConfigurationInterface;
+
+    public function getDaoNamespace() : string;
+
+    public function setDaoNamespace(string $daoNamespace) : BuildConfigurationInterface;
 }

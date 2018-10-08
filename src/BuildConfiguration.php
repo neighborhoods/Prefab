@@ -1,20 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace Neighborhoods\Prefab;
 
 
 class BuildConfiguration implements BuildConfigurationInterface
 {
-    /** @var string */
     protected $daoName;
-    /** @var string */
     protected $tableName;
-    /** @var string */
     protected $daoIdentityField;
     // TODO: Make this a map instead of an array.
     protected $daoProperties = [];
-    /** @var string */
-    protected $daoFileLocation;
+    protected $rootSaveLocation;
+    protected $projectName;
+    protected $daoNamespace;
 
     public function getDaoName() : string
     {
@@ -82,20 +81,55 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this;
     }
 
-    public function getDaoFileLocation() : string
+    public function getRootSaveLocation() : string
     {
-        if ($this->daoFileLocation === null) {
+        if ($this->rootSaveLocation === null) {
             throw new \LogicException('BuildConfiguration projectDirectory has not been set.');
         }
-        return $this->daoFileLocation;
+        return $this->rootSaveLocation;
     }
 
-    public function setDaoFileLocation(string $daoFileLocation) : BuildConfigurationInterface
+    public function setRootSaveLocation(string $rootSaveLocation) : BuildConfigurationInterface
     {
-        if ($this->daoFileLocation !== null) {
+        if ($this->rootSaveLocation !== null) {
             throw new \LogicException('BuildConfiguration projectDirectory is already set.');
         }
-        $this->daoFileLocation = $daoFileLocation;
+        $this->rootSaveLocation = $rootSaveLocation;
         return $this;
     }
+
+    public function getProjectName() : string
+    {
+        if ($this->projectName === null) {
+            throw new \LogicException('BuildConfiguration projectName has not been set.');
+        }
+        return $this->projectName;
+    }
+
+    public function setProjectName(string $projectName) : BuildConfigurationInterface
+    {
+        if ($this->projectName !== null) {
+            throw new \LogicException('BuildConfiguration projectName is already set.');
+        }
+        $this->projectName = $projectName;
+        return $this;
+    }
+
+    public function getDaoNamespace() : string
+    {
+        if ($this->daoNamespace === null) {
+            throw new \LogicException('BuildConfiguration daoNamespace has not been set.');
+        }
+        return $this->daoNamespace;
+    }
+
+    public function setDaoNamespace(string $daoNamespace) : BuildConfigurationInterface
+    {
+        if ($this->daoNamespace !== null) {
+            throw new \LogicException('BuildConfiguration daoNamespace is already set.');
+        }
+        $this->daoNamespace = $daoNamespace;
+        return $this;
+    }
+
 }

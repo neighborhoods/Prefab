@@ -4,16 +4,20 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Console;
 
 use Neighborhoods\Prefab\BuildConfiguration;
+use Neighborhoods\Prefab\BuildPlan;
+use Neighborhoods\Prefab\BuildPlanInterface;
 use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
+    use BuildPlan\Builder\Factory\AwareTrait;
 
     /** @var string */
     protected $daoName;
@@ -34,6 +38,9 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     /** @var string */
     protected $projectName;
 
+    /** @var BuildPlanInterface[] */
+    protected $buildPlans;
+
     protected function configure() : GenerateFabCommandInterface
     {
         $this->setName('gen:fab')
@@ -42,7 +49,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         // We should probably do something better than this
         $this->httpSrcDir = __DIR__ . '/../../http';
         $this->stagedHttpDir = __DIR__ . '/../../stagedHttp';
-        $this->setProjectDir(__DIR__ . '/../../../../../');
+        $this->setProjectDir(__DIR__ . '/../../../../../'); // This may not be needed anymore
         $this->srcLocation = $this->projectDir . 'src/';
         $this->fabLocation = $this->projectDir . 'fab/';
 
@@ -53,8 +60,8 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     {
         $this->setProjectName($this->getProjectNameFromComposer());
 
-//        $output->writeln('Copying HTTP skeleton.');
-//        $this->generateHttpSkeleton();
+        $output->writeln('Copying HTTP skeleton.');
+        $this->generateHttpSkeleton();
 
         $output->writeln('Assembling Prefab build plan.');
         $this->generateBuildPlan();
@@ -77,9 +84,19 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         foreach ($daos as $dao) {
             $configurations[] = $this->getBuildConfigurationBuilderFactory()->create()
                 ->setYamlFilePath($dao->getPath() . '/' . $dao->getFilename())
-                ->setDaoFileLocation($this->getProjectDir())
+                ->setProjectName($this->getProjectName())
                 ->build();
         }
+
+        foreach ($configurations as $configuration) {
+            $this->appendBuildPlan(
+                $this->getBuildPlanBuilderFactory()->create()
+                    ->setBuildConfiguration($configuration)
+                    ->build()
+            );
+        }
+
+        return $this;
     }
 
     protected function generateHttpSkeleton() : GenerateFabCommandInterface
@@ -90,6 +107,16 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             ->setHttpSourceDirectory($this->httpSrcDir)
             ->setTargetDirectory($this->projectDir)
             ->generate();
+
+        return $this;
+    }
+
+    protected function generatePrefab() : GenerateFabCommandInterface
+    {
+        /** @var BuildPlanInterface $buildPlan */
+        foreach ($this->getBuildPlans() as $buildPlan) {
+            $buildPlan->execute();
+        }
 
         return $this;
     }
@@ -119,26 +146,6 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
         $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
         return $projectName;
-    }
-
-    protected function generatePrefab() : GenerateFabCommandInterface
-    {
-        $generatorList = $this->getBuildPlan();
-        /** @var GeneratorInterface $generator */
-        foreach ($generatorList as $generator) {
-            $generator->generate();
-        }
-
-        return $this;
-    }
-
-
-    protected function getBuildPlan() : array
-    {
-        if ($this->buildPlan === null) {
-            throw new \LogicException('GenerateFabCommand buildPlan has not been set.');
-        }
-        return $this->buildPlan;
     }
 
     public function getProjectName() : string
@@ -172,6 +179,20 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
             throw new \LogicException('GenerateFabCommand projectDir is already set.');
         }
         $this->projectDir = $projectDir;
+        return $this;
+    }
+
+    public function getBuildPlans() : array
+    {
+        if ($this->buildPlans === null) {
+            throw new \LogicException('GenerateFabCommand buildPlans has not been set.');
+        }
+        return $this->buildPlans;
+    }
+
+    public function appendBuildPlan(BuildPlanInterface $buildPlan) : GenerateFabCommandInterface
+    {
+        $this->buildPlans[] = $buildPlan;
         return $this;
     }
 }

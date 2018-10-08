@@ -44,27 +44,28 @@ class Builder implements BuilderInterface
     const BACKSLASH = '\\';
     
     protected $buildConfiguration;
-    /** @var BuildPlanInterface */
     protected $buildPlan;
 
-    protected function build() : BuildPlanInterface
+    public function build() : BuildPlanInterface
     {
-        $this->buildPlan = $this->getBuildPlanFactory()->create();
+        $this->setBuildPlan($this->getBuildPlanFactory()->create());
 
-            $daoFilePath = $this->fabLocation . self::FORWARD_SLASH . $dao->getRelativePath();
-            $namespacePrefix = 'Neighborhoods\\' . $this->getProjectName() . '\\';
-            $trimmedFileName = str_replace('.dao.yml', '', $dao->getRelativePathname());
-            $daoNamespace = $namespacePrefix . str_replace('/', '\\', $trimmedFileName);
-            $daoMeta = $this->getConsoleGeneratorMetaFactory()->create();
+        $daoMeta = $this->getConsoleGeneratorMetaFactory()->create();
 
-            $daoMeta->setDaoName($this->getBuildConfiguration()->getDaoName());
-            $daoMeta->setActorNamespace($daoNamespace); // TODO
-            $daoMeta->setActorFilePath($daoFilePath); // TODO
-            $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
+        $daoMeta->setDaoName($this->getBuildConfiguration()->getDaoName());
+        $daoMeta->setActorNamespace($this->getBuildConfiguration()->getDaoNamespace());
+        $daoMeta->setActorFilePath(
+            str_replace(
+                '/' . $this->getBuildConfiguration()->getDaoName() . '.dao.yml',
+                '', 
+                $this->getBuildConfiguration()->getRootSaveLocation()
+            )
+        );
+        $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
 
-            $this->addDaoToPlan($daoMeta);
+        $this->addDaoToPlan($daoMeta);
 
-        return $buildPlan;
+        return $this->getBuildPlan();
     }
 
     protected function addDaoToPlan(GeneratorMetaInterface $daoMeta) : BuilderInterface
@@ -260,7 +261,7 @@ class Builder implements BuilderInterface
     }
 
     
-    public function getBuildConfiguration() : BuildConfigurationInterface
+    protected function getBuildConfiguration() : BuildConfigurationInterface
     {
         if ($this->buildConfiguration === null) {
             throw new \LogicException('Builder buildConfiguration has not been set.');

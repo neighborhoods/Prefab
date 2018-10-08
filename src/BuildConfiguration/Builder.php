@@ -12,7 +12,9 @@ class Builder implements BuilderInterface
     use BuildConfiguration\Factory\AwareTrait;
 
     protected $yamlFilePath;
-    protected $daoFileLocation;
+    protected $projectName;
+    /** @var string */
+    protected $daoNamespace;
 
     public function build() : BuildConfigurationInterface
     {
@@ -22,7 +24,9 @@ class Builder implements BuilderInterface
         $buildConfiguration->setDaoName($configArray['dao']['name'])
             ->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field'])
-            ->setDaoFileLocation($this->getDaoFileLocation());
+            ->setRootSaveLocation($this->getFabDirFromYamlPath())
+            ->setDaoNamespace($configArray['dao']['namespace'])
+            ->setProjectName($this->getProjectName());
 
         foreach ($configArray['dao']['properties'] as $key => $values) {
             $buildConfiguration->appendDaoProperty($key, $values);
@@ -31,6 +35,11 @@ class Builder implements BuilderInterface
         return $buildConfiguration;
     }
 
+    protected function getFabDirFromYamlPath() : string
+    {
+        $pathArray = explode('/src/', $this->getYamlFilePath());
+        return $pathArray[0] . '/src/' . $pathArray[1] . '/fab/' . $pathArray[2];
+    }
     protected function getConfigFromYaml() : array
     {
         return Yaml::parseFile($this->getYamlFilePath());
@@ -53,21 +62,37 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function getDaoFileLocation()
+    protected function getProjectName() : string
     {
-        if ($this->daoFileLocation === null) {
-            throw new \LogicException('Builder projectDirectory has not been set.');
+        if ($this->projectName === null) {
+            throw new \LogicException('Builder projectName has not been set.');
         }
-        return $this->daoFileLocation;
+        return $this->projectName;
     }
 
-    public function setDaoFileLocation($daoFileLocation) : BuilderInterface
+    public function setProjectName(string $projectName) : BuilderInterface
     {
-        if ($this->daoFileLocation !== null) {
-            throw new \LogicException('Builder projectDirectory is already set.');
+        if ($this->projectName !== null) {
+            throw new \LogicException('Builder projectName is already set.');
         }
-        $this->daoFileLocation = $daoFileLocation;
+        $this->projectName = $projectName;
         return $this;
     }
 
+    protected function getDaoNamespace() : string
+    {
+        if ($this->daoNamespace === null) {
+            throw new \LogicException('Builder daoNamespace has not been set.');
+        }
+        return $this->daoNamespace;
+    }
+
+    public function setDaoNamespace(string $daoNamespace) : BuilderInterface
+    {
+        if ($this->daoNamespace !== null) {
+            throw new \LogicException('Builder daoNamespace is already set.');
+        }
+        $this->daoNamespace = $daoNamespace;
+        return $this;
+    }
 }
