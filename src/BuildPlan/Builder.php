@@ -63,6 +63,7 @@ class Builder implements BuilderInterface
         );
         $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
 
+        $this->addDaoInterfaceToPlan($daoMeta);
         $this->addDaoToPlan($daoMeta);
 
         return $this->getBuildPlan();
@@ -90,6 +91,11 @@ class Builder implements BuilderInterface
         $this->addBuilderInterfaceToPlan($nextLevelMeta);
 
         return $this;
+    }
+
+    protected function addDaoInterfaceToPlan(GeneratorMetaInterface $meta) : BuilderInterface
+    {
+
     }
 
     protected function addAwareTraitToPlan(GeneratorMetaInterface $meta) : BuilderInterface

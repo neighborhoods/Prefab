@@ -25,15 +25,6 @@ class Generator implements GeneratorInterface
 
     public function generate() : GeneratorInterface
     {
-        $this->setGenerator();
-
-        $this->getGenerator()->setNamespaceName($this->getMeta()->getActorNamespace());
-        $this->getGenerator()->setName(self::INTERFACE_NAME);
-
-        $this->replaceReturnTypePlaceHolders();
-
-        $file = new FileGenerator();
-        $file->setClass($this->getGenerator());
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
