@@ -10,6 +10,7 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Neighborhoods\Prefab\Actor\AwareTrait;
 use Neighborhoods\Prefab\Actor;
+use Neighborhoods\Prefab\Actor\DAOInterface;
 use Neighborhoods\Prefab\Actor\Factory;
 use Neighborhoods\Prefab\Actor\FactoryInterface;
 use Neighborhoods\Prefab\Actor\Handler;
@@ -39,6 +40,7 @@ class Builder implements BuilderInterface
     use Repository\Generator\Factory\AwareTrait;
     use RepositoryInterface\Generator\Factory\AwareTrait;
     use GeneratorMeta\Factory\AwareTrait;
+    use DAOInterface\Generator\Factory\AwareTrait;
 
     const FORWARD_SLASH = '/';
     const BACKSLASH = '\\';
@@ -95,7 +97,11 @@ class Builder implements BuilderInterface
 
     protected function addDaoInterfaceToPlan(GeneratorMetaInterface $meta) : BuilderInterface
     {
+        $daoInterfaceGenerator = $this->getActorDAOInterfaceGeneratorFactory()->create();
+        $daoInterfaceGenerator->setMeta($meta);
+        $this->appendGeneratorToBuildPlan($daoInterfaceGenerator);
 
+        return $this;
     }
 
     protected function addAwareTraitToPlan(GeneratorMetaInterface $meta) : BuilderInterface

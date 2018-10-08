@@ -5,7 +5,6 @@ namespace Neighborhoods\Prefab\Actor\DAOInterface;
 
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
-use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\InterfaceGenerator;
 use Zend\Code\Reflection\ClassReflection;
 use Neighborhoods\Prefab\ClassSaver;
@@ -21,15 +20,14 @@ class Generator implements GeneratorInterface
     protected $classSaver;
     protected $meta;
 
-    protected const INTERFACE_NAME = 'FactoryInterface';
 
     public function generate() : GeneratorInterface
     {
-
+        $file = file_get_contents('Template.php');
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
         $this->getClassSaverFactory()->create()
-            ->setClassName(self::INTERFACE_NAME)
+            ->setClassName($this->getActorName())
             ->setGeneratedClass($builtFile)
             ->setSavePath($this->getMeta()->getActorFilePath())
             ->saveClass();
@@ -112,6 +110,6 @@ class Generator implements GeneratorInterface
 
     public function getActorName(): string
     {
-        return self::INTERFACE_NAME;
+        return $this->getMeta()->getDaoName() . 'Interface';
     }
 }
