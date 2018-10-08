@@ -3,17 +3,20 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Console;
 
+use Neighborhoods\Prefab\BuildConfiguration;
 use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
-    use
+    use BuildConfiguration\Builder\Factory\AwareTrait;
+
     /** @var string */
     protected $daoName;
     /** @var string */
@@ -68,12 +71,15 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function generateBuildPlan() : GenerateFabCommand
     {
+        $configurations = [];
         $finder = new Finder();
         $daos = $finder->files()->name('*.dao.yml')->in($this->srcLocation);
 
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-            $daoProperties = Yaml::parseFile($dao->getPath() . '/' . $dao->getFilename());
+            $configurations[] = $this->getBuildConfigurationBuilderFactory()->create()
+                ->setYamlFilePath($dao->getPath() . '/' . $dao->getFilename())
+                ->build();
         }
     }
 

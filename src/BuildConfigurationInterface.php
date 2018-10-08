@@ -18,5 +18,5 @@ interface BuildConfigurationInterface
 
     public function getDaoProperties() : array;
 
-    public function appendDaoProperty(array $daoProperty) : BuildConfigurationInterface;
+    public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface;
 }

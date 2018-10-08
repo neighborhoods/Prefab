@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\Prefab\BuildPlan\BuilderInterface:
+    class: Neighborhoods\Prefab\BuildPlan\Builder

@@ -3,6 +3,7 @@
 namespace Neighborhoods\Prefab\BuildConfiguration;
 
 
+use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
 
@@ -12,17 +13,20 @@ class Builder implements BuilderInterface
 
     protected $yamlFilePath;
 
-    public function build() : BuildConfiguration
+    public function build() : BuildConfigurationInterface
     {
         $buildConfiguration = $this->getBuildConfigurationFactory()->create();
         $configArray = $this->getConfigFromYaml();
 
         $buildConfiguration->setDaoName($configArray['dao']['name'])
+            ->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field']);
 
-        foreach ($configArray['dao']['properties'] as $property) {
-            $buildConfiguration->appendDaoProperty($property);
+        foreach ($configArray['dao']['properties'] as $key => $values) {
+            $buildConfiguration->appendDaoProperty($key, $values);
         }
+
+        return $buildConfiguration;
     }
 
     protected function getConfigFromYaml() : array

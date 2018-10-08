@@ -73,13 +73,10 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this->daoProperties;
     }
 
-    // TODO: Make this a property object instead of an array
-    public function appendDaoProperty(array $daoProperty) : BuildConfigurationInterface
+    // TODO: Make this a property object instead of a key and array
+    public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface
     {
-        if ($this->daoProperties !== null) {
-            throw new \LogicException('BuildConfiguration daoProperties is already set.');
-        }
-        $this->daoProperties[] = $daoProperty;
+        $this->daoProperties[$propertyName] = $values;
         return $this;
     }
 }
