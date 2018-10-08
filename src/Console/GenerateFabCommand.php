@@ -8,11 +8,12 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
 
 class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
-
+    use
     /** @var string */
     protected $daoName;
     /** @var string */
@@ -51,8 +52,8 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     {
         $this->setProjectName($this->getProjectNameFromComposer());
 
-        $output->writeln('Copying HTTP skeleton.');
-        $this->generateHttpSkeleton();
+//        $output->writeln('Copying HTTP skeleton.');
+//        $this->generateHttpSkeleton();
 
         $output->writeln('Assembling Prefab build plan.');
         $this->generateBuildPlan();
@@ -67,7 +68,13 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function generateBuildPlan() : GenerateFabCommand
     {
+        $finder = new Finder();
+        $daos = $finder->files()->name('*.dao.yml')->in($this->srcLocation);
 
+        /** @var SplFileInfo $dao */
+        foreach ($daos as $dao) {
+            $daoProperties = Yaml::parseFile($dao->getPath() . '/' . $dao->getFilename());
+        }
     }
 
     protected function generateHttpSkeleton() : GenerateFabCommandInterface
