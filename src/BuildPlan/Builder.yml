@@ -18,3 +18,4 @@ services:
       - [setActorMapBuilderInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\MapBuilderInterface\Generator\FactoryInterface']]
       - [setActorAwareTraitGeneratorFactory, ['@Neighborhoods\Prefab\Actor\AwareTrait\Generator\FactoryInterface']]
       - [setActorDAOInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\DAOInterface\Generator\FactoryInterface']]
+      - [setActorDAOGeneratorFactory, ['@Neighborhoods\Prefab\Actor\DAO\Generator\FactoryInterface']]

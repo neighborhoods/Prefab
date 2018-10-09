@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\Actor\DAOInterface\Generator;
+namespace Neighborhoods\Prefab\Actor\DAO\Generator;
 
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 
@@ -12,6 +12,6 @@ class Factory implements FactoryInterface
 
     public function create() : GeneratorInterface
     {
-        return clone $this->getActorDAOInterfaceGenerator();
+        return clone $this->getActorDAOGenerator();
     }
 }

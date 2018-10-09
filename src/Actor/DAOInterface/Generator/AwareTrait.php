@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\DAOInterface\Generator;
 
-use Neighborhoods\Prefab\Actor\DAOInterface\GeneratorInterface;
+use Neighborhoods\Prefab\Console\GeneratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

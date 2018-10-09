@@ -11,6 +11,7 @@ use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Neighborhoods\Prefab\Actor\AwareTrait;
 use Neighborhoods\Prefab\Actor;
 use Neighborhoods\Prefab\Actor\DAOInterface;
+use Neighborhoods\Prefab\Actor\DAO;
 use Neighborhoods\Prefab\Actor\Factory;
 use Neighborhoods\Prefab\Actor\FactoryInterface;
 use Neighborhoods\Prefab\Actor\Handler;
@@ -41,6 +42,7 @@ class Builder implements BuilderInterface
     use RepositoryInterface\Generator\Factory\AwareTrait;
     use GeneratorMeta\Factory\AwareTrait;
     use DAOInterface\Generator\Factory\AwareTrait;
+    use DAO\Generator\Factory\AwareTrait;
 
     const FORWARD_SLASH = '/';
     const BACKSLASH = '\\';
@@ -71,18 +73,20 @@ class Builder implements BuilderInterface
         return $this->getBuildPlan();
     }
 
-    protected function addDaoToPlan(GeneratorMetaInterface $daoMeta) : BuilderInterface
+    protected function addDaoToPlan(GeneratorMetaInterface $meta) : BuilderInterface
     {
-        /** @todo DAO generator logic + Service.yml */
+        $daoGenerator = $this->getActorDAOGeneratorFactory()->create();
+        $daoGenerator->setMeta($meta);
+        $this->appendGeneratorToBuildPlan($daoGenerator);
 
-        $nextLevelNamespace = $daoMeta->getActorNamespace() . self::BACKSLASH . $daoMeta->getDaoName();
-        $nextLevelFilePath = $daoMeta->getActorFilePath() . self::FORWARD_SLASH . $daoMeta->getDaoName();
+        $nextLevelNamespace = $meta->getActorNamespace() . self::BACKSLASH . $meta->getDaoName();
+        $nextLevelFilePath = $meta->getActorFilePath() . self::FORWARD_SLASH . $meta->getDaoName();
 
         // Once we have a DAO generator, we can pass it to getNextLevelMeta() instead of setting it all here.
         $nextLevelMeta = $this->getConsoleGeneratorMetaFactory()->create();
         $nextLevelMeta->setActorNamespace($nextLevelNamespace);
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
-        $nextLevelMeta->setDaoName($daoMeta->getDaoName());
+        $nextLevelMeta->setDaoName($meta->getDaoName());
 
         $this->addAwareTraitToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
@@ -98,6 +102,8 @@ class Builder implements BuilderInterface
     protected function addDaoInterfaceToPlan(GeneratorMetaInterface $meta) : BuilderInterface
     {
         $daoInterfaceGenerator = $this->getActorDAOInterfaceGeneratorFactory()->create();
+        $meta->setDaoIdentityField($this->getBuildConfiguration()->getDaoIdentityField());
+        $meta->setTableName($this->getBuildConfiguration()->getTableName());
         $daoInterfaceGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoInterfaceGenerator);
 

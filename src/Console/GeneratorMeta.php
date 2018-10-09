@@ -13,6 +13,12 @@ class GeneratorMeta implements GeneratorMetaInterface
     protected $daoName;
     /** @var array */
     protected $daoProperties;
+    /** @var string */
+    protected $tableName;
+    /** @var string */
+    protected $daoString;
+    /** @var string */
+    protected $daoIdentityField;
 
     public function getDaoProperties() : array
     {
@@ -82,5 +88,55 @@ class GeneratorMeta implements GeneratorMetaInterface
         return $this;
     }
 
+    public function getTableName() : string
+    {
+        if ($this->tableName === null) {
+            throw new \LogicException('GeneratorMeta tableName has not been set.');
+        }
+        return $this->tableName;
+    }
+
+    public function setTableName(string $tableName) : GeneratorMetaInterface
+    {
+        if ($this->tableName !== null) {
+            throw new \LogicException('GeneratorMeta tableName is already set.');
+        }
+        $this->tableName = $tableName;
+        return $this;
+    }
+
+    public function getDaoString() : string
+    {
+        if ($this->daoString === null) {
+            throw new \LogicException('GeneratorMeta daoString has not been set.');
+        }
+        return $this->daoString;
+    }
+
+    public function setDaoString(string $daoString) : GeneratorMetaInterface
+    {
+        if ($this->daoString !== null) {
+            throw new \LogicException('GeneratorMeta daoString is already set.');
+        }
+        $this->daoString = $daoString;
+        return $this;
+    }
+
+    public function getDaoIdentityField() : string
+    {
+        if ($this->daoIdentityField === null) {
+            throw new \LogicException('GeneratorMeta daoIdentityField has not been set.');
+        }
+        return $this->daoIdentityField;
+    }
+
+    public function setDaoIdentityField(string $daoIdentityField) : GeneratorMetaInterface
+    {
+        if ($this->daoIdentityField !== null) {
+            throw new \LogicException('GeneratorMeta daoIdentityField is already set.');
+        }
+        $this->daoIdentityField = $daoIdentityField;
+        return $this;
+    }
 
 }
