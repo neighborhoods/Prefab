@@ -79,14 +79,7 @@ class Builder implements BuilderInterface
         $daoGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoGenerator);
 
-        $nextLevelNamespace = $meta->getActorNamespace() . self::BACKSLASH . $meta->getDaoName();
-        $nextLevelFilePath = $meta->getActorFilePath() . self::FORWARD_SLASH . $meta->getDaoName();
-
-        // Once we have a DAO generator, we can pass it to getNextLevelMeta() instead of setting it all here.
-        $nextLevelMeta = $this->getConsoleGeneratorMetaFactory()->create();
-        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
-        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
-        $nextLevelMeta->setDaoName($meta->getDaoName());
+        $nextLevelMeta = $this->getNextLevelMeta($daoGenerator);
 
         $this->addAwareTraitToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
