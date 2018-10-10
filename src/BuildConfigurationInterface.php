@@ -28,8 +28,4 @@ interface BuildConfigurationInterface
     public function getProjectName() : string;
 
     public function setProjectName(string $projectName) : BuildConfigurationInterface;
-
-    public function getDaoNamespace() : string;
-
-    public function setDaoNamespace(string $daoNamespace) : BuildConfigurationInterface;
 }

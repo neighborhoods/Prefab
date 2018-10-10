@@ -114,22 +114,4 @@ class BuildConfiguration implements BuildConfigurationInterface
         $this->projectName = $projectName;
         return $this;
     }
-
-    public function getDaoNamespace() : string
-    {
-        if ($this->daoNamespace === null) {
-            throw new \LogicException('BuildConfiguration daoNamespace has not been set.');
-        }
-        return $this->daoNamespace;
-    }
-
-    public function setDaoNamespace(string $daoNamespace) : BuildConfigurationInterface
-    {
-        if ($this->daoNamespace !== null) {
-            throw new \LogicException('BuildConfiguration daoNamespace is already set.');
-        }
-        $this->daoNamespace = $daoNamespace;
-        return $this;
-    }
-
 }

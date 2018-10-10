@@ -46,25 +46,32 @@ class Builder implements BuilderInterface
 
     const FORWARD_SLASH = '/';
     const BACKSLASH = '\\';
-    
+
     protected $buildConfiguration;
     protected $buildPlan;
 
     public function build() : BuildPlanInterface
     {
         $this->setBuildPlan($this->getBuildPlanFactory()->create());
-
         $daoMeta = $this->getConsoleGeneratorMetaFactory()->create();
 
-        $daoMeta->setDaoName($this->getBuildConfiguration()->getDaoName());
-        $daoMeta->setActorNamespace($this->getBuildConfiguration()->getDaoNamespace());
-        $daoMeta->setActorFilePath(
-            str_replace(
-                '/' . $this->getBuildConfiguration()->getDaoName() . '.dao.yml',
-                '', 
-                $this->getBuildConfiguration()->getRootSaveLocation()
-            )
+        $actorFilePath = str_replace(
+            '/' . $this->getBuildConfiguration()->getDaoName() . '.dao.yml',
+            '',
+            $this->getBuildConfiguration()->getRootSaveLocation()
         );
+
+        // Get the namespace based on the filepath
+        $namespacePrefix = 'Neighborhoods\\' . $this->getBuildConfiguration()->getProjectName();
+
+        $filepathArray = explode('fab', $actorFilePath);
+        $namespaceSuffix = $filepathArray[count($filepathArray) - 1];
+        $namespaceSuffix = str_replace('/', '\\', $namespaceSuffix);
+        $namespace = $namespacePrefix . $namespaceSuffix;
+
+        $daoMeta->setDaoName($this->getBuildConfiguration()->getDaoName());
+        $daoMeta->setActorNamespace($namespace);
+        $daoMeta->setActorFilePath($actorFilePath);
         $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
 
         $this->addDaoInterfaceToPlan($daoMeta);
@@ -278,7 +285,7 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    
+
     protected function getBuildConfiguration() : BuildConfigurationInterface
     {
         if ($this->buildConfiguration === null) {

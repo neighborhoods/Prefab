@@ -25,7 +25,6 @@ class Builder implements BuilderInterface
             ->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
-            ->setDaoNamespace($configArray['dao']['namespace'])
             ->setProjectName($this->getProjectName());
 
         foreach ($configArray['dao']['properties'] as $key => $values) {

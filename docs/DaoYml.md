@@ -6,9 +6,6 @@ The file must be named {DAONAME}.dao.yml and saved under `src/`. They should sto
 - `dao`
     - `name`
         - Name of the DAO
-    - `namespace`
-        - The namespace of the DAO. 
-        - This namespace will serve as the base namespace for all generated machinery for the DAO.
     - `table_name`
         - Name of the database table containing the data that populates the DAO
     - `identity_field`
@@ -26,7 +23,6 @@ Filename: `User.dao.yml`
 ```yaml
 dao:
   name: User
-  namespace: Neighborhoods\UserService\MV1
   table_name: mv1_user
   identity_field: user_id
   properties:

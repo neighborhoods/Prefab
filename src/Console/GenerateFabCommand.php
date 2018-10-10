@@ -60,8 +60,8 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     {
         $this->setProjectName($this->getProjectNameFromComposer());
 
-//        $output->writeln('Copying HTTP skeleton.');
-//        $this->generateHttpSkeleton();
+        $output->writeln('Copying HTTP skeleton.');
+        $this->generateHttpSkeleton();
 
         $output->writeln('Assembling Prefab build plan.');
         $this->generateBuildPlan();
