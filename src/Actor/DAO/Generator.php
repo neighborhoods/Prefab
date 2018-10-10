@@ -7,6 +7,7 @@ use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Neighborhoods\Prefab\ClassSaver;
 use Neighborhoods\Prefab\StringReplacer;
+use Symfony\Component\Yaml\Yaml;
 
 class Generator implements GeneratorInterface
 {
@@ -64,6 +65,8 @@ EOF;
             ->setGeneratedClass($builtFile)
             ->setSavePath($this->getMeta()->getActorFilePath())
             ->saveClass();
+
+        $this->generateService();
 
         return $this;
     }
@@ -127,6 +130,27 @@ EOF;
        }
 
        return $classPropertiesString;
+    }
+
+    protected function generateService() : GeneratorInterface
+    {
+        $class = $this->getMeta()->getActorNamespace() . '\\' . $this->getActorName();
+        $interface = $this->getMeta()->getActorNamespace() . '\\' . $this->getActorName() . 'Interface';
+
+        $yaml = [
+            'services' => [
+                $interface => [
+                    'class' => $class,
+                    'public' => false,
+                    'shared' => true,
+                ]
+            ]
+        ];
+
+        $preparedYaml = Yaml::dump($yaml, 4, 2);
+        file_put_contents($this->getMeta()->getActorFilePath() . '/' . $this->getActorName() . '.yml', $preparedYaml);
+
+        return $this;
     }
 
     public function getMeta() : GeneratorMetaInterface
