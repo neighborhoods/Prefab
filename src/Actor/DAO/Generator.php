@@ -115,7 +115,7 @@ EOF;
                     $this->getMeta()->getDaoName(),
                     $camelCaseProperty,
                     $property,
-                    $values['type']
+                    $values['php_type']
                 ],
                 $methodString
             );

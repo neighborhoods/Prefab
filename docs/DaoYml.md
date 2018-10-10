@@ -12,9 +12,9 @@ The file must be named {DAONAME}.dao.yml and saved under `src/`. They should sto
         - Name of the database column containing the unique identifier for a given DAO
     - `properties`
         - The class properties of the DAO. Each property should have:
-            - `type`
+            - `php_type`
                 - The data type as represented in PHP. Should be one of string, int, float, array, or bool.
-            - `database_value`
+            - `database_column_name`
                 - Name of the database column containing the data that populates the class property
 
 ### Example structure of a DAO yaml file:
@@ -27,15 +27,15 @@ dao:
   identity_field: user_id
   properties:
     id:
-      type: int
-      database_value: id
+      php_type: int
+      database_column_name: id
     email:
-      type: string
-      database_value: email
+      php_type: string
+      database_column_name: email
     first_name:
-      type: string
-      database_value: fname
+      php_type: string
+      database_column_name: fname
     last_name:
-      type: string
-      database_value: lname
+      php_type: string
+      database_column_name: lname
 ```
