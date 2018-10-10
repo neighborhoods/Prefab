@@ -22,8 +22,7 @@ class Builder implements BuilderInterface
         $buildConfiguration = $this->getBuildConfigurationFactory()->create();
         $configArray = $this->getConfigFromYaml();
 
-        $buildConfiguration->setDaoName($configArray['dao']['name'])
-            ->setTableName($configArray['dao']['table_name'])
+        $buildConfiguration->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectName($this->getProjectName());
@@ -76,23 +75,6 @@ class Builder implements BuilderInterface
             throw new \LogicException('Builder projectName is already set.');
         }
         $this->projectName = $projectName;
-        return $this;
-    }
-
-    protected function getDaoNamespace() : string
-    {
-        if ($this->daoNamespace === null) {
-            throw new \LogicException('Builder daoNamespace has not been set.');
-        }
-        return $this->daoNamespace;
-    }
-
-    public function setDaoNamespace(string $daoNamespace) : BuilderInterface
-    {
-        if ($this->daoNamespace !== null) {
-            throw new \LogicException('Builder daoNamespace is already set.');
-        }
-        $this->daoNamespace = $daoNamespace;
         return $this;
     }
 }

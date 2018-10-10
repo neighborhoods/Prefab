@@ -58,7 +58,7 @@ class Builder implements BuilderInterface
         $daoMeta = $this->getConsoleGeneratorMetaFactory()->create();
 
         $actorFilePath = str_replace(
-            '/' . $this->getBuildConfiguration()->getDaoName() . self::DAO_YML_SUFFIX,
+            '/' . $this->getDaoName() . self::DAO_YML_SUFFIX,
             '',
             $this->getBuildConfiguration()->getRootSaveLocation()
         );
@@ -71,7 +71,7 @@ class Builder implements BuilderInterface
         $namespaceSuffix = str_replace('/', '\\', $namespaceSuffix);
         $namespace = $namespacePrefix . $namespaceSuffix;
 
-        $daoMeta->setDaoName($this->getBuildConfiguration()->getDaoName());
+        $daoMeta->setDaoName($this->getDaoName());
         $daoMeta->setActorNamespace($namespace);
         $daoMeta->setActorFilePath($actorFilePath);
         $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
@@ -80,6 +80,15 @@ class Builder implements BuilderInterface
         $this->addDaoToPlan($daoMeta);
 
         return $this->getBuildPlan();
+    }
+
+    protected function getDaoName() : string
+    {
+        return str_replace(
+            self::DAO_YML_SUFFIX,
+            '',
+            end(explode('/', $this->getBuildConfiguration()->getRootSaveLocation()))
+        );
     }
 
     protected function addDaoToPlan(GeneratorMetaInterface $meta) : BuilderInterface

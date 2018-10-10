@@ -5,10 +5,6 @@ namespace Neighborhoods\Prefab;
 
 interface BuildConfigurationInterface
 {
-    public function getDaoName() : string;
-
-    public function setDaoName(string $daoName) : BuildConfigurationInterface;
-
     public function getTableName() : string;
 
     public function setTableName(string $tableName) : BuildConfigurationInterface;

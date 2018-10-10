@@ -15,23 +15,6 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $projectName;
     protected $daoNamespace;
 
-    public function getDaoName() : string
-    {
-        if ($this->daoName === null) {
-            throw new \LogicException('BuildConfiguration daoName has not been set.');
-        }
-        return $this->daoName;
-    }
-
-    public function setDaoName(string $daoName) : BuildConfigurationInterface
-    {
-        if ($this->daoName !== null) {
-            throw new \LogicException('BuildConfiguration daoName is already set.');
-        }
-        $this->daoName = $daoName;
-        return $this;
-    }
-
     public function getTableName() : string
     {
         if ($this->tableName === null) {

@@ -4,8 +4,6 @@ The purpose of this document is to define the components needed to generate an H
 
 The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. They should stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
 - `dao`
-    - `name`
-        - Name of the DAO
     - `table_name`
         - Name of the database table containing the data that populates the DAO
     - `identity_field`
@@ -22,7 +20,6 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
 Filename: `User.prefab.definition.yml`
 ```yaml
 dao:
-  name: User
   table_name: mv1_user
   identity_field: user_id
   properties:
