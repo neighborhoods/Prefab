@@ -47,6 +47,7 @@ class Builder implements BuilderInterface
 
     const FORWARD_SLASH = '/';
     const BACKSLASH = '\\';
+    const DAO_YML_SUFFIX = '.prefab.definition.yml';
 
     protected $buildConfiguration;
     protected $buildPlan;
@@ -57,7 +58,7 @@ class Builder implements BuilderInterface
         $daoMeta = $this->getConsoleGeneratorMetaFactory()->create();
 
         $actorFilePath = str_replace(
-            '/' . $this->getBuildConfiguration()->getDaoName() . '.dao.yml',
+            '/' . $this->getBuildConfiguration()->getDaoName() . self::DAO_YML_SUFFIX,
             '',
             $this->getBuildConfiguration()->getRootSaveLocation()
         );

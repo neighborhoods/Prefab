@@ -77,7 +77,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     protected function generateBuildPlan() : GenerateFabCommand
     {
         $finder = new Finder();
-        $daos = $finder->files()->name('*.dao.yml')->in($this->srcLocation);
+        $daos = $finder->files()->name('*' . BuildPlan\Builder::DAO_YML_SUFFIX)->in($this->srcLocation);
 
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {

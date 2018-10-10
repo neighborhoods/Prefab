@@ -1,8 +1,8 @@
 ## DAO Yaml File Specification
 
-The purpose of this document is to define the components needed to generate an HTTP endpoint for a DAO from a `.dao.yml` file
+The purpose of this document is to define the components needed to generate an HTTP endpoint for a DAO from a `.prefab.definition.yml` file
 
-The file must be named {DAONAME}.dao.yml and saved under `src/`. They should stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
+The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. They should stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
 - `dao`
     - `name`
         - Name of the DAO
@@ -19,7 +19,7 @@ The file must be named {DAONAME}.dao.yml and saved under `src/`. They should sto
 
 ### Example structure of a DAO yaml file:
 
-Filename: `User.dao.yml`
+Filename: `User.prefab.definition.yml`
 ```yaml
 dao:
   name: User
