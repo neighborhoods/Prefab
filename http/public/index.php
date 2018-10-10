@@ -32,7 +32,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
         (require_once __DIR__ . '/../config/pipeline.php')($applicationServiceDefinition);
         $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
         $discoverableDirectories[] = __DIR__ . '/../fab';
-        $discoverableDirectories[] = __DIR__ . '/../src';
         $containerBuilderFacade->addFinder((new Finder())->name('*.yml')->files()->in($discoverableDirectories));
         $containerBuilderFacade->assembleYaml();
         (require_once __DIR__ . '/../config/routes.php')($applicationServiceDefinition, $containerBuilder);
