@@ -65,7 +65,7 @@ class Generator implements GeneratorInterface
         $constantsString = '';
 
         foreach ($this->getMeta()->getDaoProperties() as $property => $values) {
-            $constantsString .= sprintf(self::DATABASE_CONSTANT_PATTERN, strtoupper($property), $values['database_value']) . "\n";
+            $constantsString .= sprintf("\t" . self::DATABASE_CONSTANT_PATTERN, strtoupper($property), $values['database_value']) . "\n";
         }
 
         return $constantsString;
@@ -83,8 +83,8 @@ class Generator implements GeneratorInterface
                 $camelCaseProperty .= ucfirst($part);
             }
 
-            $methodString .= sprintf(self::GET_METHOD_PATTERN, $camelCaseProperty, $values['type']) . "\n";
-            $methodString .= sprintf(self::SET_METHOD_PATTERN, $camelCaseProperty, $values['type'], $property, $this->getMeta()->getDaoName()) . "\n";
+            $methodString .= sprintf("\t" . self::GET_METHOD_PATTERN, $camelCaseProperty, $values['type']) . "\n";
+            $methodString .= sprintf("\t" . self::SET_METHOD_PATTERN, $camelCaseProperty, $values['type'], $property, $this->getMeta()->getDaoName()) . "\n";
         }
 
         return $methodString;

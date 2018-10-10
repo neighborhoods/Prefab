@@ -29,6 +29,7 @@ class Generator implements GeneratorInterface
         }
         return \$this->PROPERTYNAMEPLACEHOLDER;
     }
+    
 EOF;
     protected const SET_METHOD_PATTERN = <<<EOF
     public function setCAMELCASEPROPERTYNAMEPLACEHOLDER(PROPERTYTYPEPLACEHOLDER \$PROPERTYNAMEPLACEHOLDER) : DAONAMEPLACEHOLDERInterface
@@ -39,6 +40,7 @@ EOF;
         \$this->PROPERTYNAMEPLACEHOLDER = \$PROPERTYNAMEPLACEHOLDER;
         return \$this;
     }
+    
 EOF;
 
     protected const HAS_METHOD_PATTERN = <<<EOF
@@ -46,6 +48,7 @@ EOF;
     {
         return \$this->PROPERTYNAMEPLACEHOLDER !== null;
     }
+    
 EOF;
 
 
@@ -126,7 +129,7 @@ EOF;
        $classPropertiesString = '';
 
        foreach ($this->getMeta()->getDaoProperties() as $property => $values) {
-           $classPropertiesString .= 'protected $' . $property . ";\n";
+           $classPropertiesString .= "\t" . 'protected $' . $property . ";\n";
        }
 
        return $classPropertiesString;

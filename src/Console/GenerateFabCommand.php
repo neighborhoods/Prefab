@@ -60,8 +60,8 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
     {
         $this->setProjectName($this->getProjectNameFromComposer());
 
-        $output->writeln('Copying HTTP skeleton.');
-        $this->generateHttpSkeleton();
+//        $output->writeln('Copying HTTP skeleton.');
+//        $this->generateHttpSkeleton();
 
         $output->writeln('Assembling Prefab build plan.');
         $this->generateBuildPlan();
@@ -76,19 +76,16 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function generateBuildPlan() : GenerateFabCommand
     {
-        $configurations = [];
         $finder = new Finder();
         $daos = $finder->files()->name('*.dao.yml')->in($this->srcLocation);
 
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-            $configurations[] = $this->getBuildConfigurationBuilderFactory()->create()
+            $configuration = $this->getBuildConfigurationBuilderFactory()->create()
                 ->setYamlFilePath($dao->getPath() . '/' . $dao->getFilename())
                 ->setProjectName($this->getProjectName())
                 ->build();
-        }
 
-        foreach ($configurations as $configuration) {
             $this->appendBuildPlan(
                 $this->getBuildPlanBuilderFactory()->create()
                     ->setBuildConfiguration($configuration)
