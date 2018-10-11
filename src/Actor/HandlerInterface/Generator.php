@@ -25,6 +25,7 @@ class Generator implements GeneratorInterface
     protected $entityName;
     protected $meta;
 
+    protected const ROUTE_PLACEHOLDER = 'ROUTE_PLACEHOLDER';
     protected const INTERFACE_NAME = 'HandlerInterface';
 
     public function generate() : GeneratorInterface
@@ -70,6 +71,12 @@ class Generator implements GeneratorInterface
         $fileContent = str_replace(
             'interface HandlerInterface',
             'interface HandlerInterface extends \Psr\Http\Server\RequestHandlerInterface',
+            $fileContent
+        );
+
+        $fileContent = str_replace(
+            self::ROUTE_PLACEHOLDER,
+            $this->getMeta()->getHttpRoute(),
             $fileContent
         );
 

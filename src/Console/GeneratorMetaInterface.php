@@ -32,4 +32,8 @@ interface GeneratorMetaInterface
     public function getDaoIdentityField() : string;
 
     public function setDaoIdentityField(string $daoIdentityField) : GeneratorMetaInterface;
+
+    public function getHttpRoute() : string;
+
+    public function setHttpRoute(string $httpRoute) : GeneratorMetaInterface;
 }

@@ -5,21 +5,16 @@ namespace Neighborhoods\Prefab\Console;
 
 class GeneratorMeta implements GeneratorMetaInterface
 {
-    /** @var string */
+    
     protected $actorNamespace;
-    /** @var string */
     protected $actorFilePath;
-    /** @var string */
     protected $daoName;
-    /** @var array */
     protected $daoProperties;
-    /** @var string */
     protected $tableName;
-    /** @var string */
     protected $daoString;
-    /** @var string */
     protected $daoIdentityField;
-
+    protected $httpRoute;
+    
     public function getDaoProperties() : array
     {
         if ($this->daoProperties === null) {
@@ -139,4 +134,21 @@ class GeneratorMeta implements GeneratorMetaInterface
         return $this;
     }
 
+    public function getHttpRoute() : string
+    {
+        if ($this->httpRoute === null) {
+            throw new \LogicException('GeneratorMeta httpRoute has not been set.');
+        }
+        return $this->httpRoute;
+    }
+
+    public function setHttpRoute(string $httpRoute) : GeneratorMetaInterface
+    {
+        if ($this->httpRoute !== null) {
+            throw new \LogicException('GeneratorMeta httpRoute is already set.');
+        }
+        $this->httpRoute = $httpRoute;
+        return $this;
+    }
+    
 }
