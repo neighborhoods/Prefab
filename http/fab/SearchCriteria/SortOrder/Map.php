@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder;
 
-use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrderInterface;
 
 /** @codeCoverageIgnore */
 class Map extends \ArrayIterator implements MapInterface

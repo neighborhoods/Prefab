@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder\Map;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\Map;
 
-use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder\MapInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\MapInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap;
 
     public function setSearchCriteriaSortOrderMap(MapInterface $searchCriteriaSortOrderMap): self
     {
         if ($this->hasSearchCriteriaSortOrderMap()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap = $searchCriteriaSortOrderMap;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap = $searchCriteriaSortOrderMap;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaSortOrderMap(): MapInterface
     {
         if (!$this->hasSearchCriteriaSortOrderMap()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap;
     }
 
     protected function hasSearchCriteriaSortOrderMap(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap);
     }
 
     protected function unsetSearchCriteriaSortOrderMap(): self
     {
         if (!$this->hasSearchCriteriaSortOrderMap()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderMap);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMap);
 
         return $this;
     }

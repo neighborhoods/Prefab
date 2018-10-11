@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\ServerRequest;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Neighborhoods\PrefabExamplesFunction41\SearchCriteria;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria;
 
 interface BuilderInterface extends SearchCriteria\BuilderInterface
 {

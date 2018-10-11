@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Symfony\Component\Finder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\Finder;
 
 use Symfony\Component\Finder\Finder;
 

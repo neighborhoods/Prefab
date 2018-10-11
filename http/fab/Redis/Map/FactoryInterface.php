@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Redis\Map;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\Map;
 
-use Neighborhoods\PrefabExamplesFunction41\Redis\MapInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\MapInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface

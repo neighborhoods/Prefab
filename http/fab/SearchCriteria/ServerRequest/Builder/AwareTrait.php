@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\ServerRequest\Builder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\Builder;
 
-use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\ServerRequest\BuilderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\BuilderInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder;
 
     public function setSearchCriteriaServerRequestBuilder(BuilderInterface $searchCriteriaServerRequestBuilder): self
     {
         if ($this->hasSearchCriteriaServerRequestBuilder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder = $searchCriteriaServerRequestBuilder;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder = $searchCriteriaServerRequestBuilder;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaServerRequestBuilder(): BuilderInterface
     {
         if (!$this->hasSearchCriteriaServerRequestBuilder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder;
     }
 
     protected function hasSearchCriteriaServerRequestBuilder(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder);
     }
 
     protected function unsetSearchCriteriaServerRequestBuilder(): self
     {
         if (!$this->hasSearchCriteriaServerRequestBuilder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaServerRequestBuilder);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder);
 
         return $this;
     }

@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Redis\Map;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\Map;
 
-use Neighborhoods\PrefabExamplesFunction41\Redis\MapInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\MapInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41RedisMap;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap;
 
     public function setRedisMap(MapInterface $redisMap): self
     {
         if ($this->hasRedisMap()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41RedisMap is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41RedisMap = $redisMap;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap = $redisMap;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getRedisMap(): MapInterface
     {
         if (!$this->hasRedisMap()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41RedisMap is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41RedisMap;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap;
     }
 
     protected function hasRedisMap(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41RedisMap);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap);
     }
 
     protected function unsetRedisMap(): self
     {
         if (!$this->hasRedisMap()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41RedisMap is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41RedisMap);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap);
 
         return $this;
     }

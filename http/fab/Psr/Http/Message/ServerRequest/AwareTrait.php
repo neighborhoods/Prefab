@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Psr\Http\Message\ServerRequest;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Psr\Http\Message\ServerRequest;
 
 use Psr\Http\Message\ServerRequestInterface;
 

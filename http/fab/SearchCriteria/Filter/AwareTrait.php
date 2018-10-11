@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Filter;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter;
 
-use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\FilterInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\FilterInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter;
 
     public function setSearchCriteriaFilter(FilterInterface $searchCriteriaFilter): self
     {
         if ($this->hasSearchCriteriaFilter()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter = $searchCriteriaFilter;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter = $searchCriteriaFilter;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaFilter(): FilterInterface
     {
         if (!$this->hasSearchCriteriaFilter()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter;
     }
 
     protected function hasSearchCriteriaFilter(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter);
     }
 
     protected function unsetSearchCriteriaFilter(): self
     {
         if (!$this->hasSearchCriteriaFilter()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilter);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilter);
 
         return $this;
     }

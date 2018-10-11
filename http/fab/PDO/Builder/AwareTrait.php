@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\PDO\Builder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\Builder;
 
-use Neighborhoods\PrefabExamplesFunction41\PDO\BuilderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\BuilderInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41PDOBuilder;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder;
 
     public function setPDOBuilder(BuilderInterface $pDOBuilder): self
     {
         if ($this->hasPDOBuilder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41PDOBuilder is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41PDOBuilder = $pDOBuilder;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder = $pDOBuilder;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getPDOBuilder(): BuilderInterface
     {
         if (!$this->hasPDOBuilder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41PDOBuilder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41PDOBuilder;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder;
     }
 
     protected function hasPDOBuilder(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41PDOBuilder);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder);
     }
 
     protected function unsetPDOBuilder(): self
     {
         if (!$this->hasPDOBuilder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41PDOBuilder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41PDOBuilder);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilder);
 
         return $this;
     }

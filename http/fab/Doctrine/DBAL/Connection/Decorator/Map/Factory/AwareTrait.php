@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\Map\Factory;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Map\Factory;
 
-use Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\Map\FactoryInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Map\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory;
 
     public function setDoctrineDBALConnectionDecoratorMapFactory(
         FactoryInterface $doctrineDBALConnectionDecoratorMapFactory
     ): self {
         if ($this->hasDoctrineDBALConnectionDecoratorMapFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory = $doctrineDBALConnectionDecoratorMapFactory;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory = $doctrineDBALConnectionDecoratorMapFactory;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorMapFactory(): FactoryInterface
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorMapFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorMapFactory(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorMapFactory(): self
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorMapFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMapFactory);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMapFactory);
 
         return $this;
     }

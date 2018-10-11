@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\Factory;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Factory;
 
-use Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\FactoryInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory;
 
     public function setDoctrineDBALConnectionDecoratorFactory(FactoryInterface $doctrineDBALConnectionDecoratorFactory
     ): self {
         if ($this->hasDoctrineDBALConnectionDecoratorFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory = $doctrineDBALConnectionDecoratorFactory;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory = $doctrineDBALConnectionDecoratorFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorFactory(): FactoryInterface
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorFactory(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorFactory(): self
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorFactory()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorFactory);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorFactory);
 
         return $this;
     }

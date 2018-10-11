@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\Time;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Time;
 
-use Neighborhoods\PrefabExamplesFunction41\TimeInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\TimeInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41Time;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductTime;
 
     public function setTime(TimeInterface $time): self
     {
         if ($this->hasTime()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41Time is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41Time = $time;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime = $time;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getTime(): TimeInterface
     {
         if (!$this->hasTime()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41Time is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41Time;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime;
     }
 
     protected function hasTime(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41Time);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime);
     }
 
     protected function unsetTime(): self
     {
         if (!$this->hasTime()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41Time is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41Time);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime);
 
         return $this;
     }

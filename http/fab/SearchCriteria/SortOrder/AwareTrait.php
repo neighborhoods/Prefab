@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder;
 
-use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrderInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder;
 
     public function setSearchCriteriaSortOrder(SortOrderInterface $searchCriteriaSortOrder): self
     {
         if ($this->hasSearchCriteriaSortOrder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder is already set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder is already set.');
         }
-        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder = $searchCriteriaSortOrder;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder = $searchCriteriaSortOrder;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaSortOrder(): SortOrderInterface
     {
         if (!$this->hasSearchCriteriaSortOrder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder is not set.');
         }
 
-        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder;
     }
 
     protected function hasSearchCriteriaSortOrder(): bool
     {
-        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder);
     }
 
     protected function unsetSearchCriteriaSortOrder(): self
     {
         if (!$this->hasSearchCriteriaSortOrder()) {
-            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder is not set.');
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder is not set.');
         }
-        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrder);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrder);
 
         return $this;
     }
