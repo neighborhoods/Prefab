@@ -21,7 +21,7 @@ Filename: `User.prefab.definition.yml`
 ```yaml
 dao:
   table_name: mv1_user
-  identity_field: user_id
+  identity_field: id
   properties:
     id:
       php_type: int
