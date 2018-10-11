@@ -24,4 +24,8 @@ interface BuildConfigurationInterface
     public function getProjectName() : string;
 
     public function setProjectName(string $projectName) : BuildConfigurationInterface;
+
+    public function getHttpRoute() : string;
+
+    public function setHttpRoute(string $httpRoute) : BuildConfigurationInterface;
 }

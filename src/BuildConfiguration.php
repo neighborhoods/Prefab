@@ -6,14 +6,13 @@ namespace Neighborhoods\Prefab;
 
 class BuildConfiguration implements BuildConfigurationInterface
 {
-    protected $daoName;
     protected $tableName;
     protected $daoIdentityField;
     // TODO: Make this a map instead of an array.
     protected $daoProperties = [];
     protected $rootSaveLocation;
     protected $projectName;
-    protected $daoNamespace;
+    protected $httpRoute;
 
     public function getTableName() : string
     {
@@ -95,6 +94,23 @@ class BuildConfiguration implements BuildConfigurationInterface
             throw new \LogicException('BuildConfiguration projectName is already set.');
         }
         $this->projectName = $projectName;
+        return $this;
+    }
+
+    public function getHttpRoute() : string
+    {
+        if ($this->httpRoute === null) {
+            throw new \LogicException('BuildConfiguration httpRoute has not been set.');
+        }
+        return $this->httpRoute;
+    }
+
+    public function setHttpRoute(string $httpRoute) : BuildConfigurationInterface
+    {
+        if ($this->httpRoute !== null) {
+            throw new \LogicException('BuildConfiguration httpRoute is already set.');
+        }
+        $this->httpRoute = $httpRoute;
         return $this;
     }
 }
