@@ -111,13 +111,13 @@ class StringReplacer implements StringReplacerInterface
     protected function getUcTruncatedParentNamespace() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return strtoupper($namespaceArray[count($namespaceArray) - 2]);
+        return strtoupper($namespaceArray[count($namespaceArray) - 3]);
 
     }
     protected function getTruncatedParentNamespace() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return $namespaceArray[count($namespaceArray) - 2];
+        return $namespaceArray[count($namespaceArray) - 3];
     }
     protected function getDaoName() : string
     {

@@ -62,10 +62,10 @@ class Generator implements GeneratorInterface
     {
         $methodString = '';
 
-        foreach ($this->getMeta()->getDatabaseProperties() as $key => $value) {
+        foreach ($this->getMeta()->getDaoProperties() as $key => $value) {
             $itemName = $this->getCamelCasePropertyName($key);
 
-            $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value);
+            $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value['database_column_name']);
         }
 
         return str_replace(self::BUILDER_BUILD_METHOD_PLACEHOLDER, $methodString, $builtFile);
@@ -75,9 +75,6 @@ class Generator implements GeneratorInterface
     {
         $itemName = '';
         $keyArray = explode('_', $property);
-
-        // Remove the leading PROP_ from the constant name
-        unset($keyArray[0]);
 
         foreach ($keyArray as $keyPart) {
             $itemName .= ucfirst(strtolower($keyPart));
