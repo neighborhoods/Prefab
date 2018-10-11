@@ -68,6 +68,7 @@ class StringReplacer implements StringReplacerInterface
      * @example self
      */
     protected const SELF_PLACEHOLDER = '\SELFPLACEHOLDER';
+    protected const LEVELS_UP_TO_GRANDPARENT = 3;
 
     protected $placeholdersToReplace = [];
 
@@ -113,13 +114,13 @@ class StringReplacer implements StringReplacerInterface
     protected function getUcTruncatedGrandparentNamespace() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return strtoupper($namespaceArray[count($namespaceArray) - 3]);
+        return strtoupper($namespaceArray[count($namespaceArray) - self::LEVELS_UP_TO_GRANDPARENT]);
 
     }
     protected function getTruncatedGrandparentNamespace() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return $namespaceArray[count($namespaceArray) - 3];
+        return $namespaceArray[count($namespaceArray) - self::LEVELS_UP_TO_GRANDPARENT];
     }
     protected function getDaoName() : string
     {
