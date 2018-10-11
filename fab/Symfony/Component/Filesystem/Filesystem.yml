@@ -1,0 +1,4 @@
+services:
+  Symfony\Component\Filesystem\FilesystemInterface:
+    class: Symfony\Component\Filesystem\Filesystem
+    shared: false
