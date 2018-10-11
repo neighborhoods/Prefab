@@ -14,12 +14,12 @@ class Template // implements RepositoryInterface
 //    use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 //    use DAONAMEPLACEHOLDER\Map\Builder\Factory\AwareTrait;
 
-    public function createBuilder() : \NAMESPACEPLACEHOLDER\Map\BuilderInterface
+    public function createBuilder() : \NAMESPACEPLACEHOLDER\BuilderInterface
     {
-        return $this->getDAOVARNAMEPLACEHOLDERMapBuilderFactory()->create();
+        return $this->getDAOVARNAMEPLACEHOLDERBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDER\MapInterface
+    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDERInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
@@ -30,7 +30,7 @@ class Template // implements RepositoryInterface
         return $this->createBuilder()->setRecords($records)->build();
     }
 
-    public function save(\NAMESPACEPLACEHOLDER\MapInterface $map) : \NAMESPACEPLACEHOLDER\RepositoryInterface
+    public function save(\NAMESPACEPLACEHOLDERInterface $map) : \NAMESPACEPLACEHOLDER\RepositoryInterface
     {
         // Use Doctrine Connection Decorator Repository to save your DAO to storage.
 

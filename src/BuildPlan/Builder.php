@@ -102,7 +102,6 @@ class Builder implements BuilderInterface
         $this->addAwareTraitToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
         $this->addMapToPlan($nextLevelMeta);
-        $this->addRepositoryToPlan($nextLevelMeta);
         $this->addRepositoryInterfaceToPlan($nextLevelMeta);
         $this->addBuilderToPlan($nextLevelMeta);
         $this->addBuilderInterfaceToPlan($nextLevelMeta);
@@ -229,6 +228,7 @@ class Builder implements BuilderInterface
         $this->addMapBuilderToPlan($nextLevelMeta);
         $this->addMapBuilderInterfaceToPlan($nextLevelMeta);
         $this->addFactoryToPlan($nextLevelMeta);
+        $this->addRepositoryToPlan($nextLevelMeta);
 
         return $this;
     }
