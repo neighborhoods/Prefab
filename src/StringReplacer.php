@@ -55,19 +55,20 @@ class StringReplacer implements StringReplacerInterface
      * Parent name without leading namespace
      * @example MyDao
      */
-    protected const TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER = 'TRUNCATEDPARENTNAMESPACEPLACEHOLDER';
+    protected const TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER = 'TRUNCATEDGRANDPARENTNAMESPACEPLACEHOLDER';
 
     /**
      * Uppercase parent name without leading namespace
      * @example MYDAO
      */
-    protected const UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER = 'UCTRUNCATEDPARENTNAMESPACEPLACEHOLDER';
+    protected const UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER = 'UCTRUNCATEDGRANDPARENTNAMESPACEPLACEHOLDER';
 
     /**
      * Self return type. Requires a leading slash otherwise zend will fully namespace the word selfplaceholder
      * @example self
      */
     protected const SELF_PLACEHOLDER = '\SELFPLACEHOLDER';
+    protected const LEVELS_UP_TO_GRANDPARENT = 3;
 
     protected $placeholdersToReplace = [];
 
@@ -96,8 +97,8 @@ class StringReplacer implements StringReplacerInterface
         $this->placeholdersToReplace[self::PROJECT_NAME_PLACEHOLDER] = $this->getProjectName();
         $this->placeholdersToReplace[self::NAMESPACE_PLACEHOLDER] = $this->getNamespace();
         $this->placeholdersToReplace[self::PARENT_VARNAME_PLACEHOLDER] = $this->getParentVarName();
-        $this->placeholdersToReplace[self::TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getTruncatedParentNamespace();
-        $this->placeholdersToReplace[self::UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getUcTruncatedParentNamespace();
+        $this->placeholdersToReplace[self::TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getTruncatedGrandparentNamespace();
+        $this->placeholdersToReplace[self::UC_TRUNCATED_PARENT_NAMESPACE_PLACEHOLDER] = $this->getUcTruncatedGrandparentNamespace();
         $this->placeholdersToReplace[self::SELF_PLACEHOLDER] = $this->getSelf();
 
         return $this;
@@ -108,16 +109,18 @@ class StringReplacer implements StringReplacerInterface
         return 'self';
     }
 
-    protected function getUcTruncatedParentNamespace() : string
+    // These are used to get the DAO name but this is going to be bothersome to maintain in the future as we move parts around
+    // and the DAO location changes in the namespace. We should just set the DAO name on the replacer on our next iteration of Prefab
+    protected function getUcTruncatedGrandparentNamespace() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return strtoupper($namespaceArray[count($namespaceArray) - 2]);
+        return strtoupper($namespaceArray[count($namespaceArray) - self::LEVELS_UP_TO_GRANDPARENT]);
 
     }
-    protected function getTruncatedParentNamespace() : string
+    protected function getTruncatedGrandparentNamespace() : string
     {
         $namespaceArray = explode('\\', $this->getNamespace());
-        return $namespaceArray[count($namespaceArray) - 2];
+        return $namespaceArray[count($namespaceArray) - self::LEVELS_UP_TO_GRANDPARENT];
     }
     protected function getDaoName() : string
     {

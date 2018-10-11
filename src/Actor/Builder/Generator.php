@@ -19,11 +19,12 @@ class Generator implements GeneratorInterface
 
     public const CLASS_NAME = 'Builder';
 
+    protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
+    protected const METHOD_PATTERN = "->set%s(\$this->record['%s'])\n";
     protected $generator;
     protected $varName;
     protected $projectName;
     protected $classSaver;
-    /** @var GeneratorMetaInterface */
     protected $meta;
 
     public function generate() : GeneratorInterface
@@ -44,6 +45,7 @@ class Generator implements GeneratorInterface
         $file->setClass($this->getGenerator());
 
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
+        $builtFile = $this->addBuilderMethod($builtFile);
 
         $this->getClassSaverFactory()->create()
             ->setClassName(self::CLASS_NAME)
@@ -54,6 +56,30 @@ class Generator implements GeneratorInterface
         $this->generateService();
 
         return $this;
+    }
+
+    protected function addBuilderMethod(string $builtFile) : string
+    {
+        $methodString = '';
+
+        foreach ($this->getMeta()->getDaoProperties() as $key => $value) {
+            $itemName = $this->getCamelCasePropertyName($key);
+
+            $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value['database_column_name']);
+        }
+
+        return str_replace(self::BUILDER_BUILD_METHOD_PLACEHOLDER, $methodString, $builtFile);
+    }
+
+    protected function getCamelCasePropertyName(string $property) : string
+    {
+        $itemName = '';
+        $keyArray = explode('_', $property);
+
+        foreach ($keyArray as $keyPart) {
+            $itemName .= ucfirst(strtolower($keyPart));
+        }
+        return $itemName;
     }
 
     protected function replaceReturnTypePlaceHolders() : GeneratorInterface
@@ -175,4 +201,5 @@ class Generator implements GeneratorInterface
     {
         return self::CLASS_NAME;
     }
+
 }
