@@ -13,6 +13,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $rootSaveLocation;
     protected $projectName;
     protected $httpRoute;
+    protected $projectDir;
 
     public function getTableName() : string
     {
@@ -111,6 +112,23 @@ class BuildConfiguration implements BuildConfigurationInterface
             throw new \LogicException('BuildConfiguration httpRoute is already set.');
         }
         $this->httpRoute = $httpRoute;
+        return $this;
+    }
+
+    public function getProjectDir() : string
+    {
+        if ($this->projectDir === null) {
+            throw new \LogicException('BuildConfiguration projectDir has not been set.');
+        }
+        return $this->projectDir;
+    }
+
+    public function setProjectDir(string $projectDir) : BuildConfigurationInterface
+    {
+        if ($this->projectDir !== null) {
+            throw new \LogicException('BuildConfiguration projectDir is already set.');
+        }
+        $this->projectDir = $projectDir;
         return $this;
     }
 }

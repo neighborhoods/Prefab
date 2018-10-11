@@ -26,6 +26,7 @@ class Builder implements BuilderInterface
             ->setDaoIdentityField($configArray['dao']['identity_field'])
             ->setHttpRoute($configArray['dao']['http_route'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
+            ->setProjectDir($this->getProjectDirFromYamlPath())
             ->setProjectName($this->getProjectName());
 
         foreach ($configArray['dao']['properties'] as $key => $values) {
@@ -39,6 +40,12 @@ class Builder implements BuilderInterface
     {
         $pathArray = explode('/src/', $this->getYamlFilePath());
         return $pathArray[0] . '/src/' . $pathArray[1] . '/fab/' . $pathArray[2];
+    }
+
+    protected function getProjectDirFromYamlPath() : string
+    {
+        $pathArray = explode('/src/', $this->getYamlFilePath());
+        return $pathArray[0] . '/src/' . $pathArray[1] . '/';
     }
 
     protected function getConfigFromYaml() : array
