@@ -6,6 +6,8 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
 - `dao`
     - `table_name`
         - Name of the database table containing the data that populates the DAO
+    - `http_route`
+        - The http route that corresponds with the DAO
     - `identity_field`
         - Name of the database column containing the unique identifier for a given DAO
     - `properties`
@@ -22,6 +24,7 @@ Filename: `User.prefab.definition.yml`
 dao:
   table_name: mv1_user
   identity_field: id
+  http_route: /mv1/users/{searchCriteria:}
   properties:
     id:
       php_type: int
