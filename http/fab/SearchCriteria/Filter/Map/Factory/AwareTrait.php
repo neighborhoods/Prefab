@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\Map\Factory;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Filter\Map\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\Map\FactoryInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Filter\Map\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory;
+    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory;
 
     public function setSearchCriteriaFilterMapFactory(FactoryInterface $searchCriteriaFilterMapFactory): self
     {
         if ($this->hasSearchCriteriaFilterMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory = $searchCriteriaFilterMapFactory;
+        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory = $searchCriteriaFilterMapFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaFilterMapFactory(): FactoryInterface
     {
         if (!$this->hasSearchCriteriaFilterMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory;
+        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory;
     }
 
     protected function hasSearchCriteriaFilterMapFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory);
     }
 
     protected function unsetSearchCriteriaFilterMapFactory(): self
     {
         if (!$this->hasSearchCriteriaFilterMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory);
+        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFilterMapFactory);
 
         return $this;
     }

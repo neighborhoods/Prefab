@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Filter;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\FilterInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\FilterInterface;
 
 /** @codeCoverageIgnore */
 class Map extends \ArrayIterator implements MapInterface

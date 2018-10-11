@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\Factory;
+namespace Neighborhoods\PrefabExamplesFunction41\Redis\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\FactoryInterface;
+use Neighborhoods\PrefabExamplesFunction41\Redis\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory;
+    protected $NeighborhoodsPrefabExamplesFunction41RedisFactory;
 
     public function setRedisFactory(FactoryInterface $redisFactory): self
     {
         if ($this->hasRedisFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41RedisFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory = $redisFactory;
+        $this->NeighborhoodsPrefabExamplesFunction41RedisFactory = $redisFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getRedisFactory(): FactoryInterface
     {
         if (!$this->hasRedisFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41RedisFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory;
+        return $this->NeighborhoodsPrefabExamplesFunction41RedisFactory;
     }
 
     protected function hasRedisFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41RedisFactory);
     }
 
     protected function unsetRedisFactory(): self
     {
         if (!$this->hasRedisFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41RedisFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisFactory);
+        unset($this->NeighborhoodsPrefabExamplesFunction41RedisFactory);
 
         return $this;
     }

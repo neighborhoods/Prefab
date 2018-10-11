@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteriaInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteriaInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface

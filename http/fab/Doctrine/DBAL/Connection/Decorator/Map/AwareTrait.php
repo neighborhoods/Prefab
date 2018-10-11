@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Map;
+namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\Map;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\MapInterface;
+use Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\MapInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap;
+    protected $NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap;
 
     public function setDoctrineDBALConnectionDecoratorMap(MapInterface $doctrineDBALConnectionDecoratorMap): self
     {
         if ($this->hasDoctrineDBALConnectionDecoratorMap()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap = $doctrineDBALConnectionDecoratorMap;
+        $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap = $doctrineDBALConnectionDecoratorMap;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorMap(): MapInterface
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorMap()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap;
+        return $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorMap(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorMap(): self
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorMap()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorMap);
+        unset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorMap);
 
         return $this;
     }

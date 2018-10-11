@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection;
+namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection;
 
 use Doctrine\DBAL\Connection;
 

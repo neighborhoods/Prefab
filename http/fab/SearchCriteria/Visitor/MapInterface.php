@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Visitor;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Visitor;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\VisitorInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\VisitorInterface;
 
 /** @codeCoverageIgnore */
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable

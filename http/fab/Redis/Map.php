@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis;
+namespace Neighborhoods\PrefabExamplesFunction41\Redis;
 
 /** @codeCoverageIgnore */
 class Map extends \ArrayIterator implements MapInterface

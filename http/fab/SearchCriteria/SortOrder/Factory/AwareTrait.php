@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\Factory;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\FactoryInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory;
+    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory;
 
     public function setSearchCriteriaSortOrderFactory(FactoryInterface $searchCriteriaSortOrderFactory): self
     {
         if ($this->hasSearchCriteriaSortOrderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory = $searchCriteriaSortOrderFactory;
+        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory = $searchCriteriaSortOrderFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaSortOrderFactory(): FactoryInterface
     {
         if (!$this->hasSearchCriteriaSortOrderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory;
+        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory;
     }
 
     protected function hasSearchCriteriaSortOrderFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory);
     }
 
     protected function unsetSearchCriteriaSortOrderFactory(): self
     {
         if (!$this->hasSearchCriteriaSortOrderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderFactory);
+        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaSortOrderFactory);
 
         return $this;
     }

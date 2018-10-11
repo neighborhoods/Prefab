@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory;
+    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory;
 
     public function setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory(
         FactoryInterface $searchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory
     ): self {
         if ($this->hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory = $searchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory;
+        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory = $searchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory(): FactoryInterface
     {
         if (!$this->hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory;
+        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory;
     }
 
     protected function hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory);
     }
 
     protected function unsetSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory(): self
     {
         if (!$this->hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory);
+        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory);
 
         return $this;
     }

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Map;
+namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\Map;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\MapInterface;
+use Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\MapInterface;
 
 /** @codeCoverageIgnore */
 class Factory implements FactoryInterface

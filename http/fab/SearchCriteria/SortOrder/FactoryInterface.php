@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrder;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrderInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\SortOrderInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface

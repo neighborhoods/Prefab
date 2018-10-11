@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator;
+namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\DecoratorInterface;
+use Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\DecoratorInterface;
 
 /** @codeCoverageIgnore */
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable

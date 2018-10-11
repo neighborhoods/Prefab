@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\Map;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Filter\Map;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\MapInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Filter\MapInterface;
 
 /** @codeCoverageIgnore */
 interface FactoryInterface

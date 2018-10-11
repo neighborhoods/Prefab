@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Time;
+namespace Neighborhoods\PrefabExamplesFunction41\Time;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\TimeInterface;
+use Neighborhoods\PrefabExamplesFunction41\TimeInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductTime;
+    protected $NeighborhoodsPrefabExamplesFunction41Time;
 
     public function setTime(TimeInterface $time): self
     {
         if ($this->hasTime()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41Time is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime = $time;
+        $this->NeighborhoodsPrefabExamplesFunction41Time = $time;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getTime(): TimeInterface
     {
         if (!$this->hasTime()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41Time is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime;
+        return $this->NeighborhoodsPrefabExamplesFunction41Time;
     }
 
     protected function hasTime(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41Time);
     }
 
     protected function unsetTime(): self
     {
         if (!$this->hasTime()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41Time is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime);
+        unset($this->NeighborhoodsPrefabExamplesFunction41Time);
 
         return $this;
     }

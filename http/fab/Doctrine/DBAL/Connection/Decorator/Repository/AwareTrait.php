@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\Repository;
+namespace Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\Repository;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator\RepositoryInterface;
+use Neighborhoods\PrefabExamplesFunction41\Doctrine\DBAL\Connection\Decorator\RepositoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository;
+    protected $NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository;
 
     public function setDoctrineDBALConnectionDecoratorRepository(
         RepositoryInterface $doctrineDBALConnectionDecoratorRepository
     ): self {
         if ($this->hasDoctrineDBALConnectionDecoratorRepository()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository = $doctrineDBALConnectionDecoratorRepository;
+        $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository = $doctrineDBALConnectionDecoratorRepository;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getDoctrineDBALConnectionDecoratorRepository(): RepositoryInterface
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorRepository()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository;
+        return $this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository;
     }
 
     protected function hasDoctrineDBALConnectionDecoratorRepository(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository);
     }
 
     protected function unsetDoctrineDBALConnectionDecoratorRepository(): self
     {
         if (!$this->hasDoctrineDBALConnectionDecoratorRepository()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductDoctrineDBALConnectionDecoratorRepository);
+        unset($this->NeighborhoodsPrefabExamplesFunction41DoctrineDBALConnectionDecoratorRepository);
 
         return $this;
     }

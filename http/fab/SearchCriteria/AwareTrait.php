@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteriaInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteriaInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria;
+    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteria;
 
     public function setSearchCriteria(SearchCriteriaInterface $searchCriteria): self
     {
         if ($this->hasSearchCriteria()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteria is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria = $searchCriteria;
+        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteria = $searchCriteria;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteria(): SearchCriteriaInterface
     {
         if (!$this->hasSearchCriteria()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteria is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria;
+        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteria;
     }
 
     protected function hasSearchCriteria(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteria);
     }
 
     protected function unsetSearchCriteria(): self
     {
         if (!$this->hasSearchCriteria()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteria is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria);
+        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteria);
 
         return $this;
     }

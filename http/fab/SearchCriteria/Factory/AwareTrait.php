@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Factory;
+namespace Neighborhoods\PrefabExamplesFunction41\SearchCriteria\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\FactoryInterface;
+use Neighborhoods\PrefabExamplesFunction41\SearchCriteria\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory;
+    protected $NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory;
 
     public function setSearchCriteriaFactory(FactoryInterface $searchCriteriaFactory): self
     {
         if ($this->hasSearchCriteriaFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory is already set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory = $searchCriteriaFactory;
+        $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory = $searchCriteriaFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaFactory(): FactoryInterface
     {
         if (!$this->hasSearchCriteriaFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory;
+        return $this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory;
     }
 
     protected function hasSearchCriteriaFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory);
+        return isset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory);
     }
 
     protected function unsetSearchCriteriaFactory(): self
     {
         if (!$this->hasSearchCriteriaFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory is not set.');
+            throw new \LogicException('NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFactory);
+        unset($this->NeighborhoodsPrefabExamplesFunction41SearchCriteriaFactory);
 
         return $this;
     }
