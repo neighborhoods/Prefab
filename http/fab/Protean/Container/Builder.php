@@ -50,8 +50,9 @@ class Builder implements BuilderInterface
             $discoverableDirectories[] = $this->getFabricationDirectoryPath();
             $discoverableDirectories[] = $this->getSourceDirectoryPath();
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
-            $containerBuilderFacade->addFinder((new Finder())->name('*.yml')->files()->in($discoverableDirectories));
-            $containerBuilderFacade->assembleYaml();
+            $containerBuilderFacade->addFinder(
+                (new Finder())->name('*.yml')->notName('*.prefab.definition.yml')->files()->in($discoverableDirectories)
+            );            $containerBuilderFacade->assembleYaml();
             $containerBuilderFacade->build();
             $this->symfonyContainerBuilder = $containerBuilder;
         }
