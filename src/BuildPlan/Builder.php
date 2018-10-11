@@ -281,6 +281,7 @@ class Builder implements BuilderInterface
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
         $nextLevelMeta->setDaoName($parentMeta->getDaoName());
         $nextLevelMeta->setHttpRoute($parentMeta->getHttpRoute());
+        $nextLevelMeta->setDaoProperties($parentMeta->getDaoProperties());
 
         return $nextLevelMeta;
     }
