@@ -24,6 +24,8 @@ use Neighborhoods\Prefab\Actor\MapInterface;
 use Neighborhoods\Prefab\Actor\Repository;
 use Neighborhoods\Prefab\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\Console\GeneratorMeta;
+use Symfony\Component\Yaml\Yaml;
+use Neighborhoods\UserService\Zend;
 
 class Builder implements BuilderInterface
 {
@@ -214,6 +216,7 @@ class Builder implements BuilderInterface
         $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
         $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
         $this->appendGeneratorToBuildPlan($handlerInterfaceGenerator);
+        $this->addHandlerToRouteFile($handlerInterfaceMeta);
         return $this;
     }
 
@@ -284,6 +287,25 @@ class Builder implements BuilderInterface
         $nextLevelMeta->setDaoProperties($parentMeta->getDaoProperties());
 
         return $nextLevelMeta;
+    }
+
+    protected function addHandlerToRouteFile(GeneratorMetaInterface $meta) : BuilderInterface
+    {
+        // Symfony Yaml doesn't support adding !php/const, so we have to create the string and append it to the end of the file
+
+        $routePath = $this->getBuildConfiguration()->getProjectDir() . 'fab/Zend/Expressive/Application/Decorator.yml';
+        $file = file_get_contents($routePath);
+
+        $line =
+            "    - [get, [!php/const \\" . $meta->getActorNamespace() . "\HandlerInterface::ROUTE_PATH_" . strtoupper($this->getDaoName()) . "S," .
+            "'@" . $meta->getActorNamespace() ."\HandlerInterface'," .
+            "!php/const \\" . $meta->getActorNamespace() . "\HandlerInterface::ROUTE_NAME_" . strtoupper($this->getDaoName()) . "S]]\n";
+
+        $file .= $line;
+
+        file_put_contents($routePath, $file);
+
+        return $this;
     }
 
     protected function appendGeneratorToBuildPlan(GeneratorInterface $generator) : BuilderInterface

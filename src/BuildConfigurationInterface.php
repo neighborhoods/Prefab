@@ -28,4 +28,8 @@ interface BuildConfigurationInterface
     public function getHttpRoute() : string;
 
     public function setHttpRoute(string $httpRoute) : BuildConfigurationInterface;
+
+    public function setProjectDir(string $projectDir) : BuildConfigurationInterface;
+
+    public function getProjectDir() : string;
 }
