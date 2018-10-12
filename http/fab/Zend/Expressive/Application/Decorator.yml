@@ -1,6 +1,6 @@
 services:
-  Neighborhoods\UserService\Zend\Expressive\Application\DecoratorInterface:
-    class: Neighborhoods\UserService\Zend\Expressive\Application\Decorator
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\Expressive\Application\DecoratorInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\Expressive\Application\Decorator
     decorates: Zend\Expressive\Application
     calls:
-    - [setZendExpressiveApplication, ['@Neighborhoods\UserService\Zend\Expressive\Application\DecoratorInterface.inner']]
+    - [setZendExpressiveApplication, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\Expressive\Application\DecoratorInterface.inner']]

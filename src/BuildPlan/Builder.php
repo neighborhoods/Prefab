@@ -24,8 +24,7 @@ use Neighborhoods\Prefab\Actor\MapInterface;
 use Neighborhoods\Prefab\Actor\Repository;
 use Neighborhoods\Prefab\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\Console\GeneratorMeta;
-use Symfony\Component\Yaml\Yaml;
-use Neighborhoods\UserService\Zend;
+use Neighborhoods\Prefab\Zend;
 
 class Builder implements BuilderInterface
 {
