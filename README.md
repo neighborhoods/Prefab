@@ -19,7 +19,7 @@ In order to ensure we get as much feedback as possible, we wanted to make it eas
 ## Fitness
 In order to capture the use cases for this product, and to ensure that this product is fit to handle each use case, every codebase that is designed to be composed into another codebase to perform useful work MUST have an accompaning `Fitness` repository.
 
-The `Fitness` respoistory for `Prefab` is located in [`PrefabFitness`](https://github.com/neighborhoods/PrefabFitness).
+The `Fitness` repository for `Prefab` is located in [`PrefabFitness`](https://github.com/neighborhoods/PrefabFitness).
 
 All features and changes to `Prefab` MUST have an accompanying use case in this `Fitness` repository and MUST have an adopted RFC in `Protean`.
 
