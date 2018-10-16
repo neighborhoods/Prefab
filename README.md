@@ -17,7 +17,7 @@ In order to ensure we get as much feedback as possible, we wanted to make it eas
 - If you have a request for new functionality, please add it to the [feature request spreadsheet](https://docs.google.com/spreadsheets/d/1QjHGekzFeH8WKreOsiKjciGnbEKLbHjlfT9HhpI6S6w/edit?usp=sharing).
 
 ## Fitness
-In order to capture the use cases for this product, and to ensure that this product is fit to handle each use case, every codebase that is designed to be composed into another codebase to perform useful work MUST have an accompaning `Fitness` repository.
+In order to capture the use cases for this product, and to ensure that this product is fit to handle each use case, every codebase that is designed to be composed into another codebase to perform useful work MUST have an accompanying `Fitness` repository.
 
 The `Fitness` repository for `Prefab` is located in [`PrefabFitness`](https://github.com/neighborhoods/PrefabFitness).
 
