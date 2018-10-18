@@ -125,7 +125,7 @@ class Generator implements GeneratorInterface
         return $projectName;
     }
 
-    public function getProjectName() : string
+    protected function getProjectName() : string
     {
         if ($this->projectName === null) {
             throw new \LogicException('Generator projectName has not been set.');
@@ -159,7 +159,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getBuildPlans() : array
+    protected function getBuildPlans() : array
     {
         if ($this->buildPlans === null) {
             throw new \LogicException('Generator buildPlans has not been set.');
@@ -173,7 +173,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getHttpSrcDir() : string
+    protected function getHttpSrcDir() : string
     {
         if ($this->httpSrcDir === null) {
             throw new \LogicException('Generator httpSrcDir has not been set.');
@@ -190,7 +190,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getStagedHttpDir() : string
+    protected function getStagedHttpDir() : string
     {
         if ($this->stagedHttpDir === null) {
             throw new \LogicException('Generator stagedHttpDir has not been set.');
@@ -207,7 +207,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getFabLocation() : string
+    protected function getFabLocation() : string
     {
         if ($this->fabLocation === null) {
             throw new \LogicException('Generator fabLocation has not been set.');
@@ -224,7 +224,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    public function getSrcLocation() : string
+    protected function getSrcLocation() : string
     {
         if ($this->srcLocation === null) {
             throw new \LogicException('Generator srcLocation has not been set.');

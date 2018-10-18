@@ -6,11 +6,17 @@ interface GeneratorInterface
 {
     public function generate();
 
-    public function getProjectName() : string;
-
     public function setProjectName(string $projectName) : GeneratorInterface;
 
-    public function getBuildPlans() : array;
+    public function setProjectDir(string $projectDir) : GeneratorInterface;
 
     public function appendBuildPlan(BuildPlanInterface $buildPlan) : GeneratorInterface;
+
+    public function setHttpSrcDir(string $httpSrcDir) : GeneratorInterface;
+
+    public function setStagedHttpDir(string $stagedHttpDir) : GeneratorInterface;
+
+    public function setFabLocation(string $fabLocation) : GeneratorInterface;
+
+    public function setSrcLocation(string $srcLocation) : GeneratorInterface;
 }

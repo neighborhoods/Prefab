@@ -3,6 +3,4 @@ services:
     class: Neighborhoods\Prefab\Console\GenerateFabCommand
     shared: false
     calls:
-    - [setHttpSkeletonGeneratorFactory, ['@Neighborhoods\Prefab\HttpSkeleton\Generator\FactoryInterface']]
-    - [setBuildConfigurationBuilderFactory, ['@Neighborhoods\Prefab\BuildConfiguration\Builder\FactoryInterface']]
-    - [setBuildPlanBuilderFactory, ['@Neighborhoods\Prefab\BuildPlan\Builder\FactoryInterface']]
+    - [setGenerator, ['@Neighborhoods\Prefab\GeneratorInterface']]

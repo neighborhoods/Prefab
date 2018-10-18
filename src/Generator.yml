@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\GeneratorInterface:
+    class: Neighborhoods\Prefab\Generator
+    calls:
+    - [setBuildConfigurationBuilderFactory, ['@Neighborhoods\Prefab\BuildConfiguration\Builder\FactoryInterface']]
+    - [setHttpSkeletonGeneratorFactory, ['@Neighborhoods\Prefab\HttpSkeleton\Generator\FactoryInterface']]
+    - [setBuildPlanBuilderFactory, ['@Neighborhoods\Prefab\BuildPlan\Builder\FactoryInterface']]

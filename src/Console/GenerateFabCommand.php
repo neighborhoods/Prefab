@@ -12,6 +12,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 {
 
+    use Generator\AwareTrait;
+
     protected function configure() : GenerateFabCommandInterface
     {
         $this->setName('gen:fab')
@@ -22,7 +24,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function execute(InputInterface $input, OutputInterface $output) : GenerateFabCommandInterface
     {
-        (new Generator())->setProjectDir(__DIR__ . '/../../')->generate();
+        $this->getGenerator()->setProjectDir(__DIR__ . '/../../')->generate();
 
         return $this;
     }
