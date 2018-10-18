@@ -24,7 +24,7 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function execute(InputInterface $input, OutputInterface $output) : GenerateFabCommandInterface
     {
-        $this->getGenerator()->setProjectDir(__DIR__ . '/../../')->generate();
+        $this->getGenerator()->setProjectDir(__DIR__ . '/../../../../../')->generate();
 
         return $this;
     }
