@@ -4,24 +4,11 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
-use Neighborhoods\Prefab\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Finder\Finder;
+use Neighborhoods\Prefab\Protean\Container\Builder;
+use Neighborhoods\Prefab\Prefab;
 
-$containerBuilder = new ContainerBuilder();
+$proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
+$prefab = (new Prefab())->setProteanContainerBuilder($proteanContainerBuilder);
+$prefab->generate();
 
-$discoverableDirectories[] = __DIR__ . '/../src';
-$discoverableDirectories[] = __DIR__ . '/../fab';
-
-$finder = new Finder();
-$finder->name('*.yml');
-$finder->notName('Service.yml');
-$finder->files()->in($discoverableDirectories);
-$containerBuilderFacade = new Facade();
-$containerBuilderFacade->setContainerBuilder($containerBuilder);
-$containerBuilderFacade->addFinder($finder);
-$containerBuilderFacade->assembleYaml();
-$containerBuilderFacade->build();
-
-$console = $containerBuilder->get('Symfony\Component\Console\ApplicationInterface');
-$console->run();
+return;

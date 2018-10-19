@@ -17,7 +17,5 @@ use Neighborhoods\Prefab\Actor\FactoryInterface;
 
 interface GenerateFabCommandInterface
 {
-    public function getProjectName(): string;
 
-    public function setProjectName(string $projectName): GenerateFabCommandInterface;
 }

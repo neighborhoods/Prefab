@@ -38,14 +38,16 @@ class Builder implements BuilderInterface
 
     protected function getFabDirFromYamlPath() : string
     {
-        $pathArray = explode('/src/', $this->getYamlFilePath());
-        return $pathArray[0] . '/src/' . $pathArray[1] . '/fab/' . $pathArray[2];
+        // Explode and remove the vendor portion of the filepath. Replace src/ with fab/
+        $pathArray = explode('vendor', $this->getYamlFilePath());
+        $path = $pathArray[0] . 'fab/' . array_slice(explode('src/', $pathArray[1]), -1)[0];
+
+        return $path;
     }
 
     protected function getProjectDirFromYamlPath() : string
     {
-        $pathArray = explode('/src/', $this->getYamlFilePath());
-        return $pathArray[0] . '/src/' . $pathArray[1] . '/';
+        return explode('vendor/', $this->getYamlFilePath())[0];
     }
 
     protected function getConfigFromYaml() : array
