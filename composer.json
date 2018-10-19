@@ -13,10 +13,6 @@
       "email": "brad.wilson@neighborhoods.com"
     }
   ],
-  "scripts": {
-    "post-update-cmd": "@php bin/prefab",
-    "post-install-cmd": "@php bin/prefab"
-  },
   "require": {
     "php": "^7.2",
     "jsoumelidis/zend-sf-di-config": "^0.3",
