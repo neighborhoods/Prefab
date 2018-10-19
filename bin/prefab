@@ -9,11 +9,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;
 use Neighborhoods\Prefab\Protean\Container\Builder;
 use Neighborhoods\Prefab\GeneratorInterface;
+use Neighborhoods\Prefab\Prefab;
 
 $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
-$proteanContainerBuilder
-    ->build()
-    ->get(GeneratorInterface::class)
-    ->setProjectDir(__DIR__ . '/../../../../')
-    ->generate();
+$prefab = (new Prefab())->setProteanContainerBuilder($proteanContainerBuilder);
+$prefab->generate();
 
+return;
