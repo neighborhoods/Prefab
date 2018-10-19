@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
-use Neighborhoods\Prefab\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Finder\Finder;
 use Neighborhoods\Prefab\Protean\Container\Builder;
-use Neighborhoods\Prefab\GeneratorInterface;
 use Neighborhoods\Prefab\Prefab;
 
 $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
