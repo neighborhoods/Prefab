@@ -1,0 +1,13 @@
+<?php
+declare(strict_types=1);
+
+namespace NAMESPACEPLACEHOLDER;
+
+interface DAONAMEPLACEHOLDERInterface extends \JsonSerializable
+{
+    public const TABLE_NAME = 'TABLENAMEPLACEHOLDER';
+    public const FIELD_IDENTITY = 'FIELDIDENTITYPLACEHOLDER';
+
+DATABASEPROPERTIESPLACEHOLDER
+METHODSPLACEHOLDER
+}

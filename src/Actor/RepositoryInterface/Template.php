@@ -7,9 +7,9 @@ use Neighborhoods\PROJECTNAMEPLACEHOLDER\SearchCriteriaInterface;
 
 interface Template
 {
-    public function createBuilder() : \DAONAMEPLACEHOLDER\Map\BuilderInterface;
+    public function createBuilder() : \DAONAMEPLACEHOLDER\BuilderInterface;
 
-    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDER\MapInterface;
+    public function get(SearchCriteriaInterface $searchCriteria) : \DAONAMEPLACEHOLDERInterface;
 
-    public function save(\NAMESPACEPLACEHOLDER\MapInterface $map) : \DAONAMEPLACEHOLDER\RepositoryInterface;
+    public function save(\NAMESPACEPLACEHOLDERInterface $map) : \DAONAMEPLACEHOLDER\RepositoryInterface;
 }

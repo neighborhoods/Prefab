@@ -35,8 +35,8 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setName(self::CLASS_NAME);
 
         $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait');
-        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Map\Builder\Factory\AwareTrait');
-        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Map\Factory\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Builder\Factory\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Factory\AwareTrait');
         $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait');
 
         $file = new FileGenerator();
@@ -45,9 +45,9 @@ class Generator implements GeneratorInterface
         $builtFile = $this->replaceEntityPlaceholders($file->generate());
 
         $this->getClassSaverFactory()->create()
-            ->setNamespace($this->getMeta()->getActorNamespace())
             ->setClassName(self::CLASS_NAME)
             ->setGeneratedClass($builtFile)
+            ->setSavePath($this->getMeta()->getActorFilePath())
             ->saveClass();
 
         $this->generateService();
@@ -69,8 +69,8 @@ class Generator implements GeneratorInterface
                     'public' => false,
                     'shared' => true,
                     'calls' => [
-                        ["set{$methodName}MapFactory", ["@{$this->getMeta()->getActorNamespace()}\Map\FactoryInterface" ]],
-                        ["set{$methodName}MapBuilderFactory", ["@{$this->getMeta()->getActorNamespace()}\Map\Builder\FactoryInterface" ]],
+                        ["set{$methodName}Factory", ["@{$this->getMeta()->getActorNamespace()}\FactoryInterface" ]],
+                        ["set{$methodName}BuilderFactory", ["@{$this->getMeta()->getActorNamespace()}\Builder\FactoryInterface" ]],
                         ['setDoctrineDBALConnectionDecoratorRepository', ["@Neighborhoods\\". $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\RepositoryInterface' ]],
                         ['setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface' ]],
                     ]

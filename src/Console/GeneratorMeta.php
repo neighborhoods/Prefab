@@ -5,12 +5,32 @@ namespace Neighborhoods\Prefab\Console;
 
 class GeneratorMeta implements GeneratorMetaInterface
 {
-    /** @var string */
+    
     protected $actorNamespace;
-    /** @var string */
     protected $actorFilePath;
-    /** @var string */
     protected $daoName;
+    protected $daoProperties;
+    protected $tableName;
+    protected $daoString;
+    protected $daoIdentityField;
+    protected $httpRoute;
+    
+    public function getDaoProperties() : array
+    {
+        if ($this->daoProperties === null) {
+            throw new \LogicException('GeneratorMeta daoProperties has not been set.');
+        }
+        return $this->daoProperties;
+    }
+
+    public function setDaoProperties(array $daoProperties) : GeneratorMetaInterface
+    {
+        if ($this->daoProperties !== null) {
+            throw new \LogicException('GeneratorMeta daoProperties is already set.');
+        }
+        $this->daoProperties = $daoProperties;
+        return $this;
+    }
 
     public function getActorNamespace(): string
     {
@@ -63,4 +83,72 @@ class GeneratorMeta implements GeneratorMetaInterface
         return $this;
     }
 
+    public function getTableName() : string
+    {
+        if ($this->tableName === null) {
+            throw new \LogicException('GeneratorMeta tableName has not been set.');
+        }
+        return $this->tableName;
+    }
+
+    public function setTableName(string $tableName) : GeneratorMetaInterface
+    {
+        if ($this->tableName !== null) {
+            throw new \LogicException('GeneratorMeta tableName is already set.');
+        }
+        $this->tableName = $tableName;
+        return $this;
+    }
+
+    public function getDaoString() : string
+    {
+        if ($this->daoString === null) {
+            throw new \LogicException('GeneratorMeta daoString has not been set.');
+        }
+        return $this->daoString;
+    }
+
+    public function setDaoString(string $daoString) : GeneratorMetaInterface
+    {
+        if ($this->daoString !== null) {
+            throw new \LogicException('GeneratorMeta daoString is already set.');
+        }
+        $this->daoString = $daoString;
+        return $this;
+    }
+
+    public function getDaoIdentityField() : string
+    {
+        if ($this->daoIdentityField === null) {
+            throw new \LogicException('GeneratorMeta daoIdentityField has not been set.');
+        }
+        return $this->daoIdentityField;
+    }
+
+    public function setDaoIdentityField(string $daoIdentityField) : GeneratorMetaInterface
+    {
+        if ($this->daoIdentityField !== null) {
+            throw new \LogicException('GeneratorMeta daoIdentityField is already set.');
+        }
+        $this->daoIdentityField = $daoIdentityField;
+        return $this;
+    }
+
+    public function getHttpRoute() : string
+    {
+        if ($this->httpRoute === null) {
+            throw new \LogicException('GeneratorMeta httpRoute has not been set.');
+        }
+        return $this->httpRoute;
+    }
+
+    public function setHttpRoute(string $httpRoute) : GeneratorMetaInterface
+    {
+        if ($this->httpRoute !== null) {
+            throw new \LogicException('GeneratorMeta httpRoute is already set.');
+        }
+        $this->httpRoute = $httpRoute;
+        return $this;
+    }
+    
 }

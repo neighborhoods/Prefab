@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
+use Neighborhoods\Prefab\Protean\Container\Builder;
+use Neighborhoods\Prefab\Prefab;
+
+$proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
+$prefab = (new Prefab())->setProteanContainerBuilder($proteanContainerBuilder);
+$prefab->generate();
+
+return;

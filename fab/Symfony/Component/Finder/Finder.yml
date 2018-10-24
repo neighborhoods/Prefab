@@ -1,0 +1,4 @@
+services:
+  Symfony\Component\Finder\FinderInterface:
+    class: Symfony\Component\Finder\Finder
+    shared: false
