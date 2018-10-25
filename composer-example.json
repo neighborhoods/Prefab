@@ -6,6 +6,10 @@
   "keywords": [
     "prefab"
   ],
+  "scripts": {
+    "post-update-cmd": "vendor/bin/prefab",
+    "post-install-cmd": "vendor/bin/prefab"
+  },
   "repositories": [
     {
       "type": "vcs",
@@ -24,6 +28,14 @@
       "Neighborhoods\\PROJECTNAME\\": [
         "src",
         "fab"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Neighborhoods\\UserServiceTest\\": [
+        "src/",
+        "test-fab/"
       ]
     }
   }
