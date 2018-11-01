@@ -21,7 +21,7 @@
   ],
   "require": {
     "php": "^7.2",
-    "neighborhoods/bakery": "master-dev",
+    "neighborhoods/bakery": "master",
     "jsoumelidis/zend-sf-di-config": "^0.3",
     "doctrine/dbal": "^2.7",
     "symfony/config": "^4.0",
