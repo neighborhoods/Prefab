@@ -44,7 +44,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Neighborhoods\\UserServiceTest\\": [
+      "Neighborhoods\\PROJECTNAME\\": [
         "src/",
         "test-fab/"
       ]
