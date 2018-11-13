@@ -17,6 +17,10 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
             - `database_column_name`
                 - Name of the database column containing the data that populates the class property
 
+Prefab also enforces
+* A Contract Version Namespace (e.g. `MV1`, `DOR1`, `RETS1`, etc.). This MUST be present under `src/`.
+* A `{VENDOR}\{PRODUCT_NAME}` PSR-4 namespace convention (e.g. `Neighborhoods\Prefab`). This MUST be defined in `composer.json`.
+
 ### Example structure of a DAO yaml file:
 
 Filename: `User.prefab.definition.yml`
