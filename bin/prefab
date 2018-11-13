@@ -2,15 +2,14 @@
 <?php
 declare(strict_types=1);
 error_reporting(E_ALL);
+set_error_handler(function (int $errorNumber, string $errorString, string $errorFile, int $errorLine, array $errorContext) {
+    throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
+});
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 use Neighborhoods\Prefab\Protean\Container\Builder;
 use Neighborhoods\Prefab\Prefab;
-
-set_error_handler(function ($severity, $message, $file, $line) {
-    throw new \ErrorException($message, $severity, $severity, $file, $line);
-});
 
 $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
 $prefab = (new Prefab())->setProteanContainerBuilder($proteanContainerBuilder);
