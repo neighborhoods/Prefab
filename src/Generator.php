@@ -40,16 +40,21 @@ class Generator implements GeneratorInterface
         $this->configure();
         $this->setProjectName($this->getProjectNameFromComposer());
 
-        echo 'Copying HTTP skeleton.';
+        echo "\n";
+        echo ">> Copying the HTTP skeleton...\n";
         $this->generateHttpSkeleton();
+        echo ">> Success.\n";
 
-        echo 'Assembling Prefab build plan.';
+        echo ">> Assembling the Prefab build plan...\n";
         $this->generateBuildPlan();
+        echo ">> Success.\n";
 
-        echo 'Generating prefab machinery.';
+        echo ">> Generating Prefab machinery...\n";
         $this->generatePrefab();
+        echo ">> Success.\n";
 
-        echo 'Protean prefab complete.';
+        echo ">> Protean Prefab complete.\n";
+        echo "\n";
 
         return $this;
     }
