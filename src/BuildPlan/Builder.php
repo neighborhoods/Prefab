@@ -86,10 +86,12 @@ class Builder implements BuilderInterface
 
     protected function getDaoName() : string
     {
+        $rootSaveLocationParts = explode('/', $this->getBuildConfiguration()->getRootSaveLocation());
+
         return str_replace(
             self::DAO_YML_SUFFIX,
             '',
-            end(explode('/', $this->getBuildConfiguration()->getRootSaveLocation()))
+            end($rootSaveLocationParts)
         );
     }
 
