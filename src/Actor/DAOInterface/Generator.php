@@ -22,7 +22,7 @@ class Generator implements GeneratorInterface
 
     protected const GET_METHOD_PATTERN = 'public function get%s(): %s;';
     protected const SET_METHOD_PATTERN = 'public function set%s(%s $%s): %sInterface;';
-    protected const HAS_METHOD_PATTERN = 'protected function has%s(): bool';
+    protected const HAS_METHOD_PATTERN = 'public function has%s(): bool;';
     protected const DATABASE_CONSTANT_PATTERN = "public const PROP_%s = '%s';";
 
     protected $namespace;
@@ -85,6 +85,7 @@ class Generator implements GeneratorInterface
 
             $methodString .= sprintf("\t" . self::GET_METHOD_PATTERN, $camelCaseProperty, $values['php_type']) . "\n";
             $methodString .= sprintf("\t" . self::SET_METHOD_PATTERN, $camelCaseProperty, $values['php_type'], $property, $this->getMeta()->getDaoName()) . "\n";
+            $methodString .= sprintf("\t" . self::HAS_METHOD_PATTERN, $camelCaseProperty) . "\n";
         }
 
         return $methodString;
