@@ -32,7 +32,7 @@ class Template
         return isset($this->DAOVARNAMEPLACEHOLDER);
     }
 
-    protected function unsetDAOVARNAMEPLACEHOLDER() : DAONAMEPLACEHOLDERInterface
+    protected function unsetDAOVARNAMEPLACEHOLDER() : \SELFPLACEHOLDER
     {
         if (!$this->hasDAOVARNAMEPLACEHOLDER()) {
             throw new \LogicException('DAOVARNAMEPLACEHOLDER is not set.');
