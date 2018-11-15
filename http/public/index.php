@@ -9,8 +9,8 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\Dependen
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-set_error_handler(new ErrorHandler());
 set_exception_handler(new ExceptionHandler());
+set_error_handler(new ErrorHandler());
 $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
 $HTTP = (new HTTP())->setProteanContainerBuilder($proteanContainerBuilder);
 $HTTP->respond();

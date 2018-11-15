@@ -6,9 +6,10 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\De
 interface ErrorHandlerInterface
 {
     public function __invoke(
-        int $error_number,
-        string $error_string,
-        string $error_file,
-        int $error_line
-    ): ErrorHandlerInterface;
+        int $errorNumber,
+        string $errorString,
+        string $errorFile,
+        int $errorLine,
+        array $errorContext
+    );
 }
