@@ -9,10 +9,12 @@
   "scripts": {
     "post-update-cmd": [
       "vendor/bin/prefab",
+      "@composer dump-autoload -a",
       "vendor/bin/bakery"
     ],
     "post-install-cmd": [
       "vendor/bin/prefab",
+      "@composer dump-autoload -a",
       "vendor/bin/bakery"
     ]
   },
