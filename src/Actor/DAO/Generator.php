@@ -35,7 +35,7 @@ EOF;
     public function setCAMELCASEPROPERTYNAMEPLACEHOLDER(PROPERTYTYPEPLACEHOLDER \$PROPERTYNAMEPLACEHOLDER) : DAONAMEPLACEHOLDERInterface
     {
         if (\$this->PROPERTYNAMEPLACEHOLDER !== null) {
-            throw new \LogicException('DAONAMEPLACEHOLDER PROPERTYNAMEPLACEHOLDER already set.');
+            throw new \LogicException('DAONAMEPLACEHOLDER PROPERTYNAMEPLACEHOLDER is already set.');
         }
         \$this->PROPERTYNAMEPLACEHOLDER = \$PROPERTYNAMEPLACEHOLDER;
         return \$this;
