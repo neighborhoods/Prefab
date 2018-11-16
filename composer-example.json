@@ -7,16 +7,14 @@
     "prefab"
   ],
   "scripts": {
-    "pre-update-cmd": [
-      "vendor/bin/prefab"
-    ],
     "post-update-cmd": [
+      "vendor/bin/prefab",
+      "@composer dump-autoload -a",
       "vendor/bin/bakery"
     ],
-    "pre-install-cmd": [
-      "vendor/bin/prefab"
-    ],
     "post-install-cmd": [
+      "vendor/bin/prefab",
+      "@composer dump-autoload -a",
       "vendor/bin/bakery"
     ]
   },
