@@ -41,7 +41,7 @@ class Generator implements GeneratorInterface
         $this->setProjectName($this->getProjectNameFromComposer());
 
         echo "\n";
-        echo ">> Copying the HTTP skeleton...\n";
+        echo ">> Copying the skeleton...\n";
         $this->generateHttpSkeleton();
         echo ">> Success.\n";
 
