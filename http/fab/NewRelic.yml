@@ -1,0 +1,4 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelicInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic
+    shared: false

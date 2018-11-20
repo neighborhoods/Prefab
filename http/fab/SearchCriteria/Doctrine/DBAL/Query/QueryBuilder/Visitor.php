@@ -33,25 +33,25 @@ class Visitor implements VisitorInterface
                 $where = $this->getQueryBuilder()->expr()->eq($field, $parameterPlaceholders[0]);
                 break;
             case 'neq':
-                $where = $this->getQueryBuilder()->expr()->neq($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->neq($field, $parameterPlaceholders);
                 break;
             case 'lt':
-                $where = $this->getQueryBuilder()->expr()->lt($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->lt($field, $parameterPlaceholders);
                 break;
             case 'lte':
-                $where = $this->getQueryBuilder()->expr()->lte($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->lte($field, $parameterPlaceholders);
                 break;
             case 'gt':
-                $where = $this->getQueryBuilder()->expr()->gt($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->gt($field, $parameterPlaceholders);
                 break;
             case 'gte':
-                $where = $this->getQueryBuilder()->expr()->gte($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->gte($field, $parameterPlaceholders);
                 break;
             case 'like':
-                $where = $this->getQueryBuilder()->expr()->like($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->like($field, $parameterPlaceholders);
                 break;
             case 'nlike':
-                $where = $this->getQueryBuilder()->expr()->notLike($field, $parameterPlaceholders[0]);
+                $where = $this->getQueryBuilder()->expr()->notLike($field, $parameterPlaceholders);
                 break;
             case 'st_contains':
                 $where = sprintf("ST_Contains('%s', %s)", $parameterPlaceholders[0], $field);

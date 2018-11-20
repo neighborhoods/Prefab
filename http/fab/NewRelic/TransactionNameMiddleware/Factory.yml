@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddleware\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddleware\Factory
+    calls:
+    - [setNewRelicTransactionNameMiddleware, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddlewareInterface']]
