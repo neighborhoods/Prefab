@@ -49,6 +49,9 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this;
     }
 
+    // TODO: This will never throw an exception because the instance variable is
+    // initialized to an empty array, so will never be null. Should be addressed
+    // by proposed refactor to use a Map: https://55places.atlassian.net/browse/PREF-80
     public function getDaoProperties() : array
     {
         if ($this->daoProperties === null) {
