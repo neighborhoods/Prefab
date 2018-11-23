@@ -50,12 +50,8 @@ class TestEnvironment
     public function run(): void
     {
         try {
-            $this->filesystem->remove(static::testAppRoot() . '/*');
-            $this->filesystem->copy(
-                static::testAppOriginalStateRoot(),
-                static::testAppRoot()
-            );
             $this
+                ->resetTestAppDir()
                 ->buildDockerImage()
                 ->runDockerImage()
                 ->installComposerDependencies();
@@ -64,6 +60,13 @@ class TestEnvironment
             echo static::redText($e->getMessage());
             echo static::redText($e->getTraceAsString());
             echo static::redText("\n");
+
+            while (null !== $e->getPrevious()) {
+                echo static::redText($e->getMessage());
+                echo static::redText($e->getTraceAsString());
+                echo static::redText("\n");
+            }
+
             $this->stopDockerImage();
         }
     }
@@ -73,6 +76,18 @@ class TestEnvironment
         $process = $this->createProcess(self::COMMAND_STOP_DOCKER);
 
         $process->mustRun(self::printCommandOutput());
+
+        return $this;
+    }
+
+    private function resetTestAppDir(): TestEnvironment
+    {
+        $this->filesystem->remove(static::testAppRoot());
+        $this->filesystem->mkdir(static::testAppRoot());
+        $this->filesystem->mirror(
+            static::testAppOriginalStateRoot(),
+            static::testAppRoot()
+        );
 
         return $this;
     }
