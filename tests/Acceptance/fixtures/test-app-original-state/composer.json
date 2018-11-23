@@ -1,0 +1,41 @@
+{
+  "name": "neighborhoods/prefab-test-app",
+  "description": "A dummy implementation of a Prefab test app for acceptance testing.",
+  "type": "project",
+  "license": "proprietary",
+  "keywords": [
+    "prefab"
+  ],
+  "repositories": {
+    "prefab": {
+      "type": "path",
+      "url": "/prefab-source",
+      "options": {
+        "symlink": false
+      }
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^7.2",
+    "neighborhoods/prefab": "@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Neighborhoods\\PrefabTestApp\\": [
+        "src",
+        "fab"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Neighborhoods\\PrefabTestApp\\": [
+        "src/",
+        "test-fab/"
+      ]
+    }
+  }
+}
