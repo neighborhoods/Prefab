@@ -89,6 +89,11 @@ class TestEnvironment
         return $this;
     }
 
+    public static function testAppRoot(): string
+    {
+        return __DIR__ . '/../test-app';
+    }
+
     private function deleteFilesAndDirsInTestAppDir(): void
     {
         $finder = new Finder();
@@ -118,11 +123,6 @@ class TestEnvironment
     private static function projectRoot(): string
     {
         return __DIR__ . '/../..';
-    }
-
-    private static function testAppRoot(): string
-    {
-        return __DIR__ . '/../test-app';
     }
 
     private static function testAppOriginalStateRoot(): string
