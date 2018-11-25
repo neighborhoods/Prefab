@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 namespace Neighborhoods\PrefabTest\Acceptance;
 
-use Exception;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 class TestEnvironment
 {
     private const DOCKER_IMAGE_NAME = 'prefab-test-app';
-
-    private const COMMAND_BUILD_DOCKER = 'docker-compose build';
 
     private const COMMAND_RUN_DOCKER = 'docker-compose up -d';
 
@@ -19,7 +17,7 @@ class TestEnvironment
 
     private const COMMAND_INSTALL_COMPOSER_DEPS = 'docker-compose exec -T ' .
         self::DOCKER_IMAGE_NAME .
-        ' composer update --prefer-source';
+        ' composer update --prefer-dist';
 
     /**
      * @var string
@@ -31,31 +29,19 @@ class TestEnvironment
      */
     private $filesystem;
 
-    private function __construct(Filesystem $filesystem)
+    public function __construct(Filesystem $filesystem)
     {
-        // Must use named constructor `TestEnvironment::start`
-
         $this->filesystem = $filesystem;
     }
 
-    public static function start(): TestEnvironment
-    {
-        $testEnv = new TestEnvironment(new Filesystem());
-
-        $testEnv->run();
-
-        return $testEnv;
-    }
-
-    public function run(): void
+    public function start(): void
     {
         try {
             $this
                 ->resetTestAppDir()
-                ->buildDockerImage()
                 ->runDockerImage()
                 ->installComposerDependencies();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo static::redText("Failed to create test environment:\n\n");
             echo static::redText($e->getMessage());
             echo static::redText($e->getTraceAsString());
@@ -66,12 +52,35 @@ class TestEnvironment
                 echo static::redText($e->getTraceAsString());
                 echo static::redText("\n");
             }
-
-            $this->stopDockerImage();
         }
     }
 
-    public function stopDockerImage(): TestEnvironment
+    public function resetTestAppDir(): TestEnvironment
+    {
+        $this->deleteFilesAndDirsInTestAppDir();
+
+        $this->copyAppFixtureToTestAppRoot();
+
+        return $this;
+    }
+
+    public function runCommandInTestEnvironment(string $cmd): Process
+    {
+        $process = new Process(
+            sprintf(
+                'docker-compose exec -T %s %s',
+                static::DOCKER_IMAGE_NAME,
+                $cmd
+            ),
+            self::projectRoot()
+        );
+
+        $process->run();
+
+        return $process;
+    }
+
+    public function stop(): TestEnvironment
     {
         $process = $this->createProcess(self::COMMAND_STOP_DOCKER);
 
@@ -80,16 +89,30 @@ class TestEnvironment
         return $this;
     }
 
-    private function resetTestAppDir(): TestEnvironment
+    private function deleteFilesAndDirsInTestAppDir(): void
     {
-        $this->filesystem->remove(static::testAppRoot());
-        $this->filesystem->mkdir(static::testAppRoot());
+        $finder = new Finder();
+
+        $dirsToRemove = $finder->in(static::testAppRoot())
+            ->directories()
+            ->exclude('vendor')
+            ->getIterator();
+
+        $this->filesystem->remove($dirsToRemove);
+
+        $filesToRemove = $finder->in(static::testAppRoot())
+            ->files()
+            ->getIterator();
+
+        $this->filesystem->remove($filesToRemove);
+    }
+
+    private function copyAppFixtureToTestAppRoot(): void
+    {
         $this->filesystem->mirror(
             static::testAppOriginalStateRoot(),
             static::testAppRoot()
         );
-
-        return $this;
     }
 
     private static function projectRoot(): string
@@ -117,17 +140,6 @@ class TestEnvironment
                 echo $buffer;
             }
         };
-    }
-
-    private function buildDockerImage(): TestEnvironment
-    {
-        $process = $this->createProcess(self::COMMAND_BUILD_DOCKER);
-
-        $process->setTimeout(null);
-
-        $process->mustRun(self::printCommandOutput());
-
-        return $this;
     }
 
     private function runDockerImage(): TestEnvironment
