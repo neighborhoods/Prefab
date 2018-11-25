@@ -10,7 +10,14 @@
          verbose="true">
     <testsuites>
         <testsuite name="default">
-            <directory suffix="Test.php">tests</directory>
+            <directory suffix="Test.php">tests/Unit</directory>
+            <directory suffix="Test.php">tests/Acceptance</directory>
+        </testsuite>
+        <testsuite name="unit">
+            <directory suffix="Test.php">tests/Unit</directory>
+        </testsuite>
+        <testsuite name="acceptance">
+            <directory suffix="Test.php">tests/Acceptance</directory>
         </testsuite>
     </testsuites>
 
@@ -19,4 +26,8 @@
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
+
+    <listeners>
+        <listener class="\Neighborhoods\PrefabTest\Acceptance\TestEnvironmentListener" file="./tests/Acceptance/TestEnvironmentListener.php" />
+    </listeners>
 </phpunit>
