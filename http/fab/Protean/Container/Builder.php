@@ -16,6 +16,7 @@ class Builder implements BuilderInterface
     protected $container;
     protected $applicationRootDirectoryPath;
     protected $symfonyContainerBuilder;
+    protected $publicDefinitionIds = [];
 
     public function build(): ContainerInterface
     {
@@ -52,7 +53,11 @@ class Builder implements BuilderInterface
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
                 (new Finder())->name('*.yml')->notName('*.prefab.definition.yml')->files()->in($discoverableDirectories)
-            );            $containerBuilderFacade->assembleYaml();
+            );
+            $containerBuilderFacade->assembleYaml();
+            foreach ($this->publicDefinitionIds as $publicDefinitionId) {
+                $containerBuilder->getDefinition($publicDefinitionId)->setPublic(true);
+            }
             $containerBuilderFacade->build();
             $this->symfonyContainerBuilder = $containerBuilder;
         }
@@ -143,5 +148,15 @@ class Builder implements BuilderInterface
         }
 
         return $this->applicationRootDirectoryPath;
+    }
+
+    public function addPublicDefinitionId(string $definitionId): BuilderInterface
+    {
+        if (isset($this->publicDefinitionIds[$definitionId])) {
+            throw new \LogicException(sprintf('Public definition ID[%s] is already set.', $definitionId));
+        }
+        $this->publicDefinitionIds[] = $definitionId;
+
+        return $this;
     }
 }
