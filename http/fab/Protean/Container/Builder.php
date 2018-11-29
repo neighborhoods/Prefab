@@ -16,7 +16,7 @@ class Builder implements BuilderInterface
     protected $container;
     protected $applicationRootDirectoryPath;
     protected $symfonyContainerBuilder;
-    protected $publicDefinitionIds = [];
+    protected $serviceIdsRegisteredForPublicAccess = [];
 
     public function build(): ContainerInterface
     {
@@ -55,9 +55,7 @@ class Builder implements BuilderInterface
                 (new Finder())->name('*.yml')->notName('*.prefab.definition.yml')->files()->in($discoverableDirectories)
             );
             $containerBuilderFacade->assembleYaml();
-            foreach ($this->publicDefinitionIds as $publicDefinitionId) {
-                $containerBuilder->getDefinition($publicDefinitionId)->setPublic(true);
-            }
+            $this->updateServiceDefinitions($containerBuilder);
             $containerBuilderFacade->build();
             $this->symfonyContainerBuilder = $containerBuilder;
         }
@@ -150,12 +148,28 @@ class Builder implements BuilderInterface
         return $this->applicationRootDirectoryPath;
     }
 
-    public function addPublicDefinitionId(string $definitionId): BuilderInterface
+    public function registerServiceAsPublic(string $serviceId): BuilderInterface
     {
-        if (isset($this->publicDefinitionIds[$definitionId])) {
-            throw new \LogicException(sprintf('Public definition ID[%s] is already set.', $definitionId));
+        if (isset($this->serviceIdsRegisteredForPublicAccess[$serviceId])) {
+            throw new \LogicException(
+                sprintf('Service ID[%s] is already registered for public access.', $serviceId)
+            );
         }
-        $this->publicDefinitionIds[] = $definitionId;
+        $this->serviceIdsRegisteredForPublicAccess[$serviceId] = $serviceId;
+
+        return $this;
+    }
+
+    protected function getServiceIdsRegisteredForPublicAccess(): array
+    {
+        return $this->serviceIdsRegisteredForPublicAccess;
+    }
+
+    protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
+    {
+        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $publicDefinitionId) {
+            $containerBuilder->getDefinition($publicDefinitionId)->setPublic(true);
+        }
 
         return $this;
     }

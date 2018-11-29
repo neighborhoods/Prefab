@@ -9,5 +9,5 @@ interface BuilderInterface
 {
     public function build(): ContainerInterface;
 
-    public function addPublicDefinitionId(string $definitionId): BuilderInterface;
+    public function registerServiceAsPublic(string $serviceId): BuilderInterface;
 }
