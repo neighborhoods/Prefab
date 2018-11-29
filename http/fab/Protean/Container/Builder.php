@@ -167,8 +167,8 @@ class Builder implements BuilderInterface
 
     protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
     {
-        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $publicDefinitionId) {
-            $containerBuilder->getDefinition($publicDefinitionId)->setPublic(true);
+        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
+            $containerBuilder->getDefinition($serviceId)->setPublic(true);
         }
 
         return $this;
