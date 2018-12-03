@@ -88,8 +88,8 @@ class Facade implements FacadeInterface
     {
         if ($this->containerIsBuilt === false) {
             $containerBuilder = $this->getContainerBuilder();
-
-            $passes = [new AnalyzeServiceReferencesPass(), new InlineServiceDefinitionsPass()];
+            $containerBuilder->addCompilerPass(new AnalyzeServiceReferencesPass());
+            $containerBuilder->addCompilerPass(new InlineServiceDefinitionsPass());
             $containerBuilder->compile(true);
             $this->containerIsBuilt = true;
         } else {
