@@ -7,7 +7,6 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\Finder\M
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\Finder\MapInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Compiler\RepeatedPass;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
@@ -91,8 +90,6 @@ class Facade implements FacadeInterface
             $containerBuilder = $this->getContainerBuilder();
 
             $passes = [new AnalyzeServiceReferencesPass(), new InlineServiceDefinitionsPass()];
-            $repeatedPass = new RepeatedPass($passes);
-            $repeatedPass->process($containerBuilder);
             $containerBuilder->compile(true);
             $this->containerIsBuilt = true;
         } else {
