@@ -27,6 +27,11 @@ class Repository implements RepositoryInterface
         return $this;
     }
 
+    public function has(string $id) : bool
+    {
+        return isset($this->getDoctrineDBALConnectionDecoratorMap()[$id]);
+    }
+
     public function get(string $id): DecoratorInterface
     {
         if (!isset($this->getDoctrineDBALConnectionDecoratorMap()[$id])) {

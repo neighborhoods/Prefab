@@ -8,4 +8,6 @@ use Psr\Container\ContainerInterface;
 interface BuilderInterface
 {
     public function build(): ContainerInterface;
+
+    public function registerServiceAsPublic(string $serviceId): BuilderInterface;
 }

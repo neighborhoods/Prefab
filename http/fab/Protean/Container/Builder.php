@@ -16,6 +16,7 @@ class Builder implements BuilderInterface
     protected $container;
     protected $applicationRootDirectoryPath;
     protected $symfonyContainerBuilder;
+    protected $serviceIdsRegisteredForPublicAccess = [];
 
     public function build(): ContainerInterface
     {
@@ -52,7 +53,9 @@ class Builder implements BuilderInterface
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
                 (new Finder())->name('*.yml')->notName('*.prefab.definition.yml')->files()->in($discoverableDirectories)
-            );            $containerBuilderFacade->assembleYaml();
+            );
+            $containerBuilderFacade->assembleYaml();
+            $this->updateServiceDefinitions($containerBuilder);
             $containerBuilderFacade->build();
             $this->symfonyContainerBuilder = $containerBuilder;
         }
@@ -143,5 +146,31 @@ class Builder implements BuilderInterface
         }
 
         return $this->applicationRootDirectoryPath;
+    }
+
+    public function registerServiceAsPublic(string $serviceId): BuilderInterface
+    {
+        if (isset($this->serviceIdsRegisteredForPublicAccess[$serviceId])) {
+            throw new \LogicException(
+                sprintf('Service ID[%s] is already registered for public access.', $serviceId)
+            );
+        }
+        $this->serviceIdsRegisteredForPublicAccess[$serviceId] = $serviceId;
+
+        return $this;
+    }
+
+    protected function getServiceIdsRegisteredForPublicAccess(): array
+    {
+        return $this->serviceIdsRegisteredForPublicAccess;
+    }
+
+    protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
+    {
+        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
+            $containerBuilder->getDefinition($serviceId)->setPublic(true);
+        }
+
+        return $this;
     }
 }
