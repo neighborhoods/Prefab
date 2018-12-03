@@ -14,6 +14,8 @@ interface RepositoryInterface
 {
     public function create(string $id): RepositoryInterface;
 
+    public function has(string $id): bool;
+
     public function get(string $id): DecoratorInterface;
 
     public function getConnection(string $id): Connection;
