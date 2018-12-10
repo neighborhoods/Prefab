@@ -22,8 +22,6 @@ class Generator implements GeneratorInterface
     protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
     protected const METHOD_PATTERN = "->set%s(\$this->record['%s'])\n";
     protected const METHOD_PATTERN_CONDITIONAL_SETTERS = <<<EOF
-        ;
-
         if (array_key_exists('%s', \$this->record)) {
             $%s->set%s(\$this->record['%s']);
         }
@@ -85,11 +83,16 @@ EOF;
             }
         }
 
+        $methodString .= sprintf(
+            '\n        return $%s;',
+            $this->getMeta()->getDaoName()
+        );
+
         return str_replace(
             self::BUILDER_BUILD_METHOD_PLACEHOLDER,
             $methodString,
             $builtFile
-        ) . sprintf('\n        return $%s;', $this->getMeta()->getDaoName());
+        );
     }
 
     protected function getCamelCasePropertyName(string $property) : string
