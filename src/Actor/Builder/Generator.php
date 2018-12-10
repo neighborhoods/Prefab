@@ -75,7 +75,8 @@ EOF;
             if ($this->getMeta()->getShouldUseConditionalSetters()) {
                 $methodString .= sprintf(
                     self::METHOD_PATTERN_CONDITIONAL_SETTERS,
-                    $this->getVarName(),
+                    $value['database_column_name'],
+                    $this->getMeta()->getDaoName(),
                     $itemName,
                     $value['database_column_name']
                 );

@@ -289,6 +289,9 @@ class Builder implements BuilderInterface
         $nextLevelMeta->setDaoName($parentMeta->getDaoName());
         $nextLevelMeta->setHttpRoute($parentMeta->getHttpRoute());
         $nextLevelMeta->setDaoProperties($parentMeta->getDaoProperties());
+        $nextLevelMeta->setShouldUseConditionalSetters(
+            $this->getBuildConfiguration()->getShouldUseConditionalSettersInDAOBuilder()
+        );
 
         return $nextLevelMeta;
     }
