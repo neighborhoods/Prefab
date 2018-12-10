@@ -25,9 +25,16 @@ class Builder implements BuilderInterface
         $buildConfiguration->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field'])
             ->setHttpRoute($configArray['dao']['http_route'])
+            ->setShouldUseConditionalSettersInDAOBuilder(
+                $configArray['dao']['should_use_conditional_setters_in_dao_builder'] ?? false
+            )
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectDirFromYamlPath())
             ->setProjectName($this->getProjectName());
+
+        print_r($buildConfiguration);
+
+        die();
 
         foreach ($configArray['dao']['properties'] as $key => $values) {
             $buildConfiguration->appendDaoProperty($key, $values);

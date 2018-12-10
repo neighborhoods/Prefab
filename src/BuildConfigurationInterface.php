@@ -32,4 +32,10 @@ interface BuildConfigurationInterface
     public function setProjectDir(string $projectDir) : BuildConfigurationInterface;
 
     public function getProjectDir() : string;
+
+    public function getShouldUseConditionalSettersInDAOBuilder() : bool;
+
+    public function setShouldUseConditionalSettersInDAOBuilder(
+        bool $shouldUseConditionalSettersInDAOBuilder
+    ) : BuildConfigurationInterface;
 }

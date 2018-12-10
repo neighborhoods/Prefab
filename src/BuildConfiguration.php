@@ -14,6 +14,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $projectName;
     protected $httpRoute;
     protected $projectDir;
+    protected $shouldUseConditionalSettersInDAOBuilder;
 
     public function getTableName() : string
     {
@@ -129,6 +130,29 @@ class BuildConfiguration implements BuildConfigurationInterface
             throw new \LogicException('BuildConfiguration projectDir is already set.');
         }
         $this->projectDir = $projectDir;
+        return $this;
+    }
+
+    public function getShouldUseConditionalSettersInDAOBuilder() : bool
+    {
+        if ($this->shouldUseConditionalSettersInDAOBuilder === null) {
+            throw new \LogicException(
+                'BuildConfiguration shouldUseConditionalSettersInDAOBuilder has not been set.'
+            );
+        }
+        return $this->shouldUseConditionalSettersInDAOBuilder;
+    }
+
+    public function setShouldUseConditionalSettersInDAOBuilder(
+        bool $shouldUseConditionalSettersInDAOBuilder
+    ) : BuildConfigurationInterface {
+        if ($this->shouldUseConditionalSettersInDAOBuilder !== null) {
+            throw new \LogicException(
+                'BuildConfiguration shouldUseConditionalSettersInDAOBuilder is already set.'
+            );
+        }
+        $this->shouldUseConditionalSettersInDAOBuilder =
+            $shouldUseConditionalSettersInDAOBuilder;
         return $this;
     }
 }
