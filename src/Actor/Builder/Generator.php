@@ -23,6 +23,7 @@ class Generator implements GeneratorInterface
     protected const METHOD_PATTERN = "->set%s(\$this->record['%s'])\n";
     protected const METHOD_PATTERN_CONDITIONAL_SETTERS = <<<EOF
 
+
         if (array_key_exists('%s', \$this->record)) {
             $%s->set%s(\$this->record['%s']);
         }
@@ -85,7 +86,7 @@ EOF;
         }
 
         $methodString .= sprintf(
-            "\n        return \$%s",
+            "\n\n        return \$%s",
             $this->getMeta()->getDaoName()
         );
 
