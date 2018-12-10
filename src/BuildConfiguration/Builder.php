@@ -32,10 +32,6 @@ class Builder implements BuilderInterface
             ->setProjectDir($this->getProjectDirFromYamlPath())
             ->setProjectName($this->getProjectName());
 
-        print_r($buildConfiguration);
-
-        die();
-
         foreach ($configArray['dao']['properties'] as $key => $values) {
             $buildConfiguration->appendDaoProperty($key, $values);
         }
