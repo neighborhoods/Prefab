@@ -20,7 +20,7 @@ class Generator implements GeneratorInterface
     public const CLASS_NAME = 'Builder';
 
     protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
-    protected const METHOD_PATTERN = "\n        ->set%s(\$this->record['%s'])";
+    protected const METHOD_PATTERN = "\n            ->set%s(\$this->record['%s'])";
     protected const METHOD_PATTERN_CONDITIONAL_SETTERS = <<<EOF
 
 
