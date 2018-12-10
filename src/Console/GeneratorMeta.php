@@ -165,8 +165,8 @@ class GeneratorMeta implements GeneratorMetaInterface
     public function getShouldUseConditionalSetters() : bool
     {
         if ($this->shouldUseConditionalSetters === null) {
-            throw new \LogicException('GeneratorMeta shouldUseConditionalSetters has not been set.');
+            return false;
         }
-        return $this->shouldUseConditionalSetters;
+        return (bool) $this->shouldUseConditionalSetters;
     }
 }
