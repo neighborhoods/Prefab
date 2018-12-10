@@ -20,7 +20,7 @@ class Generator implements GeneratorInterface
     public const CLASS_NAME = 'Builder';
 
     protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
-    protected const METHOD_PATTERN = "->set%s(\$this->record['%s'])\n";
+    protected const METHOD_PATTERN = "\n        ->set%s(\$this->record['%s'])";
     protected const METHOD_PATTERN_CONDITIONAL_SETTERS = <<<EOF
 
 
@@ -67,14 +67,17 @@ EOF;
 
     protected function addBuilderMethod(string $builtFile) : string
     {
-        $methodString = ($this->getMeta()->getShouldUseConditionalSetters()) ?
+        $shouldUseConditionalSetters = $this->getMeta()
+            ->getShouldUseConditionalSetters();
+
+        $methodString = ($shouldUseConditionalSetters) ?
             '' :
-            sprintf("\n\n\$%s", $this->getMeta()->getDaoName());
+            sprintf("\n        \$%s", $this->getMeta()->getDaoName());
 
         foreach ($this->getMeta()->getDaoProperties() as $key => $value) {
             $itemName = $this->getCamelCasePropertyName($key);
 
-            if ($this->getMeta()->getShouldUseConditionalSetters()) {
+            if ($shouldUseConditionalSetters) {
                 $methodString .= sprintf(
                     self::METHOD_PATTERN_CONDITIONAL_SETTERS,
                     $value['database_column_name'],
@@ -85,6 +88,10 @@ EOF;
             } else {
                 $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value['database_column_name']);
             }
+        }
+
+        if (!$shouldUseConditionalSetters) {
+            $methodString .= ';';
         }
 
         $methodString .= sprintf(
