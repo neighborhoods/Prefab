@@ -14,7 +14,7 @@ class Template
         $TRUNCATEDDAONAMEPLACEHOLDER =
             $this->getDAOVARNAMEPLACEHOLDERFactory()
                 ->create();
-        return $TRUNCATEDDAONAMEPLACEHOLDERBUILDERBUILDMETHODPLACEHOLDER;
+        BUILDERBUILDMETHODPLACEHOLDER;
     }
 
     protected function getRecord() : array
