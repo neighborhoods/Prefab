@@ -54,10 +54,22 @@ class Visitor implements VisitorInterface
                 $where = $this->getQueryBuilder()->expr()->notLike($field, $parameterPlaceholders[0]);
                 break;
             case 'st_contains':
-                $where = sprintf("ST_Contains('%s', %s)", $parameterPlaceholders[0], $field);
+                $where = sprintf("ST_Contains(%s, st_geomfromtext(%s))", $field, $parameterPlaceholders[0]);
                 break;
             case 'st_dwithin':
                 $where = sprintf('ST_DWithin(%s, %s, %s)', $field, $parameterPlaceholders['center'], $parameterPlaceholders['radius']);
+                break;
+            case 'st_within':
+                $where = sprintf("ST_Within(%s, st_buffer(st_geomfromtext(%s), %s))", $field, $parameterPlaceholders['center'], $parameterPlaceholders['radius']);
+                break;
+            case 'contains':
+                $where = sprintf("%s @> ARRAY[%s]", $field,  implode(',',$parameterPlaceholders));
+                break;
+            case 'jsonb_key_exist':
+                $where = sprintf("jsonb_exists(%s,%s)", $field,  $parameterPlaceholders[0]);
+                break;
+            case 'overlaps':
+                $where = sprintf("%s && ARRAY[%s]", $field, implode(',', $parameterPlaceholders));
                 break;
             default:
                 throw new \LogicException('Unknown filter condition.');
