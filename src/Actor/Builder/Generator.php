@@ -67,7 +67,9 @@ EOF;
 
     protected function addBuilderMethod(string $builtFile) : string
     {
-        $methodString = '';
+        $methodString = ($this->getMeta()->getShouldUseConditionalSetters()) ?
+            '' :
+            sprintf("\n\n\$%s", $this->getMeta()->getDaoName());
 
         foreach ($this->getMeta()->getDaoProperties() as $key => $value) {
             $itemName = $this->getCamelCasePropertyName($key);
