@@ -36,4 +36,8 @@ interface GeneratorMetaInterface
     public function getHttpRoute() : string;
 
     public function setHttpRoute(string $httpRoute) : GeneratorMetaInterface;
+
+    public function setShouldUseConditionalSetters(bool $shouldUseConditionalSetters): GeneratorMetaInterface;
+
+    public function getShouldUseConditionalSetters(): bool;
 }

@@ -5,7 +5,7 @@ namespace Neighborhoods\Prefab\Console;
 
 class GeneratorMeta implements GeneratorMetaInterface
 {
-    
+
     protected $actorNamespace;
     protected $actorFilePath;
     protected $daoName;
@@ -14,7 +14,8 @@ class GeneratorMeta implements GeneratorMetaInterface
     protected $daoString;
     protected $daoIdentityField;
     protected $httpRoute;
-    
+    protected $shouldUseConditionalSetters;
+
     public function getDaoProperties() : array
     {
         if ($this->daoProperties === null) {
@@ -150,5 +151,22 @@ class GeneratorMeta implements GeneratorMetaInterface
         $this->httpRoute = $httpRoute;
         return $this;
     }
-    
+
+    public function setShouldUseConditionalSetters(
+        bool $shouldUseConditionalSetters
+    ) : GeneratorMetaInterface {
+        if ($this->shouldUseConditionalSetters !== null) {
+            throw new \LogicException('GeneratorMeta shouldUseConditionalSetters is already set.');
+        }
+        $this->shouldUseConditionalSetters = $shouldUseConditionalSetters;
+        return $this;
+    }
+
+    public function getShouldUseConditionalSetters() : bool
+    {
+        if ($this->shouldUseConditionalSetters === null) {
+            throw new \LogicException('GeneratorMeta shouldUseConditionalSetters has not been set.');
+        }
+        return $this->shouldUseConditionalSetters;
+    }
 }

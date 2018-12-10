@@ -77,6 +77,9 @@ class Builder implements BuilderInterface
         $daoMeta->setActorFilePath($actorFilePath);
         $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
         $daoMeta->setHttpRoute($this->getBuildConfiguration()->getHttpRoute());
+        $daoMeta->setShouldUseConditionalSetters(
+            $this->getBuildConfiguration()->getShouldUseConditionalSettersInDAOBuilder()
+        );
 
         $this->addDaoInterfaceToPlan($daoMeta);
         $this->addDaoToPlan($daoMeta);

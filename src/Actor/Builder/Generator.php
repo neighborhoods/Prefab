@@ -21,6 +21,13 @@ class Generator implements GeneratorInterface
 
     protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
     protected const METHOD_PATTERN = "->set%s(\$this->record['%s'])\n";
+    protected const METHOD_PATTERN_CONDITIONAL_SETTERS = <<<EOF
+;
+
+if (array_key_exists('%s', \$this->record)) {
+    $%s->set%s(\$this->record['%s']);
+}
+EOF;
     protected $generator;
     protected $varName;
     protected $projectName;
@@ -65,7 +72,16 @@ class Generator implements GeneratorInterface
         foreach ($this->getMeta()->getDaoProperties() as $key => $value) {
             $itemName = $this->getCamelCasePropertyName($key);
 
-            $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value['database_column_name']);
+            if ($this->getMeta()->getShouldUseConditionalSetters()) {
+                $methodString .= sprintf(
+                    self::METHOD_PATTERN_CONDITIONAL_SETTERS,
+                    $this->getVarName(),
+                    $itemName,
+                    $value['database_column_name']
+                );
+            } else {
+                $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value['database_column_name']);
+            }
         }
 
         return str_replace(self::BUILDER_BUILD_METHOD_PLACEHOLDER, $methodString, $builtFile);
