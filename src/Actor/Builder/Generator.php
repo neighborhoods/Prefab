@@ -21,13 +21,17 @@ class Generator implements GeneratorInterface
 
     protected const BUILDER_BUILD_METHOD_PLACEHOLDER = 'BUILDERBUILDMETHODPLACEHOLDER';
     protected const METHOD_PATTERN = "\n            ->set%s(\$this->record['%s'])";
-    protected const METHOD_PATTERN_CONDITIONAL_SETTERS = <<<EOF
+    protected const METHOD_PATTERN_CONDITIONAL_SETTER = <<<EOF
 
 
         if (array_key_exists('%s', \$this->record)) {
             $%s->set%s(\$this->record['%s']);
         }
 EOF;
+    protected const METHOD_PATTERN_UNCHAINED_SETTER = <<<EOF
+        $%s->set%s(\$this->record['%s']);
+EOF;
+
     protected $generator;
     protected $varName;
     protected $projectName;
@@ -78,15 +82,9 @@ EOF;
             $itemName = $this->getCamelCasePropertyName($key);
 
             if ($shouldUseConditionalSetters) {
-                $methodString .= sprintf(
-                    self::METHOD_PATTERN_CONDITIONAL_SETTERS,
-                    $value['database_column_name'],
-                    $this->getMeta()->getDaoName(),
-                    $itemName,
-                    $value['database_column_name']
-                );
+                $methodString .= $this->buildConditionalSetter($itemName, $value);
             } else {
-                $methodString .= sprintf(self::METHOD_PATTERN, $itemName, $value['database_column_name']);
+                $methodString .= $this->buildSetter($itemName, $value);
             }
         }
 
@@ -103,6 +101,46 @@ EOF;
             self::BUILDER_BUILD_METHOD_PLACEHOLDER,
             $methodString,
             $builtFile
+        );
+    }
+
+    protected function buildSetter(string $itemName, array $value) : string
+    {
+        return sprintf(
+            self::METHOD_PATTERN,
+            $itemName,
+            $value['database_column_name']
+        );
+    }
+
+    protected function buildConditionalSetter(
+        string $itemName,
+        array $value
+    ) : string {
+        $propertyIsNullable = strpos($value['php_type'], '?') === 0;
+
+        if ($propertyIsNullable) {
+            return $this->buildUnchainedSetter($itemName, $value);
+        }
+
+        return sprintf(
+            self::METHOD_PATTERN_CONDITIONAL_SETTER,
+            $value['database_column_name'],
+            $this->getMeta()->getDaoName(),
+            $itemName,
+            $value['database_column_name']
+        );
+    }
+
+    protected function buildUnchainedSetter(
+        string $itemName,
+        array $value
+    ) : string {
+        return sprintf(
+            self::METHOD_PATTERN_UNCHAINED_SETTER,
+            $itemName,
+            $this->getMeta()->getDaoName(),
+            $value['database_column_name']
         );
     }
 
