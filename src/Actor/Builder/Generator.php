@@ -29,7 +29,7 @@ class Generator implements GeneratorInterface
         }
 EOF;
     protected const METHOD_PATTERN_UNCHAINED_SETTER_DEFAULT_NULL = <<<EOF
-    
+
 
         $%s->set%s(\$this->record['%s'] ?? null);
 EOF;
