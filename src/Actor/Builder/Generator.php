@@ -28,8 +28,8 @@ class Generator implements GeneratorInterface
             $%s->set%s(\$this->record['%s']);
         }
 EOF;
-    protected const METHOD_PATTERN_UNCHAINED_SETTER = <<<EOF
-        $%s->set%s(\$this->record['%s']);
+    protected const METHOD_PATTERN_UNCHAINED_SETTER_DEFAULT_NULL = <<<EOF
+        $%s->set%s(\$this->record['%s'] ?? null);
 EOF;
 
     protected $generator;
@@ -137,7 +137,7 @@ EOF;
         array $value
     ) : string {
         return sprintf(
-            self::METHOD_PATTERN_UNCHAINED_SETTER,
+            self::METHOD_PATTERN_UNCHAINED_SETTER_DEFAULT_NULL,
             $itemName,
             $this->getMeta()->getDaoName(),
             $value['database_column_name']
