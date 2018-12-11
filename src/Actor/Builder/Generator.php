@@ -29,6 +29,8 @@ class Generator implements GeneratorInterface
         }
 EOF;
     protected const METHOD_PATTERN_UNCHAINED_SETTER_DEFAULT_NULL = <<<EOF
+    
+
         $%s->set%s(\$this->record['%s'] ?? null);
 EOF;
 
@@ -138,8 +140,8 @@ EOF;
     ) : string {
         return sprintf(
             self::METHOD_PATTERN_UNCHAINED_SETTER_DEFAULT_NULL,
-            $itemName,
             $this->getMeta()->getDaoName(),
+            $itemName,
             $value['database_column_name']
         );
     }
