@@ -21,6 +21,7 @@ use Neighborhoods\Prefab\Actor\MapBuilder;
 use Neighborhoods\Prefab\Actor\MapBuilderInterface;
 use Neighborhoods\Prefab\Actor\Map;
 use Neighborhoods\Prefab\Actor\MapInterface;
+use Neighborhoods\Prefab\Actor\MapFactory;
 use Neighborhoods\Prefab\Actor\Repository;
 use Neighborhoods\Prefab\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\Console\GeneratorMeta;
@@ -37,6 +38,7 @@ class Builder implements BuilderInterface
     use Handler\Generator\Factory\AwareTrait;
     use HandlerInterface\Generator\Factory\AwareTrait;
     use Map\Generator\Factory\AwareTrait;
+    use MapFactory\Generator\Factory\AwareTrait;
     use MapBuilder\Generator\Factory\AwareTrait;
     use MapBuilderInterface\Generator\Factory\AwareTrait;
     use MapInterface\Generator\Factory\AwareTrait;
@@ -232,8 +234,22 @@ class Builder implements BuilderInterface
         $this->addAwareTraitToPlan($nextLevelMeta);
         $this->addMapBuilderToPlan($nextLevelMeta);
         $this->addMapBuilderInterfaceToPlan($nextLevelMeta);
-        $this->addFactoryToPlan($nextLevelMeta);
+        $this->addMapFactoryToPlan($nextLevelMeta);
         $this->addRepositoryToPlan($nextLevelMeta);
+
+        return $this;
+    }
+
+    protected function addMapFactoryToPlan(GeneratorMetaInterface $mapFactoryMeta) : BuilderInterface
+    {
+        $mapFactoryGenerator = $this->getActorMapFactoryGeneratorFactory()->create();
+        $mapFactoryGenerator->setMeta($mapFactoryMeta);
+        $this->appendGeneratorToBuildPlan($mapFactoryGenerator);
+        $this->addFactoryInterfaceToPlan($mapFactoryMeta);
+
+        $nextLevelMeta = $this->getNextLevelMeta($mapFactoryGenerator);
+
+        $this->addAwareTraitToPlan($nextLevelMeta);
 
         return $this;
     }
