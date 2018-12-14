@@ -9,9 +9,12 @@ class ExceptionHandler implements ExceptionHandlerInterface
 {
     public function __invoke(\Throwable $throwable): ExceptionHandlerInterface
     {
-        (new NewRelic())->noticeThrowable($throwable);
-
-        file_put_contents('php://stderr', $throwable->getMessage() . PHP_EOL);
+        $newRelic = new NewRelic();
+        if ($newRelic->isExtensionLoaded()) {
+            $newRelic->noticeThrowable($throwable);
+        } else {
+            fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+        }
 
         return $this;
     }
