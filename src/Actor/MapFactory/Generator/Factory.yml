@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\Actor\MapFactory\Generator\FactoryInterface:
+    class: Neighborhoods\Prefab\Actor\MapFactory\Generator\Factory
+    calls:
+    - [setActorMapFactoryGenerator, ['@Neighborhoods\Prefab\Actor\MapFactory\GeneratorInterface']]
