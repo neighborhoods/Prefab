@@ -9,21 +9,12 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Visitor;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrderInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\VisitorInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
 
 class SearchCriteria implements SearchCriteriaInterface
 {
-    use Filter\Map\Factory\AwareTrait;
-    use SortOrder\Map\Factory\AwareTrait;
-    use Visitor\Map\Factory\AwareTrait;
-    use QueryBuilder\Visitor\Factory\AwareTrait;
-
-    /** @var Filter\MapInterface */
-    protected $filters;
-    /** @var SortOrder\MapInterface */
-    protected $sortOrders;
-    /** @var Visitor\MapInterface */
-    protected $visitors;
+    use Filter\Map\AwareTrait;
+    use SortOrder\Map\AwareTrait;
+    use Visitor\Map\AwareTrait;
     /** @var int */
     protected $pageSize;
     /** @var int */
@@ -36,64 +27,48 @@ class SearchCriteria implements SearchCriteriaInterface
 
     public function addFilter(FilterInterface $filter): SearchCriteriaInterface
     {
-        foreach ($this->getVisitors() as $visitor) {
+        foreach ($this->getSearchCriteriaVisitorMap() as $visitor) {
             $visitor->addFilter($filter);
         }
-        $this->getFilters()[] = $filter;
+        $this->getSearchCriteriaFilterMap()[] = $filter;
 
         return $this;
     }
 
     public function getFilters(): Filter\MapInterface
     {
-        if ($this->filters === null) {
-            $this->filters = $this->getSearchCriteriaFilterMapFactory()->create();
-        }
-        return $this->filters;
+        return $this->getSearchCriteriaFilterMap();
     }
 
     public function getSortOrders(): SortOrder\MapInterface
     {
-        if ($this->sortOrders === null) {
-            $this->sortOrders = $this->getSearchCriteriaSortOrderMapFactory()->create();
-        }
-        return $this->sortOrders;
+        return $this->getSearchCriteriaSortOrderMap();
     }
 
     public function addSortOrder(SortOrderInterface $sortOrder): SearchCriteriaInterface
     {
-        foreach ($this->getVisitors() as $visitor) {
+        foreach ($this->getSearchCriteriaVisitorMap() as $visitor) {
             $visitor->addSortOrder($sortOrder);
         }
-        $this->getSortOrders()[] = $sortOrder;
+        $this->getSearchCriteriaSortOrderMap()[] = $sortOrder;
 
         return $this;
     }
 
-    protected function getVisitors() : Visitor\MapInterface
-    {
-        if ($this->visitors === null) {
-            $this->visitors = $this->getSearchCriteriaVisitorMapFactory()->create();
-            $doctrineQueryBuilderVisitor = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory()->create();
-            $this->addVisitor($doctrineQueryBuilderVisitor);
-        }
-        return $this->visitors;
-    }
-
     public function addVisitor(VisitorInterface $visitor): SearchCriteriaInterface
     {
-        $this->getVisitors()[get_class($visitor) . 'Interface'] = $visitor;
+        $this->getSearchCriteriaVisitorMap()[get_class($visitor) . 'Interface'] = $visitor;
 
         return $this;
     }
 
     public function getVisitor(string $identity): VisitorInterface
     {
-        if (!isset($this->getVisitors()[$identity])) {
+        if (!isset($this->getSearchCriteriaVisitorMap()[$identity])) {
             throw new \LogicException("Visitor with identity[$identity] is not set.");
         }
 
-        return $this->getVisitors()[$identity];
+        return $this->getSearchCriteriaVisitorMap()[$identity];
     }
 
     public function getPageSize(): int
@@ -107,11 +82,11 @@ class SearchCriteria implements SearchCriteriaInterface
 
     public function setPageSize(int $pageSize): SearchCriteriaInterface
     {
+        foreach ($this->getSearchCriteriaVisitorMap() as $visitor) {
+            $visitor->setPageSize($pageSize);
+        }
         if ($this->pageSize !== null) {
             throw new \LogicException('SearchCriteria pageSize is already set.');
-        }
-        foreach ($this->getVisitors() as $visitor) {
-            $visitor->setPageSize($pageSize);
         }
         $this->pageSize = $pageSize;
 
@@ -129,11 +104,11 @@ class SearchCriteria implements SearchCriteriaInterface
 
     public function setCurrentPage(int $currentPage): SearchCriteriaInterface
     {
+        foreach ($this->getSearchCriteriaVisitorMap() as $visitor) {
+            $visitor->setCurrentPage($currentPage);
+        }
         if ($this->currentPage !== null) {
             throw new \LogicException('SearchCriteria currentPage is already set.');
-        }
-        foreach ($this->getVisitors() as $visitor) {
-            $visitor->setCurrentPage($currentPage);
         }
         $this->currentPage = $currentPage;
 

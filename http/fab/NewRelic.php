@@ -5,9 +5,25 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct;
 
 class NewRelic implements NewRelicInterface
 {
+    const EXTENSION_NAME_NEWRELIC = 'newrelic';
+    protected $is_extension_loaded;
+
+    public function isExtensionLoaded(): bool
+    {
+        if ($this->is_extension_loaded === null) {
+            $isExtensionLoaded = false;
+            if (extension_loaded(self::EXTENSION_NAME_NEWRELIC)) {
+                $isExtensionLoaded = true;
+            }
+            $this->is_extension_loaded = $isExtensionLoaded;
+        }
+
+        return $this->is_extension_loaded;
+    }
+
     public function addCustomParameter(string $key, $value): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Attaches a custom attribute (key/value pair) to the current transaction. */
             newrelic_add_custom_parameter($key, $value);
         }
@@ -17,7 +33,7 @@ class NewRelic implements NewRelicInterface
 
     public function addCustomTracer(string $function_name): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Specify functions or methods for the agent to instrument with custom instrumentation. */
             newrelic_add_custom_tracer($function_name);
         }
@@ -27,7 +43,7 @@ class NewRelic implements NewRelicInterface
 
     public function backgroundJob(bool $flag): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Manually specify that a transaction is a background job or a web transaction. */
             newrelic_background_job($flag);
         }
@@ -37,7 +53,7 @@ class NewRelic implements NewRelicInterface
 
     public function captureParams(bool $enable_flag): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Enable or disable the capture of URL parameters. */
             newrelic_capture_params($enable_flag);
         }
@@ -47,7 +63,7 @@ class NewRelic implements NewRelicInterface
 
     public function customMetric(string $metric_name, float $value): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Add a custom metric (in milliseconds) to time a component of your app not captured by default. */
             newrelic_custom_metric($metric_name, $value);
         }
@@ -57,7 +73,7 @@ class NewRelic implements NewRelicInterface
 
     public function disableAutorum(): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Disable automatic injection of the New Relic Browser snippet on particular pages. */
             newrelic_disable_autorum();
         }
@@ -67,7 +83,7 @@ class NewRelic implements NewRelicInterface
 
     public function endOfTransaction(): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Stop timing the current transaction, but continue instrumenting it. */
             newrelic_end_of_transaction();
         }
@@ -77,7 +93,7 @@ class NewRelic implements NewRelicInterface
 
     public function endTransaction(bool $ignore): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Stop instrumenting the current transaction immediately. */
             newrelic_end_transaction($ignore);
         }
@@ -87,7 +103,7 @@ class NewRelic implements NewRelicInterface
 
     public function nameTransaction(string $name): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             /** Set custom name for current transaction. */
             newrelic_name_transaction($name);
         }
@@ -97,7 +113,7 @@ class NewRelic implements NewRelicInterface
 
     public function noticeMessage(string $message): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             newrelic_notice_error($message);
         }
 
@@ -110,7 +126,7 @@ class NewRelic implements NewRelicInterface
         string $error_file,
         int $error_line
     ): NewRelicInterface {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             newrelic_notice_error($error_number, $error_string, $error_file, $error_line);
         }
 
@@ -119,7 +135,7 @@ class NewRelic implements NewRelicInterface
 
     public function noticeThrowable(\Throwable $throwable): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             newrelic_notice_error($throwable);
         }
 
@@ -128,7 +144,7 @@ class NewRelic implements NewRelicInterface
 
     public function recordCustomEvent(string $name, array $attributes): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             newrelic_record_custom_event($name, $attributes);
         }
 
@@ -137,7 +153,7 @@ class NewRelic implements NewRelicInterface
 
     public function setAppname(string $name): NewRelicInterface
     {
-        if (extension_loaded('newrelic')) {
+        if ($this->isExtensionLoaded()) {
             newrelic_set_appname($name);
         }
 

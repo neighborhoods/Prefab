@@ -37,4 +37,6 @@ interface NewRelicInterface
         string $error_file,
         int $error_line
     ): NewRelicInterface;
+
+    public function isExtensionLoaded(): bool;
 }
