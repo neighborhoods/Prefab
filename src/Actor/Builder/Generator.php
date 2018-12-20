@@ -77,7 +77,7 @@ class Generator implements GeneratorInterface
         $keyArray = explode('_', $property);
 
         foreach ($keyArray as $keyPart) {
-            $itemName .= ucfirst(strtolower($keyPart));
+            $itemName .= ucfirst($keyPart);
         }
         return $itemName;
     }
