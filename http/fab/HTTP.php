@@ -12,6 +12,7 @@ class HTTP implements HTTPInterface
 
     public function respond(): HTTPInterface
     {
+        $this->getProteanContainerBuilder()->setCachedContainerFileName('HTTP.php');
         $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
         $application->run();
 

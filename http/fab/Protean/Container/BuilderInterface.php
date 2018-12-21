@@ -10,4 +10,6 @@ interface BuilderInterface
     public function build(): ContainerInterface;
 
     public function registerServiceAsPublic(string $serviceId): BuilderInterface;
+
+    public function setCachedContainerFileName(string $cached_container_file_name): BuilderInterface;
 }
