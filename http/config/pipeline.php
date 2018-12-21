@@ -72,5 +72,4 @@ return function (Definition $applicationServiceDefinition): void {
     // NotFoundHandler kicks in; alternately, you can provide other fallback
     // middleware to execute.
     $applicationServiceDefinition->addMethodCall('pipe', [ProblemDetailsNotFoundHandler::class]);
-    $applicationServiceDefinition->addMethodCall('pipe', [NotFoundHandler::class]);
 };

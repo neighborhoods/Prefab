@@ -12,6 +12,8 @@ class HTTP implements HTTPInterface
 
     public function respond(): HTTPInterface
     {
+        $this->getProteanContainerBuilder()->setCanBuildZendExpressive(true);
+        $this->getProteanContainerBuilder()->setCanCacheContainer(true);
         $this->getProteanContainerBuilder()->setCachedContainerFileName('HTTP.php');
         $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
         $application->run();
