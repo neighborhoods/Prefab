@@ -44,7 +44,7 @@ EOF;
 EOF;
 
     protected const HAS_METHOD_PATTERN = <<<EOF
-    public function hasCAMELCASEPROPERTYNAMEPLACEHOLDER() : bool 
+    public function hasCAMELCASEPROPERTYNAMEPLACEHOLDER() : bool
     {
         return \$this->PROPERTYNAMEPLACEHOLDER !== null;
     }
