@@ -41,9 +41,7 @@ class Builder implements BuilderInterface
                 if ($this->getCanBuildZendExpressive()) {
                     $this->buildZendExpressive();
                 }
-                if ($this->getCanCacheContainer()) {
-                    $this->cacheSymfonyContainerBuilder();
-                }
+                $this->cacheSymfonyContainerBuilder();
                 $containerBuilder = $this->getSymfonyContainerBuilder();
             }
             $this->container = $containerBuilder;
@@ -99,26 +97,6 @@ class Builder implements BuilderInterface
     {
         $containerBuilder = $this->getSymfonyContainerBuilder();
         file_put_contents($this->getSymfonyContainerFilePath(), (new PhpDumper($containerBuilder))->dump());
-
-        return $this;
-    }
-
-    protected function getCanCacheContainer(): bool
-    {
-        if ($this->can_cache_container === null) {
-            throw new \LogicException('Builder can_cache_container has not been set.');
-        }
-
-        return $this->can_cache_container;
-    }
-
-    public function setCanCacheContainer(bool $can_cache_container): BuilderInterface
-    {
-        if ($this->can_cache_container !== null) {
-            throw new \LogicException('Builder can_cache_container is already set.');
-        }
-
-        $this->can_cache_container = $can_cache_container;
 
         return $this;
     }
