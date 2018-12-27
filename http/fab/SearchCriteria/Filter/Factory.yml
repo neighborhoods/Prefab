@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\Factory
-    calls:
-    - [setSearchCriteriaFilter, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\FilterInterface']]

@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\Factory
-    calls:
-    - [setOpcacheDNS, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNSInterface']]

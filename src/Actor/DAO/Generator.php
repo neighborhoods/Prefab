@@ -151,7 +151,10 @@ EOF;
         ];
 
         $preparedYaml = Yaml::dump($yaml, 4, 2);
-        file_put_contents($this->getMeta()->getActorFilePath() . '/' . $this->getActorName() . '.yml', $preparedYaml);
+        file_put_contents(
+            $this->getMeta()->getActorFilePath() . '/' . $this->getActorName() . '.service.yml',
+            $preparedYaml
+        );
 
         return $this;
     }

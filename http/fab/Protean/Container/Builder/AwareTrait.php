@@ -5,7 +5,6 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Protean\Container\Bu
 
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Protean\Container\BuilderInterface;
 
-/** @codeCoverageIgnore */
 trait AwareTrait
 {
     protected $NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder;
