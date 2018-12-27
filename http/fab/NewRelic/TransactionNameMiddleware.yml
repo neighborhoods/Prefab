@@ -1,6 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddlewareInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddleware
-    arguments: [Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddleware\Factory, '@service_container', Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelic\TransactionNameMiddlewareInterface]
-    factory: [JSoumelidis\SymfonyDI\Config\CallbackFactory, createFactoryCallback]
-    public: true

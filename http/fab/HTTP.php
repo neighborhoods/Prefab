@@ -13,7 +13,7 @@ class HTTP implements HTTPInterface
     public function respond(): HTTPInterface
     {
         $this->getProteanContainerBuilder()->setCanBuildZendExpressive(true);
-        $this->getProteanContainerBuilder()->setCachedContainerFileName('HTTP.php');
+        $this->getProteanContainerBuilder()->setContainerName('HTTP');
         $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
         $application->run();
 

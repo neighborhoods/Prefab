@@ -39,8 +39,9 @@ class Builder implements BuilderInterface
             $discoverableDirectories[] = $this->getSourceDirectoryPath();
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
-                (new Finder())->name('*.yml')->files()->in($discoverableDirectories)
-            );            $containerBuilderFacade->assembleYaml();
+                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectories)
+            );
+            $containerBuilderFacade->assembleYaml();
             $containerBuilderFacade->build();
             $this->symfonyContainerBuilder = $containerBuilder;
         }

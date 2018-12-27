@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\Actor\DAO\Generator\FactoryInterface:
-    class: Neighborhoods\Prefab\Actor\DAO\Generator\Factory
-    calls:
-    - [setActorDAOGenerator, ['@Neighborhoods\Prefab\Actor\DAO\GeneratorInterface']]

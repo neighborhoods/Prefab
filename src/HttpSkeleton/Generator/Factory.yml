@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\HttpSkeleton\Generator\FactoryInterface:
-    class: Neighborhoods\Prefab\HttpSkeleton\Generator\Factory
-    calls:
-    - [setHttpSkeletonGenerator, ['@Neighborhoods\Prefab\HttpSkeleton\GeneratorInterface']]

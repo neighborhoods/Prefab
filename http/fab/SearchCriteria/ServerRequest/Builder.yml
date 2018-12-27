@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\BuilderInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\Builder
-    calls:
-    - [setSearchCriteriaFilterFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter\FactoryInterface']]
-    - [setSearchCriteriaSortOrderFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder\FactoryInterface']]
-    - [setSearchCriteriaFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\FactoryInterface']]

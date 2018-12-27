@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\ProblemDetails\ProblemDetailsMiddleware\NewRelic\ListenerInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\ProblemDetails\ProblemDetailsMiddleware\NewRelic\Listener
-    calls:
-    - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelicInterface']]

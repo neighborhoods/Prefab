@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNSInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS
-    calls:
-    - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\NewRelicInterface']]
-    - [setOpcacheDNSErrorHandler, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\ErrorHandlerInterface']]
-    shared: false

@@ -51,7 +51,7 @@ class Generator implements GeneratorInterface
             ->saveClass();
 
         $this->generateService();
-        
+
         return $this;
     }
 
@@ -79,7 +79,10 @@ class Generator implements GeneratorInterface
         ];
 
         $preparedYaml = Yaml::dump($yaml, 4, 2);
-        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
+        file_put_contents(
+            $this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.service.yml',
+            $preparedYaml
+        );
 
         return $this;
     }

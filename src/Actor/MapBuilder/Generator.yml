@@ -1,8 +1,0 @@
-services:
-  Neighborhoods\Prefab\Actor\MapBuilder\GeneratorInterface:
-    class: Neighborhoods\Prefab\Actor\MapBuilder\Generator
-    public: false
-    shared: false
-    calls:
-    - [setClassSaverFactory, ['@Neighborhoods\Prefab\ClassSaver\FactoryInterface']]
-    - [setStringReplacerFactory, ['@Neighborhoods\Prefab\StringReplacer\FactoryInterface']]

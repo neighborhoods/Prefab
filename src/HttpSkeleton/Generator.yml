@@ -1,6 +1,0 @@
-services:
-  Neighborhoods\Prefab\HttpSkeleton\GeneratorInterface:
-    class: Neighborhoods\Prefab\HttpSkeleton\Generator
-    calls:
-      - [setFileSystem, ['@Symfony\Component\Filesystem\FilesystemInterface']]
-      - [setFinder, ['@Symfony\Component\Finder\FinderInterface']]

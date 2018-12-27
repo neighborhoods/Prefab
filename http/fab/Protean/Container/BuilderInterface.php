@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Protean\Container;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Protean\Container\Builder\FilesystemProperties;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Protean\Container\Builder\FilesystemPropertiesInterface;
 use Psr\Container\ContainerInterface;
 
 interface BuilderInterface
@@ -11,7 +13,11 @@ interface BuilderInterface
 
     public function registerServiceAsPublic(string $serviceId): BuilderInterface;
 
-    public function setCanBuildZendExpressive(bool $can_build_zend_expressive): BuilderInterface;
+    public function setCanBuildZendExpressive(bool $canBuildZendExpressive): BuilderInterface;
 
-    public function setCachedContainerFileName(string $cached_container_file_name): BuilderInterface;
+    public function setContainerName(string $containerName): BuilderInterface;
+
+    public function getContainerName(): string;
+
+    public function getFilesystemProperties(): FilesystemPropertiesInterface;
 }

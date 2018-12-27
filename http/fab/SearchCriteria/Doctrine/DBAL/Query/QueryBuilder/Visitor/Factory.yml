@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Visitor\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Visitor\Factory
-    calls:
-    - [setSearchCriteriaDoctrineDBALQueryQueryBuilderVisitor, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\VisitorInterface']]

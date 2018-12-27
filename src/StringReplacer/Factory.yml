@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\StringReplacer\FactoryInterface:
-    class: Neighborhoods\Prefab\StringReplacer\Factory
-    calls:
-    - [setStringReplacer, ['@Neighborhoods\Prefab\StringReplacerInterface']]

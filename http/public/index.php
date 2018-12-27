@@ -11,7 +11,8 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\Dependen
 
 set_exception_handler(new ExceptionHandler());
 set_error_handler(new ErrorHandler());
-$proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
+$proteanContainerBuilder = new Builder();
+$proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(realpath(__DIR__ . '/../'));
 $HTTP = (new HTTP())->setProteanContainerBuilder($proteanContainerBuilder);
 $HTTP->respond();
 
