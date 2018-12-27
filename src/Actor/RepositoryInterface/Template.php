@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Actor\RepositoryInterface;
 
-use Neighborhoods\PROJECTNAMEPLACEHOLDER\SearchCriteriaInterface;
+use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab4\SearchCriteriaInterface;
 
 interface Template
 {

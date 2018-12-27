@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\ProblemDetails\ProblemDetailsMiddleware\DecoratorInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\ProblemDetails\ProblemDetailsMiddleware\Decorator
-    decorates: Zend\ProblemDetails\ProblemDetailsMiddleware
-    calls:
-    - [setZendProblemDetailsProblemDetailsMiddleware, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\ProblemDetails\ProblemDetailsMiddleware\DecoratorInterface.inner']]
-    - [attachListener, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Zend\ProblemDetails\ProblemDetailsMiddleware\NewRelic\ListenerInterface']]

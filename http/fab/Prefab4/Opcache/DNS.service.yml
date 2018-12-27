@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNSInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS
+    calls:
+    - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelicInterface']]
+    - [setOpcacheDNSErrorHandler, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\ErrorHandlerInterface']]
+    shared: false
