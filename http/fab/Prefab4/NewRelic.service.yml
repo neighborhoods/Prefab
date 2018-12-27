@@ -1,0 +1,4 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelicInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic
+    shared: false

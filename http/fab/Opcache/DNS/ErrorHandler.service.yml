@@ -1,4 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\ErrorHandlerInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache\DNS\ErrorHandler
-    shared: false

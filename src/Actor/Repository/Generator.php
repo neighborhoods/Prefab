@@ -34,10 +34,10 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setImplementedInterfaces([$this->getMeta()->getActorNamespace() . '\RepositoryInterface']);
         $this->getGenerator()->setName(self::CLASS_NAME);
 
-        $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait');
+        $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\Prefab4\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait');
         $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Builder\Factory\AwareTrait');
         $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\Factory\AwareTrait');
-        $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait');
+        $this->getGenerator()->addTrait('\Neighborhoods\\' . $this->getProjectName() . '\Prefab4\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait');
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
@@ -71,8 +71,8 @@ class Generator implements GeneratorInterface
                     'calls' => [
                         ["set{$methodName}Factory", ["@{$this->getMeta()->getActorNamespace()}\FactoryInterface" ]],
                         ["set{$methodName}BuilderFactory", ["@{$this->getMeta()->getActorNamespace()}\Builder\FactoryInterface" ]],
-                        ['setDoctrineDBALConnectionDecoratorRepository', ["@Neighborhoods\\". $this->getProjectName() . '\Doctrine\DBAL\Connection\Decorator\RepositoryInterface' ]],
-                        ['setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface' ]],
+                        ['setDoctrineDBALConnectionDecoratorRepository', ["@Neighborhoods\\". $this->getProjectName() . '\Prefab4\Doctrine\DBAL\Connection\Decorator\RepositoryInterface' ]],
+                        ['setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\Prefab4\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface' ]],
                     ]
                 ]
             ]

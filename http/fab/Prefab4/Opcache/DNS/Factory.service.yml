@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\Factory
+    calls:
+    - [setOpcacheDNS, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNSInterface']]

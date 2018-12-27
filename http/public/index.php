@@ -4,10 +4,10 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\HTTP;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Protean\Container\Builder;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\DependencyInjection\ErrorHandler;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Symfony\Component\DependencyInjection\ExceptionHandler;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\HTTP;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container\Builder;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Symfony\Component\DependencyInjection\ErrorHandler;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Symfony\Component\DependencyInjection\ExceptionHandler;
 
 set_exception_handler(new ExceptionHandler());
 set_error_handler(new ErrorHandler());
