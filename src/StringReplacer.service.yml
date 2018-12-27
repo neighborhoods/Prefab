@@ -1,0 +1,4 @@
+services:
+  Neighborhoods\Prefab\StringReplacerInterface:
+    class: Neighborhoods\Prefab\StringReplacer
+    shared: false

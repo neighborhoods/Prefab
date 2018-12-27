@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\Builder\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\Builder\Factory
+    calls:
+    - [setSearchCriteriaServerRequestBuilder, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\ServerRequest\BuilderInterface']]
