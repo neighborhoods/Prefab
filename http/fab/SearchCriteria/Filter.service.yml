@@ -1,0 +1,4 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\FilterInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Filter
+    shared: false

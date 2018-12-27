@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\Prefab\Actor\MapInterface\TemplateInterface:
+    class: Neighborhoods\Prefab\Actor\MapInterface\Template

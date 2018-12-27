@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\MapInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Redis\Map
+    public: false
+    shared: false
