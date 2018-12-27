@@ -158,7 +158,7 @@ class Builder implements BuilderInterface
 
     protected function getExpressiveDIYAMLFilePath(): string
     {
-        return $this->getApplicationRootDirectoryPath() . '/data/cache/expressive.yml';
+        return $this->getCacheDirectoryPath() . '/expressive.yml';
     }
 
     protected function getSymfonyContainerFilePath(): string
