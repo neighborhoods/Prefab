@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\HTTPInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
 
