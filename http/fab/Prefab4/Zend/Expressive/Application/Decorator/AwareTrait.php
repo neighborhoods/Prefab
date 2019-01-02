@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Zend\Expressive\Application\Decorator;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\Decorator;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Zend\Expressive\Application\DecoratorInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\DecoratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

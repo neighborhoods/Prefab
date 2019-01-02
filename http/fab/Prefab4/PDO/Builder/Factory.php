@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\Builder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface;
 
 /** @codeCoverageIgnore */
 class Factory implements FactoryInterface

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface

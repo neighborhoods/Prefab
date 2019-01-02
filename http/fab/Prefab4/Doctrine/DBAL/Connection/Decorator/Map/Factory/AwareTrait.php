@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Doctrine\DBAL\Connection\Decorator\Map\Factory;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection\Decorator\Map\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Doctrine\DBAL\Connection\Decorator\Map\FactoryInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection\Decorator\Map\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

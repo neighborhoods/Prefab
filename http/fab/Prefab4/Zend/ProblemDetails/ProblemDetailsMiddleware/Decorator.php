@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Zend\ProblemDetails\ProblemDetailsMiddleware;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\ProblemDetails\ProblemDetailsMiddleware;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Zend;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend;
 
 class Decorator implements DecoratorInterface
 {

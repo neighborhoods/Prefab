@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Redis\Factory;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Redis\FactoryInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

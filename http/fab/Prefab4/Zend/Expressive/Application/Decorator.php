@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Zend\Expressive\Application;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Zend;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

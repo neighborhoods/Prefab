@@ -1,5 +1,5 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\SortOrder\Map\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\SortOrder\Map\Factory
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\Factory
     calls:
-    - [setSearchCriteriaSortOrderMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\SortOrder\MapInterface']]
+    - [setSearchCriteriaSortOrderMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\MapInterface']]

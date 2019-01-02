@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Symfony\Component\DependencyInjection;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 class ExceptionHandler implements ExceptionHandlerInterface
 {

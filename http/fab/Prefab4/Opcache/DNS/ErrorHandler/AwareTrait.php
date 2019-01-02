@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\ErrorHandler;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandler;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\ErrorHandlerInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandlerInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

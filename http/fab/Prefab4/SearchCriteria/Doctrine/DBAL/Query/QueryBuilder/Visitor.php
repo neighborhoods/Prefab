@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\FilterInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\SortOrderInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Doctrine;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Doctrine\DBAL\Connection\DecoratorInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FilterInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection\DecoratorInterface;
 
 class Visitor implements VisitorInterface
 {

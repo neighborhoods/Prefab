@@ -1,4 +1,4 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\ErrorHandlerInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\ErrorHandler
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandlerInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandler
     shared: false

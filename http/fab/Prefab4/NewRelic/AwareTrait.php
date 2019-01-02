@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelicInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container\Builder\FilesystemProperties;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container\Builder\FilesystemPropertiesInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemPropertiesInterface;
 use Psr\Container\ContainerInterface;
 
 interface BuilderInterface

@@ -1,5 +1,5 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\Factory
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\Factory
     calls:
-    - [setNewRelicTransactionNameMiddleware, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddlewareInterface']]
+    - [setNewRelicTransactionNameMiddleware, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddlewareInterface']]

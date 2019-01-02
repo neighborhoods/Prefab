@@ -4,14 +4,14 @@ namespace Neighborhoods\Prefab\Actor\Repository;
 
 
 use Neighborhoods\PROJECTNAMEPLACEHOLDER\DAONAMEPLACEHOLDER;
-use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab4\Doctrine;
-use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab4\SearchCriteria;
-use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab4\SearchCriteriaInterface;
+use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab5\Doctrine;
+use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab5\SearchCriteria;
+use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab5\SearchCriteriaInterface;
 
 class Template // implements RepositoryInterface
 {
-//    use Prefab4\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
-//    use Prefab4\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
+//    use Prefab5\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
+//    use Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 //    use DAONAMEPLACEHOLDER\Map\Builder\Factory\AwareTrait;
 
     public function createBuilder() : \NAMESPACEPLACEHOLDER\BuilderInterface

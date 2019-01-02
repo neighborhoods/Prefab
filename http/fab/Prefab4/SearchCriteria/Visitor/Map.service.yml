@@ -1,4 +1,4 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Visitor\MapInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Visitor\Map
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Visitor\MapInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Visitor\Map
     shared: false

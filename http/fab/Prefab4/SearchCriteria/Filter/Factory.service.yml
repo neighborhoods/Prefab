@@ -1,5 +1,5 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Filter\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Filter\Factory
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\Factory
     calls:
-    - [setSearchCriteriaFilter, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\FilterInterface']]
+    - [setSearchCriteriaFilter, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FilterInterface']]

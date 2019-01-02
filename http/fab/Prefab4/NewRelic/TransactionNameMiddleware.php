@@ -1,12 +1,12 @@
 <?php
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Expressive\Router\RouteResult;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 class TransactionNameMiddleware implements TransactionNameMiddlewareInterface
 {

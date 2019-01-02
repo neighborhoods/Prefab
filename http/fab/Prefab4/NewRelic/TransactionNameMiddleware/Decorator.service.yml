@@ -1,12 +1,12 @@
 parameters:
   env(NEW_RELIC_APPLICATION_NAME): "DEFAULT_NEW_RELIC_APPLICATION_NAME"
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\DecoratorInterface.application_name: '%env(NEW_RELIC_APPLICATION_NAME)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\DecoratorInterface.application_name: '%env(NEW_RELIC_APPLICATION_NAME)%'
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\DecoratorInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\Decorator
-    decorates: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddlewareInterface
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\DecoratorInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\Decorator
+    decorates: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddlewareInterface
     calls:
-    - [setNewRelicTransactionNameMiddleware, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\DecoratorInterface.inner']]
-    - [setApplicationName, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic\TransactionNameMiddleware\DecoratorInterface.application_name%']]
-    - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelicInterface']]
+    - [setNewRelicTransactionNameMiddleware, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\DecoratorInterface.inner']]
+    - [setApplicationName, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\DecoratorInterface.application_name%']]
+    - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface']]
     shared: false

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Runtime;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime;
 
 class Exception extends \RuntimeException implements ExceptionInterface
 {

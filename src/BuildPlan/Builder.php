@@ -310,7 +310,7 @@ class Builder implements BuilderInterface
     {
         // Symfony Yaml doesn't support adding !php/const, so we have to create the string and append it to the end of the file
 
-        $routePath = $this->getBuildConfiguration()->getProjectDir() . 'fab/Prefab4/Zend/Expressive/Application/Decorator.service.yml';
+        $routePath = $this->getBuildConfiguration()->getProjectDir() . 'fab/Prefab5/Zend/Expressive/Application/Decorator.service.yml';
         $file = file_get_contents($routePath);
 
         $line =
