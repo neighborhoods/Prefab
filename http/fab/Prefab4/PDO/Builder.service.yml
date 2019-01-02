@@ -1,21 +1,21 @@
 parameters:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_user_name: '%env(DATABASE_USERNAME)%'
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_password: '%env(DATABASE_PASSWORD)%'
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_adapter: '%env(DATABASE_ADAPTER)%'
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_host: '%env(DATABASE_HOST)%'
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_name: '%env(DATABASE_NAME)%'
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.options:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_user_name: '%env(DATABASE_USERNAME)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_password: '%env(DATABASE_PASSWORD)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_adapter: '%env(DATABASE_ADAPTER)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_host: '%env(DATABASE_HOST)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_name: '%env(DATABASE_NAME)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.options:
     !php/const \PDO::ATTR_PERSISTENT: true
     !php/const \PDO::ATTR_EMULATE_PREPARES: false
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\Builder
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder
     shared: false
     calls:
-    - [setOpcacheDNS, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNSInterface']]
-    - [setOptions, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.options%']]
-    - [setPassword, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_password%']]
-    - [setUserName, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_user_name%']]
-    - [setDatabaseAdapter, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_adapter%']]
-    - [setDatabaseHost, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_host%']]
-    - [setDatabaseName, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\BuilderInterface.database_name%']]
+    - [setOpcacheDNS, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNSInterface']]
+    - [setOptions, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.options%']]
+    - [setPassword, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_password%']]
+    - [setUserName, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_user_name%']]
+    - [setDatabaseAdapter, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_adapter%']]
+    - [setDatabaseHost, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_host%']]
+    - [setDatabaseName, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface.database_name%']]

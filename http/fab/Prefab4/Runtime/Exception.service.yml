@@ -1,4 +1,4 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Runtime\ExceptionInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Runtime\Exception
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime\ExceptionInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime\Exception
     shared: false

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\Exception;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\NewRelic;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Exception;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 class DNS implements DNSInterface
 {

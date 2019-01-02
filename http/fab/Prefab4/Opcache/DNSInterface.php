@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
 interface DNSInterface
 {

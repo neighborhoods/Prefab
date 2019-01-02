@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\ServerRequest;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteriaInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Psr;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr;
 
 class Builder implements BuilderInterface
 {
-    use Prefab4\SearchCriteria\Filter\Factory\AwareTrait;
-    use Prefab4\SearchCriteria\SortOrder\Factory\AwareTrait;
-    use Prefab4\SearchCriteria\Factory\AwareTrait;
+    use Prefab5\SearchCriteria\Filter\Factory\AwareTrait;
+    use Prefab5\SearchCriteria\SortOrder\Factory\AwareTrait;
+    use Prefab5\SearchCriteria\Factory\AwareTrait;
     use Psr\Http\Message\ServerRequest\AwareTrait;
 
     protected $searchCriteriaQuery;

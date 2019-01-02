@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Redis;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Redis;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis;
 
 class Repository implements RepositoryInterface
 {

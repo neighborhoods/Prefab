@@ -1,9 +1,9 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteriaInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria
     calls:
-    - [setSearchCriteriaFilterMapFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Filter\Map\FactoryInterface']]
-    - [setSearchCriteriaSortOrderMapFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\SortOrder\Map\FactoryInterface']]
-    - [setSearchCriteriaVisitorMapFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Visitor\Map\FactoryInterface']]
-    - [setSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Visitor\FactoryInterface']]
+    - [setSearchCriteriaFilterMapFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\Map\FactoryInterface']]
+    - [setSearchCriteriaSortOrderMapFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\FactoryInterface']]
+    - [setSearchCriteriaVisitorMapFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Visitor\Map\FactoryInterface']]
+    - [setSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Visitor\FactoryInterface']]
     shared: false

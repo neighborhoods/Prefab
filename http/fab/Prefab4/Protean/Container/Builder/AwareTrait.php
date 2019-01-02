@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container\Builder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container\BuilderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\BuilderInterface;
 
 trait AwareTrait
 {

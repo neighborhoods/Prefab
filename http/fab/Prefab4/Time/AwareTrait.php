@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Time;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Time;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\TimeInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\TimeInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait

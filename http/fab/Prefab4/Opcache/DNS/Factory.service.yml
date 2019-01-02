@@ -1,5 +1,5 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS\Factory
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Factory
     calls:
-    - [setOpcacheDNS, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNSInterface']]
+    - [setOpcacheDNS, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNSInterface']]

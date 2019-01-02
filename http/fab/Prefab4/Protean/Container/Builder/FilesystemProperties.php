@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean\Container\Builder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Protean;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 
 class FilesystemProperties implements FilesystemPropertiesInterface
 {
@@ -14,7 +14,7 @@ class FilesystemProperties implements FilesystemPropertiesInterface
     protected $root_directory_path;
     protected $directory_filters = [];
     protected $discoverable_directories;
-    protected $prefab4_directory_path;
+    protected $prefab5_directory_path;
 
     public function getDiscoverableDirectories(): array
     {
@@ -24,7 +24,7 @@ class FilesystemProperties implements FilesystemPropertiesInterface
                 $discoverableDirectories[] = $this->getFabricationDirectoryPath();
                 $discoverableDirectories[] = $this->getSourceDirectoryPath();
             } else {
-                $discoverableDirectories[] = $this->getPrefab4DirectoryPath();
+                $discoverableDirectories[] = $this->getPrefab5DirectoryPath();
                 foreach ($this->getDirectoryFilters() as $directoryFilter) {
                     $discoverableDirectories[] = sprintf(
                         '%s/%s',
@@ -165,12 +165,12 @@ class FilesystemProperties implements FilesystemPropertiesInterface
         return $this->filesystem;
     }
 
-    public function getPrefab4DirectoryPath()
+    public function getPrefab5DirectoryPath()
     {
-        if ($this->prefab4_directory_path === null) {
-            $this->prefab4_directory_path = sprintf('%s/Prefab4', $this->getFabricationDirectoryPath());
+        if ($this->prefab5_directory_path === null) {
+            $this->prefab5_directory_path = sprintf('%s/Prefab5', $this->getFabricationDirectoryPath());
         }
 
-        return $this->prefab4_directory_path;
+        return $this->prefab5_directory_path;
     }
 }

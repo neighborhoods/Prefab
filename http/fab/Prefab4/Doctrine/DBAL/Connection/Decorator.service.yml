@@ -1,7 +1,7 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Doctrine\DBAL\Connection\DecoratorInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Doctrine\DBAL\Connection\Decorator
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection\DecoratorInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection\Decorator
     public: false
     shared: false
     calls:
-      - [setPDOBuilderFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\PDO\Builder\FactoryInterface']]
+      - [setPDOBuilderFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\FactoryInterface']]

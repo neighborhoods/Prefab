@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Opcache\DNS;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab4\Runtime;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime;
 
 class Exception extends Runtime\Exception
 {
