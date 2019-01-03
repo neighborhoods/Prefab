@@ -1,4 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Visitor\MapInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\Visitor\Map
-    shared: false

@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\DecoratorInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Doctrine\DBAL\Connection\Decorator
-    public: false
-    shared: false
-    calls:
-      - [setPDOBuilderFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\PDO\Builder\FactoryInterface']]

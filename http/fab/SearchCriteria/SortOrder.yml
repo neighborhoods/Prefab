@@ -1,4 +1,0 @@
-services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrderInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\SearchCriteria\SortOrder
-    shared: false

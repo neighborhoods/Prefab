@@ -7,8 +7,8 @@ namespace Neighborhoods\Prefab\Actor\Handler;
 class Template // implements HandlerInterface
 {
 //    use DAONAMEPLACEHOLDER\Repository\AwareTrait;
-//    use Neighborhoods\PROJECTNAMEPLACEHOLDER\Psr\Http\Message\ServerRequest\AwareTrait;
-//    use Neighborhoods\PROJECTNAMEPLACEHOLDER\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
+//    use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;
+//    use Neighborhoods\PROJECTNAMEPLACEHOLDER\Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
 
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
