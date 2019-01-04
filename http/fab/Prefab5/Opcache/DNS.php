@@ -18,7 +18,7 @@ class DNS implements DNSInterface
 
     protected function set(string $key, string $value): DNSInterface
     {
-        $temporaryFileName = $this->getCacheDirectoryPath() . $key . uniqid('', true) . '.tmp';
+        $temporaryFileName = $this->getCacheDirectoryPath() . '/' . $key . uniqid('', true) . '.tmp';
         try {
             if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
                 throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
