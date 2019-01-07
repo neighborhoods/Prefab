@@ -15,12 +15,13 @@ class DNS implements DNSInterface
     protected $ip;
     /** @var string */
     protected $host;
-
+    
     protected function set(string $key, string $value): DNSInterface
     {
-        $temporaryFileName = $this->getCacheDirectoryPath() . $key . uniqid('', true) . '.tmp';
+        $temporaryFileName = sprintf('%s/%s%s.tmp', $this->getCacheDirectoryPath(), $key, uniqid('', true));
         try {
-            if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
+            $temporaryFileContents = sprintf('<?php $value = %s;', var_export($value, true));
+            if (file_put_contents($temporaryFileName, $temporaryFileContents) === false) {
                 throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
             } else {
                 if (rename($temporaryFileName, $this->getCacheFilePath()) === false) {
