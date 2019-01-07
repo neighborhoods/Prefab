@@ -5,7 +5,7 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Opcache;
 
 interface DNSInterface
 {
-    public const CACHE_DIRECTORY_PATH = __DIR__ . '/../../data/cache/Opcache/DNS';
+    public const CACHE_DIRECTORY_PATH = __DIR__ . '/../../data/cache/Opcache/DNS/';
 
     public function getIp(): string;
 
