@@ -15,7 +15,7 @@ class DNS implements DNSInterface
     protected $ip;
     /** @var string */
     protected $host;
-    
+
     protected function set(string $key, string $value): DNSInterface
     {
         $temporaryFileName = sprintf('%s/%s%s.tmp', $this->getCacheDirectoryPath(), $key, uniqid('', true));
