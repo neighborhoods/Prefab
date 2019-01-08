@@ -69,10 +69,10 @@ class Builder implements BuilderInterface
         // Get the namespace based on the filepath
         $namespacePrefix = 'Neighborhoods\\' . $this->getBuildConfiguration()->getProjectName();
 
-        $filepathArray = explode('fab', $actorFilePath);
+        $filepathArray = explode('/fab/', $actorFilePath);
         $namespaceSuffix = $filepathArray[count($filepathArray) - 1];
         $namespaceSuffix = str_replace('/', '\\', $namespaceSuffix);
-        $namespace = $namespacePrefix . $namespaceSuffix;
+        $namespace = $namespacePrefix . '\\' . $namespaceSuffix;
 
         $daoMeta->setDaoName($this->getDaoName());
         $daoMeta->setActorNamespace($namespace);
