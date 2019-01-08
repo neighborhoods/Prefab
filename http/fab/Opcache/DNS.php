@@ -38,6 +38,7 @@ class DNS implements DNSInterface
     protected function get()
     {
         set_error_handler($this->getOpcacheDNSErrorHandler());
+        /** @noinspection PhpIncludeInspection */
         include $this->getCacheFilePath();
         restore_error_handler();
 
