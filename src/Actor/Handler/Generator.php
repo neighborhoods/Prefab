@@ -38,8 +38,8 @@ class Generator implements GeneratorInterface
         $this->getGenerator()->setName(self::CLASS_NAME);
 
         $this->getGenerator()->addTrait('\\' . $this->getMeta()->getActorNamespace() . '\AwareTrait');
-        $this->getGenerator()->addTrait('\\' . 'Neighborhoods\\' . $this->getProjectName() . '\Psr\Http\Message\ServerRequest\AwareTrait');
-        $this->getGenerator()->addTrait('\\' . 'Neighborhoods\\' . $this->getProjectName() . '\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . 'Neighborhoods\\' . $this->getProjectName() . '\Prefab5\Psr\Http\Message\ServerRequest\AwareTrait');
+        $this->getGenerator()->addTrait('\\' . 'Neighborhoods\\' . $this->getProjectName() . '\Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait');
 
         $file = new FileGenerator();
         $file->setClass($this->getGenerator());
@@ -72,14 +72,17 @@ class Generator implements GeneratorInterface
                     'shared' => false,
                     'calls' => [
                         [ "set{$methodName}", ["@{$this->getMeta()->getActorNamespace()}Interface" ]],
-                        [ 'setSearchCriteriaServerRequestBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\SearchCriteria\ServerRequest\Builder\FactoryInterface' ]]
+                        [ 'setSearchCriteriaServerRequestBuilderFactory', ["@Neighborhoods\\". $this->getProjectName() . '\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface' ]]
                     ]
                 ]
             ]
         ];
 
         $preparedYaml = Yaml::dump($yaml, 4, 2);
-        file_put_contents($this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.yml', $preparedYaml);
+        file_put_contents(
+            $this->getMeta()->getActorFilePath() . '/' . self::CLASS_NAME . '.service.yml',
+            $preparedYaml
+        );
 
         return $this;
     }

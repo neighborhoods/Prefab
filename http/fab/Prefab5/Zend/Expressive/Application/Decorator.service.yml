@@ -1,0 +1,6 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\DecoratorInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\Decorator
+    decorates: Zend\Expressive\Application
+    calls:
+    - [setZendExpressiveApplication, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\DecoratorInterface.inner']]
