@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMapInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap
+    calls:
+      - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface']]
+      - [setPrefab5OpcacheHTTPBuildableDirectoryMapErrorHandler, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\ErrorHandlerInterface']]
+    shared: false
