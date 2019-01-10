@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
+use Neighborhoods\PropertyService\Prefab5\Opcache\HTTPBuildableDirectoryMap;
+use Neighborhoods\PropertyService\Prefab5\Protean;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
@@ -22,17 +23,17 @@ class HTTP implements HTTPInterface
     protected function configureContainerBuilder() : HTTPInterface
     {
         $urlRoot = explode('/', $_REQUEST['_url'])[1];
+        $requestType = strtolower($_SERVER['REQUEST_METHOD']);
 
-        $directory = $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/fab/' . $urlRoot;
+        $directoryMap = (new HTTPBuildableDirectoryMap())->getDirectoryMap();
 
-        if (file_exists($directory)) {
-            $this->getProteanContainerBuilder()->getFilesystemProperties()->addDirectoryFilter($urlRoot);
-            $this->getProteanContainerBuilder()->setContainerName('HTTP' . $urlRoot);
-        } else {
-            $this->getProteanContainerBuilder()->setContainerName('HTTP');
+        if (!isset($directoryMap[$requestType][$urlRoot])) {
+            throw new \Exception();
         }
 
+        $this->getProteanContainerBuilder()->getFilesystemProperties()->addDirectoryFilter($urlRoot);
         $this->getProteanContainerBuilder()->setCanBuildZendExpressive(true);
+        $this->getProteanContainerBuilder()->setContainerName('HTTP' . $urlRoot);
 
         return $this;
     }
