@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
-use Neighborhoods\PropertyService\Prefab5\Opcache\HTTPBuildableDirectoryMap;
-use Neighborhoods\PropertyService\Prefab5\Protean;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
@@ -28,7 +28,7 @@ class HTTP implements HTTPInterface
         $directoryMap = (new HTTPBuildableDirectoryMap())->getDirectoryMap();
 
         if (!isset($directoryMap[$requestType][$urlRoot])) {
-            throw new \Exception();
+            throw new \Exception('ayy lmao');
         }
 
         $this->getProteanContainerBuilder()->getFilesystemProperties()->addDirectoryFilter($urlRoot);
