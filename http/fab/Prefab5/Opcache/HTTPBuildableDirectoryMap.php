@@ -10,8 +10,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 {
-    use NewRelic\AwareTrait;
-
     protected const BUILDABLE_DIRECTORY_MAP_KEY = 'buildable-directory-map-key';
     protected const COMPOSER_FILE_PATH = __DIR__ . '/../../../composer.json';
     protected const ROUTE_FILE_PATH = __DIR__ . '/../Zend/Expressive/Application/Decorator.service.yml';
@@ -36,7 +34,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
                 }
             }
         } catch (Exception $exception) {
-            $this->getNewRelic()->noticeThrowable($exception); // this won't work because we haven't built the container
+            (new NewRelic())->noticeThrowable($exception);
         }
 
         return $this;

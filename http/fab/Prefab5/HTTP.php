@@ -21,7 +21,7 @@ class HTTP implements HTTPInterface
         } catch (InvalidDirectory\Exception $e) {
             http_response_code(400);
         }
-        
+
         return $this;
     }
 
