@@ -14,10 +14,15 @@ class HTTP implements HTTPInterface
 
     public function respond(): HTTPInterface
     {
-        $this->configureContainerBuilder();
+        try {
+            $this->configureContainerBuilder();
+        } catch (InvalidDirectory\Exception $e) {
+            http_response_code(400);
+            return $this;
+        }
+
         $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
         $application->run();
-
         return $this;
     }
 
@@ -29,7 +34,7 @@ class HTTP implements HTTPInterface
         $directoryMap = (new HTTPBuildableDirectoryMap())->getDirectoryMap();
 
         if (!isset($directoryMap[$requestType][$urlRoot])) {
-            throw new \Exception('ayy lmao');
+            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
 
         $this->getProteanContainerBuilder()->getFilesystemProperties()->addDirectoryFilter($urlRoot);

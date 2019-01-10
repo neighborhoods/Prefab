@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\PropertyService\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 
-use Neighborhoods\PropertyService\Prefab5\Runtime;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime;
 
 class Exception extends Runtime\Exception
 {
