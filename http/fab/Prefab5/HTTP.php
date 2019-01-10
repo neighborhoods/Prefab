@@ -16,13 +16,12 @@ class HTTP implements HTTPInterface
     {
         try {
             $this->configureContainerBuilder();
+            $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
+            $application->run();
         } catch (InvalidDirectory\Exception $e) {
             http_response_code(400);
-            return $this;
         }
-
-        $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
-        $application->run();
+        
         return $this;
     }
 
