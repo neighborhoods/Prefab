@@ -41,7 +41,9 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function get()
     {
-        include $this->getCacheFilePath();
+        if (file_exists($this->getCacheFilePath())) {
+            include $this->getCacheFilePath();
+        }
 
         return $value ?? false;
     }
