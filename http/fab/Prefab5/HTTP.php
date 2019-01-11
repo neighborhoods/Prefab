@@ -10,16 +10,25 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuilda
 
 class HTTP implements HTTPInterface
 {
+    const HTTP_CODE_BAD_REQUEST = 400;
+    const HTTP_CODE_INTERNAL_ERROR = 500;
     use Protean\Container\Builder\AwareTrait;
 
-    public function respond(): HTTPInterface
+    public function respond() : HTTPInterface
     {
         try {
             $this->configureContainerBuilder();
             $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
             $application->run();
-        } catch (InvalidDirectory\Exception $e) {
-            http_response_code(400);
+        } catch (InvalidDirectory\Exception $exception) {
+            http_response_code(self::HTTP_CODE_BAD_REQUEST);
+            (new NewRelic())->noticeThrowable($exception);
+        } catch (HTTP\Exception $exception) {
+            http_response_code(self::HTTP_CODE_BAD_REQUEST);
+            (new NewRelic())->noticeThrowable($exception);
+        } catch (\Throwable $throwable) {
+            http_response_code(self::HTTP_CODE_INTERNAL_ERROR);
+            (new NewRelic())->noticeThrowable($throwable);
         }
 
         return $this;
@@ -27,7 +36,22 @@ class HTTP implements HTTPInterface
 
     protected function configureContainerBuilder() : HTTPInterface
     {
-        $urlRoot = explode('/', $_REQUEST['_url'])[1];
+
+        if (!isset($_REQUEST['_url'])) {
+            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
+        }
+
+        if (!isset($_SERVER['REQUEST_METHOD'])) {
+            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_NO_REQUEST_METHOD);
+        }
+
+        $urlArray = explode('/', $_REQUEST['_url']);
+
+        if (!isset($urlArray[1])) {
+            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
+        }
+
+        $urlRoot = $urlArray[1];
         $requestType = strtolower($_SERVER['REQUEST_METHOD']);
 
         $directoryMap = (new HTTPBuildableDirectoryMap())->getDirectoryMap();

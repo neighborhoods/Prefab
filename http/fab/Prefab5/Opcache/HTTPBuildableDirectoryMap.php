@@ -4,7 +4,7 @@
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Exception;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use Symfony\Component\Yaml\Yaml;
 
@@ -24,7 +24,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function set(string $key, string $value) : HTTPBuildableDirectoryMapInterface
     {
-        $temporaryFileName = $this->getCacheDirectoryPath() . $key . uniqid('', true) . '.tmp';
+        $temporaryFileName = $this->getCacheDirectoryPath() . '/' . $key . uniqid('', true) . '.tmp';
         try {
             if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
                 throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
@@ -109,6 +109,6 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function getCacheFilePath()
     {
-        return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), 'HTTPBuildableDirectoryMap.php');
+        return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), HTTPBuildableDirectoryMap::class);
     }
 }
