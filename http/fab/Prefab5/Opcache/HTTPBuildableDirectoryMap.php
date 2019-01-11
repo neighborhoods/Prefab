@@ -3,7 +3,6 @@
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use Symfony\Component\Yaml\Yaml;
@@ -42,9 +41,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function get()
     {
-        set_error_handler((new Opcache\HTTPBuildableDirectoryMap\ErrorHandler()));
         include $this->getCacheFilePath();
-        restore_error_handler();
 
         return $value ?? false;
     }
