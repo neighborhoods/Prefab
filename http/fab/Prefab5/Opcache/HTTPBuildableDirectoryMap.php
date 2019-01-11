@@ -27,10 +27,6 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         try {
             if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
                 throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
-            } else {
-                if (rename($temporaryFileName, $this->getCacheFilePath()) === false) {
-                    throw (new Exception())->setCode(Exception::CODE_RENAME_FAILED);
-                }
             }
         } catch (Exception $exception) {
             (new NewRelic())->noticeThrowable($exception);
