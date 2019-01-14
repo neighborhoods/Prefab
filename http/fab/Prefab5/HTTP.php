@@ -20,10 +20,7 @@ class HTTP implements HTTPInterface
             $this->configureContainerBuilder();
             $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
             $application->run();
-        } catch (InvalidDirectory\Exception $exception) {
-            http_response_code(self::HTTP_CODE_BAD_REQUEST);
-            (new NewRelic())->noticeThrowable($exception);
-        } catch (HTTP\Exception $exception) {
+        } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(self::HTTP_CODE_BAD_REQUEST);
             (new NewRelic())->noticeThrowable($exception);
         } catch (\Throwable $throwable) {
