@@ -21,7 +21,7 @@ class Builder implements BuilderInterface
     protected $can_build_zend_expressive;
     protected $container_name;
     protected $filesystem_properties;
-    protected $shouldRegisterAllSericesAsPublic;
+    protected $shouldRegisterAllServicesAsPublic;
 
     public function build(): ContainerInterface
     {
@@ -137,7 +137,7 @@ class Builder implements BuilderInterface
         ContainerBuilder $containerBuilder
     ) : BuilderInterface
     {
-        if ($this->shouldRegisterAllSericesAsPublic) {
+        if ($this->shouldRegisterAllServicesAsPublic) {
             $this->registerAllDefinitionsAsPublic($containerBuilder);
             $this->registerAllAliasesAsPublic($containerBuilder);
         } else {
@@ -194,15 +194,26 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    public function registerAllServicesAsPublic() : BuilderInterface
+    public function setShouldRegisterAllServicesAsPublic(
+        bool $shouldRegisterAllServicesAsPublic
+    ) : BuilderInterface
     {
-        if (null !== $this->shouldRegisterAllSericesAsPublic) {
-            throw new \LogicException('Builder shouldRegisterAllSericesAsPublic is already set.');
+        if (null !== $this->shouldRegisterAllServicesAsPublic) {
+            throw new \LogicException('Builder shouldRegisterAllServicesAsPublic is already set.');
         }
 
-        $this->shouldRegisterAllSericesAsPublic = true;
+        $this->shouldRegisterAllServicesAsPublic = $shouldRegisterAllServicesAsPublic;
 
         return $this;
+    }
+
+    public function getShouldRegisterAllServicesAsPublic() : bool
+    {
+        if (null === $this->shouldRegisterAllServicesAsPublic) {
+            throw new \LogicException('Builder shouldRegisterAllServicesAsPublic has not been set.');
+        }
+
+        return $this->shouldRegisterAllServicesAsPublic;
     }
 
     public function getFilesystemProperties(): FilesystemPropertiesInterface
