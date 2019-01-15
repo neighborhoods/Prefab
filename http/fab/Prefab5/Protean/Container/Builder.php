@@ -21,6 +21,7 @@ class Builder implements BuilderInterface
     protected $can_build_zend_expressive;
     protected $container_name;
     protected $filesystem_properties;
+    protected $shouldRegisterAllSericesAsPublic;
 
     public function build(): ContainerInterface
     {
@@ -132,13 +133,45 @@ class Builder implements BuilderInterface
         return $this->service_ids_registered_for_public_access;
     }
 
-    protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
+    protected function updateServiceDefinitions(
+        ContainerBuilder $containerBuilder
+    ) : BuilderInterface
+    {
+        if ($this->shouldRegisterAllSericesAsPublic) {
+            $this->registerAllDefinitionsAsPublic($containerBuilder);
+            $this->registerAllAliasesAsPublic($containerBuilder);
+        } else {
+            $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
+        }
+
+        return $this;
+    }
+
+    protected function registerAllDefinitionsAsPublic(
+        ContainerBuilder $containerBuilder
+    ) : void
+    {
+        foreach ($containerBuilder->getDefinitions() as $definition) {
+            $definition->setPublic(true);
+        }
+    }
+
+    protected function registerAllAliasesAsPublic(
+        ContainerBuilder $containerBuilder
+    ) : void
+    {
+        foreach ($containerBuilder->getAliases() as $alias) {
+            $alias->setPublic(true);
+        }
+    }
+
+    protected function registerUserSpecifiedDefinitionsAsPublic(
+        ContainerBuilder $containerBuilder
+    ) : void
     {
         foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
             $containerBuilder->getDefinition($serviceId)->setPublic(true);
         }
-
-        return $this;
     }
 
     public function getContainerName(): string
@@ -157,6 +190,17 @@ class Builder implements BuilderInterface
         }
 
         $this->container_name = $containerName;
+
+        return $this;
+    }
+
+    public function registerAllServicesAsPublic() : BuilderInterface
+    {
+        if (null !== $this->shouldRegisterAllSericesAsPublic) {
+            throw new \LogicException('Builder shouldRegisterAllSericesAsPublic is already set.');
+        }
+
+        $this->shouldRegisterAllSericesAsPublic = true;
 
         return $this;
     }
