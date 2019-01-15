@@ -1,20 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
-/**
- * @deprecated
- * @see \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler
- */
 class ErrorHandler implements ErrorHandlerInterface
 {
     public function __invoke(
         int $errorNumber,
         string $errorString,
         string $errorFile,
-        int $errorLine,
-        array $errorContext
+        int $errorLine
     ): ErrorHandlerInterface {
         throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
     }

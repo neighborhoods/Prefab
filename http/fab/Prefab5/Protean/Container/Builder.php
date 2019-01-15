@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectories;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectoriesInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemPropertiesInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
@@ -21,6 +23,7 @@ class Builder implements BuilderInterface
     protected $can_build_zend_expressive;
     protected $container_name;
     protected $filesystem_properties;
+    protected $discoverable_directories;
 
     public function build(): ContainerInterface
     {
@@ -74,10 +77,10 @@ class Builder implements BuilderInterface
     {
         if ($this->symfony_container_builder === null) {
             $containerBuilder = new ContainerBuilder();
-            $discoverableDirectories = $this->getFilesystemProperties()->getDiscoverableDirectories();
+            $discoverableDirectoryFullPaths = $this->getDiscoverableDirectories()->getFullPaths();
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
-                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectories)
+                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
             );
             $containerBuilderFacade->assembleYaml();
             $this->updateServiceDefinitions($containerBuilder);
@@ -103,8 +106,10 @@ class Builder implements BuilderInterface
     {
         $currentWorkingDirectory = getcwd();
         chdir($this->getFilesystemProperties()->getRootDirectoryPath());
+        /** @noinspection PhpIncludeInspection */
         $zendContainerBuilder = require $this->getFilesystemProperties()->getZendConfigContainerFilePath();
         $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
+        /** @noinspection PhpIncludeInspection */
         (require_once $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
         file_put_contents(
             $this->getFilesystemProperties()->getExpressiveDIYAMLFilePath(),
@@ -170,4 +175,16 @@ class Builder implements BuilderInterface
 
         return $this->filesystem_properties;
     }
+
+    public function getDiscoverableDirectories(): DiscoverableDirectoriesInterface
+    {
+        if ($this->discoverable_directories === null) {
+            $discoverableDirectories = new DiscoverableDirectories();
+            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($this->getFilesystemProperties());
+            $this->discoverable_directories = $discoverableDirectories;
+        }
+
+        return $this->discoverable_directories;
+    }
+
 }

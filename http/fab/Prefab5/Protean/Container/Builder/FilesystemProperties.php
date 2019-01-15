@@ -12,111 +12,109 @@ class FilesystemProperties implements FilesystemPropertiesInterface
 
     protected $filesystem;
     protected $root_directory_path;
-    protected $directory_filters = [];
-    protected $discoverable_directories;
     protected $prefab5_directory_path;
+    protected $cache_directory_path;
+    protected $fabrication_directory_path;
+    protected $source_directory_path;
+    protected $data_directory_path;
+    protected $pipeline_file_path;
+    protected $config_directory_path;
+    protected $zend_config_container_file_path;
 
-    public function getDiscoverableDirectories(): array
+    public function getFabricationDirectoryPath(): string
     {
-        if ($this->discoverable_directories === null) {
-            $discoverableDirectories[] = $this->getCacheDirectoryPath();
-            if (empty($this->getDirectoryFilters())) {
-                $discoverableDirectories[] = $this->getFabricationDirectoryPath();
-                $discoverableDirectories[] = $this->getSourceDirectoryPath();
-            } else {
-                $discoverableDirectories[] = $this->getPrefab5DirectoryPath();
-                foreach ($this->getDirectoryFilters() as $directoryFilter) {
-                    $discoverableDirectories[] = sprintf(
-                        '%s/%s',
-                        $this->getFabricationDirectoryPath(),
-                        $directoryFilter
-                    );
-                }
-                foreach ($this->getDirectoryFilters() as $directoryFilter) {
-                    $discoverableDirectories[] = sprintf('%s/%s', $this->getSourceDirectoryPath(), $directoryFilter);
-                }
-            }
-
-            $this->discoverable_directories = $discoverableDirectories;
+        if ($this->fabrication_directory_path === null) {
+            $this->fabrication_directory_path = $this->getRealDirectoryPath($this->getRootDirectoryPath(), 'fab');
         }
 
-        return $this->discoverable_directories;
+        return $this->fabrication_directory_path;
     }
 
-    protected function getDirectoryFilters(): array
+    public function getSourceDirectoryPath(): string
     {
-        return $this->directory_filters;
-    }
-
-    public function addDirectoryFilter(string $directoryFilter): FilesystemPropertiesInterface
-    {
-        if (isset($this->directory_filters[$directoryFilter])) {
-            throw new \LogicException(
-                sprintf('FilesystemProperties directory_filter[%s] is already set.', $directoryFilter)
-            );
-        }
-        foreach ($this->directory_filters as $existingDirectoryFilter) {
-            if (strpos($existingDirectoryFilter, $directoryFilter) === 0) {
-                throw new \LogicException(
-                    sprintf(
-                        'FilesystemProperties directory_filter[%s] is a parent node of [%s].',
-                        $existingDirectoryFilter,
-                        $directoryFilter
-                    )
-                );
-            }
+        if ($this->source_directory_path === null) {
+            $this->source_directory_path = $this->getRealDirectoryPath($this->getRootDirectoryPath(), 'src');
         }
 
-        $this->directory_filters[$directoryFilter] = $directoryFilter;
-
-        return $this;
+        return $this->source_directory_path;
     }
 
-    protected function getFabricationDirectoryPath(): string
+    protected function getRealDirectoryPath(string $parentDirectoryPath, string $directoryName): string
     {
-        if (!realpath($this->getRootDirectoryPath() . '/fab')) {
-            $this->getFilesystem()->mkdir($this->getRootDirectoryPath() . '/fab');
+        $directoryPath = sprintf('%s/%s', $parentDirectoryPath, $directoryName);
+        if (!realpath($directoryPath)) {
+            $this->getFilesystem()->mkdir($directoryPath);
         }
 
-        return realpath($this->getRootDirectoryPath() . '/fab');
+        return realpath($directoryPath);
     }
 
-    protected function getSourceDirectoryPath(): string
+    public function getCacheDirectoryPath(): string
     {
-        return realpath($this->getRootDirectoryPath() . '/src');
-    }
-
-    protected function getCacheDirectoryPath(): string
-    {
-        if (!realpath($this->getRootDirectoryPath() . '/data/cache')) {
-            $this->getFilesystem()->mkdir($this->getRootDirectoryPath() . '/data/cache');
+        if ($this->cache_directory_path === null) {
+            $this->cache_directory_path = $this->getRealDirectoryPath($this->getDataDirectoryPath(), 'cache');
         }
 
-        return realpath($this->getRootDirectoryPath() . '/data/cache');
+        return $this->cache_directory_path;
+    }
+
+    protected function getDataDirectoryPath(): string
+    {
+        if ($this->data_directory_path === null) {
+            $this->data_directory_path = $this->getRealDirectoryPath($this->getRootDirectoryPath(), 'data');
+        }
+
+        return $this->data_directory_path;
     }
 
     public function getPipelineFilePath(): string
     {
-        return $this->getConfigurationDirectoryPath() . '/pipeline.php';
+        if ($this->pipeline_file_path === null) {
+            $this->pipeline_file_path = realpath(sprintf('%s/pipeline.php', $this->getConfigurationDirectoryPath()));
+        }
+
+        return $this->pipeline_file_path;
     }
 
     public function getZendConfigContainerFilePath(): string
     {
-        return $this->getConfigurationDirectoryPath() . '/container.php';
+        if ($this->zend_config_container_file_path === null) {
+            $this->zend_config_container_file_path = realpath(
+                sprintf(
+                    '%s/container.php',
+                    $this->getConfigurationDirectoryPath()
+                )
+            );
+        }
+
+        return $this->zend_config_container_file_path;
     }
 
     protected function getConfigurationDirectoryPath(): string
     {
-        if (!realpath($this->getRootDirectoryPath() . '/config')) {
-            $this->getFilesystem()->mkdir($this->getRootDirectoryPath() . '/config');
+        if ($this->config_directory_path === null) {
+            $this->config_directory_path = $this->getRealDirectoryPath($this->getRootDirectoryPath(), 'config');
         }
 
-        return realpath($this->getRootDirectoryPath() . '/config');
+        return $this->config_directory_path;
     }
 
     public function getExpressiveDIYAMLFilePath(): string
     {
-        return $this->getCacheDirectoryPath() . '/expressive.service.yml';
+        if (!realpath($this->getCacheDirectoryPath() . '/Zend')) {
+            $this->getFilesystem()->mkdir($this->getCacheDirectoryPath() . '/Zend');
+        }
+
+        return $this->getCacheDirectoryPath() . '/Zend/expressive.service.yml';
+    }
+
+    public function getPrefab5DirectoryPath()
+    {
+        if ($this->prefab5_directory_path === null) {
+            $this->prefab5_directory_path = sprintf('%s/Prefab5', $this->getFabricationDirectoryPath());
+        }
+
+        return $this->prefab5_directory_path;
     }
 
     public function getSymfonyContainerFilePath(): string
@@ -163,14 +161,5 @@ class FilesystemProperties implements FilesystemPropertiesInterface
         }
 
         return $this->filesystem;
-    }
-
-    public function getPrefab5DirectoryPath()
-    {
-        if ($this->prefab5_directory_path === null) {
-            $this->prefab5_directory_path = sprintf('%s/Prefab5', $this->getFabricationDirectoryPath());
-        }
-
-        return $this->prefab5_directory_path;
     }
 }
