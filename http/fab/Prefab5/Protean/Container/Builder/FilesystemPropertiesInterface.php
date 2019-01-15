@@ -22,4 +22,6 @@ interface FilesystemPropertiesInterface
     public function getFabricationDirectoryPath(): string;
 
     public function getSourceDirectoryPath(): string;
+
+    public function getPrefab5DirectoryPath();
 }

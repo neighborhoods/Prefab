@@ -136,14 +136,18 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         foreach ($this->getWelcomeBaskets()->getDirectoryPaths() as $directoryPath) {
             $this->addFullPath($directoryPath);
         }
-        
+
         return $this;
     }
 
-    protected function getWelcomeBaskets(): Prefab5\WelcomeBasketsInterface
+    public function getWelcomeBaskets(): Prefab5\WelcomeBasketsInterface
     {
         if ($this->welcome_baskets === null) {
-            $this->welcome_baskets = new Prefab5\WelcomeBaskets();
+            $welcomeBaskets = new Prefab5\WelcomeBaskets();
+            $welcomeBaskets->setProteanContainerBuilderFilesystemProperties(
+                $this->getProteanContainerBuilderFilesystemProperties()
+            );
+            $this->welcome_baskets = $welcomeBaskets;
         }
 
         return $this->welcome_baskets;
