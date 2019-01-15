@@ -137,7 +137,7 @@ class Builder implements BuilderInterface
         ContainerBuilder $containerBuilder
     ) : BuilderInterface
     {
-        if ($this->shouldRegisterAllServicesAsPublic) {
+        if ($this->getShouldRegisterAllServicesAsPublic()) {
             $this->registerAllDefinitionsAsPublic($containerBuilder);
             $this->registerAllAliasesAsPublic($containerBuilder);
         } else {
