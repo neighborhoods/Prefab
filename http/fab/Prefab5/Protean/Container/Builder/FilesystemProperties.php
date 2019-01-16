@@ -20,6 +20,7 @@ class FilesystemProperties implements FilesystemPropertiesInterface
     protected $pipeline_file_path;
     protected $config_directory_path;
     protected $zend_config_container_file_path;
+    protected $zend_cache_directory_path;
 
     public function getFabricationDirectoryPath(): string
     {
@@ -57,6 +58,7 @@ class FilesystemProperties implements FilesystemPropertiesInterface
 
         return $this->cache_directory_path;
     }
+
 
     protected function getDataDirectoryPath(): string
     {
@@ -101,11 +103,16 @@ class FilesystemProperties implements FilesystemPropertiesInterface
 
     public function getExpressiveDIYAMLFilePath(): string
     {
-        if (!realpath($this->getCacheDirectoryPath() . '/Zend')) {
-            $this->getFilesystem()->mkdir($this->getCacheDirectoryPath() . '/Zend');
+        return sprintf('%s/expressive.service.yml', $this->getZendCacheDirectoryPath());
+    }
+
+    public function getZendCacheDirectoryPath(): string
+    {
+        if ($this->zend_cache_directory_path === null) {
+            $this->zend_cache_directory_path = $this->getRealDirectoryPath($this->getCacheDirectoryPath(), 'zend');
         }
 
-        return $this->getCacheDirectoryPath() . '/Zend/expressive.service.yml';
+        return $this->zend_cache_directory_path;
     }
 
     public function getPrefab5DirectoryPath()

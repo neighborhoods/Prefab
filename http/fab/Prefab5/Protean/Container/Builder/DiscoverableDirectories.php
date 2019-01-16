@@ -12,17 +12,18 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 
     protected $directory_filters = [];
     protected $full_paths = [];
+    protected $appended_paths = [];
     protected $filesystem;
     protected $welcome_baskets;
 
     public function getFullPaths(): array
     {
         if (empty($this->full_paths)) {
-            $this->addFullPath($this->getCacheDirectoryPath());
             if ($this->hasFilters()) {
                 $this->addFabricationDirectoryPaths();
                 $this->addSourceDirectoryPaths();
                 $this->addWelcomeBaskets();
+                $this->addAppendedPaths();
             } else {
                 $this->addFullPath($this->getFabricationDirectoryPath());
                 $this->addFullPath($this->getSourceDirectoryPath());
@@ -62,6 +63,28 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         }
 
         $this->directory_filters[$directoryPathFilter] = $directoryPathFilter;
+
+        return $this;
+    }
+
+    public function addAppendedPaths(): array
+    {
+        foreach ($this->appended_paths as $appendedPath) {
+            $this->addFullPath($appendedPath);
+        }
+
+        return $this->appended_paths;
+    }
+
+    public function appendPath(string $path): DiscoverableDirectoriesInterface
+    {
+        if (isset($this->appended_paths[$path])) {
+            throw new \LogicException(
+                sprintf('DiscoverableDirectories appended_paths[%s] is already set.', $path)
+            );
+        }
+
+        $this->appended_paths[$path] = $path;
 
         return $this;
     }

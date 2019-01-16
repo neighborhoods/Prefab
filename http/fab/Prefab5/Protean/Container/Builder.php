@@ -116,6 +116,7 @@ class Builder implements BuilderInterface
             (new YamlDumper($zendContainerBuilder))->dump()
         );
         chdir($currentWorkingDirectory);
+        $this->getDiscoverableDirectories()->appendPath($this->getZendCacheDirectoryPath());
 
         return $this;
     }
@@ -187,4 +188,8 @@ class Builder implements BuilderInterface
         return $this->discoverable_directories;
     }
 
+    protected function getZendCacheDirectoryPath(): string
+    {
+        return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
+    }
 }

@@ -13,6 +13,7 @@ class WelcomeBaskets implements WelcomeBasketsInterface
 
     protected $directory_paths = [];
     protected $exclusions = [];
+    protected $exclusionParentNode;
     protected $finder;
 
     public function addExclusion(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface
@@ -39,12 +40,18 @@ class WelcomeBaskets implements WelcomeBasketsInterface
             }
             /** @var SplFileInfo $directory */
             foreach ($this->getFinder()->in($this->getPrefab5DirectoryPath())->directories() as $directory) {
-                $this->directory_paths[] = $directory->getPathname();
+                $this->directory_paths[$directory->getPathname()] = $directory->getPathname();
+            }
+            foreach ($this->getExclusionParentNodes() as $exclusionParentNode) {
+                if (isset($this->directory_paths[$exclusionParentNode])) {
+                    unset($this->directory_paths[$exclusionParentNode]);
+                }
             }
         }
 
         return $this->directory_paths;
     }
+
 
     protected function getFinder(): Finder
     {
@@ -58,5 +65,22 @@ class WelcomeBaskets implements WelcomeBasketsInterface
     protected function getPrefab5DirectoryPath(): string
     {
         return $this->getProteanContainerBuilderFilesystemProperties()->getPrefab5DirectoryPath();
+    }
+
+    public function getExclusionParentNodes(): array
+    {
+        if ($this->exclusionParentNode === null) {
+            foreach ($this->exclusions as $exclusion) {
+                $exclusionParts = explode('/', $exclusion);
+                array_pop($exclusionParts);
+                foreach ($exclusionParts as $exclusionPart) {
+                    $exclusionParentNode = sprintf('%s/%s', $this->getPrefab5DirectoryPath(), $exclusionPart);
+                    $this->exclusionParentNode[$exclusionParentNode] = $exclusionParentNode;
+                }
+            }
+
+        }
+
+        return $this->exclusionParentNode;
     }
 }

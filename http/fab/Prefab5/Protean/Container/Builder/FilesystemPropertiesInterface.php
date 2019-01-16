@@ -24,4 +24,6 @@ interface FilesystemPropertiesInterface
     public function getSourceDirectoryPath(): string;
 
     public function getPrefab5DirectoryPath();
+
+    public function getZendCacheDirectoryPath(): string;
 }
