@@ -55,7 +55,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Neighborhoods\\PrefabTest\\": "tests"
+      "Neighborhoods\\PrefabTest\\": "tests",
+      "Neighborhoods\\ReplaceThisWithTheNameOfYourProduct\\": "http/fab"
     }
   }
 }
