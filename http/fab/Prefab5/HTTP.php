@@ -59,7 +59,7 @@ class HTTP implements HTTPInterface
 
         $this->getProteanContainerBuilder()->getFilesystemProperties()->addDirectoryFilter($urlRoot);
         $this->getProteanContainerBuilder()->setCanBuildZendExpressive(true);
-        $this->getProteanContainerBuilder()->setContainerName('HTTP' . $urlRoot);
+        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
 
         return $this;
     }
