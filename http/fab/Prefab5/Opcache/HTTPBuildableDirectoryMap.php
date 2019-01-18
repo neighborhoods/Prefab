@@ -84,12 +84,15 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         $directoryMap = [];
         foreach (reset($routeYaml['services'])['calls'] as $methodCall)
         {
-            if (in_array($methodCall[0], self::HTTP_REQUEST_TYPES)) {
-                $directory = str_replace('@' . $namespace, '', $methodCall[1][1]);
+            $httpRequestType = $methodCall[0];
+
+            if (in_array($httpRequestType, self::HTTP_REQUEST_TYPES)) {
+                $serviceName = $methodCall[1][1];
+                $directory = str_replace('@' . $namespace, '', $serviceName);
                 $directory = explode('\\', $directory)[0];
 
-                if (!isset($directoryMap[$methodCall[0]][$directory])) {
-                    $directoryMap[$methodCall[0]][$directory] = true;
+                if (!isset($directoryMap[$httpRequestType][$directory])) {
+                    $directoryMap[$httpRequestType][$directory] = true;
                 }
             }
         }
