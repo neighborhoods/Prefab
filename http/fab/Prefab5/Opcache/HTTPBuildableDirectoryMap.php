@@ -3,8 +3,10 @@
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\ComposerFileParser;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\RouteMapBuilder;
 use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
@@ -12,12 +14,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
     protected const BUILDABLE_DIRECTORY_MAP_KEY = 'buildable-directory-map-key';
     protected const COMPOSER_FILE_PATH = __DIR__ . '/../../../composer.json';
     protected const ROUTE_FILE_PATH = __DIR__ . '/../Zend/Expressive/Application/Decorator.service.yml';
-    protected const HTTP_REQUEST_TYPES = [
-        'get',
-        'post',
-        'put',
-        'delete'
-    ];
+
 
     protected $directoryMap;
 
@@ -69,33 +66,14 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function buildDirectoryMap() : array
     {
-        $composerFile = file_get_contents(self::COMPOSER_FILE_PATH);
+       $namespace = (new ComposerFileParser())
+           ->setComposerFilePath(self::COMPOSER_FILE_PATH)
+            ->getPsr4AutoloaderBaseNamespace();
 
-        if ($composerFile === false) {
-            throw (new Exception())->setCode(Exception::CODE_COMPOSER_FILE_NOT_FOUND);
-        }
-
-        $composerArray = json_decode($composerFile, true);
-
-        $namespace = array_keys($composerArray['autoload']['psr-4'])[0];
-
-        $routeYaml = Yaml::parseFile(self::ROUTE_FILE_PATH);
-
-        $directoryMap = [];
-        foreach (reset($routeYaml['services'])['calls'] as $methodCall)
-        {
-            $httpRequestType = $methodCall[0];
-
-            if (in_array($httpRequestType, self::HTTP_REQUEST_TYPES)) {
-                $serviceName = $methodCall[1][1];
-                $directory = str_replace('@' . $namespace, '', $serviceName);
-                $directory = explode('\\', $directory)[0];
-
-                if (!isset($directoryMap[$httpRequestType][$directory])) {
-                    $directoryMap[$httpRequestType][$directory] = true;
-                }
-            }
-        }
+        $directoryMap = (new RouteMapBuilder())
+            ->setRouteFilePath(self::ROUTE_FILE_PATH)
+            ->setNamespace($namespace)
+            ->buildRouteMap();
 
         return $directoryMap;
     }
