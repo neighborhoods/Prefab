@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap;
 
-
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap;
 use Symfony\Component\Yaml\Yaml;
 
 class RouteMapBuilder implements RouteMapBuilderInterface
@@ -20,6 +20,10 @@ class RouteMapBuilder implements RouteMapBuilderInterface
 
     public function buildRouteMap() : array
     {
+        if (!file_exists($this->getRouteFilePath())) {
+            throw (new HTTPBuildableDirectoryMap\Exception())->setCode(HTTPBuildableDirectoryMap\Exception::CODE_ROUTE_FILE_NOT_FOUND);
+        }
+
         $routeYaml = Yaml::parseFile($this->getRouteFilePath());
 
         $directoryMap = [];

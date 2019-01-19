@@ -2,6 +2,7 @@
 
 namespace tests\Unit\Prefab5\Opcache\HttpBuildableDirectoryMap;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\RouteMapBuilder;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
@@ -44,6 +45,20 @@ class RouteMapBuilderTest extends TestCase
         $routeMapBuilder = new RouteMapBuilder();
         $routeMapBuilder->setRouteFilePath('unimportant')
             ->setRouteFilePath('also unimportant');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldThrowRouteFileNotFoundException() : void
+    {
+        static::expectException(HTTPBuildableDirectoryMap\Exception::class);
+        static::expectExceptionCode(HTTPBuildableDirectoryMap\Exception::CODE_ROUTE_FILE_NOT_FOUND);
+
+        (new RouteMapBuilder())
+            ->setNamespace('unimportant')
+            ->setRouteFilePath($this->filesystem->url() . '/dir/doesnt/exist')
+            ->buildRouteMap();
     }
 
     /**
