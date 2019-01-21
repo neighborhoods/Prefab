@@ -74,11 +74,13 @@ class Generator implements GeneratorInterface
             $fileContent
         );
 
-        $fileContent = str_replace(
-            self::ROUTE_PLACEHOLDER,
-            $this->getMeta()->getHttpRoute(),
-            $fileContent
-        );
+        if ($this->getMeta()->hasHttpRoute()) {
+            $fileContent = str_replace(
+                self::ROUTE_PLACEHOLDER,
+                $this->getMeta()->getHttpRoute(),
+                $fileContent
+            );
+        }
 
         return $this->getStringReplacerFactory()
             ->create()
