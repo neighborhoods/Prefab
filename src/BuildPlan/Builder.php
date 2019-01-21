@@ -222,7 +222,9 @@ class Builder implements BuilderInterface
         $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
         $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
         $this->appendGeneratorToBuildPlan($handlerInterfaceGenerator);
-        $this->addHandlerToRouteFile($handlerInterfaceMeta);
+        if ($handlerInterfaceMeta->hasHttpRoute()) {
+            $this->addHandlerToRouteFile($handlerInterfaceMeta);
+        }
         return $this;
     }
 

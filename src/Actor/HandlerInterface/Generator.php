@@ -25,7 +25,8 @@ class Generator implements GeneratorInterface
     protected $entityName;
     protected $meta;
 
-    protected const ROUTE_PLACEHOLDER = 'ROUTE_PLACEHOLDER';
+    protected const ROUTE_LINE_PLACEHOLDER = "const ROUTE_PATH_UCTRUNCATEDGRANDPARENTNAMESPACEPLACEHOLDERS = 'ROUTE_PLACEHOLDER';";
+    protected const ROUTE_VARIABLE_PLACEHOLDER = "ROUTE_PLACEHOLDER";
     protected const INTERFACE_NAME = 'HandlerInterface';
 
     public function generate() : GeneratorInterface
@@ -74,12 +75,15 @@ class Generator implements GeneratorInterface
             $fileContent
         );
 
+
         if ($this->getMeta()->hasHttpRoute()) {
             $fileContent = str_replace(
-                self::ROUTE_PLACEHOLDER,
+                self::ROUTE_VARIABLE_PLACEHOLDER,
                 $this->getMeta()->getHttpRoute(),
                 $fileContent
             );
+        } else {
+            $fileContent = str_replace(self::ROUTE_LINE_PLACEHOLDER, '', $fileContent);
         }
 
         return $this->getStringReplacerFactory()
