@@ -15,6 +15,8 @@ use Zend\Expressive\Application;
 
 class Builder implements BuilderInterface
 {
+    protected const SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT = false;
+
     protected $container;
     protected $symfony_container_builder;
     protected $service_ids_registered_for_public_access = [];
@@ -210,7 +212,8 @@ class Builder implements BuilderInterface
     public function getShouldRegisterAllServicesAsPublic() : bool
     {
         if (null === $this->shouldRegisterAllServicesAsPublic) {
-            throw new \LogicException('Builder shouldRegisterAllServicesAsPublic has not been set.');
+            $this->shouldRegisterAllServicesAsPublic =
+                static::SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT;
         }
 
         return $this->shouldRegisterAllServicesAsPublic;
