@@ -15,12 +15,15 @@ use Zend\Expressive\Application;
 
 class Builder implements BuilderInterface
 {
+    protected const SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT = false;
+
     protected $container;
     protected $symfony_container_builder;
     protected $service_ids_registered_for_public_access = [];
     protected $can_build_zend_expressive;
     protected $container_name;
     protected $filesystem_properties;
+    protected $shouldRegisterAllServicesAsPublic;
 
     public function build(): ContainerInterface
     {
@@ -132,13 +135,45 @@ class Builder implements BuilderInterface
         return $this->service_ids_registered_for_public_access;
     }
 
-    protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
+    protected function updateServiceDefinitions(
+        ContainerBuilder $containerBuilder
+    ) : BuilderInterface
+    {
+        if ($this->getShouldRegisterAllServicesAsPublic()) {
+            $this->registerAllDefinitionsAsPublic($containerBuilder);
+            $this->registerAllAliasesAsPublic($containerBuilder);
+        } else {
+            $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
+        }
+
+        return $this;
+    }
+
+    protected function registerAllDefinitionsAsPublic(
+        ContainerBuilder $containerBuilder
+    ) : void
+    {
+        foreach ($containerBuilder->getDefinitions() as $definition) {
+            $definition->setPublic(true);
+        }
+    }
+
+    protected function registerAllAliasesAsPublic(
+        ContainerBuilder $containerBuilder
+    ) : void
+    {
+        foreach ($containerBuilder->getAliases() as $alias) {
+            $alias->setPublic(true);
+        }
+    }
+
+    protected function registerUserSpecifiedDefinitionsAsPublic(
+        ContainerBuilder $containerBuilder
+    ) : void
     {
         foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
             $containerBuilder->getDefinition($serviceId)->setPublic(true);
         }
-
-        return $this;
     }
 
     public function getContainerName(): string
@@ -159,6 +194,29 @@ class Builder implements BuilderInterface
         $this->container_name = $containerName;
 
         return $this;
+    }
+
+    public function setShouldRegisterAllServicesAsPublic(
+        bool $shouldRegisterAllServicesAsPublic
+    ) : BuilderInterface
+    {
+        if (null !== $this->shouldRegisterAllServicesAsPublic) {
+            throw new \LogicException('Builder shouldRegisterAllServicesAsPublic is already set.');
+        }
+
+        $this->shouldRegisterAllServicesAsPublic = $shouldRegisterAllServicesAsPublic;
+
+        return $this;
+    }
+
+    public function getShouldRegisterAllServicesAsPublic() : bool
+    {
+        if (null === $this->shouldRegisterAllServicesAsPublic) {
+            $this->shouldRegisterAllServicesAsPublic =
+                static::SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT;
+        }
+
+        return $this->shouldRegisterAllServicesAsPublic;
     }
 
     public function getFilesystemProperties(): FilesystemPropertiesInterface
