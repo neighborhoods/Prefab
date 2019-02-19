@@ -18,6 +18,8 @@ class Generator implements GeneratorInterface
     protected $fileSystem;
     protected $finder;
 
+    protected const PHPUNIT_XML_DIST = 'phpunit.xml.dist';
+
     public function generate() : GeneratorInterface
     {
         $this->setStagedDirectory($this->getHttpSourceDirectory() . '/../StagedHttp');
@@ -30,6 +32,10 @@ class Generator implements GeneratorInterface
 
         $this->getFileSystem()->mirror($this->getHttpSourceDirectory(), $this->getStagedDirectory(), null, $options);
         $this->setProjectNameInStagedHttpFiles();
+
+        if (file_exists($this->getTargetDirectory() . '/' . self::PHPUNIT_XML_DIST)) {
+            $this->getFileSystem()->remove($this->getStagedDirectory() . '/' . self::PHPUNIT_XML_DIST);
+        }
 
         $httpDirs = $this->getFinder()->directories()->in($this->getStagedDirectory());
 
