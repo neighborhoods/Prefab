@@ -12,18 +12,18 @@ class WelcomeBaskets implements WelcomeBasketsInterface
     use Prefab5\Protean\Container\Builder\FilesystemProperties\AwareTrait;
 
     protected $directory_paths = [];
-    protected $exclusions = [];
-    protected $exclusionParentNode;
+    protected $buildableDirectory = [];
+    protected $directoryParentNodes;
     protected $finder;
 
-    public function addExclusion(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface
+    public function addBuildableDirectory(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface
     {
-        if (!isset($this->exclusions[$welcomeBasketRelativeDirectoryPath])) {
-            $this->exclusions[$welcomeBasketRelativeDirectoryPath] = $welcomeBasketRelativeDirectoryPath;
+        if (!isset($this->buildableDirectory[$welcomeBasketRelativeDirectoryPath])) {
+            $this->buildableDirectory[$welcomeBasketRelativeDirectoryPath] = $welcomeBasketRelativeDirectoryPath;
         } else {
             throw new \LogicException(
                 sprintf(
-                    'WelcomeBasket exclusion[%s] is already set.',
+                    'WelcomeBasket buildableDirectory[%s] is already set.',
                     $welcomeBasketRelativeDirectoryPath
                 )
             );
@@ -35,18 +35,13 @@ class WelcomeBaskets implements WelcomeBasketsInterface
     public function getDirectoryPaths(): array
     {
         if (empty($this->directory_paths)) {
-            foreach ($this->exclusions as $exclusion) {
-                $this->getFinder()->notPath($exclusion);
-            }
+
             /** @var SplFileInfo $directory */
             foreach ($this->getFinder()->in($this->getPrefab5DirectoryPath())->directories() as $directory) {
                 $this->directory_paths[$directory->getPathname()] = $directory->getPathname();
             }
-            foreach ($this->getExclusionParentNodes() as $exclusionParentNode) {
-                if (isset($this->directory_paths[$exclusionParentNode])) {
-                    unset($this->directory_paths[$exclusionParentNode]);
-                }
-            }
+
+            $this->directory_paths = array_intersect($this->directory_paths, $this->getWelcomeBasketDirectories());
         }
 
         return $this->directory_paths;
@@ -67,20 +62,21 @@ class WelcomeBaskets implements WelcomeBasketsInterface
         return $this->getProteanContainerBuilderFilesystemProperties()->getPrefab5DirectoryPath();
     }
 
-    public function getExclusionParentNodes(): array
+    public function getWelcomeBasketDirectories(): array
     {
-        if ($this->exclusionParentNode === null) {
-            foreach ($this->exclusions as $exclusion) {
-                $exclusionParts = explode('/', $exclusion);
-                array_pop($exclusionParts);
-                foreach ($exclusionParts as $exclusionPart) {
-                    $exclusionParentNode = sprintf('%s/%s', $this->getPrefab5DirectoryPath(), $exclusionPart);
-                    $this->exclusionParentNode[$exclusionParentNode] = $exclusionParentNode;
+        if ($this->directoryParentNodes === null) {
+            $this->directoryParentNodes = [];
+            foreach ($this->buildableDirectory as $directory) {
+                $directoryParts = explode('\\', $directory);
+
+                foreach ($directoryParts as $directoryPart) {
+                    $parentNode = sprintf('%s/%s', $this->getPrefab5DirectoryPath(), $directoryPart);
+                    $this->directoryParentNodes[$parentNode] = $parentNode;
                 }
             }
 
         }
 
-        return $this->exclusionParentNode;
+        return $this->directoryParentNodes;
     }
 }

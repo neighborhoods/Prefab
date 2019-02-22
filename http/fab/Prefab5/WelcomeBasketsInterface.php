@@ -7,5 +7,5 @@ interface WelcomeBasketsInterface
 {
     public function getDirectoryPaths(): array;
 
-    public function addExclusion(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface;
+    public function addBuildableDirectory(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface;
 }
