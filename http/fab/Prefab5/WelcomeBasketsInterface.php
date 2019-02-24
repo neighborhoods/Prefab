@@ -7,5 +7,5 @@ interface WelcomeBasketsInterface
 {
     public function getDirectoryPaths(): array;
 
-    public function addBuildableDirectory(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface;
+    public function addWelcomeBasket(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface;
 }

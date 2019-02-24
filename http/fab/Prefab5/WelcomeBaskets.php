@@ -16,7 +16,7 @@ class WelcomeBaskets implements WelcomeBasketsInterface
     protected $directoryParentNodes;
     protected $finder;
 
-    public function addBuildableDirectory(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface
+    public function addWelcomeBasket(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface
     {
         if (!isset($this->buildableDirectory[$welcomeBasketRelativeDirectoryPath])) {
             $this->buildableDirectory[$welcomeBasketRelativeDirectoryPath] = $welcomeBasketRelativeDirectoryPath;

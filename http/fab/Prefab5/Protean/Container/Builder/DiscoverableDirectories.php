@@ -19,15 +19,10 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
     public function getFullPaths(): array
     {
         if (empty($this->full_paths)) {
-            if ($this->hasFilters()) {
                 $this->addFabricationDirectoryPaths();
                 $this->addSourceDirectoryPaths();
                 $this->addWelcomeBaskets();
                 $this->addAppendedPaths();
-            } else {
-                $this->addFullPath($this->getFabricationDirectoryPath());
-                $this->addFullPath($this->getSourceDirectoryPath());
-            }
         }
 
         return $this->full_paths;
