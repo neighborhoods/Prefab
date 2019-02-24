@@ -8,4 +8,6 @@ interface WelcomeBasketsInterface
     public function getDirectoryPaths(): array;
 
     public function addWelcomeBasket(string $welcomeBasketRelativeDirectoryPath): WelcomeBasketsInterface;
+
+    public function getWelcomeBasketDirectories(): array;
 }
