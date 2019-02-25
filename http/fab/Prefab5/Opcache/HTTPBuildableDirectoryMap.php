@@ -17,9 +17,9 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected $directoryMap;
 
-    protected function set(string $key, string $value) : HTTPBuildableDirectoryMapInterface
+    protected function set(string $value) : HTTPBuildableDirectoryMapInterface
     {
-        $temporaryFileName = $this->getCacheDirectoryPath() . '/' . $key . uniqid('', true) . '.tmp';
+        $temporaryFileName = $this->getCacheFilePath();
 
         try {
             if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
@@ -72,10 +72,10 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
                     }
 
                     $this->directoryMap = $directoryMap;
-                    $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, json_encode($this->directoryMap));
+                    $this->set(json_encode($this->directoryMap));
 
                 } else {
-                    $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, self::CODE_FILE_NOT_FOUND);
+                    $this->set(self::CODE_FILE_NOT_FOUND);
                     throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
                 }
 
