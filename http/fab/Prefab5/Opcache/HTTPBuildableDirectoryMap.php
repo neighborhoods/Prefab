@@ -20,6 +20,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
     protected function set(string $key, string $value) : HTTPBuildableDirectoryMapInterface
     {
         $temporaryFileName = $this->getCacheDirectoryPath() . '/' . $key . uniqid('', true) . '.tmp';
+
         try {
             if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
                 throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
@@ -67,15 +68,15 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
                     $directoryMap = Yaml::parseFile($filepath);
 
                     if ($directoryMap === false) {
-                        $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, self::CODE_FILE_NOT_FOUND);
-                        throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+                        throw (new Exception())->setCode(Exception::CODE_INVALID_YAML_FILE);
                     }
 
                     $this->directoryMap = $directoryMap;
                     $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, json_encode($this->directoryMap));
 
                 } else {
-                    throw (new Exception())->setCode(Exception::CODE_BUILDABLE_DIRECTORY_FILE_NOT_FOUND);
+                    $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, self::CODE_FILE_NOT_FOUND);
+                    throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
                 }
 
             } else {

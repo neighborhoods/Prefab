@@ -21,7 +21,12 @@ class HTTP implements HTTPInterface
         try {
             try {
                 $this->configureContainerBuilder();
-            } catch (BuildableDirectoryFileNotFound\Exception $exception) {}
+            } catch (BuildableDirectoryFileNotFound\Exception $exception) {
+                // No YAML file found. Build full container
+                $this->getProteanContainerBuilder()->buildZendExpressive();
+                $this->getProteanContainerBuilder()->setContainerName('HTTP');
+            }
+
             $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
@@ -50,13 +55,13 @@ class HTTP implements HTTPInterface
         }
 
         $urlRoot = $urlArray[1];
+        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
 
         if (!isset($httpBuildableDirectoryMap[$urlRoot])) {
-            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_FILE_NOT_FOUND);
+            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
 
         $this->getProteanContainerBuilder()->buildZendExpressive();
-        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
 
         if (isset($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'])) {
             foreach ($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'] as $directory) {
