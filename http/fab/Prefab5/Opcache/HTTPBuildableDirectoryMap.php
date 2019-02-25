@@ -52,37 +52,37 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
     public function getBuildableDirectoryMap() : array
     {
 
-        if ($this->directoryMap === null) {
-
-            $directoryMap = $this->get();
-
-            // This code is set after the file is not found the first time to prevent disk access on every subsequent call
-            if ($directoryMap === self::CODE_FILE_NOT_FOUND) {
-                throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
-            }
-
-            if ($directoryMap === false) {
-                $filepath = self::BUILDABLE_DIRECTORY_FILEPATH . '/' . self::BUILDABLE_DIRECTORY_FILENAME;
-
-                if (file_exists($filepath)) {
-                    $directoryMap = Yaml::parseFile($filepath);
-
-                    if ($directoryMap === false) {
-                        throw (new Exception())->setCode(Exception::CODE_INVALID_YAML_FILE);
-                    }
-
-                    $this->directoryMap = $directoryMap;
-                    $this->set(json_encode($this->directoryMap));
-
-                } else {
-                    $this->set(self::CODE_FILE_NOT_FOUND);
-                    throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
-                }
-
-            } else {
-                $this->directoryMap = json_decode($directoryMap, true);
-            }
+        if ($this->directoryMap !== null) {
+            return $this->directoryMap;
         }
+
+        $directoryMap = $this->get();
+
+        // This code is set after the file is not found the first time to prevent disk access on every subsequent call
+        if ($directoryMap === self::CODE_FILE_NOT_FOUND) {
+            throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+        }
+
+        if ($directoryMap !== false) {
+            $this->directoryMap = json_decode($directoryMap, true);
+            return $this->directoryMap;
+        }
+
+        $filepath = self::BUILDABLE_DIRECTORY_FILEPATH . '/' . self::BUILDABLE_DIRECTORY_FILENAME;
+
+        if (!file_exists($filepath)) {
+            $this->set(self::CODE_FILE_NOT_FOUND);
+            throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+        }
+
+        $directoryMap = Yaml::parseFile($filepath);
+
+        if ($directoryMap === false) {
+            throw (new Exception())->setCode(Exception::CODE_INVALID_YAML_FILE);
+        }
+
+        $this->directoryMap = $directoryMap;
+        $this->set(json_encode($this->directoryMap));
 
         return $this->directoryMap;
     }
