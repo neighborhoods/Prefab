@@ -53,7 +53,7 @@ class RouteMapBuilderTest extends TestCase
     public function shouldThrowRouteFileNotFoundException() : void
     {
         static::expectException(HTTPBuildableDirectoryMap\Exception::class);
-        static::expectExceptionCode(HTTPBuildableDirectoryMap\Exception::CODE_ROUTE_FILE_NOT_FOUND);
+        static::expectExceptionCode(HTTPBuildableDirectoryMap\Exception::CODE_BUILDABLE_DIRECTORY_FILE_NOT_FOUND);
 
         (new RouteMapBuilder())
             ->setNamespace('unimportant')

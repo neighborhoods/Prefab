@@ -3,17 +3,15 @@
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\ComposerFileParser;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\RouteMapBuilder;
 use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 {
     protected const BUILDABLE_DIRECTORY_MAP_KEY = 'buildable-directory-map-key';
-    protected const COMPOSER_FILE_PATH = __DIR__ . '/../../../composer.json';
-    protected const ROUTE_FILE_PATH = __DIR__ . '/../Zend/Expressive/Application/Decorator.service.yml';
+    protected const BUILDABLE_DIRECTORY_FILEPATH = __DIR__ . '/../../../';
+    protected const BUILDABLE_DIRECTORY_FILENAME = 'http-buildable-directories.yml';
 
 
     protected $directoryMap;
@@ -49,33 +47,24 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         return $this;
     }
 
-    public function getDirectoryMap() : array
+    public function getBuildableDirectoryMap() : array
     {
         if ($this->directoryMap === null) {
             $directoryMap = $this->get();
             if ($directoryMap === false) {
-                $this->directoryMap = $this->buildDirectoryMap();
-                $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, json_encode($this->directoryMap));
+                $filepath = self::BUILDABLE_DIRECTORY_FILEPATH . '/' . self::BUILDABLE_DIRECTORY_FILENAME;
+                if (file_exists($filepath)) {
+                    $this->directoryMap = Yaml::parseFile($filepath);
+                    $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, json_encode($this->directoryMap));
+                } else {
+                    throw (new Exception())->setCode(Exception::CODE_BUILDABLE_DIRECTORY_FILE_NOT_FOUND);
+                }
             } else {
                 $this->directoryMap = json_decode($directoryMap, true);
             }
         }
 
         return $this->directoryMap;
-    }
-
-    protected function buildDirectoryMap() : array
-    {
-       $namespace = (new ComposerFileParser())
-           ->setComposerFilePath(self::COMPOSER_FILE_PATH)
-            ->getPsr4AutoloaderBaseNamespace();
-
-        $directoryMap = (new RouteMapBuilder())
-            ->setRouteFilePath(self::ROUTE_FILE_PATH)
-            ->setNamespace($namespace)
-            ->buildRouteMap();
-
-        return $directoryMap;
     }
 
     protected function getCacheDirectoryPath() : string
