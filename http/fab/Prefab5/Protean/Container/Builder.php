@@ -44,9 +44,6 @@ class Builder implements BuilderInterface
                 $containerClass = sprintf('\\%s', $this->getContainerName());
                 $containerBuilder = new $containerClass;
             } else {
-                if ($this->getCanBuildZendExpressive()) {
-                    $this->buildZendExpressive();
-                }
                 $this->cacheSymfonyContainerBuilder();
                 $containerBuilder = $this->getSymfonyContainerBuilder();
             }
@@ -54,26 +51,6 @@ class Builder implements BuilderInterface
         }
 
         return $this->container;
-    }
-
-    public function setCanBuildZendExpressive(bool $canBuildZendExpressive): BuilderInterface
-    {
-        if ($this->can_build_zend_expressive === null) {
-            $this->can_build_zend_expressive = $canBuildZendExpressive;
-        } else {
-            throw new \LogicException('Builder can_build_zend_expressive is already set.');
-        }
-
-        return $this;
-    }
-
-    protected function getCanBuildZendExpressive(): bool
-    {
-        if ($this->can_build_zend_expressive === null) {
-            throw new \LogicException('Builder can_build_zend_expressive is not set.');
-        }
-
-        return $this->can_build_zend_expressive;
     }
 
     protected function getSymfonyContainerBuilder(): ContainerBuilder
@@ -105,7 +82,7 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function buildZendExpressive(): BuilderInterface
+    public function buildZendExpressive(): BuilderInterface
     {
         $currentWorkingDirectory = getcwd();
         chdir($this->getFilesystemProperties()->getRootDirectoryPath());

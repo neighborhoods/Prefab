@@ -34,13 +34,8 @@ class HTTP implements HTTPInterface
 
     protected function configureContainerBuilder() : HTTPInterface
     {
-
         if (!isset($_REQUEST['_url'])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
-        }
-
-        if (!isset($_SERVER['REQUEST_METHOD'])) {
-            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_NO_REQUEST_METHOD);
         }
 
         $urlArray = explode('/', $_REQUEST['_url']);
@@ -50,28 +45,32 @@ class HTTP implements HTTPInterface
         }
 
         $urlRoot = $urlArray[1];
-        $requestType = strtolower($_SERVER['REQUEST_METHOD']);
 
-        $directoryMap = (new HTTPBuildableDirectoryMap())->getDirectoryMap();
+        $httpBuildableDirectoryMap = (new HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
-        if (!isset($directoryMap[$requestType][$urlRoot])) {
+        if (!isset($httpBuildableDirectoryMap[$urlRoot])) {
             throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
 
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->addDirectoryPathFilter($urlRoot);
-        $this->getProteanContainerBuilder()->setCanBuildZendExpressive(true);
+        $this->getProteanContainerBuilder()->buildZendExpressive();
         $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->addDirectoryPathFilter('MV1');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->addDirectoryPathFilter('Aws');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('Doctrine\DBAL');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('Zend\Expressive');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('PDO');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('Opcache');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('NewRelic');
-        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('SearchCriteria');
 
-        $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
-        $application->run();
+        foreach ($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'] as $directory) {
+            $this->getProteanContainerBuilder()
+                ->getDiscoverableDirectories()
+                ->addDirectoryPathFilter($directory);
+        }
+
+        foreach ($httpBuildableDirectoryMap[$urlRoot]['welcome_baskets'] as $welcomeBasket) {
+            $this->getProteanContainerBuilder()
+                ->getDiscoverableDirectories()
+                ->getWelcomeBaskets()
+                ->addWelcomeBasket($welcomeBasket);
+        }
+
+        foreach ($httpBuildableDirectoryMap[$urlRoot]['appended_paths'] as $path) {
+            $this->getProteanContainerBuilder()->getDiscoverableDirectories()->appendPath($path);
+        }
 
         return $this;
     }
