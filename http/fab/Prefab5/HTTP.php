@@ -7,6 +7,7 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuilda
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
 
 class HTTP implements HTTPInterface
 {
@@ -18,7 +19,9 @@ class HTTP implements HTTPInterface
     public function respond() : HTTPInterface
     {
         try {
-            $this->configureContainerBuilder();
+            try {
+                $this->configureContainerBuilder();
+            } catch (BuildableDirectoryFileNotFound\Exception $exception) {}
             $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
@@ -34,6 +37,8 @@ class HTTP implements HTTPInterface
 
     protected function configureContainerBuilder() : HTTPInterface
     {
+        $httpBuildableDirectoryMap = (new HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
+
         if (!isset($_REQUEST['_url'])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
@@ -46,30 +51,38 @@ class HTTP implements HTTPInterface
 
         $urlRoot = $urlArray[1];
 
-        $httpBuildableDirectoryMap = (new HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
-
         if (!isset($httpBuildableDirectoryMap[$urlRoot])) {
-            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
+            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_FILE_NOT_FOUND);
         }
 
         $this->getProteanContainerBuilder()->buildZendExpressive();
         $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
 
-        foreach ($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'] as $directory) {
-            $this->getProteanContainerBuilder()
-                ->getDiscoverableDirectories()
-                ->addDirectoryPathFilter($directory);
+        if (isset($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'])) {
+            foreach ($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'] as $directory) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->addDirectoryPathFilter($directory);
+            }
         }
 
-        foreach ($httpBuildableDirectoryMap[$urlRoot]['welcome_baskets'] as $welcomeBasket) {
-            $this->getProteanContainerBuilder()
-                ->getDiscoverableDirectories()
-                ->getWelcomeBaskets()
-                ->addWelcomeBasket($welcomeBasket);
+        if (isset($httpBuildableDirectoryMap[$urlRoot]['welcome_baskets'])) {
+            foreach ($httpBuildableDirectoryMap[$urlRoot]['welcome_baskets'] as $welcomeBasket) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->getWelcomeBaskets()
+                    ->addWelcomeBasket($welcomeBasket);
+            }
         }
 
-        foreach ($httpBuildableDirectoryMap[$urlRoot]['appended_paths'] as $path) {
-            $this->getProteanContainerBuilder()->getDiscoverableDirectories()->appendPath($path);
+        if (isset($httpBuildableDirectoryMap[$urlRoot]['appended_paths'])) {
+            foreach ($httpBuildableDirectoryMap[$urlRoot]['appended_paths'] as $path) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->appendPath(
+                        $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/' . $path
+                    );
+            }
         }
 
         return $this;

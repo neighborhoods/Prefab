@@ -5,6 +5,7 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
 use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
@@ -12,7 +13,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
     protected const BUILDABLE_DIRECTORY_MAP_KEY = 'buildable-directory-map-key';
     protected const BUILDABLE_DIRECTORY_FILEPATH = __DIR__ . '/../../../';
     protected const BUILDABLE_DIRECTORY_FILENAME = 'http-buildable-directories.yml';
-
+    protected const CODE_FILE_NOT_FOUND = 'code_file_not_found';
 
     protected $directoryMap;
 
@@ -49,16 +50,34 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     public function getBuildableDirectoryMap() : array
     {
+
         if ($this->directoryMap === null) {
+
             $directoryMap = $this->get();
+
+            // This code is set after the file is not found the first time to prevent disk access on every subsequent call
+            if ($directoryMap === self::CODE_FILE_NOT_FOUND) {
+                throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+            }
+
             if ($directoryMap === false) {
                 $filepath = self::BUILDABLE_DIRECTORY_FILEPATH . '/' . self::BUILDABLE_DIRECTORY_FILENAME;
+
                 if (file_exists($filepath)) {
-                    $this->directoryMap = Yaml::parseFile($filepath);
+                    $directoryMap = Yaml::parseFile($filepath);
+
+                    if ($directoryMap === false) {
+                        $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, self::CODE_FILE_NOT_FOUND);
+                        throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+                    }
+
+                    $this->directoryMap = $directoryMap;
                     $this->set(self::BUILDABLE_DIRECTORY_MAP_KEY, json_encode($this->directoryMap));
+
                 } else {
                     throw (new Exception())->setCode(Exception::CODE_BUILDABLE_DIRECTORY_FILE_NOT_FOUND);
                 }
+
             } else {
                 $this->directoryMap = json_decode($directoryMap, true);
             }
