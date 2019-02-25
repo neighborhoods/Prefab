@@ -15,6 +15,9 @@ class HTTP implements HTTPInterface
 
     const HTTP_CODE_BAD_REQUEST = 400;
     const HTTP_CODE_INTERNAL_ERROR = 500;
+    const YAML_KEY_BUILDABLE_DIRECTORIES = 'buildable_directories';
+    const YAML_KEY_WELCOME_BASKETS = 'welcome_baskets';
+    const YAML_KEY_APPENDED_PATHS = 'appended_paths';
 
     public function respond() : HTTPInterface
     {
@@ -44,6 +47,48 @@ class HTTP implements HTTPInterface
     {
         $httpBuildableDirectoryMap = (new HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
+        $urlRoot = $this->getUrlRoot();
+
+        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
+
+        if (!isset($httpBuildableDirectoryMap[$urlRoot])) {
+            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
+        }
+
+        $this->getProteanContainerBuilder()->buildZendExpressive();
+
+        if (isset($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_BUILDABLE_DIRECTORIES])) {
+            foreach ($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_BUILDABLE_DIRECTORIES] as $directory) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->addDirectoryPathFilter($directory);
+            }
+        }
+
+        if (isset($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_WELCOME_BASKETS])) {
+            foreach ($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_WELCOME_BASKETS] as $welcomeBasket) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->getWelcomeBaskets()
+                    ->addWelcomeBasket($welcomeBasket);
+            }
+        }
+
+        if (isset($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_APPENDED_PATHS])) {
+            foreach ($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_APPENDED_PATHS] as $path) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->appendPath(
+                        $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/' . $path
+                    );
+            }
+        }
+
+        return $this;
+    }
+
+    protected function getUrlRoot() : string
+    {
         if (!isset($_REQUEST['_url'])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
@@ -54,42 +99,6 @@ class HTTP implements HTTPInterface
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
 
-        $urlRoot = $urlArray[1];
-        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
-
-        if (!isset($httpBuildableDirectoryMap[$urlRoot])) {
-            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
-        }
-
-        $this->getProteanContainerBuilder()->buildZendExpressive();
-
-        if (isset($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'])) {
-            foreach ($httpBuildableDirectoryMap[$urlRoot]['buildable_directories'] as $directory) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->addDirectoryPathFilter($directory);
-            }
-        }
-
-        if (isset($httpBuildableDirectoryMap[$urlRoot]['welcome_baskets'])) {
-            foreach ($httpBuildableDirectoryMap[$urlRoot]['welcome_baskets'] as $welcomeBasket) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->getWelcomeBaskets()
-                    ->addWelcomeBasket($welcomeBasket);
-            }
-        }
-
-        if (isset($httpBuildableDirectoryMap[$urlRoot]['appended_paths'])) {
-            foreach ($httpBuildableDirectoryMap[$urlRoot]['appended_paths'] as $path) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->appendPath(
-                        $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/' . $path
-                    );
-            }
-        }
-
-        return $this;
+        return $urlArray[1];
     }
 }
