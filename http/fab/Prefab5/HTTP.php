@@ -12,16 +12,8 @@ class HTTP implements HTTPInterface
 
     public function respond(): HTTPInterface
     {
-        $this->getProteanContainerBuilder()->setCanBuildZendExpressive(true);
+        $this->getProteanContainerBuilder()->buildZendExpressive();
         $this->getProteanContainerBuilder()->setContainerName('HTTP');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->addDirectoryPathFilter('MV1');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->addDirectoryPathFilter('Aws');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('Doctrine\DBAL');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('Zend\Expressive');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('PDO');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('Opcache');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('NewRelic');
-//        $this->getProteanContainerBuilder()->getDiscoverableDirectories()->getWelcomeBaskets()->addWelcomeBasket('SearchCriteria');
         $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
         $application->run();
 

@@ -110,15 +110,19 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 
     protected function addFabricationDirectoryPaths(): DiscoverableDirectoriesInterface
     {
-        foreach ($this->getFilters() as $directoryFilter) {
-            $fullPathCandidate = sprintf(
-                '%s/%s',
-                $this->getFabricationDirectoryPath(),
-                $directoryFilter
-            );
-            if ($this->getFilesystem()->exists($fullPathCandidate)) {
-                $this->addFullPath($fullPathCandidate);
+        if (!empty($this->getFilters())) {
+            foreach ($this->getFilters() as $directoryFilter) {
+                $fullPathCandidate = sprintf(
+                    '%s/%s',
+                    $this->getFabricationDirectoryPath(),
+                    $directoryFilter
+                );
+                if ($this->getFilesystem()->exists($fullPathCandidate)) {
+                    $this->addFullPath($fullPathCandidate);
+                }
             }
+        } else {
+            $this->addFullPath($this->getFabricationDirectoryPath());
         }
 
         return $this;
@@ -126,8 +130,12 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 
     protected function addSourceDirectoryPaths(): DiscoverableDirectoriesInterface
     {
-        foreach ($this->getFilters() as $directoryFilter) {
-            $this->addFullPath(sprintf('%s/%s', $this->getSourceDirectoryPath(), $directoryFilter));
+        if (!empty($this->getFilters())) {
+            foreach ($this->getFilters() as $directoryFilter) {
+                $this->addFullPath(sprintf('%s/%s', $this->getSourceDirectoryPath(), $directoryFilter));
+            }
+        } else {
+            $this->addFullPath($this->getSourceDirectoryPath());
         }
 
         return $this;
