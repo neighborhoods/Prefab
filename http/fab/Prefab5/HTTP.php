@@ -22,13 +22,7 @@ class HTTP implements HTTPInterface
     public function respond() : HTTPInterface
     {
         try {
-            try {
-                $this->configureContainerBuilder();
-            } catch (BuildableDirectoryFileNotFound\Exception $exception) {
-                // No YAML file found. Build full container
-                $this->getProteanContainerBuilder()->buildZendExpressive();
-                $this->getProteanContainerBuilder()->setContainerName('HTTP');
-            }
+            $this->configureContainerBuilder();
 
             $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
             $application->run();
@@ -45,7 +39,14 @@ class HTTP implements HTTPInterface
 
     protected function configureContainerBuilder() : HTTPInterface
     {
-        $httpBuildableDirectoryMap = (new HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
+        try {
+            $httpBuildableDirectoryMap = (new HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
+        } catch (BuildableDirectoryFileNotFound\Exception $exception) {
+            // No YAML file found. Build full container
+            $this->getProteanContainerBuilder()->buildZendExpressive();
+            $this->getProteanContainerBuilder()->setContainerName('HTTP');
+            return $this;
+        }
 
         $urlRoot = $this->getUrlRoot();
 
