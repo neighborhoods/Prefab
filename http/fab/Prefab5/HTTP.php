@@ -13,11 +13,11 @@ class HTTP implements HTTPInterface
 {
     use Protean\Container\Builder\AwareTrait;
 
-    const HTTP_CODE_BAD_REQUEST = 400;
-    const HTTP_CODE_INTERNAL_ERROR = 500;
-    const YAML_KEY_BUILDABLE_DIRECTORIES = 'buildable_directories';
-    const YAML_KEY_WELCOME_BASKETS = 'welcome_baskets';
-    const YAML_KEY_APPENDED_PATHS = 'appended_paths';
+    protected const HTTP_CODE_BAD_REQUEST = 400;
+    protected const HTTP_CODE_INTERNAL_ERROR = 500;
+    protected const YAML_KEY_BUILDABLE_DIRECTORIES = 'buildable_directories';
+    protected const YAML_KEY_WELCOME_BASKETS = 'welcome_baskets';
+    protected const YAML_KEY_APPENDED_PATHS = 'appended_paths';
 
     public function respond() : HTTPInterface
     {
