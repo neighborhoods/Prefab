@@ -19,12 +19,8 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function set(string $value) : HTTPBuildableDirectoryMapInterface
     {
-        $temporaryFileName = $this->getCacheFilePath();
-
         try {
-            if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
-                throw (new Exception())->setCode(Exception::CODE_FAILED_TO_WRITE_FILE);
-            }
+            $this->saveValueToTempFile($value);
         } catch (Exception $exception) {
             (new NewRelic())->noticeThrowable($exception);
         }
@@ -64,7 +60,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         }
 
         if ($directoryMap !== false) {
-            $this->directoryMap = $directoryMap;
+            $this->directoryMap = json_decode($directoryMap, true);
             return $this->directoryMap;
         }
 
@@ -82,7 +78,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         }
 
         $this->directoryMap = $directoryMap;
-        $this->set($this->directoryMap);
+        $this->set(json_encode($this->directoryMap));
 
         return $this->directoryMap;
     }
@@ -95,5 +91,18 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
     protected function getCacheFilePath()
     {
         return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), HTTPBuildableDirectoryMap::class);
+    }
+
+    protected function saveValueToTempFile(string $value) : void
+    {
+        $fileDidSave = file_put_contents(
+            $this->getCacheFilePath(),
+            '<?php $value = ' . var_export($value, true) . ';'
+        );
+
+        if ($fileDidSave === false) {
+            throw (new Exception())
+                ->setCode(Exception::CODE_FAILED_TO_WRITE_FILE);
+        }
     }
 }

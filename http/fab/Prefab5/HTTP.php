@@ -58,32 +58,11 @@ class HTTP implements HTTPInterface
 
         $this->getProteanContainerBuilder()->buildZendExpressive();
 
-        if (isset($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_BUILDABLE_DIRECTORIES])) {
-            foreach ($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_BUILDABLE_DIRECTORIES] as $directory) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->addDirectoryPathFilter($directory);
-            }
-        }
+        $routeBuildableDirectories = $httpBuildableDirectoryMap[$urlRoot];
 
-        if (isset($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_WELCOME_BASKETS])) {
-            foreach ($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_WELCOME_BASKETS] as $welcomeBasket) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->getWelcomeBaskets()
-                    ->addWelcomeBasket($welcomeBasket);
-            }
-        }
-
-        if (isset($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_APPENDED_PATHS])) {
-            foreach ($httpBuildableDirectoryMap[$urlRoot][self::YAML_KEY_APPENDED_PATHS] as $path) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->appendPath(
-                        $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/' . $path
-                    );
-            }
-        }
+        $this->addBuildableDirectories($routeBuildableDirectories);
+        $this->addWelcomeBaskets($routeBuildableDirectories);
+        $this->addAppendedPaths($routeBuildableDirectories);
 
         return $this;
     }
@@ -101,5 +80,47 @@ class HTTP implements HTTPInterface
         }
 
         return $urlArray[1];
+    }
+
+    protected function addBuildableDirectories(array $httpBuildableDirectoryMap) : HTTPInterface
+    {
+        if (isset($httpBuildableDirectoryMap[self::YAML_KEY_BUILDABLE_DIRECTORIES])) {
+            foreach ($httpBuildableDirectoryMap[self::YAML_KEY_BUILDABLE_DIRECTORIES] as $directory) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->addDirectoryPathFilter($directory);
+            }
+        }
+
+        return $this;
+    }
+
+    protected function addWelcomeBaskets(array $httpBuildableDirectoryMap) : HTTPInterface
+    {
+        if (isset($httpBuildableDirectoryMap[self::YAML_KEY_WELCOME_BASKETS])) {
+            foreach ($httpBuildableDirectoryMap[self::YAML_KEY_WELCOME_BASKETS] as $welcomeBasket) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->getWelcomeBaskets()
+                    ->addWelcomeBasket($welcomeBasket);
+            }
+        }
+
+        return $this;
+    }
+
+    protected function addAppendedPaths(array $httpBuildableDirectoryMap) : HTTPInterface
+    {
+        if (isset($httpBuildableDirectoryMap[self::YAML_KEY_APPENDED_PATHS])) {
+            foreach ($httpBuildableDirectoryMap[self::YAML_KEY_APPENDED_PATHS] as $path) {
+                $this->getProteanContainerBuilder()
+                    ->getDiscoverableDirectories()
+                    ->appendPath(
+                        $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/' . $path
+                    );
+            }
+        }
+
+        return $this;
     }
 }
