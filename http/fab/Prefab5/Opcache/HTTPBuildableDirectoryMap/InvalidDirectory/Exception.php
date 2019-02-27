@@ -13,7 +13,7 @@ class Exception extends Runtime\Exception
     public function __construct()
     {
         parent::__construct();
-        $this->addPossibleMessage(self::CODE_INVALID_DIRECTORY, 'Get host by name failed.');
+        $this->addPossibleMessage(self::CODE_INVALID_DIRECTORY, 'Invalid directory requested.');
 
         return $this;
     }

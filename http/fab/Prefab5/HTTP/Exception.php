@@ -13,7 +13,7 @@ class Exception extends Runtime\Exception
     public function __construct()
     {
         parent::__construct();
-        $this->addPossibleMessage(self::CODE_INVALID_ROUTE, 'Provide HTTP route is invalid.');
+        $this->addPossibleMessage(self::CODE_INVALID_ROUTE, 'Provided HTTP route is invalid.');
 
         return $this;
     }

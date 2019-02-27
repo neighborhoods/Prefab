@@ -6,12 +6,12 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Map;
 use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 {
-    protected const BUILDABLE_DIRECTORY_MAP_KEY = 'buildable-directory-map-key';
-    protected const BUILDABLE_DIRECTORY_FILEPATH = __DIR__ . '/../../../';
+    protected const BUILDABLE_DIRECTORY_FILEPATH = __DIR__ . '/../../..';
     protected const BUILDABLE_DIRECTORY_FILENAME = 'http-buildable-directories.yml';
     protected const CODE_FILE_NOT_FOUND = 'code_file_not_found';
 
@@ -23,7 +23,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
         try {
             if (file_put_contents($temporaryFileName, '<?php $value = ' . var_export($value, true) . ';') === false) {
-                throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
+                throw (new Exception())->setCode(Exception::CODE_FAILED_TO_WRITE_FILE);
             }
         } catch (Exception $exception) {
             (new NewRelic())->noticeThrowable($exception);
@@ -64,7 +64,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         }
 
         if ($directoryMap !== false) {
-            $this->directoryMap = json_decode($directoryMap, true);
+            $this->directoryMap = $directoryMap;
             return $this->directoryMap;
         }
 
@@ -82,7 +82,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         }
 
         $this->directoryMap = $directoryMap;
-        $this->set(json_encode($this->directoryMap));
+        $this->set($this->directoryMap);
 
         return $this->directoryMap;
     }
