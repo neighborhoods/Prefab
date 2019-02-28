@@ -13,7 +13,9 @@ class ExceptionHandler implements ExceptionHandlerInterface
 
         if ($newRelic->isExtensionLoaded()) {
             $newRelic->noticeThrowable($throwable);
-        } else {
+        }
+        // Writing to file is extremely slow and should never be done on Production from an HTTP context
+        else if (getenv('SITE_ENVIRONMENT') === 'Local') {
             $this->getPrefab5Logger()
                 ->critical($throwable->__toString() . PHP_EOL);
         }
