@@ -140,7 +140,8 @@ class Builder implements BuilderInterface
 
     protected function updateServiceDefinitions(
         ContainerBuilder $containerBuilder
-    ) : BuilderInterface {
+    ) : BuilderInterface
+    {
         if ($this->getShouldRegisterAllServicesAsPublic()) {
             $this->registerAllDefinitionsAsPublic($containerBuilder);
             $this->registerAllAliasesAsPublic($containerBuilder);
@@ -153,7 +154,8 @@ class Builder implements BuilderInterface
 
     protected function registerAllDefinitionsAsPublic(
         ContainerBuilder $containerBuilder
-    ) : void {
+    ) : void
+    {
         foreach ($containerBuilder->getDefinitions() as $definition) {
             $definition->setPublic(true);
         }
@@ -161,7 +163,8 @@ class Builder implements BuilderInterface
 
     protected function registerAllAliasesAsPublic(
         ContainerBuilder $containerBuilder
-    ) : void {
+    ) : void
+    {
         foreach ($containerBuilder->getAliases() as $alias) {
             $alias->setPublic(true);
         }
@@ -169,7 +172,8 @@ class Builder implements BuilderInterface
 
     protected function registerUserSpecifiedDefinitionsAsPublic(
         ContainerBuilder $containerBuilder
-    ) : void {
+    ) : void
+    {
         foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
             $containerBuilder->getDefinition($serviceId)->setPublic(true);
         }
@@ -197,7 +201,8 @@ class Builder implements BuilderInterface
 
     public function setShouldRegisterAllServicesAsPublic(
         bool $shouldRegisterAllServicesAsPublic
-    ) : BuilderInterface {
+    ) : BuilderInterface
+    {
         if (null !== $this->shouldRegisterAllServicesAsPublic) {
             throw new \LogicException('Builder shouldRegisterAllServicesAsPublic is already set.');
         }

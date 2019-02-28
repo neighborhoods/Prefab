@@ -9,6 +9,7 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
+
 $logger = (new Logger())
     ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log');
 
