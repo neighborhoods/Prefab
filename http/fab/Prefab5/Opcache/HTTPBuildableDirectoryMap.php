@@ -3,10 +3,10 @@
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Map;
 use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
@@ -15,6 +15,8 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
     protected const BUILDABLE_DIRECTORY_FILENAME = 'http-buildable-directories.yml';
     protected const CODE_FILE_NOT_FOUND = 'code_file_not_found';
 
+    protected const LOG_FILE_PATH = __DIR__ . '/../../../Logs/HTTP.log';
+
     protected $directoryMap;
 
     protected function set(string $value) : HTTPBuildableDirectoryMapInterface
@@ -22,7 +24,15 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         try {
             $this->saveValueToTempFile($value);
         } catch (Exception $exception) {
-            (new NewRelic())->noticeThrowable($exception);
+            $newRelic = new NewRelic();
+
+            if ($newRelic->isExtensionLoaded()) {
+                $newRelic->noticeThrowable($exception);
+            } else if (getenv('SITE_ENVIRONMENT') === 'Local') {
+                (new Logger())
+                    ->setLogFilePath(self::LOG_FILE_PATH)
+                    ->notice($exception->__toString());
+            }
         }
 
         return $this;
