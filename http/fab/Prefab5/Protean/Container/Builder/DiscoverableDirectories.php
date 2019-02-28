@@ -16,29 +16,29 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
     protected $filesystem;
     protected $welcome_baskets;
 
-    public function getFullPaths(): array
+    public function getFullPaths() : array
     {
         if (empty($this->full_paths)) {
-                $this->addFabricationDirectoryPaths();
-                $this->addSourceDirectoryPaths();
-                $this->addWelcomeBaskets();
-                $this->addAppendedPaths();
+            $this->addFabricationDirectoryPaths();
+            $this->addSourceDirectoryPaths();
+            $this->addWelcomeBaskets();
+            $this->addAppendedPaths();
         }
 
         return $this->full_paths;
     }
 
-    protected function hasFilters(): bool
+    protected function hasFilters() : bool
     {
         return !empty($this->directory_filters);
     }
 
-    protected function getFilters(): array
+    protected function getFilters() : array
     {
         return $this->directory_filters;
     }
 
-    public function addDirectoryPathFilter(string $directoryPathFilter): DiscoverableDirectoriesInterface
+    public function addDirectoryPathFilter(string $directoryPathFilter) : DiscoverableDirectoriesInterface
     {
         if (isset($this->directory_filters[$directoryPathFilter])) {
             throw new \LogicException(
@@ -62,7 +62,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    public function addAppendedPaths(): array
+    public function addAppendedPaths() : array
     {
         foreach ($this->appended_paths as $appendedPath) {
             $this->addFullPath($appendedPath);
@@ -71,7 +71,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this->appended_paths;
     }
 
-    public function appendPath(string $path): DiscoverableDirectoriesInterface
+    public function appendPath(string $path) : DiscoverableDirectoriesInterface
     {
         if (isset($this->appended_paths[$path])) {
             throw new \LogicException(
@@ -84,22 +84,22 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    protected function getCacheDirectoryPath(): string
+    protected function getCacheDirectoryPath() : string
     {
         return $this->getProteanContainerBuilderFilesystemProperties()->getCacheDirectoryPath();
     }
 
-    protected function getFabricationDirectoryPath(): string
+    protected function getFabricationDirectoryPath() : string
     {
         return $this->getProteanContainerBuilderFilesystemProperties()->getFabricationDirectoryPath();
     }
 
-    protected function getSourceDirectoryPath(): string
+    protected function getSourceDirectoryPath() : string
     {
         return $this->getProteanContainerBuilderFilesystemProperties()->getSourceDirectoryPath();
     }
 
-    protected function getFilesystem(): Filesystem
+    protected function getFilesystem() : Filesystem
     {
         if ($this->filesystem === null) {
             $this->filesystem = new Filesystem();
@@ -108,7 +108,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this->filesystem;
     }
 
-    protected function addFabricationDirectoryPaths(): DiscoverableDirectoriesInterface
+    protected function addFabricationDirectoryPaths() : DiscoverableDirectoriesInterface
     {
         if (!empty($this->getFilters())) {
             foreach ($this->getFilters() as $directoryFilter) {
@@ -128,7 +128,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    protected function addSourceDirectoryPaths(): DiscoverableDirectoriesInterface
+    protected function addSourceDirectoryPaths() : DiscoverableDirectoriesInterface
     {
         if (!empty($this->getFilters())) {
             foreach ($this->getFilters() as $directoryFilter) {
@@ -141,7 +141,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    protected function addFullPath(string $fullPathCandidate): DiscoverableDirectoriesInterface
+    protected function addFullPath(string $fullPathCandidate) : DiscoverableDirectoriesInterface
     {
         if (!isset($this->full_paths[$fullPathCandidate])) {
             $this->full_paths[$fullPathCandidate] = $fullPathCandidate;
@@ -157,7 +157,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    protected function addWelcomeBaskets(): DiscoverableDirectoriesInterface
+    protected function addWelcomeBaskets() : DiscoverableDirectoriesInterface
     {
         foreach ($this->getWelcomeBaskets()->getDirectoryPaths() as $directoryPath) {
             $this->addFullPath($directoryPath);
@@ -166,7 +166,7 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    public function getWelcomeBaskets(): Prefab5\WelcomeBasketsInterface
+    public function getWelcomeBaskets() : Prefab5\WelcomeBasketsInterface
     {
         if ($this->welcome_baskets === null) {
             $welcomeBaskets = new Prefab5\WelcomeBaskets();
