@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
@@ -13,8 +14,6 @@ class HTTP implements HTTPInterface
 {
     use Protean\Container\Builder\AwareTrait;
 
-    protected const HTTP_CODE_BAD_REQUEST = 400;
-    protected const HTTP_CODE_INTERNAL_ERROR = 500;
     protected const YAML_KEY_BUILDABLE_DIRECTORIES = 'buildable_directories';
     protected const YAML_KEY_WELCOME_BASKETS = 'welcome_baskets';
     protected const YAML_KEY_APPENDED_PATHS = 'appended_paths';
@@ -27,10 +26,10 @@ class HTTP implements HTTPInterface
             $application = $this->getProteanContainerBuilder()->build()->get(Application::class);
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
-            http_response_code(self::HTTP_CODE_BAD_REQUEST);
+            http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
             (new NewRelic())->noticeThrowable($exception);
         } catch (\Throwable $throwable) {
-            http_response_code(self::HTTP_CODE_INTERNAL_ERROR);
+            http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
             (new NewRelic())->noticeThrowable($throwable);
         }
 

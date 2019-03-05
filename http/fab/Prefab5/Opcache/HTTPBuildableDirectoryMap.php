@@ -64,9 +64,11 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
         $directoryMap = $this->get();
 
-        // This code is set after the file is not found the first time to prevent disk access on every subsequent call
+        // This code is set after the file is not found the first time to prevent
+        // disk access on every subsequent call
         if ($directoryMap === self::CODE_FILE_NOT_FOUND) {
-            throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+            throw (new BuildableDirectoryFileNotFound\Exception())
+                ->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
         }
 
         if ($directoryMap !== false) {
@@ -78,7 +80,8 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
         if (!file_exists($filepath)) {
             $this->set(self::CODE_FILE_NOT_FOUND);
-            throw (new BuildableDirectoryFileNotFound\Exception())->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+            throw (new BuildableDirectoryFileNotFound\Exception())
+                ->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
         }
 
         $directoryMap = Yaml::parseFile($filepath);
