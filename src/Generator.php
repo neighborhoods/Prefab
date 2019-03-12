@@ -3,6 +3,7 @@
 
 namespace Neighborhoods\Prefab;
 
+use Neighborhoods\Bradfab\Bradfab;
 use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -42,7 +43,10 @@ class Generator implements GeneratorInterface
 
         echo "\n";
         echo ">> Copying the skeleton...\n";
-        $this->generateHttpSkeleton();
+        $this->generateBradFabTemplates();
+
+//        $bradfab = (new Bradfab())->run();
+//        $this->generateHttpSkeleton();
         echo ">> Success.\n";
 
         echo ">> Assembling the Prefab build plan...\n";
@@ -55,6 +59,35 @@ class Generator implements GeneratorInterface
 
         echo ">> Protean Prefab complete.\n";
         echo "\n";
+
+        return $this;
+    }
+
+    protected function generateBradFabTemplates() : GeneratorInterface
+    {
+        $finder = new Finder();
+        $daos = $finder->files()->name('*' . BuildPlan\Builder::DAO_YML_SUFFIX)->in($this->srcLocation);
+
+        /** @var SplFileInfo $dao */
+        foreach ($daos as $dao) {
+
+
+            $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
+            $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath).  '.fabrication.yml';
+
+            $writeFilePath = __DIR__ . '/../bradfab/' .  $daoRelativePath;
+
+            $directoryPathArray = explode('/', $writeFilePath);
+            unset($directoryPathArray[count($directoryPathArray) -1]);
+            $directoryPath = implode('/', $directoryPathArray);
+
+            // TODO: Create directories for files without doing this
+            if (!file_exists($directoryPath)) {
+                mkdir($directoryPath, 0777, true);
+            }
+
+            file_put_contents($writeFilePath, file_get_contents(__DIR__ . '/Template/AllSupportingActors.yml'));
+        }
 
         return $this;
     }

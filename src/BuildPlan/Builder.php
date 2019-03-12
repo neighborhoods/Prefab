@@ -106,14 +106,14 @@ class Builder implements BuilderInterface
         $daoGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoGenerator);
 
-        $nextLevelMeta = $this->getNextLevelMeta($daoGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addFactoryToPlan($nextLevelMeta);
-        $this->addMapToPlan($nextLevelMeta);
-        $this->addRepositoryInterfaceToPlan($nextLevelMeta);
-        $this->addBuilderToPlan($nextLevelMeta);
-        $this->addBuilderInterfaceToPlan($nextLevelMeta);
+//        $nextLevelMeta = $this->getNextLevelMeta($daoGenerator);
+//
+//        $this->addAwareTraitToPlan($nextLevelMeta);
+//        $this->addFactoryToPlan($nextLevelMeta);
+//        $this->addMapToPlan($nextLevelMeta);
+//        $this->addRepositoryInterfaceToPlan($nextLevelMeta);
+//        $this->addBuilderToPlan($nextLevelMeta);
+//        $this->addBuilderInterfaceToPlan($nextLevelMeta);
 
         return $this;
     }
