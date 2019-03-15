@@ -106,7 +106,7 @@ class Builder implements BuilderInterface
         $daoGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoGenerator);
 
-//        $nextLevelMeta = $this->getNextLevelMeta($daoGenerator);
+        $nextLevelMeta = $this->getNextLevelMeta($daoGenerator);
 //
 //        $this->addAwareTraitToPlan($nextLevelMeta);
 //        $this->addFactoryToPlan($nextLevelMeta);
@@ -292,6 +292,17 @@ class Builder implements BuilderInterface
         $this->appendGeneratorToBuildPlan($repositoryInterfaceGenerator);
 
         return $this;
+    }
+
+    // GeneratorMeta is only needed to update the route file now. We probably don't need the meta class anymore
+    // but I am just using this for now to get Prefab working on Bradfab. This should be revisited.
+    protected function getMetaForRouteFileAppend(GeneratorInterface $parentGenerator) : GeneratorMetaInterface
+    {
+        $parentMeta = $parentGenerator->getMeta();
+        $actorName = $parentGenerator->getActorName();
+        $nextLevelNamespace = $parentMeta->getActorNamespace() .
+            self::BACKSLASH . 'Repository' . self::BACKSLASH .
+            $actorName;
     }
 
     protected function getNextLevelMeta(GeneratorInterface $parentGenerator) : GeneratorMetaInterface

@@ -45,8 +45,7 @@ class Generator implements GeneratorInterface
         echo ">> Copying the skeleton...\n";
         $this->generateBradFabTemplates();
 
-//        $bradfab = (new Bradfab())->run();
-//        $this->generateHttpSkeleton();
+        $this->generateHttpSkeleton();
         echo ">> Success.\n";
 
         echo ">> Assembling the Prefab build plan...\n";
