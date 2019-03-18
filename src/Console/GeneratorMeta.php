@@ -150,5 +150,10 @@ class GeneratorMeta implements GeneratorMetaInterface
         $this->httpRoute = $httpRoute;
         return $this;
     }
+
+    public function hasHttpRoute() : bool
+    {
+        return $this->httpRoute !== null;
+    }
     
 }

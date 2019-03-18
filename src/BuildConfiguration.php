@@ -115,6 +115,11 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this;
     }
 
+    public function hasHttpRoute() : bool
+    {
+        return $this->httpRoute !== null;
+    }
+
     public function getProjectDir() : string
     {
         if ($this->projectDir === null) {

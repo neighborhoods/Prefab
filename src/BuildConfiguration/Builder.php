@@ -14,7 +14,6 @@ class Builder implements BuilderInterface
 
     protected $yamlFilePath;
     protected $projectName;
-    /** @var string */
     protected $daoNamespace;
 
     public function build() : BuildConfigurationInterface
@@ -24,10 +23,13 @@ class Builder implements BuilderInterface
 
         $buildConfiguration->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field'])
-            ->setHttpRoute($configArray['dao']['http_route'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectDirFromYamlPath())
             ->setProjectName($this->getProjectName());
+
+        if (!empty($configArray['dao']['http_route'])) {
+            $buildConfiguration->setHttpRoute($configArray['dao']['http_route']);
+        }
 
         foreach ($configArray['dao']['properties'] as $key => $values) {
             $buildConfiguration->appendDaoProperty($key, $values);
