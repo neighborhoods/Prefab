@@ -78,7 +78,10 @@ class Builder implements BuilderInterface
         $daoMeta->setActorNamespace($namespace);
         $daoMeta->setActorFilePath($actorFilePath);
         $daoMeta->setDaoProperties($this->getBuildConfiguration()->getDaoProperties());
-        $daoMeta->setHttpRoute($this->getBuildConfiguration()->getHttpRoute());
+
+        if ($this->getBuildConfiguration()->hasHttpRoute()) {
+            $daoMeta->setHttpRoute($this->getBuildConfiguration()->getHttpRoute());
+        }
 
         $this->addDaoInterfaceToPlan($daoMeta);
         $this->addDaoToPlan($daoMeta);
@@ -219,7 +222,9 @@ class Builder implements BuilderInterface
         $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
         $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
         $this->appendGeneratorToBuildPlan($handlerInterfaceGenerator);
-        $this->addHandlerToRouteFile($handlerInterfaceMeta);
+        if ($handlerInterfaceMeta->hasHttpRoute()) {
+            $this->addHandlerToRouteFile($handlerInterfaceMeta);
+        }
         return $this;
     }
 
@@ -300,7 +305,9 @@ class Builder implements BuilderInterface
         $nextLevelMeta->setActorNamespace($nextLevelNamespace);
         $nextLevelMeta->setActorFilepath($nextLevelFilePath);
         $nextLevelMeta->setDaoName($parentMeta->getDaoName());
-        $nextLevelMeta->setHttpRoute($parentMeta->getHttpRoute());
+        if ($parentMeta->hasHttpRoute()) {
+            $nextLevelMeta->setHttpRoute($parentMeta->getHttpRoute());
+        }
         $nextLevelMeta->setDaoProperties($parentMeta->getDaoProperties());
 
         return $nextLevelMeta;

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectories;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectoriesInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemPropertiesInterface;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
@@ -23,16 +25,17 @@ class Builder implements BuilderInterface
     protected $can_build_zend_expressive;
     protected $container_name;
     protected $filesystem_properties;
+    protected $discoverable_directories;
     protected $shouldRegisterAllServicesAsPublic;
 
-    public function build(): ContainerInterface
+    public function build() : ContainerInterface
     {
         $container = $this->getContainer();
 
         return $container;
     }
 
-    protected function getContainer(): ContainerInterface
+    protected function getContainer() : ContainerInterface
     {
         if ($this->container === null) {
             $containerCacheFilePath = $this->getFilesystemProperties()->getSymfonyContainerFilePath();
@@ -53,34 +56,31 @@ class Builder implements BuilderInterface
         return $this->container;
     }
 
-    public function setCanBuildZendExpressive(bool $canBuildZendExpressive): BuilderInterface
+    /** @deprecated */
+    public function setCanBuildZendExpressive(bool $can_build_zend_expressive) : BuilderInterface
     {
-        if ($this->can_build_zend_expressive === null) {
-            $this->can_build_zend_expressive = $canBuildZendExpressive;
-        } else {
+        if ($this->can_build_zend_expressive !== null) {
             throw new \LogicException('Builder can_build_zend_expressive is already set.');
         }
+
+        $this->can_build_zend_expressive = $can_build_zend_expressive;
 
         return $this;
     }
 
-    protected function getCanBuildZendExpressive(): bool
+    protected function getCanBuildZendExpressive() : bool
     {
-        if ($this->can_build_zend_expressive === null) {
-            throw new \LogicException('Builder can_build_zend_expressive is not set.');
-        }
-
-        return $this->can_build_zend_expressive;
+        return $this->can_build_zend_expressive === true;
     }
 
-    protected function getSymfonyContainerBuilder(): ContainerBuilder
+    protected function getSymfonyContainerBuilder() : ContainerBuilder
     {
         if ($this->symfony_container_builder === null) {
             $containerBuilder = new ContainerBuilder();
-            $discoverableDirectories = $this->getFilesystemProperties()->getDiscoverableDirectories();
+            $discoverableDirectoryFullPaths = $this->getDiscoverableDirectories()->getFullPaths();
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
-                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectories)
+                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
             );
             $containerBuilderFacade->assembleYaml();
             $this->updateServiceDefinitions($containerBuilder);
@@ -91,7 +91,7 @@ class Builder implements BuilderInterface
         return $this->symfony_container_builder;
     }
 
-    protected function cacheSymfonyContainerBuilder(): BuilderInterface
+    protected function cacheSymfonyContainerBuilder() : BuilderInterface
     {
         $containerBuilder = $this->getSymfonyContainerBuilder();
         file_put_contents(
@@ -102,23 +102,26 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function buildZendExpressive(): BuilderInterface
+    public function buildZendExpressive() : BuilderInterface
     {
         $currentWorkingDirectory = getcwd();
         chdir($this->getFilesystemProperties()->getRootDirectoryPath());
+        /** @noinspection PhpIncludeInspection */
         $zendContainerBuilder = require $this->getFilesystemProperties()->getZendConfigContainerFilePath();
         $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
+        /** @noinspection PhpIncludeInspection */
         (require_once $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
         file_put_contents(
             $this->getFilesystemProperties()->getExpressiveDIYAMLFilePath(),
             (new YamlDumper($zendContainerBuilder))->dump()
         );
         chdir($currentWorkingDirectory);
+        $this->getDiscoverableDirectories()->appendPath($this->getZendCacheDirectoryPath());
 
         return $this;
     }
 
-    public function registerServiceAsPublic(string $serviceId): BuilderInterface
+    public function registerServiceAsPublic(string $serviceId) : BuilderInterface
     {
         if (isset($this->service_ids_registered_for_public_access[$serviceId])) {
             throw new \LogicException(
@@ -130,7 +133,7 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function getServiceIdsRegisteredForPublicAccess(): array
+    protected function getServiceIdsRegisteredForPublicAccess() : array
     {
         return $this->service_ids_registered_for_public_access;
     }
@@ -176,7 +179,7 @@ class Builder implements BuilderInterface
         }
     }
 
-    public function getContainerName(): string
+    public function getContainerName() : string
     {
         if ($this->container_name === null) {
             throw new \LogicException('Builder container_name has not been set.');
@@ -185,7 +188,7 @@ class Builder implements BuilderInterface
         return $this->container_name;
     }
 
-    public function setContainerName(string $containerName): BuilderInterface
+    public function setContainerName(string $containerName) : BuilderInterface
     {
         if ($this->container_name !== null) {
             throw new \LogicException('Builder container_name is already set.');
@@ -219,7 +222,7 @@ class Builder implements BuilderInterface
         return $this->shouldRegisterAllServicesAsPublic;
     }
 
-    public function getFilesystemProperties(): FilesystemPropertiesInterface
+    public function getFilesystemProperties() : FilesystemPropertiesInterface
     {
         if ($this->filesystem_properties === null) {
             $this->filesystem_properties = new FilesystemProperties();
@@ -227,5 +230,21 @@ class Builder implements BuilderInterface
         }
 
         return $this->filesystem_properties;
+    }
+
+    public function getDiscoverableDirectories() : DiscoverableDirectoriesInterface
+    {
+        if ($this->discoverable_directories === null) {
+            $discoverableDirectories = new DiscoverableDirectories();
+            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($this->getFilesystemProperties());
+            $this->discoverable_directories = $discoverableDirectories;
+        }
+
+        return $this->discoverable_directories;
+    }
+
+    protected function getZendCacheDirectoryPath() : string
+    {
+        return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
     }
 }

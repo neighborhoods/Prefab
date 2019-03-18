@@ -15,9 +15,15 @@ interface FilesystemPropertiesInterface
 
     public function getSymfonyContainerFilePath(): string;
 
-    public function getDiscoverableDirectories(): array;
-
     public function setRootDirectoryPath(string $rootDirectoryPath): FilesystemPropertiesInterface;
 
-    public function addDirectoryFilter(string $directoryFilter): FilesystemPropertiesInterface;
+    public function getCacheDirectoryPath(): string;
+
+    public function getFabricationDirectoryPath(): string;
+
+    public function getSourceDirectoryPath(): string;
+
+    public function getPrefab5DirectoryPath();
+
+    public function getZendCacheDirectoryPath(): string;
 }
