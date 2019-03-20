@@ -16,6 +16,10 @@ supporting_actors:
   Repository.service.yml:
   RepositoryInterface.php:
   Repository\AwareTrait.php:
+  Repository\Handler.php:
+  Repository\HandlerInterface.php:
+  Repository\Handler.service.yml:
+  Repository\Handler\AwareTrait.php:
   Map.php:
   Map.service.yml:
   MapInterface.php:
