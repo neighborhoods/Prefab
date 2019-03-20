@@ -26,6 +26,26 @@ class Template // implements HandlerInterface
         return $this->getDAOVARNAMEPLACEHOLDER()->get($searchCriteria);
     }
 
+    protected function post()
+    {
+
+    }
+
+    protected function put()
+    {
+
+    }
+
+    protected function patch()
+    {
+
+    }
+
+    protected function delete()
+    {
+
+    }
+
     protected function getRouteResult() : \Zend\Expressive\Router\RouteResult
     {
         return $this->getPsrHttpMessageServerRequest()->getAttribute(\Zend\Expressive\Router\RouteResult::class);
