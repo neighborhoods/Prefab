@@ -43,9 +43,12 @@ class Generator implements GeneratorInterface
 
         echo "\n";
         echo ">> Copying the skeleton...\n";
-        $this->generateBradFabTemplates();
-
         $this->generateHttpSkeleton();
+        echo ">> Success.\n";
+
+        echo "\n";
+        echo ">> Generating Bradfab templates...\n";
+        $this->generateBradFabTemplates();
         echo ">> Success.\n";
 
         echo ">> Assembling the Prefab build plan...\n";
@@ -69,7 +72,6 @@ class Generator implements GeneratorInterface
 
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-
 
             $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
             $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath).  '.fabrication.yml';
