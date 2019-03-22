@@ -106,7 +106,7 @@ class Generator implements GeneratorInterface
     protected function getProjectNameFromComposer() : string
     {
         $finder = new Finder();
-        $finder->name('composer.json')->in($this->projectDir)->exclude('vendor');
+        $finder->name('composer.json')->in($this->projectDir)->depth('== 0');
 
         $matchCount = $finder->count();
         if ($matchCount < 1) {
