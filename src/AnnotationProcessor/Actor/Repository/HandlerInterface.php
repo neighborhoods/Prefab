@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Bradfab;
+namespace Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
 
 use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
 use Neighborhoods\Bradfab\AnnotationProcessorInterface;

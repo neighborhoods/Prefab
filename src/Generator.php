@@ -3,7 +3,6 @@
 
 namespace Neighborhoods\Prefab;
 
-use Neighborhoods\Bradfab\Bradfab;
 use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -72,7 +71,6 @@ class Generator implements GeneratorInterface
 
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-
             $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
             $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath).  '.fabrication.yml';
 
@@ -113,6 +111,11 @@ class Generator implements GeneratorInterface
         }
 
         return $this;
+    }
+
+    protected function generateBradfabTemplate(BuildConfigurationInterface $configuration) : GeneratorInterface
+    {
+//        $configuration->get
     }
 
     protected function generateHttpSkeleton() : GeneratorInterface
