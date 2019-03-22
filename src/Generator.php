@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab;
 use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Yaml\Yaml;
 
 class Generator implements GeneratorInterface
 {
@@ -14,9 +15,6 @@ class Generator implements GeneratorInterface
     use BuildPlan\Builder\Factory\AwareTrait;
 
     protected $buildPlans;
-    protected $daoName;
-    protected $daoNamespace;
-    protected $daoRelativePath;
     protected $httpSrcDir;
     protected $stagedHttpDir;
     protected $projectDir;
@@ -30,7 +28,7 @@ class Generator implements GeneratorInterface
         $this->setStagedHttpDir(__DIR__ . '/../stagedHttp');
 
         $this->setSrcLocation($this->projectDir . 'src/');
-        $this->setFabLocation( $this->projectDir . 'fab/');
+        $this->setFabLocation($this->projectDir . 'fab/');
 
         return $this;
     }
@@ -42,7 +40,7 @@ class Generator implements GeneratorInterface
 
         echo "\n";
         echo ">> Copying the skeleton...\n";
-        $this->generateHttpSkeleton();
+//        $this->generateHttpSkeleton();
         echo ">> Success.\n";
 
         echo "\n";
@@ -72,12 +70,12 @@ class Generator implements GeneratorInterface
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
             $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
-            $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath).  '.fabrication.yml';
+            $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
 
-            $writeFilePath = __DIR__ . '/../bradfab/' .  $daoRelativePath;
+            $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
 
             $directoryPathArray = explode('/', $writeFilePath);
-            unset($directoryPathArray[count($directoryPathArray) -1]);
+            unset($directoryPathArray[count($directoryPathArray) - 1]);
             $directoryPath = implode('/', $directoryPathArray);
 
             // TODO: Create directories for files without doing this
@@ -103,6 +101,7 @@ class Generator implements GeneratorInterface
                 ->setProjectName($this->getProjectName())
                 ->build();
 
+            $this->generateBradfabTemplate($configuration, $dao);
             $this->appendBuildPlan(
                 $this->getBuildPlanBuilderFactory()->create()
                     ->setBuildConfiguration($configuration)
@@ -113,18 +112,43 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function generateBradfabTemplate(BuildConfigurationInterface $configuration) : GeneratorInterface
+    protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
-//        $configuration->get
+        $yaml = Yaml::parseFile(__DIR__ . '/Template/AllSupportingActors.yml');
+
+        if ($configuration->hasHttpRoute()) {
+            $yaml['supporting_actors']['Repository\HandlerInterface.php'] =
+                [
+                    'annotation_processors' => [
+                        "Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface-CONSTANTS" =>
+                            [
+                                'processor_fqcn' => '\Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface',
+                                'static_context_record' => [
+                                    'route_path' => $configuration->getHttpRoute(),
+                                    'route_name' => 'ACTORS',
+                                ],
+                            ],
+                    ],
+                ];
+        }
+        $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
+        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
+
+        $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
+
+        $yaml = Yaml::dump($yaml, 10);
+        file_put_contents($writeFilePath, $yaml);
+
+        return $this;
     }
 
     protected function generateHttpSkeleton() : GeneratorInterface
     {
         $generator = $this->getHttpSkeletonGeneratorFactory()->create();
         $generator->setProjectName($this->getProjectName())
-            ->setSrcDirectory($this->srcLocation)
-            ->setHttpSourceDirectory($this->httpSrcDir)
-            ->setTargetDirectory($this->projectDir)
+            ->setSrcDirectory($this->getSrcLocation())
+            ->setHttpSourceDirectory($this->getHttpSrcDir())
+            ->setTargetDirectory($this->getProjectDir())
             ->generate();
 
         return $this;
