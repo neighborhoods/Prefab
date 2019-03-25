@@ -145,7 +145,7 @@ class Visitor implements VisitorInterface
         return $this;
     }
 
-    public function getPreparedStatementPlaceholders(FilterInterface $filter): array
+    private function getPreparedStatementPlaceholders(FilterInterface $filter): array
     {
         $placeholders = [];
 
