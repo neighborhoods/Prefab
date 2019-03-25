@@ -1,15 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
+namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
 use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
 use Neighborhoods\Bradfab\AnnotationProcessorInterface;
 
-class HandlerInterface implements AnnotationProcessorInterface
+class Builder implements AnnotationProcessorInterface
 {
-    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface-CONSTANTS';
-
     protected $context;
 
     protected const ROUTE_PATH_LINE_FORMAT_STRING =
@@ -39,8 +37,6 @@ EOF;
     {
         $path = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_path'];
         $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_name'];
-        $name = strtoupper($name);
-
         return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);
     }
 }

@@ -7,12 +7,14 @@ use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
+use Neighborhoods\Prefab\Bradfab;
 
 class Generator implements GeneratorInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use BuildPlan\Builder\Factory\AwareTrait;
+    use Bradfab\Template\Factory\AwareTrait;
 
     protected $buildPlans;
     protected $httpSrcDir;
@@ -40,12 +42,7 @@ class Generator implements GeneratorInterface
 
         echo "\n";
         echo ">> Copying the skeleton...\n";
-//        $this->generateHttpSkeleton();
-        echo ">> Success.\n";
-
-        echo "\n";
-        echo ">> Generating Bradfab templates...\n";
-        $this->generateBradFabTemplates();
+        $this->generateHttpSkeleton();
         echo ">> Success.\n";
 
         echo ">> Assembling the Prefab build plan...\n";
@@ -58,33 +55,6 @@ class Generator implements GeneratorInterface
 
         echo ">> Protean Prefab complete.\n";
         echo "\n";
-
-        return $this;
-    }
-
-    protected function generateBradFabTemplates() : GeneratorInterface
-    {
-        $finder = new Finder();
-        $daos = $finder->files()->name('*' . BuildPlan\Builder::DAO_YML_SUFFIX)->in($this->srcLocation);
-
-        /** @var SplFileInfo $dao */
-        foreach ($daos as $dao) {
-            $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
-            $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
-
-            $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
-
-            $directoryPathArray = explode('/', $writeFilePath);
-            unset($directoryPathArray[count($directoryPathArray) - 1]);
-            $directoryPath = implode('/', $directoryPathArray);
-
-            // TODO: Create directories for files without doing this
-            if (!file_exists($directoryPath)) {
-                mkdir($directoryPath, 0777, true);
-            }
-
-            file_put_contents($writeFilePath, file_get_contents(__DIR__ . '/Template/AllSupportingActors.yml'));
-        }
 
         return $this;
     }
@@ -114,29 +84,24 @@ class Generator implements GeneratorInterface
 
     protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
-        $yaml = Yaml::parseFile(__DIR__ . '/Template/AllSupportingActors.yml');
+        $bradfabTemplate = $this->getTemplateFactory()->create()
+            ->setProperties($configuration->getDaoProperties());
 
         if ($configuration->hasHttpRoute()) {
-            $yaml['supporting_actors']['Repository\HandlerInterface.php'] =
-                [
-                    'annotation_processors' => [
-                        "Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface-CONSTANTS" =>
-                            [
-                                'processor_fqcn' => '\Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface',
-                                'static_context_record' => [
-                                    'route_path' => $configuration->getHttpRoute(),
-                                    'route_name' => strtoupper($this->getNameForDao($dao)),
-                                ],
-                            ],
-                    ],
-                ];
+            $bradfabTemplate->setRoutePath($configuration->getHttpRoute());
+            $bradfabTemplate->setRouteName($this->getNameForDao($dao));
         }
-        $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
-        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
 
-        $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
+        $configArray = $bradfabTemplate->getFabricationConfig();
 
-        $yaml = Yaml::dump($yaml, 10);
+        $writeFilePath = $this->getWritePathForDao($dao);
+        $directory = $this->getWriteDirectoryForDao($writeFilePath);
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $yaml = Yaml::dump($configArray, 10);
         file_put_contents($writeFilePath, $yaml);
 
         return $this;
@@ -313,5 +278,22 @@ class Generator implements GeneratorInterface
         }
         $this->srcLocation = $srcLocation;
         return $this;
+    }
+
+    protected function getWritePathForDao(SplFileInfo $dao) : string
+    {
+        $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
+        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
+
+        $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
+        return $writeFilePath;
+    }
+
+    protected function getWriteDirectoryForDao(string $writeFilePath) : string
+    {
+        $directoryPathArray = explode('/', $writeFilePath);
+        unset($directoryPathArray[count($directoryPathArray) - 1]);
+        $directoryPath = implode('/', $directoryPathArray);
+        return $directoryPath;
     }
 }

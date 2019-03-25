@@ -16,10 +16,6 @@ class Builder implements BuilderInterface
         $Actor = $this->getActorFactory()->create();
         /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Bradfab\Template\Actor\Builder.build1
          */
-        /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Bradfab\Template\Actor\Builder.build2
-        // @TODO - build the object.
-        throw new \LogicException('Unimplemented build method.');
-         */
 
         return $Actor;
     }
