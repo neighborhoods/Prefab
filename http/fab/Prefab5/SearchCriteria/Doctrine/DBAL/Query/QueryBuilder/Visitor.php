@@ -23,61 +23,61 @@ class Visitor implements VisitorInterface
             case 'in':
                 $where = $this->getQueryBuilder()->expr()->in(
                     $field,
-                    $this->getParameterPlaceholders($filter)
+                    $this->getPreparedStatementPlaceholders($filter)
                 );
                 break;
             case 'nin':
                 $where = $this->getQueryBuilder()->expr()->notIn(
                     $field,
-                    $this->getParameterPlaceholders($filter)
+                    $this->getPreparedStatementPlaceholders($filter)
                 );
                 break;
             case 'eq':
                 $where = $this->getQueryBuilder()->expr()->eq(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'neq':
                 $where = $this->getQueryBuilder()->expr()->neq(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'lt':
                 $where = $this->getQueryBuilder()->expr()->lt(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'lte':
                 $where = $this->getQueryBuilder()->expr()->lte(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'gt':
                 $where = $this->getQueryBuilder()->expr()->gt(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'gte':
                 $where = $this->getQueryBuilder()->expr()->gte(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'like':
                 $where = $this->getQueryBuilder()->expr()->like(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'nlike':
                 $where = $this->getQueryBuilder()->expr()->notLike(
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'is_null':
@@ -90,46 +90,46 @@ class Visitor implements VisitorInterface
                 $where = sprintf(
                     "ST_Contains(%s, st_geomfromtext(%s))",
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'st_dwithin':
-                $params = $this->getParameterPlaceholders($filter);
+                $placeholders = $this->getPreparedStatementPlaceholders($filter);
                 $where = sprintf(
                     'ST_DWithin(%s, %s, %s)',
                     $field,
-                    $params['center'],
-                    $params['radius']
+                    $placeholders['center'],
+                    $placeholders['radius']
                 );
                 break;
             case 'st_within':
-                $params = $this->getParameterPlaceholders($filter);
+                $placeholders = $this->getPreparedStatementPlaceholders($filter);
                 $where = sprintf(
                     "ST_Within(%s, st_buffer(st_geomfromtext(%s), %s))",
                     $field,
-                    $params['center'],
-                    $params['radius']
+                    $placeholders['center'],
+                    $placeholders['radius']
                 );
                 break;
             case 'contains':
                 $where = sprintf(
                     "%s @> ARRAY[%s]",
                     $field,
-                    implode(',', $this->getParameterPlaceholders($filter))
+                    implode(',', $this->getPreparedStatementPlaceholders($filter))
                 );
                 break;
             case 'jsonb_key_exist':
                 $where = sprintf(
                     "jsonb_exists(%s,%s)",
                     $field,
-                    $this->getParameterPlaceholders($filter)[0]
+                    $this->getPreparedStatementPlaceholders($filter)[0]
                 );
                 break;
             case 'overlaps':
                 $where = sprintf(
                     "%s && ARRAY[%s]",
                     $field,
-                    implode(',', $this->getParameterPlaceholders($filter))
+                    implode(',', $this->getPreparedStatementPlaceholders($filter))
                 );
                 break;
             default:
@@ -145,15 +145,15 @@ class Visitor implements VisitorInterface
         return $this;
     }
 
-    public function getParameterPlaceholders(FilterInterface $filter): array
+    public function getPreparedStatementPlaceholders(FilterInterface $filter): array
     {
-        $parameterPlaceholders = [];
+        $placeholders = [];
 
         foreach ($filter->getValues() as $key => $value) {
-            $parameterPlaceholders[$key] = $this->getQueryBuilder()->createNamedParameter($value);
+            $placeholders[$key] = $this->getQueryBuilder()->createNamedParameter($value);
         }
 
-        return $parameterPlaceholders;
+        return $placeholders;
     }
 
     public function addSortOrder(SortOrderInterface $sortOrder): SearchCriteria\VisitorInterface
