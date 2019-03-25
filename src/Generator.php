@@ -125,7 +125,7 @@ class Generator implements GeneratorInterface
                                 'processor_fqcn' => '\Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface',
                                 'static_context_record' => [
                                     'route_path' => $configuration->getHttpRoute(),
-                                    'route_name' => 'ACTORS',
+                                    'route_name' => strtoupper($this->getNameForDao($dao)),
                                 ],
                             ],
                     ],
@@ -142,6 +142,14 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
+    protected function getNameForDao(SplFileInfo $dao) : string
+    {
+        $name = explode('/src/', $dao->getRealPath())[1];
+        $name = implode('', explode('/', $name));
+        $name = str_replace('.prefab.definition.yml', '', $name);
+
+        return $name;
+    }
     protected function generateHttpSkeleton() : GeneratorInterface
     {
         $generator = $this->getHttpSkeletonGeneratorFactory()->create();

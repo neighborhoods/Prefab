@@ -12,8 +12,8 @@ class HandlerInterface implements AnnotationProcessorInterface
 
     protected const ROUTE_PATH_LINE_FORMAT_STRING =
         <<<EOF
-    const ROUTE_PATH_ACTORS = '%s';
-    const ROUTE_NAME_ACTORS = '%s';
+    const ROUTE_PATH_%sS = '%s';
+    const ROUTE_NAME_%sS = '%s';
 EOF;
 
     public function getAnnotationProcessorContext() : ContextInterface
@@ -37,6 +37,6 @@ EOF;
     {
         $path = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_path'];
         $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_name'];
-        return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $path, $name);
+        return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);
     }
 }
