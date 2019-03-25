@@ -16,11 +16,6 @@ class Visitor implements VisitorInterface
 
     protected $queryBuilder;
 
-    /**
-     * @var array
-     */
-    private $parameterPlaceholders;
-
     public function addFilter(FilterInterface $filter): SearchCriteria\VisitorInterface
     {
         $field = $filter->getField();
