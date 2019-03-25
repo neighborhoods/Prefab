@@ -99,19 +99,21 @@ class Visitor implements VisitorInterface
                 );
                 break;
             case 'st_dwithin':
+                $params = $this->getParameterPlaceholders($filter);
                 $where = sprintf(
                     'ST_DWithin(%s, %s, %s)',
                     $field,
-                    $this->getParameterPlaceholders($filter)['center'],
-                    $this->getParameterPlaceholders($filter)['radius']
+                    $params['center'],
+                    $params['radius']
                 );
                 break;
             case 'st_within':
+                $params = $this->getParameterPlaceholders($filter);
                 $where = sprintf(
                     "ST_Within(%s, st_buffer(st_geomfromtext(%s), %s))",
                     $field,
-                    $this->getParameterPlaceholders($filter)['center'],
-                    $this->getParameterPlaceholders($filter)['radius']
+                    $params['center'],
+                    $params['radius']
                 );
                 break;
             case 'contains':
@@ -138,6 +140,7 @@ class Visitor implements VisitorInterface
             default:
                 throw new \LogicException('Unknown filter condition.');
         }
+
         if ($filter->getGlue() === 'and') {
             $this->getQueryBuilder()->andWhere($where);
         } elseif ($filter->getGlue() === 'or') {
@@ -149,16 +152,13 @@ class Visitor implements VisitorInterface
 
     public function getParameterPlaceholders(FilterInterface $filter): array
     {
-        if (null === $this->parameterPlaceholders) {
-            $parameterPlaceholders = [];
-            foreach ($filter->getValues() as $key => $value) {
-                $parameterPlaceholders[$key] = $this->getQueryBuilder()->createNamedParameter($value);
-            }
+        $parameterPlaceholders = [];
 
-            $this->parameterPlaceholders = $parameterPlaceholders;
+        foreach ($filter->getValues() as $key => $value) {
+            $parameterPlaceholders[$key] = $this->getQueryBuilder()->createNamedParameter($value);
         }
 
-        return $this->parameterPlaceholders;
+        return $parameterPlaceholders;
     }
 
     public function addSortOrder(SortOrderInterface $sortOrder): SearchCriteria\VisitorInterface

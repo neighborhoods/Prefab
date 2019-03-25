@@ -105,6 +105,118 @@ class VisitorTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function shouldQueryWhereStDWithin(): void
+    {
+        $expectedField = 'some_field';
+        $expectedCenter = "'POINT(5, 5)'";
+        $expectedRadius = 2;
+        $expectedSql = "ST_DWithin($expectedField, $expectedCenter, $expectedRadius)";
+
+        $filter = new Filter();
+        $filter
+            ->setField($expectedField)
+            ->setGlue('and')
+            ->setCondition('st_dwithin')
+            ->setValues([
+                'center' => $expectedCenter,
+                'radius' => $expectedRadius,
+            ]);
+
+        $queryBuilderMock = $this->buildQueryBuilderMock();
+
+        $queryBuilderMock->expects(static::exactly(2))
+            ->method('createNamedParameter')
+            ->willReturnCallback(
+                function (string $value) : string
+                {
+                    return $value;
+                }
+            );
+
+        $queryBuilderMock->expects(static::once())
+            ->method('andWhere')
+            ->with($expectedSql);
+
+        $visitor = new Visitor();
+
+        /**
+         * @var MockObject|RepositoryInterface $repoMock
+         */
+        $repoMock = $this->getMockBuilder(Repository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $repoMock->expects(static::once())
+            ->method('createQueryBuilder')
+            ->with(DecoratorInterface::ID_CORE)
+            ->willReturn($queryBuilderMock);
+
+        $visitor->setDoctrineDBALConnectionDecoratorRepository(
+            $repoMock
+        );
+
+        $visitor->addFilter($filter);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldQueryWhereStWithin(): void
+    {
+        $expectedField = 'some_field';
+        $expectedCenter = "'POINT(5, 5)'";
+        $expectedRadius = 2;
+        $expectedSql = "ST_Within($expectedField, st_buffer(st_geomfromtext($expectedCenter), $expectedRadius))";
+
+        $filter = new Filter();
+        $filter
+            ->setField($expectedField)
+            ->setGlue('and')
+            ->setCondition('st_within')
+            ->setValues([
+                'center' => $expectedCenter,
+                'radius' => $expectedRadius,
+            ]);
+
+        $queryBuilderMock = $this->buildQueryBuilderMock();
+
+        $queryBuilderMock->expects(static::exactly(2))
+            ->method('createNamedParameter')
+            ->willReturnCallback(
+                function (string $value) : string
+                {
+                    return $value;
+                }
+            );
+
+        $queryBuilderMock->expects(static::once())
+            ->method('andWhere')
+            ->with($expectedSql);
+
+        $visitor = new Visitor();
+
+        /**
+         * @var MockObject|RepositoryInterface $repoMock
+         */
+        $repoMock = $this->getMockBuilder(Repository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $repoMock->expects(static::once())
+            ->method('createQueryBuilder')
+            ->with(DecoratorInterface::ID_CORE)
+            ->willReturn($queryBuilderMock);
+
+        $visitor->setDoctrineDBALConnectionDecoratorRepository(
+            $repoMock
+        );
+
+        $visitor->addFilter($filter);
+    }
+
+    /**
      * @return MockObject|QueryBuilder
      */
     private function buildQueryBuilderMock(): MockObject
@@ -117,7 +229,7 @@ class VisitorTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $queryBuilderMock->expects(static::once())
+        $queryBuilderMock->expects(static::any())
             ->method('expr')
             ->willReturn(new ExpressionBuilder($connMock));
 
