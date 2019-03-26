@@ -30,7 +30,11 @@ class Builder implements BuilderInterface
     protected function getSearchCriteriaQuery(): array
     {
         if ($this->searchCriteriaQuery === null) {
-            $queryParams = $this->getPsrHttpMessageServerRequest()->getQueryParams();
+            if ($this->getPsrHttpMessageServerRequest()->getMethod() === 'POST') {
+                $queryParams = $this->getPsrHttpMessageServerRequest()->getParsedBody();
+            } else {
+                $queryParams = $this->getPsrHttpMessageServerRequest()->getQueryParams();
+            }
             if (isset($queryParams[self::SEARCH_CRITERIA]) && is_array($queryParams[self::SEARCH_CRITERIA])) {
                 $searchCriteriaQuery = $queryParams[self::SEARCH_CRITERIA];
             } else {

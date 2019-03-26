@@ -13,8 +13,13 @@ class Template // implements HandlerInterface
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
         $this->setPsrHttpMessageServerRequest($request);
+        $method = $this->getPsrHttpMessageServerRequest()->getMethod();
 
-        return new \Zend\Diactoros\Response\JsonResponse($this->get());
+        if (!method_exists($this, $method)) {
+            throw new \RuntimeException('Unhandled HTTP method: ' . $method);
+        }
+
+        return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
     protected function get() : \PARENTNAMESPACEPLACEHOLDERInterface
