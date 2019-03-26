@@ -81,6 +81,7 @@ class Builder implements BuilderInterface
 
         if ($this->getBuildConfiguration()->hasHttpRoute()) {
             $daoMeta->setHttpRoute($this->getBuildConfiguration()->getHttpRoute());
+            $daoMeta->setHttpVerbs($this->getBuildConfiguration()->getHttpVerbs());
         }
 
         $this->addDaoInterfaceToPlan($daoMeta);
@@ -307,6 +308,7 @@ class Builder implements BuilderInterface
         $nextLevelMeta->setDaoName($parentMeta->getDaoName());
         if ($parentMeta->hasHttpRoute()) {
             $nextLevelMeta->setHttpRoute($parentMeta->getHttpRoute());
+            $nextLevelMeta->setHttpVerbs($parentMeta->getHttpVerbs());
         }
         $nextLevelMeta->setDaoProperties($parentMeta->getDaoProperties());
 
@@ -320,16 +322,33 @@ class Builder implements BuilderInterface
         $routePath = $this->getBuildConfiguration()->getProjectDir() . 'fab/Prefab5/Zend/Expressive/Application/Decorator.service.yml';
         $file = file_get_contents($routePath);
 
-        $line =
-            "    - [get, [!php/const \\" . $meta->getActorNamespace() . "\HandlerInterface::ROUTE_PATH_" . strtoupper($this->getDaoName()) . "S," .
-            "'@" . $meta->getActorNamespace() ."\HandlerInterface'," .
-            "!php/const \\" . $meta->getActorNamespace() . "\HandlerInterface::ROUTE_NAME_" . strtoupper($this->getDaoName()) . "S]]\n";
-
-        $file .= $line;
+        $routes = $this->formatRoutes($meta);
+        foreach ($routes as $route) {
+            $file .= $route;
+        }
 
         file_put_contents($routePath, $file);
 
         return $this;
+    }
+
+    protected function formatRoutes(GeneratorMetaInterface $meta): array
+    {
+        $routes = [];
+        foreach ($meta->getHttpVerbs() as $httpVerb) {
+            $verb = strtolower($httpVerb);
+            $line =
+                "    - [" . $verb .
+                ", [!php/const \\" . $meta->getActorNamespace() .
+                "\HandlerInterface::ROUTE_PATH_" . strtoupper($this->getDaoName()) . "S," .
+                "'@" . $meta->getActorNamespace() ."\HandlerInterface'," .
+                "!php/const \\" . $meta->getActorNamespace() .
+                "\HandlerInterface::ROUTE_NAME_" . strtoupper($this->getDaoName()) . "S]]\n";
+
+            $routes[] = $line;
+        }
+
+        return $routes;
     }
 
     protected function appendGeneratorToBuildPlan(GeneratorInterface $generator) : BuilderInterface

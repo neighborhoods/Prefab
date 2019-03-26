@@ -13,8 +13,13 @@ class Template // implements HandlerInterface
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
         $this->setPsrHttpMessageServerRequest($request);
+        $method = $this->getPsrHttpMessageServerRequest()->getMethod();
 
-        return new \Zend\Diactoros\Response\JsonResponse($this->get());
+        if (!method_exists($this, $method)) {
+            throw new \RuntimeException('Unhandled HTTP method: ' . $method);
+        }
+
+        return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
     protected function get() : \PARENTNAMESPACEPLACEHOLDERInterface
@@ -24,6 +29,26 @@ class Template // implements HandlerInterface
         $searchCriteria = $searchCriteriaBuilder->build();
 
         return $this->getDAOVARNAMEPLACEHOLDER()->get($searchCriteria);
+    }
+
+    protected function post()
+    {
+
+    }
+
+    protected function put()
+    {
+
+    }
+
+    protected function patch()
+    {
+
+    }
+
+    protected function delete()
+    {
+
     }
 
     protected function getRouteResult() : \Zend\Expressive\Router\RouteResult

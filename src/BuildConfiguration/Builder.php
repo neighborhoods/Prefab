@@ -29,6 +29,8 @@ class Builder implements BuilderInterface
 
         if (!empty($configArray['dao']['http_route'])) {
             $buildConfiguration->setHttpRoute($configArray['dao']['http_route']);
+            $httpVerbs = ($configArray['dao']['http_verbs']) ?? ['GET'];
+            $buildConfiguration->setHttpVerbs($httpVerbs);
         }
 
         foreach ($configArray['dao']['properties'] as $key => $values) {

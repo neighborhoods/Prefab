@@ -13,6 +13,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $rootSaveLocation;
     protected $projectName;
     protected $httpRoute;
+    protected $httpVerbs;
     protected $projectDir;
 
     public function getTableName() : string
@@ -118,6 +119,28 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasHttpRoute() : bool
     {
         return $this->httpRoute !== null;
+    }
+
+    public function getHttpVerbs() : array
+    {
+        if ($this->httpVerbs === null) {
+            throw new \LogicException('BuildConfiguration httpVerbs has not been set.');
+        }
+        return $this->httpVerbs;
+    }
+
+    public function setHttpVerbs(array $httpVerbs): BuildConfigurationInterface
+    {
+        if ($this->httpVerbs !== null) {
+            throw new \LogicException('BuildConfiguration httpVerbs is already set.');
+        }
+        $this->httpVerbs = $httpVerbs;
+        return $this;
+    }
+
+    public function hasHttpVerbs() : bool
+    {
+        return $this->httpVerbs !== null;
     }
 
     public function getProjectDir() : string

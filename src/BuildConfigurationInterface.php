@@ -31,6 +31,12 @@ interface BuildConfigurationInterface
 
     public function hasHttpRoute() : bool;
 
+    public function getHttpVerbs() : array;
+
+    public function setHttpVerbs(array $httpVerbs) : BuildConfigurationInterface;
+
+    public function hasHttpVerbs() : bool;
+
     public function setProjectDir(string $projectDir) : BuildConfigurationInterface;
 
     public function getProjectDir() : string;
