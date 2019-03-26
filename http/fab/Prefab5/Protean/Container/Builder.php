@@ -44,9 +44,6 @@ class Builder implements BuilderInterface
                 $containerClass = sprintf('\\%s', $this->getContainerName());
                 $containerBuilder = new $containerClass;
             } else {
-                if ($this->getCanBuildZendExpressive()) {
-                    $this->buildZendExpressive();
-                }
                 $this->cacheSymfonyContainerBuilder();
                 $containerBuilder = $this->getSymfonyContainerBuilder();
             }
@@ -54,23 +51,6 @@ class Builder implements BuilderInterface
         }
 
         return $this->container;
-    }
-
-    /** @deprecated */
-    public function setCanBuildZendExpressive(bool $can_build_zend_expressive) : BuilderInterface
-    {
-        if ($this->can_build_zend_expressive !== null) {
-            throw new \LogicException('Builder can_build_zend_expressive is already set.');
-        }
-
-        $this->can_build_zend_expressive = $can_build_zend_expressive;
-
-        return $this;
-    }
-
-    protected function getCanBuildZendExpressive() : bool
-    {
-        return $this->can_build_zend_expressive === true;
     }
 
     protected function getSymfonyContainerBuilder() : ContainerBuilder

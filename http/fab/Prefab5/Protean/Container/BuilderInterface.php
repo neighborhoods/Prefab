@@ -15,9 +15,7 @@ interface BuilderInterface
     public function registerServiceAsPublic(string $serviceId): BuilderInterface;
 
     public function buildZendExpressive(): BuilderInterface;
-
-    public function setCanBuildZendExpressive(bool $canBuildZendExpressive): BuilderInterface;
-
+    
     public function setContainerName(string $containerName): BuilderInterface;
 
     public function getContainerName(): string;
