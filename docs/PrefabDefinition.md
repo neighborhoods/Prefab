@@ -10,6 +10,7 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
         - The http route that corresponds with the DAO
     - `http_verbs`
         - HTTP methods allowed for a DAO. Can include get, post, put, patch, and delete.
+            - Note: Since mutatitve and destuctive actions are not yet patterned for repositories, you will need to override the generated handler to call the proper repository method.
     - `identity_field`
         - Name of the database column containing the unique identifier for a given DAO
     - `properties`
