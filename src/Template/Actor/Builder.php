@@ -14,6 +14,9 @@ class Builder implements BuilderInterface
     public function build(): ActorInterface
     {
         $Actor = $this->getActorFactory()->create();
+
+        $record = $this->getRecord();
+
         /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Bradfab\Template\Actor\Builder.build1
          */
 

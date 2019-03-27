@@ -10,11 +10,15 @@ class Builder implements AnnotationProcessorInterface
 {
     protected $context;
 
-    protected const ROUTE_PATH_LINE_FORMAT_STRING =
-        <<<EOF
-    const ROUTE_PATH_%sS = '%s';
-    const ROUTE_NAME_%sS = '%s';
-EOF;
+    protected const NULLABLE_PROPERTY_METHOD_PATTERN =
+
+"
+    if (isset(\$record[ActorInterface::PROP_%s])) {\n
+        \$actor->set%s(\$record[ActorInterface::PROP_%s]);\n
+    }\n\n
+";
+
+    protected const NON_NULLABLE_PROPERTY_METHOD_PATTERN = "   \$actor->set%s(\$record[ActorInterface::PROP_%s]);\n\n";
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -35,8 +39,24 @@ EOF;
 
     public function getReplacement() : string
     {
-        $path = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_path'];
-        $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_name'];
+        $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()['properties'];
+
+        $replacement = '';
+
+        foreach ($properties as $propertyName => $property) {
+
+            if ($property['nullable'] === true) {
+                $replacement .= sprintf(
+                    self::NULLABLE_PROPERTY_METHOD_PATTERN,
+                    strtoupper($propertyName),
+                    ucfirst($propertyName),
+                    strtoupper($propertyName)
+                );
+            } else {
+                $replacement =
+            }
+        }
+
         return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);
     }
 }
