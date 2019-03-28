@@ -17,7 +17,7 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
     - `properties`
         - The class properties of the DAO. Each property should have:
             - `php_type`
-                - The type of object the property represents. This can be a primitive or a full qualified namespaced object
+                - The type of object the property represents. This can be a primitive or a fully qualified namespaced object
             - `database_column_name`
                 - Name of the database column containing the data that populates the class property
 
