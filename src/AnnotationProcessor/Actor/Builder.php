@@ -10,11 +10,17 @@ class Builder implements AnnotationProcessorInterface
 {
     protected $context;
 
-    protected const ROUTE_PATH_LINE_FORMAT_STRING =
-        <<<EOF
-    const ROUTE_PATH_%sS = '%s';
-    const ROUTE_NAME_%sS = '%s';
-EOF;
+    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
+
+    protected const NULLABLE_PROPERTY_METHOD_PATTERN =
+"
+        if (isset(\$record[ActorInterface::PROP_%s])) {
+            \$Actor->set%s(\$record[ActorInterface::PROP_%s]);
+        }\n
+";
+
+    protected const NON_NULLABLE_PROPERTY_METHOD_PATTERN =
+"        \$Actor->set%s(\$record[ActorInterface::PROP_%s]);\n";
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -35,8 +41,34 @@ EOF;
 
     public function getReplacement() : string
     {
-        $path = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_path'];
-        $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_name'];
-        return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);
+        $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()['properties'];
+
+        $replacement = '';
+
+        foreach ($properties as $propertyName => $property) {
+
+            $camelCaseName = '';
+            $nameArray = explode('_', $propertyName);
+            foreach ($nameArray as $part) {
+                $camelCaseName .= ucfirst($part);
+            }
+
+            if ($property['nullable'] === true) {
+                $replacement .= sprintf(
+                    self::NULLABLE_PROPERTY_METHOD_PATTERN,
+                    strtoupper($propertyName),
+                    $camelCaseName,
+                    strtoupper($propertyName)
+                );
+            } else {
+                $replacement .= sprintf(
+                    self::NON_NULLABLE_PROPERTY_METHOD_PATTERN,
+                    $camelCaseName,
+                    strtoupper($propertyName)
+                );
+            }
+        }
+
+        return $replacement;
     }
 }
