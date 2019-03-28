@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\Prefab\Bradfab\TemplateInterface:
+    class: Neighborhoods\Prefab\Bradfab\Template

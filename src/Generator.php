@@ -6,17 +6,17 @@ namespace Neighborhoods\Prefab;
 use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Yaml\Yaml;
+use Neighborhoods\Prefab\Bradfab;
 
 class Generator implements GeneratorInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use BuildPlan\Builder\Factory\AwareTrait;
+    use Bradfab\Template\Factory\AwareTrait;
 
     protected $buildPlans;
-    protected $daoName;
-    protected $daoNamespace;
-    protected $daoRelativePath;
     protected $httpSrcDir;
     protected $stagedHttpDir;
     protected $projectDir;
@@ -30,7 +30,7 @@ class Generator implements GeneratorInterface
         $this->setStagedHttpDir(__DIR__ . '/../stagedHttp');
 
         $this->setSrcLocation($this->projectDir . 'src/');
-        $this->setFabLocation( $this->projectDir . 'fab/');
+        $this->setFabLocation($this->projectDir . 'fab/');
 
         return $this;
     }
@@ -71,6 +71,7 @@ class Generator implements GeneratorInterface
                 ->setProjectName($this->getProjectName())
                 ->build();
 
+            $this->generateBradfabTemplate($configuration, $dao);
             $this->appendBuildPlan(
                 $this->getBuildPlanBuilderFactory()->create()
                     ->setBuildConfiguration($configuration)
@@ -81,13 +82,46 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
+    protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
+    {
+        $bradfabTemplate = $this->getTemplateFactory()->create()
+            ->setProperties($configuration->getDaoProperties());
+
+        if ($configuration->hasHttpRoute()) {
+            $bradfabTemplate->setRoutePath($configuration->getHttpRoute());
+            $bradfabTemplate->setRouteName($this->getNameForDao($dao));
+        }
+
+        $configArray = $bradfabTemplate->getFabricationConfig();
+
+        $writeFilePath = $this->getWritePathForDao($dao);
+        $directory = $this->getWriteDirectoryForDao($writeFilePath);
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $yaml = Yaml::dump($configArray, 10);
+        file_put_contents($writeFilePath, $yaml);
+
+        return $this;
+    }
+
+    protected function getNameForDao(SplFileInfo $dao) : string
+    {
+        $name = explode('/src/', $dao->getRealPath())[1];
+        $name = implode('', explode('/', $name));
+        $name = str_replace('.prefab.definition.yml', '', $name);
+
+        return $name;
+    }
     protected function generateHttpSkeleton() : GeneratorInterface
     {
         $generator = $this->getHttpSkeletonGeneratorFactory()->create();
         $generator->setProjectName($this->getProjectName())
-            ->setSrcDirectory($this->srcLocation)
-            ->setHttpSourceDirectory($this->httpSrcDir)
-            ->setTargetDirectory($this->projectDir)
+            ->setSrcDirectory($this->getSrcLocation())
+            ->setHttpSourceDirectory($this->getHttpSrcDir())
+            ->setTargetDirectory($this->getProjectDir())
             ->generate();
 
         return $this;
@@ -244,5 +278,22 @@ class Generator implements GeneratorInterface
         }
         $this->srcLocation = $srcLocation;
         return $this;
+    }
+
+    protected function getWritePathForDao(SplFileInfo $dao) : string
+    {
+        $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
+        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
+
+        $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
+        return $writeFilePath;
+    }
+
+    protected function getWriteDirectoryForDao(string $writeFilePath) : string
+    {
+        $directoryPathArray = explode('/', $writeFilePath);
+        unset($directoryPathArray[count($directoryPathArray) - 1]);
+        $directoryPath = implode('/', $directoryPathArray);
+        return $directoryPath;
     }
 }

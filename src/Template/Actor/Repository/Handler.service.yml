@@ -1,0 +1,8 @@
+services:
+  Neighborhoods\Bradfab\Template\Actor\Repository\HandlerInterface:
+    class: Neighborhoods\Bradfab\Template\Actor\Repository\Handler
+    public: false
+    shared: false
+    calls:
+      - [setActorMapRepository, ['@Neighborhoods\Bradfab\Template\Actor\Map\RepositoryInterface']]
+      - [setSearchCriteriaServerRequestBuilderFactory, ['@Neighborhoods\Bradfab\Template\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface']]
