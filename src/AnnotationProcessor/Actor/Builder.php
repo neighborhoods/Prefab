@@ -10,15 +10,16 @@ class Builder implements AnnotationProcessorInterface
 {
     protected $context;
 
+    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
     protected const NULLABLE_PROPERTY_METHOD_PATTERN =
 
 "
-    if (isset(\$record[ActorInterface::PROP_%s])) {\n
-        \$actor->set%s(\$record[ActorInterface::PROP_%s]);\n
-    }\n\n
+        if (isset(\$record[ActorInterface::PROP_%s])) {
+            \$Actor->set%s(\$record[ActorInterface::PROP_%s]);
+        }\n
 ";
 
-    protected const NON_NULLABLE_PROPERTY_METHOD_PATTERN = "   \$actor->set%s(\$record[ActorInterface::PROP_%s]);\n\n";
+    protected const NON_NULLABLE_PROPERTY_METHOD_PATTERN = "        \$Actor->set%s(\$record[ActorInterface::PROP_%s]);\n";
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -45,18 +46,27 @@ class Builder implements AnnotationProcessorInterface
 
         foreach ($properties as $propertyName => $property) {
 
+            $camelCaseName = '';
+            $nameArray = explode('_', $propertyName);
+            foreach ($nameArray as $part) {
+                $camelCaseName .= ucfirst($part);
+            }
             if ($property['nullable'] === true) {
                 $replacement .= sprintf(
                     self::NULLABLE_PROPERTY_METHOD_PATTERN,
                     strtoupper($propertyName),
-                    ucfirst($propertyName),
+                    $camelCaseName,
                     strtoupper($propertyName)
                 );
             } else {
-                $replacement =
+                $replacement .= sprintf(
+                    self::NON_NULLABLE_PROPERTY_METHOD_PATTERN,
+                    $camelCaseName,
+                    strtoupper($propertyName)
+                );
             }
         }
 
-        return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);
+        return $replacement;
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Bradfab;
 
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -10,12 +11,15 @@ class Template implements TemplateInterface
 {
     protected const KEY_SUPPORTING_ACTORS = 'supporting_actors';
     protected const KEY_HANDLER_INTERFACE = 'Repository\HandlerInterface.php';
+    protected const KEY_BUILDER = 'Builder.php';
+
     protected const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
     protected const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
     protected const KEY_STATIC_CONTEXT_RECORD = 'static_context_record';
 
     protected const CONTEXT_KEY_ROUTE_PATH = 'route_path';
     protected const CONTEXT_KEY_ROUTE_NAME = 'route_name';
+    protected const CONTEXT_KEY_PROPERTIES = 'properties';
 
     protected $route_path;
     protected $route_name;
@@ -26,9 +30,37 @@ class Template implements TemplateInterface
     public function getFabricationConfig() : array
     {
         $this->configureRepositoryHandlerInterface();
+        $this->configureBuilder();
         return $this->getAllSupportingActorsConfig();
     }
 
+    protected function configureBuilder() : TemplateInterface
+    {
+        $config = $this->getAllSupportingActorsConfig();
+        $propertyArray = [];
+
+        foreach ($this->getProperties() as $propertyName => $propertyValues) {
+            $propertyArray[$propertyName] = [
+                'nullable' => $propertyValues['nullable'] ?? false,
+            ];
+        }
+
+        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_BUILDER] =
+            [
+                self::KEY_ANNOTATION_PROCESSORS =>
+                    [
+                        Builder::ANNOTATION_PROCESSOR_KEY  => [
+                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . Builder::class,
+                            self::KEY_STATIC_CONTEXT_RECORD => [
+                                self::CONTEXT_KEY_PROPERTIES => $propertyArray
+                            ]
+                        ]
+                    ]
+            ];
+
+        $this->all_supporting_actors = $config;
+        return $this;
+    }
     protected function configureRepositoryHandlerInterface() : TemplateInterface
     {
         if ($this->hasRouteName() && $this->hasRoutePath()) {

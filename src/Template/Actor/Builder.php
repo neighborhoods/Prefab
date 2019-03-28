@@ -17,8 +17,8 @@ class Builder implements BuilderInterface
 
         $record = $this->getRecord();
 
-        /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Bradfab\Template\Actor\Builder.build1
-         */
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build
+ */
 
         return $Actor;
     }
