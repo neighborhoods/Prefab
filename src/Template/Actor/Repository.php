@@ -5,21 +5,46 @@ namespace Neighborhoods\Bradfab\Template\Actor;
 
 use Neighborhoods\Bradfab\Template\ActorInterface;
 
+use Doctrine\DBAL\Connection;
+use Neighborhoods\Bradfab\Template\Actor;
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName */
 class Repository implements RepositoryInterface
 {
-    public function add(ActorInterface $Actor): RepositoryInterface
-    {
-        // TODO: Implement add() method.
-        throw new \LogicException('Unimplemented add method.');
+    use Actor\Map\Builder\Factory\AwareTrait;
+    use Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
+    use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 
+    protected $connection;
+
+    public function createBuilder() : Property\Map\BuilderInterface
+    {
+        return $this->getActorMapBuilderFactory()->create();
+    }
+
+    public function get(SearchCriteriaInterface $searchCriteria) : MapInterface
+    {
+        $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
+        $queryBuilderBuilder->setSearchCriteria($searchCriteria);
+        $queryBuilder = $queryBuilderBuilder->build();
+        $queryBuilder->from(\Neighborhoods\Bradfab\Template\ActorInterface::TABLE_NAME)->select('*');
+        $records = $queryBuilder->execute()->fetchAll();
+
+        return $this->createBuilder()->setRecords($records)->build();
+    }
+
+    public function save(ActorInterface $property) : RepositoryInterface
+    {
+        // TODO: Implement Save Method
         return $this;
     }
 
-    public function getByIdentity(string $identity): ActorInterface
+    protected function getConnection() : Connection
     {
-        // TODO: Implement getByIdentity() method.
-        throw new \LogicException('Unimplemented get method.');
+        if ($this->connection === null) {
+            $this->connection = $this->getDoctrineDBALConnectionDecoratorRepository()->get(Doctrine\DBAL\Connection\DecoratorInterface::ID_CORE)
+                ->getDoctrineConnection();
+        }
 
-        return $Actor;
+        return $this->connection;
     }
 }

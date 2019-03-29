@@ -5,9 +5,8 @@ namespace Neighborhoods\Bradfab\Template\Actor\Repository;
 class Handler implements HandlerInterface
 {
 
-    use \Neighborhoods\Bradfab\Template\Actor\Repository\AwareTrait,
-        \Neighborhoods\Psr\Http\Message\ServerRequest\AwareTrait,
-        \Neighborhoods\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Bradfab\Template\Actor\Repository\AwareTrait;
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler-ProjectName */
 
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
@@ -27,7 +26,7 @@ class Handler implements HandlerInterface
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         $searchCriteria = $searchCriteriaBuilder->build();
 
-        return $this->getActorMapRepository()->get($searchCriteria);
+        return $this->getActorRepository()->get($searchCriteria);
     }
 
     protected function post()
@@ -54,7 +53,5 @@ class Handler implements HandlerInterface
     {
         return $this->getPsrHttpMessageServerRequest()->getAttribute(\Zend\Expressive\Router\RouteResult::class);
     }
-
-
 }
 
