@@ -81,6 +81,10 @@ class Builder implements BuilderInterface
         $daoGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoGenerator);
 
+        if ($meta->hasHttpRoute()) {
+            $this->addHandlerToRouteFile($meta);
+        }
+
         return $this;
     }
 
@@ -116,15 +120,18 @@ class Builder implements BuilderInterface
     protected function formatRoutes(GeneratorMetaInterface $meta): array
     {
         $routes = [];
+
+        $truncatedNamespace = explode($this->getBuildConfiguration()->getProjectName() . '\\', $meta->getActorNamespace())[1];
+        $fullDaoName = implode('', explode('\\', $truncatedNamespace . $meta->getDaoName()));
         foreach ($meta->getHttpVerbs() as $httpVerb) {
             $verb = strtolower($httpVerb);
             $line =
                 "    - [" . $verb .
-                ", [!php/const \\" . $meta->getActorNamespace() .
-                "\HandlerInterface::ROUTE_PATH_" . strtoupper($this->getDaoName()) . "S," .
-                "'@" . $meta->getActorNamespace() ."\HandlerInterface'," .
-                "!php/const \\" . $meta->getActorNamespace() .
-                "\HandlerInterface::ROUTE_NAME_" . strtoupper($this->getDaoName()) . "S]]\n";
+                ", [!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
+                "\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
+                "'@" . $meta->getActorNamespace() . '\\' . $this->getDaoName() . "\Repository\HandlerInterface'," .
+                "!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
+                "\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
 
             $routes[] = $line;
         }

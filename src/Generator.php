@@ -85,7 +85,8 @@ class Generator implements GeneratorInterface
     protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
         $bradfabTemplate = $this->getTemplateFactory()->create()
-            ->setProperties($configuration->getDaoProperties());
+            ->setProperties($configuration->getDaoProperties())
+            ->setProjectName($configuration->getProjectName());
 
         if ($configuration->hasHttpRoute()) {
             $bradfabTemplate->setRoutePath($configuration->getHttpRoute());

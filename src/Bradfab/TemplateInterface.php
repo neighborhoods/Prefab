@@ -17,4 +17,6 @@ interface TemplateInterface
     public function setProperties(array $properties) : TemplateInterface;
 
     public function hasProperties() : bool;
+
+    public function setProjectName(string $project_name) : TemplateInterface;
 }
