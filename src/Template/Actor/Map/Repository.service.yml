@@ -1,6 +1,6 @@
 services:
-  Neighborhoods\Bradfab\Template\Actor\RepositoryInterface:
-    class: Neighborhoods\Bradfab\Template\Actor\Repository
+  Neighborhoods\Bradfab\Template\Actor\Map\RepositoryInterface:
+    class: Neighborhoods\Bradfab\Template\Actor\Map\Repository
     public: false
     shared: true
     calls:

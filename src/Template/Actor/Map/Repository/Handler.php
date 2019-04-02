@@ -1,14 +1,14 @@
 <?php
 
-namespace Neighborhoods\Bradfab\Template\Actor\Repository;
+namespace Neighborhoods\Bradfab\Template\Actor\Map\Repository;
 
 class Handler implements HandlerInterface
 {
 
     use \Neighborhoods\Bradfab\Template\Actor\Map\Repository\AwareTrait;
-    /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler-ProjectName-Http\Message
+    /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-ProjectName-Http\Message
      */
-    /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler-ProjectName-SearchCriteria
+    /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-ProjectName-SearchCriteria
      */
 
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface

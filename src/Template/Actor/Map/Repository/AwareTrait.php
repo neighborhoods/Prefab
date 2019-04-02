@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Bradfab\Template\Actor\Map\Repository;
 
-use Neighborhoods\Bradfab\Template\Actor\RepositoryInterface;
+use Neighborhoods\Bradfab\Template\Actor\Map\RepositoryInterface;
 
 trait AwareTrait
 {

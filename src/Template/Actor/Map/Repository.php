@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Bradfab\Template\Actor;
+namespace Neighborhoods\Bradfab\Template\Actor\Map;
 
 use Neighborhoods\Bradfab\Template\ActorInterface;
 
 use Doctrine\DBAL\Connection;
 use Neighborhoods\Bradfab\Template\Actor;
+use Neighborhoods\Bradfab\Template\Actor\MapInterface;
 /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName */
 class Repository implements RepositoryInterface
 {
@@ -16,12 +17,12 @@ class Repository implements RepositoryInterface
 
     protected $connection;
 
-    public function createBuilder() : Property\Map\BuilderInterface
+    public function createBuilder() : \Neighborhoods\Bradfab\Template\Actor\Map\BuilderInterface
     {
         return $this->getActorMapBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : MapInterface
+    public function get(SearchCriteriaInterface $searchCriteria) : \Neighborhoods\Bradfab\Template\Actor\MapInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
@@ -32,7 +33,7 @@ class Repository implements RepositoryInterface
         return $this->createBuilder()->setRecords($records)->build();
     }
 
-    public function save(ActorInterface $property) : RepositoryInterface
+    public function save(MapInterface $property) : RepositoryInterface
     {
         // TODO: Implement Save Method
         return $this;

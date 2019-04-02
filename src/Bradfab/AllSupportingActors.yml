@@ -12,14 +12,14 @@ supporting_actors:
   Builder\Factory.service.yml:
   Builder\FactoryInterface.php:
   Builder\Factory\AwareTrait.php:
-  Repository.php:
-  Repository.service.yml:
-  RepositoryInterface.php:
-  Repository\AwareTrait.php:
-  Repository\Handler.php:
-  Repository\HandlerInterface.php:
-  Repository\Handler.service.yml:
-  Repository\Handler\AwareTrait.php:
+  Map\Repository.php:
+  Map\Repository.service.yml:
+  Map\RepositoryInterface.php:
+  Map\Repository\AwareTrait.php:
+  Map\Repository\Handler.php:
+  Map\Repository\HandlerInterface.php:
+  Map\Repository\Handler.service.yml:
+  Map\Repository\Handler\AwareTrait.php:
   Map.php:
   Map.service.yml:
   MapInterface.php:

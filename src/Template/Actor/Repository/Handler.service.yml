@@ -5,4 +5,4 @@ services:
     shared: false
     calls:
       - [setActorRepository, ['@Neighborhoods\Bradfab\Template\Actor\RepositoryInterface']]
-      - [setSearchCriteriaServerRequestBuilderFactory, ['@Neighborhoods\Bradfab\Template\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface']]
+      - [setSearchCriteriaServerRequestBuilderFactory, ['/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor */']]
