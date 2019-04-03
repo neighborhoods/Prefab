@@ -4,4 +4,6 @@ services:
     public: false
     shared: true
     calls:
-      - [setActorBuilderFactory, ['@Neighborhoods\Bradfab\Template\Actor\Builder\FactoryInterface']]
+      - [setDoctrineDBALConnectionDecoratorRepository, ['/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor-HttpMessage */']]
+      - [setActorMapBuilderFactory, ['@Neighborhoods\Bradfab\Template\Actor\Map\Builder\FactoryInterface']]
+      - [setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory, ['/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor-SearchCriteria */']]

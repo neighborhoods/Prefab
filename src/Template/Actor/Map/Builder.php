@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Neighborhoods\Bradfab\Template\Actor\Map;
 
@@ -7,21 +6,28 @@ use Neighborhoods\Bradfab\Template\Actor\MapInterface;
 
 class Builder implements BuilderInterface
 {
-    use Factory\AwareTrait;
 
-    protected $records;
+    use \Neighborhoods\Bradfab\Template\Actor\Map\Factory\AwareTrait;
+    use \Neighborhoods\Bradfab\Template\Actor\Builder\Factory\AwareTrait;
 
-    public function build(): MapInterface
+    /**
+     * @var array
+     */
+    protected $records = null;
+
+    public function build() : MapInterface
     {
         $map = $this->getActorMapFactory()->create();
-
-        // @TODO - build the object.
-        throw new \LogicException('Unimplemented build method.');
+        foreach ($this->getRecords() as $record) {
+            $builder = $this->getActorBuilderFactory()->create();
+            $item = $builder->setRecord($record)->build();
+            $map[] = $item; // remove or change index field as desired
+        }
 
         return $map;
     }
 
-    protected function getRecords(): array
+    protected function getRecords() : array
     {
         if ($this->records === null) {
             throw new \LogicException('Builder records has not been set.');
@@ -30,7 +36,7 @@ class Builder implements BuilderInterface
         return $this->records;
     }
 
-    public function setRecords(array $records): BuilderInterface
+    public function setRecords(array $records) : BuilderInterface
     {
         if ($this->records !== null) {
             throw new \LogicException('Builder records is already set.');
@@ -41,3 +47,4 @@ class Builder implements BuilderInterface
         return $this;
     }
 }
+

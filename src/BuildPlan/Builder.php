@@ -128,10 +128,10 @@ class Builder implements BuilderInterface
             $line =
                 "    - [" . $verb .
                 ", [!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
-                "\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
-                "'@" . $meta->getActorNamespace() . '\\' . $this->getDaoName() . "\Repository\HandlerInterface'," .
+                "\Map\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
+                "'@" . $meta->getActorNamespace() . '\\' . $this->getDaoName() . "\Map\Repository\HandlerInterface'," .
                 "!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
-                "\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
+                "\Map\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
 
             $routes[] = $line;
         }

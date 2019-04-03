@@ -10,7 +10,7 @@ trait AwareTrait
 
     protected $ActorMapRepositoryHandler = null;
 
-    public function setActorMapRepositoryHandler(\Neighborhoods\Bradfab\Template\Template\Actor\Map\Repository\HandlerInterface $ActorMapRepositoryHandler) : self
+    public function setActorMapRepositoryHandler(\Neighborhoods\Bradfab\Template\Actor\Map\Repository\HandlerInterface $ActorMapRepositoryHandler) : self
     {
         if ($this->hasActorMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is already set.');
@@ -20,7 +20,7 @@ trait AwareTrait
         return $this;
     }
 
-    protected function getActorMapRepositoryHandler() : \Neighborhoods\Bradfab\Template\Template\MV1\Address\Map\Repository\HandlerInterface
+    protected function getActorMapRepositoryHandler() : \Neighborhoods\Bradfab\Template\Actor\Map\Repository\HandlerInterface
     {
         if (!$this->hasActorMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is not set.');

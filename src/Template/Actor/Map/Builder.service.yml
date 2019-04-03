@@ -5,3 +5,4 @@ services:
     shared: false
     calls:
       - [setActorMapFactory, ['@Neighborhoods\Bradfab\Template\Actor\Map\FactoryInterface']]
+      - [setActorBuilderFactory, ['@Neighborhoods\Bradfab\Template\Actor\Builder\FactoryInterface']]

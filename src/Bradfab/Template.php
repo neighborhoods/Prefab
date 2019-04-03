@@ -19,6 +19,7 @@ class Template implements TemplateInterface
     protected const KEY_HANDLER_INTERFACE = 'Map\Repository\HandlerInterface.php';
     protected const KEY_HANDLER = 'Map\Repository\Handler.php';
     protected const KEY_HANDLER_SERVICE_FILE = 'Map\Repository\Handler.service.yml';
+    protected const KEY_REPOSITORY_SERVICE_FILE = 'Map\Repository.service.yml';
     protected const KEY_BUILDER = 'Builder.php';
     protected const KEY_NAMESPACE_ANNOTATION_PROCESSOR = 'Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor';
 
@@ -48,6 +49,8 @@ class Template implements TemplateInterface
 
         $this->configureRepository();
         $this->configureRepositoryInterface();
+        $this->configureRepositoryServiceFile();
+
         $this->configureBuilder();
 
         return $this->getAllSupportingActorsConfig();
@@ -109,6 +112,27 @@ class Template implements TemplateInterface
         $config = $this->getAllSupportingActorsConfig();
         $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS][self::KEY_NAMESPACE_ANNOTATION_PROCESSOR] =
             $this->getNamespaceAnnotationProcessorArray($namespace);
+
+        $this->all_supporting_actors = $config;
+        return $this;
+    }
+
+    protected function configureRepositoryServiceFile() : TemplateInterface
+    {
+        $config = $this->getAllSupportingActorsConfig();
+        $annotationProcessors = [];
+
+        $namespaces = [
+            'HttpMessage' => '@Neighborhoods\PropertyService\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface',
+            'SearchCriteria' => '@Neighborhoods\PropertyService\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface',
+        ];
+
+        foreach ($namespaces as $key => $namespace) {
+            $annotationProcessors[NamespaceAnnotationProcessor::ANNOTATION_PROCESSOR_KEY . '-' . $key] =
+                $this->getNamespaceAnnotationProcessorArray($namespace);
+        }
+
+        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_REPOSITORY_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
 
         $this->all_supporting_actors = $config;
         return $this;

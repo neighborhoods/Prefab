@@ -8,7 +8,7 @@ use Neighborhoods\Bradfab\AnnotationProcessorInterface;
 
 class HandlerInterface implements AnnotationProcessorInterface
 {
-    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface-CONSTANTS';
+    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\HandlerInterface-CONSTANTS';
 
     protected $context;
 
