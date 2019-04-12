@@ -59,5 +59,7 @@
       "Neighborhoods\\PrefabTest\\": "tests",
       "Neighborhoods\\ReplaceThisWithTheNameOfYourProduct\\": "http/fab"
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
