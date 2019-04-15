@@ -20,17 +20,14 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     public function getContainerBuilder() : Protean\Container\BuilderInterface
     {
-        $urlRoot = $this->getUrlRoot();
-
-        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $urlRoot);
-
-        if (!isset($this->getBuildableDirectoryMap()[$urlRoot])) {
+        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $this->getDirectoryGroup());
+        if (!isset($this->getBuildableDirectoryMap()[$this->getDirectoryGroup()])) {
             throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
 
         $this->getProteanContainerBuilder()->buildZendExpressive();
 
-        $routeBuildableDirectories = $this->getBuildableDirectoryMap()[$urlRoot];
+        $routeBuildableDirectories = $this->getBuildableDirectoryMap()[$this->getDirectoryGroup()];
 
         $this->addBuildableDirectories($routeBuildableDirectories);
         $this->addWelcomeBaskets($routeBuildableDirectories);
@@ -39,16 +36,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this->getProteanContainerBuilder();
     }
 
-    protected function getUrlRoot() : string
-    {
-        $urlArray = explode('/', $_REQUEST['_url']);
 
-        if (!isset($urlArray[1])) {
-            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
-        }
-
-        return $urlArray[1];
-    }
 
     protected function addBuildableDirectories(array $httpBuildableDirectoryMap) : ContainerBuilderInterface
     {

@@ -1,9 +1,12 @@
 <?php
 declare(strict_types=1);
 
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
+
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HttpBuildableDirectoryMap\ContainerBuilder;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
 class Prebuilder implements PrebuilderInterface
 {
@@ -17,18 +20,16 @@ class Prebuilder implements PrebuilderInterface
         }
 
         foreach ($httpBuildableDirectoryMap as $key => $values) {
-            (new ContainerBuilder())
+            $proteanContainerBuilder = new Builder();
+            $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(__DIR__ . '/../../../../');
+
+            $containerBuilder = (new ContainerBuilder())
+                ->setProteanContainerBuilder($proteanContainerBuilder)
                 ->setDirectoryGroup($key)
                 ->setBuildableDirectoryMap([$key => $values])
-                ->getContainerBuilder()
-                ->build();
-        }
+                ->getContainerBuilder();
 
-        $mapBuilder = new ContainerBuilder\Map\Builder();
-        $containerBuilderMap = $mapBuilder->setRecords($httpBuildableDirectoryMap)->build();
-
-        foreach ($containerBuilderMap as $builder) {
-            $builder->getContainerBuilder()->build();
+            $containerBuilder->build();
         }
 
         return $this;
