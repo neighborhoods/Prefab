@@ -16,7 +16,7 @@ class ContainerBuilder implements ContainerBuilderInterface
     protected const YAML_KEY_APPENDED_PATHS = 'appended_paths';
 
     protected $buildableDirectoryMap;
-    protected $route;
+    protected $directoryGroup;
 
     public function getContainerBuilder() : Protean\Container\BuilderInterface
     {
@@ -127,6 +127,21 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
+    public function getDirectoryGroup() : string
+    {
+        if ($this->directoryGroup === null) {
+            throw new \LogicException('ContainerBuilder directoryGroup has not been set.');
+        }
+        return $this->directoryGroup;
+    }
 
+    public function setDirectoryGroup(string $directoryGroup) : ContainerBuilderInterface
+    {
+        if ($this->directoryGroup !== null) {
+            throw new \LogicException('ContainerBuilder directoryGroup is already set.');
+        }
+        $this->directoryGroup = $directoryGroup;
+        return $this;
+    }
 
 }

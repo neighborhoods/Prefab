@@ -7,7 +7,7 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 
 interface ContainerBuilderInterface
 {
-    public function setRoute(string $route) : ContainerBuilderInterface;
+    public function setDirectoryGroup(string $directoryGroup) : ContainerBuilderInterface;
 
     public function setBuildableDirectoryMap(array $buildableDirectoryMap) : ContainerBuilderInterface;
 
