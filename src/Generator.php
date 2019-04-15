@@ -9,7 +9,6 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 use Neighborhoods\Prefab;
-
 use Neighborhoods\Bradfab\Bradfab;
 use Neighborhoods\Bradfab\Protean\Container\Builder;
 
@@ -189,7 +188,7 @@ class Generator implements GeneratorInterface
         $bradfab = (new Bradfab())->setProteanContainerBuilder($proteanContainerBuilder);
         $bradfab->run();
 
-        $filesystem = new Filesystem();
+        $filesystem = $this->getFileSystem();
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath(__DIR__ . '/../../../../fab'));
 
         return $this;
