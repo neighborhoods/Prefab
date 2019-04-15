@@ -12,8 +12,16 @@ class Prebuilder implements PrebuilderInterface
         try {
             $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
         } catch (BuildableDirectoryFileNotFound\Exception $exception) {
-            // No YAML file found. Build full container
+            // No directory map file found. Nothing to build
             return $this;
+        }
+
+        foreach ($httpBuildableDirectoryMap as $key => $values) {
+            (new ContainerBuilder())
+                ->setDirectoryGroup($key)
+                ->setBuildableDirectoryMap([$key => $values])
+                ->getContainerBuilder()
+                ->build();
         }
 
         $mapBuilder = new ContainerBuilder\Map\Builder();
