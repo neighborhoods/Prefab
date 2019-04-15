@@ -9,6 +9,7 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 $logger = (new Logger())
     ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log');
@@ -19,7 +20,11 @@ set_exception_handler($exceptionHandler);
 set_error_handler(new ErrorHandler());
 $proteanContainerBuilder = new Builder();
 $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(realpath(__DIR__ . '/../'));
-$HTTP = (new HTTP())->setProteanContainerBuilder($proteanContainerBuilder);
-$HTTP->respond();
+$httpBuildableDirectoryContainerBuilder = new HTTPBuildableDirectoryMap\ContainerBuilder();
+
+$HTTP = (new HTTP())
+    ->setProteanContainerBuilder($proteanContainerBuilder)
+    ->setPrefab5HttpBuildableDirectoryMapContainerBuilder($httpBuildableDirectoryContainerBuilder)
+    ->respond();
 
 return;
