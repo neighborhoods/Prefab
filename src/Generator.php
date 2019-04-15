@@ -4,17 +4,21 @@
 namespace Neighborhoods\Prefab;
 
 use Neighborhoods\Prefab\HttpSkeleton;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
-use Neighborhoods\Prefab\Bradfab;
+use Neighborhoods\Prefab;
+
+use Neighborhoods\Bradfab\Bradfab;
+use Neighborhoods\Bradfab\Protean\Container\Builder;
 
 class Generator implements GeneratorInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use BuildPlan\Builder\Factory\AwareTrait;
-    use Bradfab\Template\Factory\AwareTrait;
+    use Prefab\Bradfab\Template\Factory\AwareTrait;
 
     protected $buildPlans;
     protected $httpSrcDir;
@@ -23,6 +27,7 @@ class Generator implements GeneratorInterface
     protected $fabLocation;
     protected $srcLocation;
     protected $projectName;
+    protected $fileSystem;
 
     protected function configure()
     {
@@ -52,6 +57,9 @@ class Generator implements GeneratorInterface
         echo ">> Generating Prefab machinery...\n";
         $this->generatePrefab();
         echo ">> Success.\n";
+
+        echo ">> Bradfabbing supporting actors\n";
+        $this->fabricateSupportingActors();
 
         echo ">> Protean Prefab complete.\n";
         echo "\n";
@@ -163,6 +171,28 @@ class Generator implements GeneratorInterface
         $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
         return $projectName;
+    }
+
+    protected function fabricateSupportingActors() : GeneratorInterface
+    {
+        // Where the Bradfab fabrication files were saved
+        putenv('BRADFAB_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
+        // Where to put the supporting actors
+        putenv('BRADFAB_TARGET_APPLICATION_FABRICATION_PATH=' . realpath(__DIR__ . '/../fabricatedFiles'));
+        // Where to find the templates to generate the supporting actors
+        putenv('BRADFAB_FABRICATOR_TEMPLATE_ACTOR_DIRECTORY_PATH='  . realpath(__DIR__ . '/Template/Prefab5/Actor'));
+        // Namespace of the generated files
+        putenv('BRADFAB_TARGET_APPLICATION_NAMESPACE=Neighborhoods\\'. $this->getProjectName() . '\\');
+
+        $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../../bradfab/'));
+
+        $bradfab = (new Bradfab())->setProteanContainerBuilder($proteanContainerBuilder);
+        $bradfab->run();
+
+        $filesystem = new Filesystem();
+        $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath(__DIR__ . '/../../../../fab'));
+
+        return $this;
     }
 
     protected function getProjectName() : string
@@ -296,5 +326,23 @@ class Generator implements GeneratorInterface
         unset($directoryPathArray[count($directoryPathArray) - 1]);
         $directoryPath = implode('/', $directoryPathArray);
         return $directoryPath;
+    }
+
+    public function getFileSystem() : Filesystem
+    {
+        if ($this->fileSystem === null) {
+            $this->fileSystem = new Filesystem();
+        }
+
+        return $this->fileSystem;
+    }
+
+    public function setFileSystem(Filesystem $fileSystem) : GeneratorInterface
+    {
+        if ($this->fileSystem !== null) {
+            throw new \LogicException('Generator fileSystem is already set.');
+        }
+        $this->fileSystem = $fileSystem;
+        return $this;
     }
 }
