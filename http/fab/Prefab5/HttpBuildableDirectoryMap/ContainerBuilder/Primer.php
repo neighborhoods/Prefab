@@ -8,9 +8,9 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuilda
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HttpBuildableDirectoryMap\ContainerBuilder;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
-class Prebuilder implements PrebuilderInterface
+class Primer implements PrimerInterface
 {
-    public function prebuildContainers() : PrebuilderInterface
+    public function primeContainers() : PrimerInterface
     {
         try {
             $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
