@@ -7,38 +7,38 @@ use Neighborhoods\Bradfab\Template\Actor\Map\RepositoryInterface;
 
 trait AwareTrait
 {
-    protected $ActorRepository;
+    protected $ActorMapRepository;
 
-    public function setActorRepository(RepositoryInterface $ActorRepository): self
+    public function setActorMapRepository(RepositoryInterface $ActorMapRepository): self
     {
-        if ($this->hasActorRepository()) {
-            throw new \LogicException('ActorRepository is already set.');
+        if ($this->hasActorMapRepository()) {
+            throw new \LogicException('ActorMapRepository is already set.');
         }
-        $this->ActorRepository = $ActorRepository;
+        $this->ActorMapRepository = $ActorMapRepository;
 
         return $this;
     }
 
-    protected function getActorRepository(): RepositoryInterface
+    protected function getActorMapRepository(): RepositoryInterface
     {
-        if (!$this->hasActorRepository()) {
-            throw new \LogicException('ActorRepository is not set.');
+        if (!$this->hasActorMapRepository()) {
+            throw new \LogicException('ActorMapRepository is not set.');
         }
 
-        return $this->ActorRepository;
+        return $this->ActorMapRepository;
     }
 
-    protected function hasActorRepository(): bool
+    protected function hasActorMapRepository(): bool
     {
-        return isset($this->ActorRepository);
+        return isset($this->ActorMapRepository);
     }
 
-    protected function unsetActorRepository(): self
+    protected function unsetActorMapRepository(): self
     {
-        if (!$this->hasActorRepository()) {
-            throw new \LogicException('ActorRepository is not set.');
+        if (!$this->hasActorMapRepository()) {
+            throw new \LogicException('ActorMapRepository is not set.');
         }
-        unset($this->ActorRepository);
+        unset($this->ActorMapRepository);
 
         return $this;
     }

@@ -29,7 +29,7 @@ class Handler implements HandlerInterface
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         $searchCriteria = $searchCriteriaBuilder->build();
 
-        return $this->getActorRepository()->get($searchCriteria);
+        return $this->getActorMapRepository()->get($searchCriteria);
     }
 
     protected function post()

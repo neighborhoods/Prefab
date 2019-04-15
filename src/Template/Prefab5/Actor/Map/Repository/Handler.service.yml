@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorRepository, ['@Neighborhoods\Bradfab\Template\Actor\Map\RepositoryInterface']]
+      - [setActorMapRepository, ['@Neighborhoods\Bradfab\Template\Actor\Map\RepositoryInterface']]
       - [setSearchCriteriaServerRequestBuilderFactory, ['/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor */']]
