@@ -9,41 +9,15 @@ use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildPlanInterface;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
-use Neighborhoods\Prefab\Actor\AwareTrait;
 use Neighborhoods\Prefab\Actor;
 use Neighborhoods\Prefab\Actor\DAOInterface;
 use Neighborhoods\Prefab\Actor\DAO;
-use Neighborhoods\Prefab\Actor\Factory;
-use Neighborhoods\Prefab\Actor\FactoryInterface;
-use Neighborhoods\Prefab\Actor\Handler;
-use Neighborhoods\Prefab\Actor\HandlerInterface;
-use Neighborhoods\Prefab\Actor\MapBuilder;
-use Neighborhoods\Prefab\Actor\MapBuilderInterface;
-use Neighborhoods\Prefab\Actor\Map;
-use Neighborhoods\Prefab\Actor\MapInterface;
-use Neighborhoods\Prefab\Actor\MapFactory;
-use Neighborhoods\Prefab\Actor\Repository;
-use Neighborhoods\Prefab\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\Console\GeneratorMeta;
 use Neighborhoods\Prefab\Zend;
 
 class Builder implements BuilderInterface
 {
     use BuildPlan\Factory\AwareTrait;
-    use AwareTrait\Generator\Factory\AwareTrait;
-    use Actor\Builder\Generator\Factory\AwareTrait;
-    use Actor\BuilderInterface\Generator\Factory\AwareTrait;
-    use Factory\Generator\Factory\AwareTrait;
-    use FactoryInterface\Generator\Factory\AwareTrait;
-    use Handler\Generator\Factory\AwareTrait;
-    use HandlerInterface\Generator\Factory\AwareTrait;
-    use Map\Generator\Factory\AwareTrait;
-    use MapFactory\Generator\Factory\AwareTrait;
-    use MapBuilder\Generator\Factory\AwareTrait;
-    use MapBuilderInterface\Generator\Factory\AwareTrait;
-    use MapInterface\Generator\Factory\AwareTrait;
-    use Repository\Generator\Factory\AwareTrait;
-    use RepositoryInterface\Generator\Factory\AwareTrait;
     use GeneratorMeta\Factory\AwareTrait;
     use DAOInterface\Generator\Factory\AwareTrait;
     use DAO\Generator\Factory\AwareTrait;
@@ -107,14 +81,9 @@ class Builder implements BuilderInterface
         $daoGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoGenerator);
 
-        $nextLevelMeta = $this->getNextLevelMeta($daoGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addFactoryToPlan($nextLevelMeta);
-        $this->addMapToPlan($nextLevelMeta);
-        $this->addRepositoryInterfaceToPlan($nextLevelMeta);
-        $this->addBuilderToPlan($nextLevelMeta);
-        $this->addBuilderInterfaceToPlan($nextLevelMeta);
+        if ($meta->hasHttpRoute()) {
+            $this->addHandlerToRouteFile($meta);
+        }
 
         return $this;
     }
@@ -130,190 +99,6 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function addAwareTraitToPlan(GeneratorMetaInterface $meta) : BuilderInterface
-    {
-        $awareTraitGenerator = $this->getActorAwareTraitGeneratorFactory()->create();
-        $awareTraitGenerator->setMeta($meta);
-        $this->appendGeneratorToBuildPlan($awareTraitGenerator);
-
-        return $this;
-    }
-
-    protected function addBuilderToPlan(GeneratorMetaInterface $builderMeta) : BuilderInterface
-    {
-        $builderGenerator = $this->getActorBuilderGeneratorFactory()->create();
-        $builderGenerator->setMeta($builderMeta);
-        $this->appendGeneratorToBuildPlan($builderGenerator);
-
-        $nextLevelMeta = $this->getNextLevelMeta($builderGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addFactoryToPlan($nextLevelMeta);
-
-        return $this;
-    }
-
-    protected function addMapBuilderToPlan(GeneratorMetaInterface $builderMeta) : BuilderInterface
-    {
-        $builderGenerator = $this->getActorMapBuilderGeneratorFactory()->create();
-        $builderGenerator->setMeta($builderMeta);
-        $this->appendGeneratorToBuildPlan($builderGenerator);
-
-        $nextLevelMeta = $this->getNextLevelMeta($builderGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addFactoryToPlan($nextLevelMeta);
-
-        return $this;
-    }
-
-    protected function addMapBuilderInterfaceToPlan(GeneratorMetaInterface $builderMeta) : BuilderInterface
-    {
-        $builderGenerator = $this->getActorMapBuilderInterfaceGeneratorFactory()->create();
-        $builderGenerator->setMeta($builderMeta);
-        $this->appendGeneratorToBuildPlan($builderGenerator);
-
-        return $this;
-    }
-
-    protected function addBuilderInterfaceToPlan(GeneratorMetaInterface $builderInterfaceMeta) : BuilderInterface
-    {
-        $builderInterfaceGenerator = $this->getActorBuilderInterfaceGeneratorFactory()->create();
-        $builderInterfaceGenerator->setMeta($builderInterfaceMeta);
-        $this->appendGeneratorToBuildPlan($builderInterfaceGenerator);
-
-        return $this;
-    }
-
-    protected function addFactoryToPlan(GeneratorMetaInterface $factoryMeta) : BuilderInterface
-    {
-        $factoryGenerator = $this->getActorFactoryGeneratorFactory()->create();
-        $factoryGenerator->setMeta($factoryMeta);
-        $this->appendGeneratorToBuildPlan($factoryGenerator);
-        $this->addFactoryInterfaceToPlan($factoryMeta);
-
-        $nextLevelMeta = $this->getNextLevelMeta($factoryGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-
-        return $this;
-    }
-
-    protected function addFactoryInterfaceToPlan(GeneratorMetaInterface $factoryInterfaceMeta) : BuilderInterface
-    {
-        $factoryInterfaceGenerator = $this->getActorFactoryInterfaceGeneratorFactory()->create();
-        $factoryInterfaceGenerator->setMeta($factoryInterfaceMeta);
-        $this->appendGeneratorToBuildPlan($factoryInterfaceGenerator);
-        return $this;
-    }
-
-    protected function addHandlerToPlan(GeneratorMetaInterface $handlerMeta) : BuilderInterface
-    {
-        $handlerGenerator = $this->getActorHandlerGeneratorFactory()->create();
-        $handlerGenerator->setMeta($handlerMeta);
-        $this->appendGeneratorToBuildPlan($handlerGenerator);
-
-        $nextLevelMeta = $this->getNextLevelMeta($handlerGenerator);
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        return $this;
-    }
-
-    protected function addHandlerInterfaceToPlan(GeneratorMetaInterface $handlerInterfaceMeta) : BuilderInterface
-    {
-        $handlerInterfaceGenerator = $this->getActorHandlerInterfaceGeneratorFactory()->create();
-        $handlerInterfaceGenerator->setMeta($handlerInterfaceMeta);
-        $this->appendGeneratorToBuildPlan($handlerInterfaceGenerator);
-        if ($handlerInterfaceMeta->hasHttpRoute()) {
-            $this->addHandlerToRouteFile($handlerInterfaceMeta);
-        }
-        return $this;
-    }
-
-    protected function addMapToPlan(GeneratorMetaInterface $mapMeta) : BuilderInterface
-    {
-        $mapGenerator = $this->getMapGeneratorFactory()->create();
-        $mapGenerator->setMeta($mapMeta);
-        $this->appendGeneratorToBuildPlan($mapGenerator);
-        $this->addMapInterfaceToPlan($mapMeta);
-
-        $nextLevelMeta = $this->getNextLevelMeta($mapGenerator);
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addMapBuilderToPlan($nextLevelMeta);
-        $this->addMapBuilderInterfaceToPlan($nextLevelMeta);
-        $this->addMapFactoryToPlan($nextLevelMeta);
-        $this->addRepositoryToPlan($nextLevelMeta);
-
-        return $this;
-    }
-
-    protected function addMapFactoryToPlan(GeneratorMetaInterface $mapFactoryMeta) : BuilderInterface
-    {
-        $mapFactoryGenerator = $this->getActorMapFactoryGeneratorFactory()->create();
-        $mapFactoryGenerator->setMeta($mapFactoryMeta);
-        $this->appendGeneratorToBuildPlan($mapFactoryGenerator);
-        $this->addFactoryInterfaceToPlan($mapFactoryMeta);
-
-        $nextLevelMeta = $this->getNextLevelMeta($mapFactoryGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-
-        return $this;
-    }
-
-    protected function addMapInterfaceToPlan(GeneratorMetaInterface $mapInterfaceMeta) : BuilderInterface
-    {
-        $mapInterfaceGenerator = $this->getMapInterfaceGeneratorFactory()->create();
-        $mapInterfaceGenerator->setMeta($mapInterfaceMeta);
-        $this->appendGeneratorToBuildPlan($mapInterfaceGenerator);
-
-        return $this;
-    }
-
-
-    protected function addRepositoryToPlan(GeneratorMetaInterface $repositoryMeta) : BuilderInterface
-    {
-        $repositoryGenerator = $this->getActorRepositoryGeneratorFactory()->create();
-        $repositoryGenerator->setMeta($repositoryMeta);
-        $this->appendGeneratorToBuildPlan($repositoryGenerator);
-        $this->addRepositoryInterfaceToPlan($repositoryMeta);
-
-        $nextLevelMeta = $this->getNextLevelMeta($repositoryGenerator);
-
-        $this->addAwareTraitToPlan($nextLevelMeta);
-        $this->addHandlerToPlan($nextLevelMeta);
-        $this->addHandlerInterfaceToPlan($nextLevelMeta);
-
-        return $this;
-    }
-
-    protected function addRepositoryInterfaceToPlan(GeneratorMetaInterface $repositoryInterfaceMeta) : BuilderInterface
-    {
-        $repositoryInterfaceGenerator = $this->getActorRepositoryInterfaceGeneratorFactory()->create();
-        $repositoryInterfaceGenerator->setMeta($repositoryInterfaceMeta);
-        $this->appendGeneratorToBuildPlan($repositoryInterfaceGenerator);
-
-        return $this;
-    }
-
-    protected function getNextLevelMeta(GeneratorInterface $parentGenerator) : GeneratorMetaInterface
-    {
-        $parentMeta = $parentGenerator->getMeta();
-        $actorName = $parentGenerator->getActorName();
-        $nextLevelNamespace = $parentMeta->getActorNamespace() . self::BACKSLASH . $actorName;
-        $nextLevelFilePath = $parentMeta->getActorFilePath() . self::FORWARD_SLASH . $actorName;
-
-        $nextLevelMeta = $this->getConsoleGeneratorMetaFactory()->create();
-        $nextLevelMeta->setActorNamespace($nextLevelNamespace);
-        $nextLevelMeta->setActorFilepath($nextLevelFilePath);
-        $nextLevelMeta->setDaoName($parentMeta->getDaoName());
-        if ($parentMeta->hasHttpRoute()) {
-            $nextLevelMeta->setHttpRoute($parentMeta->getHttpRoute());
-            $nextLevelMeta->setHttpVerbs($parentMeta->getHttpVerbs());
-        }
-        $nextLevelMeta->setDaoProperties($parentMeta->getDaoProperties());
-
-        return $nextLevelMeta;
-    }
 
     protected function addHandlerToRouteFile(GeneratorMetaInterface $meta) : BuilderInterface
     {
@@ -335,15 +120,18 @@ class Builder implements BuilderInterface
     protected function formatRoutes(GeneratorMetaInterface $meta): array
     {
         $routes = [];
+
+        $truncatedNamespace = explode($this->getBuildConfiguration()->getProjectName() . '\\', $meta->getActorNamespace())[1];
+        $fullDaoName = implode('', explode('\\', $truncatedNamespace . $meta->getDaoName()));
         foreach ($meta->getHttpVerbs() as $httpVerb) {
             $verb = strtolower($httpVerb);
             $line =
                 "    - [" . $verb .
-                ", [!php/const \\" . $meta->getActorNamespace() .
-                "\HandlerInterface::ROUTE_PATH_" . strtoupper($this->getDaoName()) . "S," .
-                "'@" . $meta->getActorNamespace() ."\HandlerInterface'," .
-                "!php/const \\" . $meta->getActorNamespace() .
-                "\HandlerInterface::ROUTE_NAME_" . strtoupper($this->getDaoName()) . "S]]\n";
+                ", [!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
+                "\Map\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
+                "'@" . $meta->getActorNamespace() . '\\' . $this->getDaoName() . "\Map\Repository\HandlerInterface'," .
+                "!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
+                "\Map\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
 
             $routes[] = $line;
         }

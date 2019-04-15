@@ -39,7 +39,9 @@ class Builder implements BuilderInterface
             $discoverableDirectories[] = $this->getSourceDirectoryPath();
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
-                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectories)
+                (new Finder())->name('*.service.yml')->files()
+                    ->in($discoverableDirectories)
+                    ->exclude('Template/Prefab5/')
             );
             $containerBuilderFacade->assembleYaml();
             $containerBuilderFacade->build();
