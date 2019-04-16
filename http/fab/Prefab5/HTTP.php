@@ -56,7 +56,7 @@ class HTTP implements HTTPInterface
         if (!isset($_REQUEST['_url'])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
-        
+
         $urlArray = explode('/', $_REQUEST['_url']);
 
         if (!isset($urlArray[1])) {
