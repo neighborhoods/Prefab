@@ -44,10 +44,6 @@ class HTTP implements HTTPInterface
             return $this->getProteanContainerBuilder();
         }
 
-        if (!isset($_REQUEST['_url'])) {
-            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
-        }
-
         return $this->getPrefab5HttpBuildableDirectoryMapContainerBuilder()
             ->setProteanContainerBuilder($this->getProteanContainerBuilder())
             ->setBuildableDirectoryMap($httpBuildableDirectoryMap)
@@ -57,6 +53,10 @@ class HTTP implements HTTPInterface
 
     protected function getUrlRoot() : string
     {
+        if (!isset($_REQUEST['_url'])) {
+            throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
+        }
+        
         $urlArray = explode('/', $_REQUEST['_url']);
 
         if (!isset($urlArray[1])) {
