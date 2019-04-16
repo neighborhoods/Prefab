@@ -129,7 +129,7 @@ class Builder implements BuilderInterface
                 "    - [" . $verb .
                 ", [!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
                 "\Map\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
-                "'@" . $meta->getActorNamespace() . '\\' . $this->getDaoName() . "\Map\Repository\HandlerInterface'," .
+                "'@?" . $meta->getActorNamespace() . '\\' . $this->getDaoName() . "\Map\Repository\HandlerInterface'," .
                 "!php/const \\" . $meta->getActorNamespace() . '\\' . $this->getDaoName() .
                 "\Map\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
 

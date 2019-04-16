@@ -110,7 +110,7 @@ class Builder implements BuilderInterface
         $zendContainerBuilder = require $this->getFilesystemProperties()->getZendConfigContainerFilePath();
         $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
         /** @noinspection PhpIncludeInspection */
-        (require_once $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
+        (require $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
         file_put_contents(
             $this->getFilesystemProperties()->getExpressiveDIYAMLFilePath(),
             (new YamlDumper($zendContainerBuilder))->dump()
