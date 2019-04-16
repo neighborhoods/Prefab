@@ -20,7 +20,10 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
                 - The type of object the property represents. This can be a primitive or a fully qualified namespaced object
             - `database_column_name`
                 - Name of the database column containing the data that populates the class property
-
+            - `nullable`
+                - Whether or not this property can be null. If true, the builder method will surround this property with isset() before attempting to set the value on the DAO
+                - If not set, defaults to false
+                
 Prefab also enforces
 * A Contract Version Namespace (e.g. `MV1`, `DOR1`, `RETS1`, etc.). This MUST be present under `src/`.
 * A `{VENDOR}\{PRODUCT_NAME}` PSR-4 namespace convention (e.g. `Neighborhoods\Prefab`). This MUST be defined in `composer.json`.
@@ -43,13 +46,17 @@ dao:
     id:
       php_type: int
       database_column_name: id
+      nullable: false
     email:
       php_type: string
       database_column_name: email
+      nullable: true
     first_name:
       php_type: string
       database_column_name: fname
+      nullable: false
     last_name:
       php_type: string
       database_column_name: lname
+      nullable: false
 ```
