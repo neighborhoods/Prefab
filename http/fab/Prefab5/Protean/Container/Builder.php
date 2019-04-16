@@ -22,7 +22,7 @@ class Builder implements BuilderInterface
 
     protected const INCORRECT_WRITE_LENGTH_MESSAGE = 'SymfonyContainerCacheWriteLengthMismatch';
     protected const SUSPICOUS_CLASS_LENGTH_MESSAGE = 'SymfonyDumpSuspiciousClassLength';
-    // A semi-arbitrary size in bytes that signals that Symfony PHP dumper failed to write the entire file to string
+    // A semi-arbitrary size in bytes that signals that the Symfony PHP dumper may have failed to convert the entire file to string
     protected const SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD = 300;
 
     protected $container;
