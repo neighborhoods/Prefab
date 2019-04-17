@@ -56,7 +56,7 @@ Urgency/Desired Due Date:
 ```
 
 ## Counterexample 1
-"I have a PR for something I needed to change in PR. Can you take a look?"
+"I have a PR for something I needed to change in Prefab. Can you take a look?"
 
 ## Future Scope
 * This section details areas where the feature might be improved in future, but that are not currently proposed in this LDR.
