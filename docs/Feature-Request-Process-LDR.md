@@ -29,9 +29,6 @@ Problem:
 Desired Outcome:
  - A clearly explained result of the requested feature/support
  
-Value:
- - The benefit as it relates to you/your product/others
- 
 Urgency/Desired Due Date:
  - Is this a blocker for a time sensitive task?
 ```
@@ -42,17 +39,13 @@ None
 ## Example 1
 ```
 Problem: 
- - A succinct description of the problem you are encountering when 
-   using Prefab or with the resulting generated code.
+ - We have noticed that as our HTTP container grows in size, response times have been slowing significantly. 
    
 Desired Outcome:
- - A clearly explained result of the requested feature/support
- 
-Value:
- - The benefit as it relates to you/your product/others
+ - We would like a way to only include what is needed for individual requests so they aren't slowed down by including a bunch of unnecessary files.
  
 Urgency/Desired Due Date:
- - Is this a blocker for a time sensitive task?
+ - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would be great if we could have a couple weeks of leeway to integrate this feature before launch.
 ```
 
 ## Counterexample 1
