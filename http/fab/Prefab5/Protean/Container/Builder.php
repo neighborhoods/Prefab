@@ -20,8 +20,8 @@ class Builder implements BuilderInterface
 {
     protected const SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT = false;
 
-    protected const INCORRECT_WRITE_LENGTH_MESSAGE = 'SymfonyContainerCacheWriteLengthMismatch';
-    protected const SUSPICOUS_CLASS_LENGTH_MESSAGE = 'SymfonyDumpSuspiciousClassLength';
+    protected const INCORRECT_WRITE_LENGTH_EVENT_KEY = 'SymfonyContainerCacheWriteLengthMismatch';
+    protected const SUSPICOUS_CLASS_LENGTH_EVENT_KEY = 'SymfonyDumpSuspiciousClassLength';
     // A semi-arbitrary size in bytes that signals that the Symfony PHP dumper may have failed to convert the entire file to string
     protected const SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD = 300;
 
@@ -100,33 +100,33 @@ class Builder implements BuilderInterface
     protected function cacheSymfonyContainerBuilder() : BuilderInterface
     {
         $containerBuilder = $this->getSymfonyContainerBuilder();
-        $class = (new PhpDumper($containerBuilder))->dump(['class' => $this->getContainerName()]);
+        $containerClass = (new PhpDumper($containerBuilder))->dump(['class' => $this->getContainerName()]);
         $writtenBytes = file_put_contents(
             $this->getFilesystemProperties()->getSymfonyContainerFilePath(),
-            $class
+            $containerClass
         );
 
         // This signals a failure of file_put_contents to write the entirety of the file to disk
-        if (strlen($class) !== $writtenBytes) {
+        if (strlen($containerClass) !== $writtenBytes) {
             (new NewRelic())->recordCustomEvent(
-                self::INCORRECT_WRITE_LENGTH_MESSAGE,
+                self::INCORRECT_WRITE_LENGTH_EVENT_KEY,
                 [
                     'bytes_written_to_disk' => $writtenBytes,
-                    'class_size' => strlen($class),
-                    'class' => $class
+                    'class_size' => strlen($containerClass),
+                    'class' => $containerClass
                 ]
             );
 
             unlink($this->getFilesystemProperties()->getSymfonyContainerFilePath());
 
-        } else if (strlen($class) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
-            // This signals that Symfony PHPDumper may have failed to convert the entire container to a string when dumping
+        } else if (strlen($containerClass) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
+            // This signals that Symfony PHPDumper may have failed to convert the entire container class to a string when dumping
             (new NewRelic())->recordCustomEvent(
-                self::SUSPICOUS_CLASS_LENGTH_MESSAGE,
+                self::SUSPICOUS_CLASS_LENGTH_EVENT_KEY,
                 [
                     'bytes_written_to_disk' => $writtenBytes,
-                    'class_size' => strlen($class),
-                    'class' => $class
+                    'class_size' => strlen($containerClass),
+                    'class' => $containerClass
                 ]
             );
         }
