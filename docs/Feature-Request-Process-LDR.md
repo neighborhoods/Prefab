@@ -57,7 +57,7 @@ Urgency/Desired Due Date:
 This being the first attempt at improving requesting features/support, the future is unknown. Once we put this into practice, we will use the lessons learned to improve upon this process.
 
 ## Drawbacks
-* I see no downsides to having documented requests with context and defined desired results.
+* I see no downsides to having documented requests with context and defined desired results over our current process.
 
 ## Unresolved Questions
 * None
