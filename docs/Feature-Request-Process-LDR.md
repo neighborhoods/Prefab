@@ -42,10 +42,12 @@ Problem:
  - We have noticed that as our HTTP container grows in size, response times have been slowing significantly. 
    
 Desired Outcome:
- - We would like a way to only include what is needed for individual requests so they aren't slowed down by including a bunch of unnecessary files.
+ - We would like a way to only include what is needed for individual requests so they aren't slowed down by 
+ including a bunch of unnecessary files.
  
 Urgency/Desired Due Date:
- - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would be great if we could have a couple weeks of leeway to integrate this feature before launch, so desired date: 5/13.
+ - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would 
+ be great if we could have a couple weeks of leeway to integrate this feature before launch, so desired date: 5/13.
 ```
 
 ## Counterexample 1
