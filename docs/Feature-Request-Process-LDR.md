@@ -22,15 +22,15 @@ This means owners will review all known requests before setting Sprint Committme
 
 To help owners prioritize requests, we propose clients create JIRA tickets with descriptions using the following template:
 ```
-Problem: 
- - A succinct description of the problem you are encountering when 
+h3. Problem: 
+ * A succinct description of the problem you are encountering when 
    using Prefab or with the resulting generated code.
    
-Desired Outcome:
- - A clearly explained result of the requested feature/support
+h3. Desired Outcome:
+ * A clearly explained result of the requested feature/support
  
-Urgency/Desired Due Date:
- - Is this a blocker for a time sensitive task?
+h3. Urgency/Desired Due Date:
+ * Is this a blocker for a time sensitive task?
 ```
 
 ## Backward Incompatible Changes
@@ -38,15 +38,15 @@ None
 
 ## Example 1
 ```
-Problem: 
- - We have noticed that as our HTTP container grows in size, response times have been slowing significantly. 
+h3. Problem: 
+ * We have noticed that as our HTTP container grows in size, response times have been slowing significantly. 
    
-Desired Outcome:
- - We would like a way to only include what is needed for individual requests so they aren't slowed down by 
+h3. Desired Outcome:
+ * We would like a way to only include what is needed for individual requests so they aren't slowed down by 
  including a bunch of unnecessary files in the Symfony containers.
  
-Urgency/Desired Due Date:
- - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would 
+h3. Urgency/Desired Due Date:
+ * Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would 
  be great if we could have a couple weeks of leeway to integrate this feature before launch, so desired date: 5/13.
 ```
 
@@ -71,12 +71,7 @@ This being the first attempt at improving requesting features/support, the futur
   * Never fulfill requests.
 
 ## Implementation Links
-After the LDR is implemented, this section should contain:
-* Links to any merged PRs.
-* Links to any `Fitness` `UseCases`.
-* Links to any JIRA tickets, Github issues, etc.
-* Links to SonarQube implementations.
-* If nothing, explicitly state that.
+* https://55places.atlassian.net/browse/PREF-120
 
 ## Rejected Features
 * None
