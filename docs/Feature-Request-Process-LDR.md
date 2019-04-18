@@ -85,4 +85,3 @@ After the LDR is implemented, this section should contain:
 * [LDR Google calendar](https://calendar.google.com/calendar?cid=NTVwbGFjZXMuY29tX3JrNG12NzFnYzEwNDhwZ3EwcWptMDZidGdjQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20)
 * [RFC 2119 Keywords](https://www.ietf.org/rfc/rfc2119.txt)
 
-Links to external references, related ideas, discussions, or other LDRs.
