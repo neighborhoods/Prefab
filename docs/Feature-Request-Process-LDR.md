@@ -20,7 +20,7 @@ We want to follow Protean's [Expectations of Projects and Sprints](https://githu
 as much as possible. Specifically, sprinted work with Retros and Sprint Committments. 
 This means owners will review all known requests before setting Sprint Committments.
 
-To help owners prioritize requests, we propose the following JIRA Ticket Description template to be filled out by clients:
+To help owners prioritize requests, we propose clients create JIRA tickets with descriptions using the following template:
 ```
 Problem: 
  - A succinct description of the problem you are encountering when 
@@ -45,33 +45,28 @@ Desired Outcome:
  - We would like a way to only include what is needed for individual requests so they aren't slowed down by including a bunch of unnecessary files.
  
 Urgency/Desired Due Date:
- - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would be great if we could have a couple weeks of leeway to integrate this feature before launch.
+ - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would be great if we could have a couple weeks of leeway to integrate this feature before launch, so desired date: 5/13.
 ```
 
 ## Counterexample 1
 "I have a PR for something I needed to change in Prefab. Can you take a look?"
 
 ## Future Scope
-* This section details areas where the feature might be improved in future, but that are not currently proposed in this LDR.
-* If nothing, explicitly state that.
+This being the first attempt at improving requesting features/support, the future is unknown. Once we put this into practice, we will use the lessons learned to improve upon this process.
 
 ## Drawbacks
-* Why should we \*not\* do this? 
-* This should heavily take into consideration our [Engineering Values](Humans/Engineering-Values.md). 
-* If nothing, explicitly state that.
+* I see no downsides to having documented requests with context and defined desired results.
 
 ## Unresolved Questions
-* What parts of the design do you expect to resolve through the LDR process before this gets merged?
-* What parts of the design do you expect to resolve through the implementation of this feature before stabilization?
-* What related issues do you consider out of scope for this LDR that could be addressed in the future independently of the solution that comes out of this LDR?
-* Make sure there are no unresolved questions when the vote starts.
-* If adopted, delete this section before merging.
+* None
 
 ## Alternatives
-* Why is this design the best in the space of possible designs?
-* What other designs have been considered and what is the rationale for not choosing them?
-* What is the impact of not doing this?
-* If nothing, explicitly state that.
+* We could not think of any reasonable alternatives to JIRA tickets that would better offer documented requests and tie into our current sprinted workflow as quickly/easily.
+* Unreasonable alternatives consist of:
+  * Self-serving clients
+  * Continuing with emphemeral verbal requests.
+  * A google spreadsheet that nobody keeps up to date or looks at.
+  * Never fulfill requests.
 
 ## Implementation Links
 After the LDR is implemented, this section should contain:
@@ -82,8 +77,7 @@ After the LDR is implemented, this section should contain:
 * If nothing, explicitly state that.
 
 ## Rejected Features
-* Features that were were removed from scope. 
-* If nothing, explicitly state that.
+* None
 
 ## References
 * [LDR Google calendar](https://calendar.google.com/calendar?cid=NTVwbGFjZXMuY29tX3JrNG12NzFnYzEwNDhwZ3EwcWptMDZidGdjQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20)
