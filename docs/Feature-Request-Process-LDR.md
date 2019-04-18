@@ -43,7 +43,7 @@ Problem:
    
 Desired Outcome:
  - We would like a way to only include what is needed for individual requests so they aren't slowed down by 
- including a bunch of unnecessary files.
+ including a bunch of unnecessary files in the Symfony containers.
  
 Urgency/Desired Due Date:
  - Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would 
