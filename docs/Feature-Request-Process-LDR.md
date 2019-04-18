@@ -12,7 +12,7 @@ self-serving and committing their changes to the repo as they saw fit.
 
 Now that Prefab is an official project, we are able to resume ownership and allocate
 time toward maturing the product. However, we still need a process to help identify 
-and prioritize feature requests/support tasks so that we may deliver valueable improvements 
+and prioritize feature requests/support tasks so that we may deliver valuable improvements 
 in a timely manner.
 
 ## Proposed Solution
