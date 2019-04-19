@@ -66,7 +66,7 @@ This being the first attempt at improving requesting features/support, the futur
 * We could not think of any reasonable alternatives to JIRA tickets that would better offer documented requests and tie into our current sprinted workflow as quickly/easily.
 * Unreasonable alternatives consist of:
   * Self-serving clients
-  * Continuing with emphemeral verbal requests.
+  * Continuing with ephemeral verbal requests.
   * A google spreadsheet that nobody keeps up to date or looks at.
   * Never fulfill requests.
 
