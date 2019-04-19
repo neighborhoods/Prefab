@@ -18,7 +18,7 @@ in a timely manner.
 ## Proposed Solution
 We want to follow Protean's [Expectations of Projects and Sprints](https://github.com/neighborhoods/Protean/blob/4.x/Architecture/Expectations-of-Projects-and-Sprints.md)
 as much as possible. Specifically, sprinted work with Retros and Sprint Commitments. 
-This means owners will review all known requests before setting Sprint Committments.
+This means owners will review all known requests before setting Sprint Commitments.
 
 To help owners prioritize requests, we propose clients create JIRA tickets with descriptions using the following template:
 ```
