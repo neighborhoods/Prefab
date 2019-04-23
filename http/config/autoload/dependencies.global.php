@@ -21,7 +21,8 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories'  => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
-            \Zend\ProblemDetails\ProblemDetailsResponseFactory::class => \Neighborhoods\PropertyService\Prefab5\Zend\ProblemDetails\ProblemDetailsResponseFactoryFactory::class,
+            \Zend\ProblemDetails\ProblemDetailsResponseFactory::class => \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\ProblemDetails\ProblemDetailsResponseFactoryFactory::class,
+            Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware::class => Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\Factory::class,
         ],
     ],
 ];
