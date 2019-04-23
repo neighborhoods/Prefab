@@ -123,8 +123,8 @@ class Template implements TemplateInterface
         $annotationProcessors = [];
 
         $namespaces = [
-            'HttpMessage' => '@Neighborhoods\PropertyService\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface',
-            'SearchCriteria' => '@Neighborhoods\PropertyService\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface',
+            'HttpMessage' => '@Neighborhoods\PROJECTNAME\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface',
+            'SearchCriteria' => '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface',
         ];
 
         foreach ($namespaces as $key => $namespace) {
