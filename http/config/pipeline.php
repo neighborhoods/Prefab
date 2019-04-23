@@ -14,7 +14,7 @@ use Zend\Expressive\Router\Middleware\RouteMiddleware;
 use Zend\ProblemDetails\ProblemDetailsMiddleware;
 use Zend\ProblemDetails\ProblemDetailsNotFoundHandler;
 use Zend\Stratigility\Middleware\ErrorHandler;
-use Neighborhoods\PropertyService\Prefab5\NewRelic\TransactionNameMiddleware;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware;
 
 return function (Definition $applicationServiceDefinition): void {
     // The error handler should be the first (most outer) middleware to catch
