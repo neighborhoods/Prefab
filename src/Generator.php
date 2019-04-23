@@ -100,7 +100,14 @@ class Generator implements GeneratorInterface
             $bradfabTemplate->setRouteName($this->getNameForDao($dao));
         }
 
-        $configArray = $bradfabTemplate->getFabricationConfig();
+        $configArray = $bradfabTemplate
+            ->addAwareTraitActor()
+            ->addFactoryActor()
+            ->addBuilder()
+            ->addHandler()
+            ->addHandlerServiceFile()
+            ->addRepository()
+            ->getFabricationConfig();
 
         $writeFilePath = $this->getWritePathForDao($dao);
         $directory = $this->getWriteDirectoryForDao($writeFilePath);
