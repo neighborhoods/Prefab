@@ -15,6 +15,7 @@ class Builder implements BuilderInterface
     protected $yamlFilePath;
     protected $projectName;
     protected $daoNamespace;
+    protected $projectRoot;
 
     public function build() : BuildConfigurationInterface
     {
@@ -24,7 +25,7 @@ class Builder implements BuilderInterface
         $buildConfiguration->setTableName($configArray['dao']['table_name'])
             ->setDaoIdentityField($configArray['dao']['identity_field'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
-            ->setProjectDir($this->getProjectDirFromYamlPath())
+            ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
 
         if (!empty($configArray['dao']['http_route'])) {
@@ -42,16 +43,7 @@ class Builder implements BuilderInterface
 
     protected function getFabDirFromYamlPath() : string
     {
-        // Explode and remove the vendor portion of the filepath. Replace src/ with fab/
-        $pathArray = explode('vendor', $this->getYamlFilePath());
-        $path = $pathArray[0] . 'fab/' . array_slice(explode('src/', $pathArray[1]), -1)[0];
-
-        return $path;
-    }
-
-    protected function getProjectDirFromYamlPath() : string
-    {
-        return explode('vendor/', $this->getYamlFilePath())[0];
+        return str_replace('/src/', '/fab/', $this->getYamlFilePath());
     }
 
     protected function getConfigFromYaml() : array
@@ -92,4 +84,22 @@ class Builder implements BuilderInterface
         $this->projectName = $projectName;
         return $this;
     }
+
+    protected function getProjectRoot() : string
+    {
+        if ($this->projectRoot === null) {
+            throw new \LogicException('Builder projectRoot has not been set.');
+        }
+        return $this->projectRoot;
+    }
+
+    public function setProjectRoot(string $projectRoot) : BuilderInterface
+    {
+        if ($this->projectRoot !== null) {
+            throw new \LogicException('Builder projectRoot is already set.');
+        }
+        $this->projectRoot = $projectRoot;
+        return $this;
+    }
+
 }

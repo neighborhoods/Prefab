@@ -22,7 +22,7 @@ class Generator implements GeneratorInterface
     protected $buildPlans;
     protected $httpSrcDir;
     protected $stagedHttpDir;
-    protected $projectDir;
+    protected $projectRoot;
     protected $fabLocation;
     protected $srcLocation;
     protected $projectName;
@@ -33,8 +33,8 @@ class Generator implements GeneratorInterface
         $this->setHttpSrcDir(__DIR__ . '/../http');
         $this->setStagedHttpDir(__DIR__ . '/../stagedHttp');
 
-        $this->setSrcLocation($this->projectDir . 'src/');
-        $this->setFabLocation($this->projectDir . 'fab/');
+        $this->setSrcLocation($this->getProjectRoot() . 'src/');
+        $this->setFabLocation($this->getProjectRoot() . 'fab/');
 
         return $this;
     }
@@ -74,8 +74,9 @@ class Generator implements GeneratorInterface
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
             $configuration = $this->getBuildConfigurationBuilderFactory()->create()
-                ->setYamlFilePath($dao->getPath() . '/' . $dao->getFilename())
+                ->setYamlFilePath($dao->getRealPath())
                 ->setProjectName($this->getProjectName())
+                ->setProjectRoot($this->getProjectRoot())
                 ->build();
 
             $this->generateBradfabTemplate($configuration, $dao);
@@ -129,7 +130,7 @@ class Generator implements GeneratorInterface
         $generator->setProjectName($this->getProjectName())
             ->setSrcDirectory($this->getSrcLocation())
             ->setHttpSourceDirectory($this->getHttpSrcDir())
-            ->setTargetDirectory($this->getProjectDir())
+            ->setTargetDirectory($this->getProjectRoot())
             ->generate();
 
         return $this;
@@ -148,7 +149,7 @@ class Generator implements GeneratorInterface
     protected function getProjectNameFromComposer() : string
     {
         $finder = new Finder();
-        $finder->name('composer.json')->in($this->projectDir)->depth('== 0');
+        $finder->name('composer.json')->in($this->projectRoot)->depth('== 0');
 
         $matchCount = $finder->count();
         if ($matchCount < 1) {
@@ -174,6 +175,9 @@ class Generator implements GeneratorInterface
 
     protected function fabricateSupportingActors() : GeneratorInterface
     {
+        $filesystem = $this->getFileSystem();
+        $filesystem->mkdir([__DIR__ . '/../bradfab/', __DIR__ . '/../fabricatedFiles/']);
+
         // Where the Bradfab fabrication files were saved
         putenv('BRADFAB_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
         // Where to put the supporting actors
@@ -188,9 +192,10 @@ class Generator implements GeneratorInterface
         $bradfab = (new Bradfab())->setProteanContainerBuilder($proteanContainerBuilder);
         $bradfab->run();
 
-        $filesystem = $this->getFileSystem();
-        $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath(__DIR__ . '/../../../../fab'));
+        $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
 
+        $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
+        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
         return $this;
     }
 
@@ -211,20 +216,20 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function getProjectDir() : string
+    protected function getProjectRoot() : string
     {
-        if ($this->projectDir === null) {
+        if ($this->projectRoot === null) {
             throw new \LogicException('Generator projectDir has not been set.');
         }
-        return $this->projectDir;
+        return $this->projectRoot;
     }
 
-    public function setProjectDir(string $projectDir) : GeneratorInterface
+    public function setProjectRoot(string $projectRoot) : GeneratorInterface
     {
-        if ($this->projectDir !== null) {
+        if ($this->projectRoot !== null) {
             throw new \LogicException('Generator projectDir is already set.');
         }
-        $this->projectDir = $projectDir;
+        $this->projectRoot = $projectRoot;
         return $this;
     }
 
