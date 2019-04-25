@@ -1,45 +1,45 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HttpBuildableDirectoryMap\ContainerBuilder;
+namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HttpBuildableDirectoryMap\ContainerBuilderInterface;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilderInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder;
+    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder;
 
-    public function setPrefab5HttpBuildableDirectoryMapContainerBuilder(ContainerBuilderInterface $prefab5HttpBuildableDirectoryMapContainerBuilder) : self
+    public function setPrefab5HTTPBuildableDirectoryMapContainerBuilder(ContainerBuilderInterface $prefab5HTTPBuildableDirectoryMapContainerBuilder) : self
     {
-        if ($this->hasPrefab5HttpBuildableDirectoryMapContainerBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder is already set.');
+        if ($this->hasPrefab5HTTPBuildableDirectoryMapContainerBuilder()) {
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder = $prefab5HttpBuildableDirectoryMapContainerBuilder;
+        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder = $prefab5HTTPBuildableDirectoryMapContainerBuilder;
 
         return $this;
     }
 
-    protected function getPrefab5HttpBuildableDirectoryMapContainerBuilder() : ContainerBuilderInterface
+    protected function getPrefab5HTTPBuildableDirectoryMapContainerBuilder() : ContainerBuilderInterface
     {
-        if (!$this->hasPrefab5HttpBuildableDirectoryMapContainerBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder is not set.');
+        if (!$this->hasPrefab5HTTPBuildableDirectoryMapContainerBuilder()) {
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder;
+        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder;
     }
 
-    protected function hasPrefab5HttpBuildableDirectoryMapContainerBuilder() : bool
+    protected function hasPrefab5HTTPBuildableDirectoryMapContainerBuilder() : bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder);
+        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder);
     }
 
-    protected function unsetPrefab5HttpBuildableDirectoryMapContainerBuilder() : self
+    protected function unsetPrefab5HTTPBuildableDirectoryMapContainerBuilder() : self
     {
-        if (!$this->hasPrefab5HttpBuildableDirectoryMapContainerBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder is not set.');
+        if (!$this->hasPrefab5HTTPBuildableDirectoryMapContainerBuilder()) {
+            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HttpBuildableDirectoryMapContainerBuilder);
+        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5HTTPBuildableDirectoryMapContainerBuilder);
 
         return $this;
     }
