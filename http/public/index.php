@@ -24,7 +24,7 @@ $httpBuildableDirectoryContainerBuilder = new HTTPBuildableDirectoryMap\Containe
 
 $HTTP = (new HTTP())
     ->setProteanContainerBuilder($proteanContainerBuilder)
-    ->setPrefab5HttpBuildableDirectoryMapContainerBuilder($httpBuildableDirectoryContainerBuilder)
+    ->setPrefab5HTTPBuildableDirectoryMapContainerBuilder($httpBuildableDirectoryContainerBuilder)
     ->respond();
 
 return;
