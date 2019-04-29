@@ -21,7 +21,7 @@ class Builder implements BuilderInterface
         foreach ($this->getRecords() as $record) {
             $builder = $this->getActorBuilderFactory()->create();
             $item = $builder->setRecord($record)->build();
-            $map[] = $item; // remove or change index field as desired
+            $map[$item->getId()] = $item; // remove or change index field as desired
         }
 
         return $map;
