@@ -20,7 +20,10 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     public function getContainerBuilder() : Protean\Container\BuilderInterface
     {
-        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $this->getDirectoryGroup());
+        $this->getProteanContainerBuilder()->setContainerName(
+            'HTTP_' . str_replace('/', '_', $this->getDirectoryGroup())
+        );
+
         if (!isset($this->getBuildableDirectoryMap()[$this->getDirectoryGroup()])) {
             throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
