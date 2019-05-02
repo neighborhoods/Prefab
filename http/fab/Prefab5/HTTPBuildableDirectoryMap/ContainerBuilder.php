@@ -28,7 +28,7 @@ class ContainerBuilder implements ContainerBuilderInterface
 
         if (
             !isset($this->getBuildableDirectoryMap()[$this->getDirectoryGroup()])
-            && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot()])
+            && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
         ) {
             throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
