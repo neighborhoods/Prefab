@@ -132,7 +132,10 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
     {
         if (!empty($this->getFilters())) {
             foreach ($this->getFilters() as $directoryFilter) {
-                $this->addFullPath(sprintf('%s/%s', $this->getSourceDirectoryPath(), $directoryFilter));
+                $fullPathCandidate = sprintf('%s/%s', $this->getSourceDirectoryPath(), $directoryFilter);
+                if ($this->getFilesystem()->exists($fullPathCandidate)) {
+                    $this->addFullPath($fullPathCandidate);
+                }
             }
         } else {
             $this->addFullPath($this->getSourceDirectoryPath());
