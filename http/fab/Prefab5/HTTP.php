@@ -59,11 +59,11 @@ class HTTP implements HTTPInterface
 
         $urlArray = explode('/', $_REQUEST['_url']);
 
-        if (!isset($urlArray[1])) {
+        if (empty($urlArray[1]) || empty($urlArray[2])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
 
-        return $urlArray[1];
+        return $urlArray[1] . '/' . $urlArray[2];
     }
 
 }
