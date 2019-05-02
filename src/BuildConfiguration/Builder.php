@@ -33,6 +33,10 @@ class Builder implements BuilderInterface
             $buildConfiguration->setHttpVerbs($httpVerbs);
         }
 
+        if (!empty($configArray['dao']['supporting_actor_group'])) {
+            $buildConfiguration->setSupportingActorGroup($configArray['dao']['supporting_actor_group']);
+        }
+
         foreach ($configArray['dao']['properties'] as $key => $values) {
             $buildConfiguration->appendDaoProperty($key, $values);
         }

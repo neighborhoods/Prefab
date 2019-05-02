@@ -19,4 +19,8 @@ interface TemplateInterface
     public function hasProperties() : bool;
 
     public function setProjectName(string $project_name) : TemplateInterface;
+
+    public function setSupportingActorGroup(string $supporting_actor_group) : TemplateInterface;
+
+    public function hasSupportingActorGroup() : bool;
 }

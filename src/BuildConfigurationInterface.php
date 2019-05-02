@@ -40,4 +40,10 @@ interface BuildConfigurationInterface
     public function setProjectDir(string $projectDir) : BuildConfigurationInterface;
 
     public function getProjectDir() : string;
+
+    public function setSupportingActorGroup(string $supporting_actor_group) : BuildConfigurationInterface;
+
+    public function getSupportingActorGroup() : string;
+
+    public function hasSupportingActorGroup() : bool;
 }

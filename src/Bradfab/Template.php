@@ -34,12 +34,20 @@ class Template implements TemplateInterface
     protected const CONTEXT_KEY_NAMESPACE = 'namespace';
     protected const CONTEXT_KEY_PROJECT_NAME = 'project_name';
 
+    protected const SUPPORTING_ACTOR_GROUP_FULL = 'full';
+    protected const SUPPORTING_ACTOR_GROUP_REDUCED = 'reduced';
+
+    protected $supportingActorConfigFiles = [
+        self::SUPPORTING_ACTOR_GROUP_FULL => 'AllSupportingActors.yml',
+        self::SUPPORTING_ACTOR_GROUP_REDUCED => 'ReducedSupportingActors.yml'
+    ];
+
     protected $route_path;
     protected $route_name;
     protected $properties;
     protected $project_name;
-
-    protected $all_supporting_actors;
+    protected $supporting_actor_group;
+    protected $supporting_actors;
 
     public function getFabricationConfig() : array
     {
@@ -53,12 +61,12 @@ class Template implements TemplateInterface
 
         $this->configureBuilder();
 
-        return $this->getAllSupportingActorsConfig();
+        return $this->getSupportingActorsConfig();
     }
 
     protected function configureBuilder() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
+        $config = $this->getSupportingActorsConfig();
         $propertyArray = [];
 
         foreach ($this->getProperties() as $propertyName => $propertyValues) {
@@ -80,13 +88,13 @@ class Template implements TemplateInterface
                     ],
             ];
 
-        $this->all_supporting_actors = $config;
+        $this->supporting_actors = $config;
         return $this;
     }
 
     protected function configureHandler() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
+        $config = $this->getSupportingActorsConfig();
         $annotationProcessors = [];
 
         $namespaces = [
@@ -101,7 +109,7 @@ class Template implements TemplateInterface
 
         $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
 
-        $this->all_supporting_actors = $config;
+        $this->supporting_actors = $config;
         return $this;
     }
 
@@ -109,17 +117,17 @@ class Template implements TemplateInterface
     {
         $namespace = '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface';
 
-        $config = $this->getAllSupportingActorsConfig();
+        $config = $this->getSupportingActorsConfig();
         $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS][self::KEY_NAMESPACE_ANNOTATION_PROCESSOR] =
             $this->getNamespaceAnnotationProcessorArray($namespace);
 
-        $this->all_supporting_actors = $config;
+        $this->supporting_actors = $config;
         return $this;
     }
 
     protected function configureRepositoryServiceFile() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
+        $config = $this->getSupportingActorsConfig();
         $annotationProcessors = [];
 
         $namespaces = [
@@ -134,13 +142,13 @@ class Template implements TemplateInterface
 
         $config[self::KEY_SUPPORTING_ACTORS][self::KEY_REPOSITORY_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
 
-        $this->all_supporting_actors = $config;
+        $this->supporting_actors = $config;
         return $this;
     }
 
     protected function configureRepository() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
+        $config = $this->getSupportingActorsConfig();
 
         $namespaces = [
             'Neighborhoods\PROJECTNAME\Prefab5\Doctrine',
@@ -162,13 +170,13 @@ class Template implements TemplateInterface
                     ]
             ];
 
-        $this->all_supporting_actors = $config;
+        $this->supporting_actors = $config;
         return $this;
     }
 
     protected function configureRepositoryInterface() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
+        $config = $this->getSupportingActorsConfig();
 
         $namespaces = [
             'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
@@ -188,14 +196,14 @@ class Template implements TemplateInterface
                     ],
             ];
 
-        $this->all_supporting_actors = $config;
+        $this->supporting_actors = $config;
         return $this;
     }
 
     protected function configureRepositoryHandlerInterface() : TemplateInterface
     {
         if ($this->hasRouteName() && $this->hasRoutePath()) {
-            $config = $this->getAllSupportingActorsConfig();
+            $config = $this->getSupportingActorsConfig();
             $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER_INTERFACE] =
                 [
                     self::KEY_ANNOTATION_PROCESSORS =>
@@ -209,7 +217,7 @@ class Template implements TemplateInterface
                             ],
                         ],
                 ];
-            $this->all_supporting_actors = $config;
+            $this->supporting_actors = $config;
         }
 
         return $this;
@@ -218,23 +226,33 @@ class Template implements TemplateInterface
     protected function getNamespaceAnnotationProcessorArray(string $namespace) : array
     {
         return
-        [
-            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . NamespaceAnnotationProcessor::class,
-            self::KEY_STATIC_CONTEXT_RECORD =>
-                [
-                    self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                    self::CONTEXT_KEY_NAMESPACE => $namespace,
-                ],
-        ];
+            [
+                self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . NamespaceAnnotationProcessor::class,
+                self::KEY_STATIC_CONTEXT_RECORD =>
+                    [
+                        self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
+                        self::CONTEXT_KEY_NAMESPACE => $namespace,
+                    ],
+            ];
     }
 
-    protected function getAllSupportingActorsConfig() : array
+    protected function getSupportingActorsConfig() : array
     {
-        if ($this->all_supporting_actors === null) {
-            $this->all_supporting_actors = Yaml::parseFile(__DIR__ . '/AllSupportingActors.yml');
+        if ($this->supporting_actors === null) {
+            $supportingActorGroup = $this->hasSupportingActorGroup()
+                ? $this->getSupportingActorGroup()
+                : self::SUPPORTING_ACTOR_GROUP_FULL;
+
+            $supportingActorsConfigFile =
+                $this->supportingActorConfigFiles[$supportingActorGroup] ??
+                $this->supportingActorConfigFiles[self::SUPPORTING_ACTOR_GROUP_FULL];
+
+            // Warn about provided group not being found?
+
+            $this->supporting_actors = Yaml::parseFile(__DIR__ . '/' . $supportingActorsConfigFile);
         }
 
-        return $this->all_supporting_actors;
+        return $this->supporting_actors;
     }
 
     public function getRoutePath() : string
@@ -318,5 +336,27 @@ class Template implements TemplateInterface
         }
         $this->project_name = $project_name;
         return $this;
+    }
+
+    public function getSupportingActorGroup()
+    {
+        if ($this->supporting_actor_group === null) {
+            throw new \LogicException('Template supporting_actor_group has not been set.');
+        }
+        return $this->supporting_actor_group;
+    }
+
+    public function setSupportingActorGroup(string $supporting_actor_group): TemplateInterface
+    {
+        if ($this->supporting_actor_group !== null) {
+            throw new \LogicException('Template supporting_actor_group is already set.');
+        }
+        $this->supporting_actor_group = $supporting_actor_group;
+        return $this;
+    }
+
+    public function hasSupportingActorGroup() : bool
+    {
+        return $this->supporting_actor_group !== null;
     }
 }
