@@ -15,6 +15,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $httpRoute;
     protected $httpVerbs;
     protected $projectDir;
+    protected $supportingActorGroup;
 
     public function getTableName() : string
     {
@@ -158,5 +159,27 @@ class BuildConfiguration implements BuildConfigurationInterface
         }
         $this->projectDir = $projectDir;
         return $this;
+    }
+
+    public function getSupportingActorGroup(): string
+    {
+        if ($this->supportingActorGroup === null) {
+            throw new \LogicException('BuildConfiguration supportingActorGroup has not been set.');
+        }
+        return $this->supportingActorGroup;
+    }
+
+    public function setSupportingActorGroup(string $supportingActorGroup): BuildConfigurationInterface
+    {
+        if ($this->supportingActorGroup !== null) {
+            throw new \LogicException('BuildConfiguration supportingActorGroup is already set.');
+        }
+        $this->supportingActorGroup = $supportingActorGroup;
+        return $this;
+    }
+
+    public function hasSupportingActorGroup() : bool
+    {
+        return $this->supportingActorGroup !== null;
     }
 }

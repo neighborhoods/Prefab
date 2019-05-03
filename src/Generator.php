@@ -109,6 +109,12 @@ class Generator implements GeneratorInterface
             ->addRepository()
             ->getFabricationConfig();
 
+        if ($configuration->hasSupportingActorGroup()) {
+            $bradfabTemplate->setSupportingActorGroup($configuration->getSupportingActorGroup());
+        }
+
+        $configArray = $bradfabTemplate->getFabricationConfig();
+
         $writeFilePath = $this->getWritePathForDao($dao);
         $directory = $this->getWriteDirectoryForDao($writeFilePath);
 
