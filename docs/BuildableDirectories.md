@@ -2,9 +2,9 @@
 
 As Symfony containers get bigger, the response times for HTTP requests rise.  To prevent slow response times, Prefab implemented user-defined subset container building. Prefab users can define what is included in a container for individual requests, so only what is needed is included in each container. The purpose of this document is to define the usage of the `http-buildable-directories.yml` file.
 
-The top level key in the buildable directories file for each group should be the root of the URI for the paths that use that container. Example: `property_service.neighborhoods.com/MV1/property/{searchCriteria}` would build all directories under the `MV1` key in the file below.
+The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. Example: `property_service.neighborhoods.com/MV1/property/{searchCriteria}` would build all directories under the `MV1/property` key in the file below.
 
-`buildable_directories` - These are the directories of your actors that you want to include for a request. Example: Having an `MV1` buildable directory will include `fab/MV1` and `src/MV1` in the container.
+`buildable_directories` - These are the directories of your actors that you want to include for a request. Example: Having an `MV1/property` buildable directory will include `fab/MV1/property` and `src/MV1/property` in the container.
 
 `welcome_baskets` - These are the namespaces of actors that Prefab generates that would like to include in a request. Example: `Doctrine\DBAL` will include all of the files under the `Doctrine\DBAL` namespace that are in `fab/Prefab5/Doctrine/DBAL`.
 
@@ -12,9 +12,9 @@ The top level key in the buildable directories file for each group should be the
 
 **Example**
 ```yaml
-MV1:
+MV1/property:
   buildable_directories:
-    - MV1
+    - MV1/Property
   welcome_baskets:
     - Doctrine\DBAL
     - PDO
@@ -48,7 +48,7 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HttpBuildableDirectoryMap\ContainerBuilder;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
 
 $primer = new ContainerBuilder\Primer();
 $primer->primeContainers();

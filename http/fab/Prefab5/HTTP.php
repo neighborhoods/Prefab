@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HttpBuildableDirectoryMap;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
@@ -14,7 +14,7 @@ use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuilda
 class HTTP implements HTTPInterface
 {
     use Protean\Container\Builder\AwareTrait;
-    use HttpBuildableDirectoryMap\ContainerBuilder\AwareTrait;
+    use HTTPBuildableDirectoryMap\ContainerBuilder\AwareTrait;
 
     public function respond() : HTTPInterface
     {
@@ -44,7 +44,7 @@ class HTTP implements HTTPInterface
             return $this->getProteanContainerBuilder();
         }
 
-        return $this->getPrefab5HttpBuildableDirectoryMapContainerBuilder()
+        return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
             ->setProteanContainerBuilder($this->getProteanContainerBuilder())
             ->setBuildableDirectoryMap($httpBuildableDirectoryMap)
             ->setDirectoryGroup($this->getUrlRoot())
@@ -59,11 +59,11 @@ class HTTP implements HTTPInterface
 
         $urlArray = explode('/', $_REQUEST['_url']);
 
-        if (!isset($urlArray[1])) {
+        if (empty($urlArray[1]) || empty($urlArray[2])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
 
-        return $urlArray[1];
+        return $urlArray[1] . '/' . $urlArray[2];
     }
 
 }

@@ -181,6 +181,9 @@ class Generator implements GeneratorInterface
 
     protected function fabricateSupportingActors() : GeneratorInterface
     {
+        $filesystem = $this->getFileSystem();
+        $filesystem->mkdir([__DIR__ . '/../bradfab/', __DIR__ . '/../fabricatedFiles/']);
+
         // Where the Bradfab fabrication files were saved
         putenv('BRADFAB_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
         // Where to put the supporting actors
@@ -195,9 +198,10 @@ class Generator implements GeneratorInterface
         $bradfab = (new Bradfab())->setProteanContainerBuilder($proteanContainerBuilder);
         $bradfab->run();
 
-        $filesystem = $this->getFileSystem();
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath(__DIR__ . '/../../../../fab'));
 
+        $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
+        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
         return $this;
     }
 

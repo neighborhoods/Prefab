@@ -20,14 +20,24 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     public function getContainerBuilder() : Protean\Container\BuilderInterface
     {
-        $this->getProteanContainerBuilder()->setContainerName('HTTP_' . $this->getDirectoryGroup());
-        if (!isset($this->getBuildableDirectoryMap()[$this->getDirectoryGroup()])) {
+        $this->getProteanContainerBuilder()->setContainerName(
+            'HTTP_' . str_replace('/', '_', $this->getDirectoryGroup())
+        );
+
+        $directoryGroupRoot = explode('/', $this->getDirectoryGroup())[0];
+
+        if (
+            !isset($this->getBuildableDirectoryMap()[$this->getDirectoryGroup()])
+            && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
+        ) {
             throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
         }
 
         $this->getProteanContainerBuilder()->buildZendExpressive();
 
-        $routeBuildableDirectories = $this->getBuildableDirectoryMap()[$this->getDirectoryGroup()];
+        $routeBuildableDirectories =
+            $this->getBuildableDirectoryMap()[$this->getDirectoryGroup()] ??
+            $this->getBuildableDirectoryMap()[$directoryGroupRoot];
 
         $this->addBuildableDirectories($routeBuildableDirectories);
         $this->addWelcomeBaskets($routeBuildableDirectories);
@@ -35,8 +45,6 @@ class ContainerBuilder implements ContainerBuilderInterface
 
         return $this->getProteanContainerBuilder();
     }
-
-
 
     protected function addBuildableDirectories(array $httpBuildableDirectoryMap) : ContainerBuilderInterface
     {

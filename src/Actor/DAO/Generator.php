@@ -151,8 +151,14 @@ EOF;
         ];
 
         $preparedYaml = Yaml::dump($yaml, 4, 2);
+        $serviceFileDirectoryPath = $this->getMeta()->getActorFilePath() . '/' . $this->getActorName();
+
+        if (!file_exists($serviceFileDirectoryPath)) {
+            mkdir($serviceFileDirectoryPath);
+        }
+
         file_put_contents(
-            $this->getMeta()->getActorFilePath() . '/' . $this->getActorName() . '.service.yml',
+            $serviceFileDirectoryPath . '/' . $this->getActorName() . '.service.yml',
             $preparedYaml
         );
 
