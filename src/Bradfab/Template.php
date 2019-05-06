@@ -11,6 +11,8 @@ use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
 use Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor;
 use Neighborhoods\Prefab\Bradfab\Template\BuilderActor;
 use Neighborhoods\Prefab\Bradfab\Template\FactoryActor;
+use Neighborhoods\Prefab\Bradfab\Template\MapActor;
+use Neighborhoods\Prefab\Bradfab\Template\RepositoryActor;
 use Symfony\Component\Yaml\Yaml;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
 
@@ -22,19 +24,19 @@ class Template implements TemplateInterface
     protected const KEY_HANDLER_INTERFACE = 'Map\Repository\HandlerInterface.php';
     protected const KEY_HANDLER = 'Map\Repository\Handler.php';
     protected const KEY_HANDLER_SERVICE_FILE = 'Map\Repository\Handler.service.yml';
-    protected const KEY_REPOSITORY_SERVICE_FILE = 'Map\Repository.service.yml';
     protected const KEY_BUILDER = 'Builder.php';
     protected const KEY_NAMESPACE_ANNOTATION_PROCESSOR = 'Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor';
 
-    protected const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
-    protected const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
-    protected const KEY_STATIC_CONTEXT_RECORD = 'static_context_record';
+    public const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
+    public const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
+    public const KEY_STATIC_CONTEXT_RECORD = 'static_context_record';
 
     protected const CONTEXT_KEY_ROUTE_PATH = 'route_path';
     protected const CONTEXT_KEY_ROUTE_NAME = 'route_name';
-    protected const CONTEXT_KEY_NAMESPACES = 'namespaces';
-    protected const CONTEXT_KEY_NAMESPACE = 'namespace';
-    protected const CONTEXT_KEY_PROJECT_NAME = 'project_name';
+
+    public const CONTEXT_KEY_NAMESPACES = 'namespaces';
+    public const CONTEXT_KEY_NAMESPACE = 'namespace';
+    public const CONTEXT_KEY_PROJECT_NAME = 'project_name';
 
     protected const SUPPORTING_ACTOR_GROUP_FULL = 'full';
     protected const SUPPORTING_ACTOR_GROUP_REDUCED = 'reduced';
@@ -81,6 +83,14 @@ class Template implements TemplateInterface
         return $this;
     }
 
+    public function addMap() : TemplateInterface
+    {
+        $map = new MapActor();
+
+        $this->supporting_actors = array_merge($this->supporting_actors, $map->getActorConfiguration());
+
+        return $this;
+    }
     public function addHandler() : TemplateInterface
     {
         $annotationProcessors = [];
@@ -109,75 +119,15 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function addRepositoryServiceFile() : TemplateInterface
-    {
-        $annotationProcessors = [];
-
-        $namespaces = [
-            'HttpMessage' => '@Neighborhoods\PROJECTNAME\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface',
-            'SearchCriteria' => '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface',
-        ];
-
-        foreach ($namespaces as $key => $namespace) {
-            $annotationProcessors[NamespaceAnnotationProcessor::ANNOTATION_PROCESSOR_KEY . '-' . $key] =
-                $this->getNamespaceAnnotationProcessorArray($namespace);
-        }
-
-        $this->supporting_actors[self::KEY_REPOSITORY_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
-        return $this;
-    }
-
     public function addRepository() : TemplateInterface
     {
-        $config = $this->getSupportingActorsConfig();
+        $repository = new RepositoryActor();
 
-        $namespaces = [
-            'Neighborhoods\PROJECTNAME\Prefab5\Doctrine',
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria',
-        ];
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $repository->setProjectName($this->getProjectName())->getActorConfiguration()
+        );
 
-        $this->supporting_actors[self::KEY_REPOSITORY] =
-            [
-                self::KEY_ANNOTATION_PROCESSORS =>
-                    [
-                        Repository::ANNOTATION_PROCESSOR_KEY  => [
-                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . Repository::class,
-                            self::KEY_STATIC_CONTEXT_RECORD => [
-                                self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                                self::CONTEXT_KEY_NAMESPACES => $namespaces,
-                            ]
-                        ]
-                    ]
-            ];
-
-        $this->supporting_actors = $config;
-        return $this;
-    }
-
-    public function addRepositoryInterface() : TemplateInterface
-    {
-        $config = $this->getSupportingActorsConfig();
-
-        $namespaces = [
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
-        ];
-
-        $this->supporting_actors[self::KEY_REPOSITORY_INTERFACE] =
-            [
-                self::KEY_ANNOTATION_PROCESSORS =>
-                    [
-                        RepositoryInterface::ANNOTATION_PROCESSOR_KEY => [
-                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryInterface::class,
-                            self::KEY_STATIC_CONTEXT_RECORD => [
-                                self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                                self::CONTEXT_KEY_NAMESPACES => $namespaces,
-                            ],
-                        ],
-                    ],
-            ];
-
-        $this->supporting_actors = $config;
         return $this;
     }
 

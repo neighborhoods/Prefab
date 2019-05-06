@@ -13,15 +13,13 @@ interface TemplateInterface
 
     public function addBuilder() : TemplateInterface;
 
+    public function addMap() : TemplateInterface;
+
     public function addHandler() : TemplateInterface;
 
     public function addHandlerServiceFile() : TemplateInterface;
 
-    public function addRepositoryServiceFile() : TemplateInterface;
-
     public function addRepository() : TemplateInterface;
-
-    public function addRepositoryInterface() : TemplateInterface;
 
     public function addRepositoryHandlerInterface() : TemplateInterface;
 

@@ -109,8 +109,7 @@ class Generator implements GeneratorInterface
             ->addHandlerServiceFile()
             ->addRepositoryHandlerInterface()
             ->addRepository()
-            ->addRepositoryInterface()
-            ->addRepositoryServiceFile();
+            ->addMap();
 
         if ($configuration->hasSupportingActorGroup()) {
             $bradfabTemplate->setSupportingActorGroup($configuration->getSupportingActorGroup());
