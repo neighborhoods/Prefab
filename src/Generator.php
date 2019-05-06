@@ -101,14 +101,16 @@ class Generator implements GeneratorInterface
             $bradfabTemplate->setRouteName($this->getNameForDao($dao));
         }
 
-        $configArray = $bradfabTemplate
+        $bradfabTemplate
             ->addAwareTraitActor()
             ->addFactoryActor()
             ->addBuilder()
             ->addHandler()
             ->addHandlerServiceFile()
+            ->addRepositoryHandlerInterface()
             ->addRepository()
-            ->getFabricationConfig();
+            ->addRepositoryInterface()
+            ->addRepositoryServiceFile();
 
         if ($configuration->hasSupportingActorGroup()) {
             $bradfabTemplate->setSupportingActorGroup($configuration->getSupportingActorGroup());
@@ -161,25 +163,13 @@ class Generator implements GeneratorInterface
 
     protected function getProjectNameFromComposer() : string
     {
-        $finder = new Finder();
-        $finder->name('composer.json')->in($this->projectRoot)->depth('== 0');
+        $composerFilePath = $this->getProjectRoot() . '/composer.json';
 
-        $matchCount = $finder->count();
-        if ($matchCount < 1) {
-            throw new \RuntimeException('Could not find composer file for project.');
-        } elseif ($matchCount > 1) {
-            throw new \RuntimeException('Found more than one composer file.');
-        } else {
-            $iterator = $finder->getIterator();
-            $iterator->rewind();
-            $composerFile = $iterator->current();
-        }
-
-        if (!$composerFile) {
+        if (!file_exists($composerFilePath)) {
             throw new \RuntimeException('Could not access composer file for project.');
         }
 
-        $composerContents = json_decode($composerFile->getContents(), true);
+        $composerContents = json_decode(file_get_contents($composerFilePath), true);
         $fullNamespace = key($composerContents['autoload']['psr-4']);
         $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
@@ -208,7 +198,7 @@ class Generator implements GeneratorInterface
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
 
         $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
-        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
+//        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
         return $this;
     }
 

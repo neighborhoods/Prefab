@@ -8,11 +8,11 @@ use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
 
 class BuilderActor
 {
-    public const BUILDER_KEY = 'Builder';
+    public const MAP_BUILDER_KEY = 'MapBuilder';
 
-    public const BUILDER_ACTOR_KEY = 'Builder.php';
-    public const BUILDER_INTERFACE_ACTOR_KEY = 'BuilderInterface.php';
-    public const BUILDER_SERVICE_FILE_ACTOR_KEY = 'Builder.service.yml';
+    public const MAP_BUILDER_ACTOR_KEY = 'Map\Builder.php';
+    public const MAP_BUILDER_INTERFACE_ACTOR_KEY = 'Map\BuilderInterface.php';
+    public const MAP_BUILDER_SERVICE_FILE_ACTOR_KEY = 'Map\Builder.service.yml';
 
     protected const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
     protected const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
@@ -26,13 +26,13 @@ class BuilderActor
     {
         $config =
             [
-                self::BUILDER_ACTOR_KEY => $this->getBuilderActor(),
-                self::BUILDER_INTERFACE_ACTOR_KEY => $this->getBuilderInterfaceActor(),
-                self::BUILDER_SERVICE_FILE_ACTOR_KEY => $this->getBuilderServiceFileActory(),
-                self::BUILDER_KEY . '\\' . AwareTraitActor::ACTOR_KEY => (new AwareTraitActor())->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
+                self::MAP_BUILDER_ACTOR_KEY => null,
+                self::MAP_BUILDER_INTERFACE_ACTOR_KEY => null,
+                self::MAP_BUILDER_SERVICE_FILE_ACTOR_KEY => null,
+                self::MAP_BUILDER_KEY . '\\' . AwareTraitActor::ACTOR_KEY => (new AwareTraitActor())->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
             ];
 
-        return array_merge($config, (new FactoryActor())->setKeyPrefix(self::BUILDER_KEY)->getActorConfiguration());
+        return array_merge($config, (new FactoryActor())->setKeyPrefix(self::MAP_BUILDER_KEY)->getActorConfiguration());
     }
 
     protected function getBuilderActor() : ?array

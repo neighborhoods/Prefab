@@ -49,7 +49,7 @@ class Template implements TemplateInterface
     protected $properties;
     protected $project_name;
     protected $supporting_actor_group;
-    protected $supporting_actors;
+    protected $supporting_actors = [];
 
     public function getFabricationConfig() : array
     {
@@ -111,7 +111,6 @@ class Template implements TemplateInterface
 
     public function addRepositoryServiceFile() : TemplateInterface
     {
-        $config = $this->getSupportingActorsConfig();
         $annotationProcessors = [];
 
         $namespaces = [
@@ -125,9 +124,6 @@ class Template implements TemplateInterface
         }
 
         $this->supporting_actors[self::KEY_REPOSITORY_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_REPOSITORY_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
-
-        $this->supporting_actors = $config;
         return $this;
     }
 
