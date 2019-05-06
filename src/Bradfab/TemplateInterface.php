@@ -17,8 +17,6 @@ interface TemplateInterface
 
     public function addHandler() : TemplateInterface;
 
-    public function addHandlerServiceFile() : TemplateInterface;
-
     public function addRepository() : TemplateInterface;
 
     public function addRepositoryHandlerInterface() : TemplateInterface;

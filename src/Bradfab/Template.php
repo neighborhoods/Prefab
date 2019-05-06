@@ -11,6 +11,7 @@ use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
 use Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor;
 use Neighborhoods\Prefab\Bradfab\Template\BuilderActor;
 use Neighborhoods\Prefab\Bradfab\Template\FactoryActor;
+use Neighborhoods\Prefab\Bradfab\Template\HandlerActor;
 use Neighborhoods\Prefab\Bradfab\Template\MapActor;
 use Neighborhoods\Prefab\Bradfab\Template\RepositoryActor;
 use Symfony\Component\Yaml\Yaml;
@@ -93,31 +94,16 @@ class Template implements TemplateInterface
     }
     public function addHandler() : TemplateInterface
     {
-        $annotationProcessors = [];
+        $handler = new HandlerActor();
 
-        $namespaces = [
-            'Http\Message' => 'use \Neighborhoods\PROJECTNAME\Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;',
-            'SearchCriteria' => 'use \Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;',
-        ];
-
-        foreach ($namespaces as $key => $namespace) {
-            $annotationProcessors[Handler::ANNOTATION_PROCESSOR_KEY . '-' . $key] =
-                $this->getNamespaceAnnotationProcessorArray($namespace);
-        }
-
-        $this->supporting_actors[self::KEY_HANDLER][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
-        return $this;
-    }
-
-    public function addHandlerServiceFile() : TemplateInterface
-    {
-        $namespace = '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface';
-
-        $this->supporting_actors[self::KEY_HANDLER_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS][self::KEY_NAMESPACE_ANNOTATION_PROCESSOR] =
-            $this->getNamespaceAnnotationProcessorArray($namespace);
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $handler->setProjectName($this->getProjectName())->getActorConfiguration()
+        );
 
         return $this;
     }
+
 
     public function addRepository() : TemplateInterface
     {

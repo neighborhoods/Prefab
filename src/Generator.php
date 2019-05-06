@@ -106,7 +106,6 @@ class Generator implements GeneratorInterface
             ->addFactoryActor()
             ->addBuilder()
             ->addHandler()
-            ->addHandlerServiceFile()
             ->addRepositoryHandlerInterface()
             ->addRepository()
             ->addMap();
