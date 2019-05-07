@@ -20,8 +20,8 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
         - Name of the database table containing the data that populates the DAO
     - `supporting_actor_group`
         - The collection of supporting actors you need generated for the actor
-        - Can be one of `all_supporting_actors`, `collection`, or `typed_object`
-        - This field is optional and defaults to `all_supporting_actors`
+        - Can be one of `complete`, `collection`, or `minimal`
+        - This field is optional and defaults to `complete`
         - See [below](#supporting-actor-groups) for more information
     - `http_route`
         - The http route that corresponds with the DAO
@@ -52,7 +52,7 @@ Filename: `User.prefab.definition.yml`
 dao:
   table_name: mv1_user
   identity_field: id
-  supporting_actor_group: all_supporting_actors
+  supporting_actor_group: complete
   http_route: /mv1/users/{searchCriteria:}
   http_verbs:
    - get
@@ -81,8 +81,29 @@ dao:
 
 ## Supporting Actor Groups
 
-
-
+There are multiple use cases for using Prefab to generate the supporting actors for a given DAO. Prefab supports generating different subsets of actors to support those use cases. For information on how to specify a supporting actor group, see the [Prefab definition file specification](#prefab-definition-file-specification) above. The following supporting actor groups are available:
+- `complete` - Generates all supporting actors.  This should be used when you need to be able to build an actor from storage and return it via HTTP.
+    - Included supporting actors
+        - Factory
+        - Builder
+        - AwareTraits
+        - Repository
+        - Map
+        - Map Builder
+        - Handler
+- `collection` - Generates supporting actors for building and handling groups of strongly typed objects. This is often used to represent a collection of actors in a JSON database column. 
+    - Included supporting actors
+        - Factory
+        - Builder
+        - AwareTraits
+        - Map
+        - Map Builder
+- `minimal` - Generates the minimum number of supporting actors to build an actor. This can be used to represent a single, strongly typed object.
+    - Included supporting actors
+        - Factory
+        - Builder
+        - AwareTraits
+        
 ## Subset Container Buildable Directories
 
 As Symfony containers get bigger, the response times for HTTP requests rise.  To prevent slow response times, Prefab implemented user-defined subset container building. Prefab users can define what is included in a container for individual requests, so only what is needed is included in each container. The purpose of this document is to define the usage of the `http-buildable-directories.yml` file.

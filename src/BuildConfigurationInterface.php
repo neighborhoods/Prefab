@@ -5,9 +5,9 @@ namespace Neighborhoods\Prefab;
 
 interface BuildConfigurationInterface
 {
-    public const SUPPORTING_ACTOR_GROUP_ALL_ACTORS = 'all_supporting_actors';
+    public const SUPPORTING_ACTOR_GROUP_COMPLETE = 'complete';
     public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
-    public const SUPPORTING_ACTOR_GROUP_TYPED_OBJECT = 'typed_object';
+    public const SUPPORTING_ACTOR_GROUP_MINIMAL = 'minimal';
 
     public function getTableName() : string;
 

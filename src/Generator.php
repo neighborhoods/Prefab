@@ -114,11 +114,11 @@ class Generator implements GeneratorInterface
     protected function getSupportingActorConfigForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : array
     {
         if (!$buildConfiguration->hasSupportingActorGroup()) {
-            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_ALL_ACTORS);
+            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
         }
 
         switch ($buildConfiguration->getSupportingActorGroup()) {
-            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_ALL_ACTORS:
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE:
                 return $this->getAllSupportingActorsFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->setDaoName($daoName)
@@ -129,7 +129,7 @@ class Generator implements GeneratorInterface
                     ->setBuildConfiguration($buildConfiguration)
                     ->setDaoName($daoName)
                     ->getSupportingActorConfig();
-            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_TYPED_OBJECT:
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
                 return $this->getTypedObjectFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->setDaoName($daoName)
