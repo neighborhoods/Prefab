@@ -18,6 +18,8 @@ class HandlerActor
     public const HANDLER_SERVICE_FILE_ACTOR_KEY = 'Map\Repository\Handler.service.yml';
 
     protected $project_name;
+    protected $route_path;
+    protected $route_name;
 
     public function getActorConfiguration() : array
     {
@@ -32,7 +34,7 @@ class HandlerActor
         return $config;
     }
 
-    protected function getHandlerActor() : ?array
+    protected function getHandlerActor() : array
     {
         $annotationProcessors = [];
 
@@ -51,25 +53,28 @@ class HandlerActor
 
     protected function getHandlerInterfaceActor() : array
     {
-        $namespaces = [
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
+        $namespace = 'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface';
+
+        $config = [
+            Template::KEY_ANNOTATION_PROCESSORS =>
+                [NamespaceAnnotationProcessor::ANNOTATION_PROCESSOR_KEY => $this->getNamespaceAnnotationProcessorArray($namespace)],
         ];
 
-        return [
-            Template::KEY_ANNOTATION_PROCESSORS =>
+        if ($this->hasRoutePath()) {
+            $config[Template::KEY_ANNOTATION_PROCESSORS][HandlerInterface::ANNOTATION_PROCESSOR_KEY] =
                 [
-                    HandlerInterface::ANNOTATION_PROCESSOR_KEY => [
-                        Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . HandlerInterface::class,
-                        Template::KEY_STATIC_CONTEXT_RECORD => [
-                            Template::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                            Template::CONTEXT_KEY_NAMESPACES => $namespaces,
-                        ],
+                    Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . HandlerInterface::class,
+                    Template::KEY_STATIC_CONTEXT_RECORD => [
+                        HandlerInterface::CONTEXT_KEY_ROUTE_PATH => $this->getRoutePath(),
+                        HandlerInterface::CONTEXT_KEY_ROUTE_NAME => $this->getRouteName(),
                     ],
-                ],
-        ];
+                ];
+        }
+
+        return $config;
     }
 
-    protected function getHandlerServiceFileActor() : ?array
+    protected function getHandlerServiceFileActor() : array
     {
 
         $namespace = '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface';
@@ -84,7 +89,7 @@ class HandlerActor
 
     }
 
-    public function getProjectName()
+    protected function getProjectName()
     {
         if ($this->project_name === null) {
             throw new \LogicException('HandlerActor project_name has not been set.');
@@ -98,6 +103,45 @@ class HandlerActor
             throw new \LogicException('HandlerActor project_name is already set.');
         }
         $this->project_name = $project_name;
+        return $this;
+    }
+
+    protected function getRoutePath() : string
+    {
+        if ($this->route_path === null) {
+            throw new \LogicException('HandlerActor route_path has not been set.');
+        }
+        return $this->route_path;
+    }
+
+    public function setRoutePath(string $route_path)
+    {
+        if ($this->route_path !== null) {
+            throw new \LogicException('HandlerActor route_path is already set.');
+        }
+        $this->route_path = $route_path;
+        return $this;
+    }
+
+    protected function hasRoutePath() : bool
+    {
+        return $this->route_path !== null;
+    }
+
+    protected function getRouteName() : string
+    {
+        if ($this->route_name === null) {
+            throw new \LogicException('HandlerActor route_name has not been set.');
+        }
+        return $this->route_name;
+    }
+
+    public function setRouteName(string $route_name)
+    {
+        if ($this->route_name !== null) {
+            throw new \LogicException('HandlerActor route_name is already set.');
+        }
+        $this->route_name = $route_name;
         return $this;
     }
 

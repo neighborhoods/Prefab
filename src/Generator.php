@@ -11,6 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 use Neighborhoods\Prefab;
 use Neighborhoods\Bradfab\Bradfab;
 use Neighborhoods\Bradfab\Protean\Container\Builder;
+use Neighborhoods\Prefab\SupportingActorGroup;
 
 class Generator implements GeneratorInterface
 {
@@ -18,6 +19,9 @@ class Generator implements GeneratorInterface
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use BuildPlan\Builder\Factory\AwareTrait;
     use Prefab\Bradfab\Template\Factory\AwareTrait;
+    use SupportingActorGroup\AllSupportingActors\Factory\AwareTrait;
+    use SupportingActorGroup\Collection\Factory\AwareTrait;
+    use SupportingActorGroup\TypedObject\Factory\AwareTrait;
 
     protected $buildPlans;
     protected $httpSrcDir;
@@ -92,29 +96,7 @@ class Generator implements GeneratorInterface
 
     protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
-        $bradfabTemplate = $this->getTemplateFactory()->create()
-            ->setProperties($configuration->getDaoProperties())
-            ->setProjectName($configuration->getProjectName());
-
-        if ($configuration->hasHttpRoute()) {
-            $bradfabTemplate->setRoutePath($configuration->getHttpRoute());
-            $bradfabTemplate->setRouteName($this->getNameForDao($dao));
-        }
-
-        $bradfabTemplate
-            ->addAwareTraitActor()
-            ->addFactoryActor()
-            ->addBuilder()
-            ->addHandler()
-            ->addRepositoryHandlerInterface()
-            ->addRepository()
-            ->addMap();
-
-        if ($configuration->hasSupportingActorGroup()) {
-            $bradfabTemplate->setSupportingActorGroup($configuration->getSupportingActorGroup());
-        }
-
-        $configArray = $bradfabTemplate->getFabricationConfig();
+        $configArray = $this->getSupportingActorConfigForBuildConfiguration($configuration, $this->getNameForDao($dao));
 
         $writeFilePath = $this->getWritePathForDao($dao);
         $directory = $this->getWriteDirectoryForDao($writeFilePath);
@@ -127,6 +109,32 @@ class Generator implements GeneratorInterface
         file_put_contents($writeFilePath, $yaml);
 
         return $this;
+    }
+
+    protected function getSupportingActorConfigForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : array
+    {
+        if (!$buildConfiguration->hasSupportingActorGroup()) {
+            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_ALL_ACTORS);
+        }
+
+        switch ($buildConfiguration->getSupportingActorGroup()) {
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_ALL_ACTORS:
+                return $this->getAllSupportingActorsFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->setDaoName($daoName)
+                    ->getSupportingActorConfig();
+                break;
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COLLECTION:
+                return $this->getCollectionFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->setDaoName($daoName)
+                    ->getSupportingActorConfig();
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_TYPED_OBJECT:
+                return $this->getTypedObjectFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->setDaoName($daoName)
+                    ->getSupportingActorConfig();
+        }
     }
 
     protected function getNameForDao(SplFileInfo $dao) : string

@@ -5,6 +5,10 @@ namespace Neighborhoods\Prefab;
 
 interface BuildConfigurationInterface
 {
+    public const SUPPORTING_ACTOR_GROUP_ALL_ACTORS = 'all_supporting_actors';
+    public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
+    public const SUPPORTING_ACTOR_GROUP_TYPED_OBJECT = 'typed_object';
+
     public function getTableName() : string;
 
     public function setTableName(string $tableName) : BuildConfigurationInterface;

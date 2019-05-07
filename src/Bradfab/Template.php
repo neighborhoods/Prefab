@@ -51,7 +51,6 @@ class Template implements TemplateInterface
     protected $route_name;
     protected $properties;
     protected $project_name;
-    protected $supporting_actor_group;
     protected $supporting_actors = [];
 
     public function getFabricationConfig() : array
@@ -96,6 +95,11 @@ class Template implements TemplateInterface
     {
         $handler = new HandlerActor();
 
+        if ($this->hasRoutePath()) {
+            $handler->setRoutePath($this->getRoutePath())
+                ->setRouteName($this->getRouteName());
+        }
+
         $this->supporting_actors = array_merge(
             $this->supporting_actors,
             $handler->setProjectName($this->getProjectName())->getActorConfiguration()
@@ -117,26 +121,26 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function addRepositoryHandlerInterface() : TemplateInterface
-    {
-        if ($this->hasRouteName() && $this->hasRoutePath()) {
-            $this->supporting_actors[self::KEY_HANDLER_INTERFACE] =
-                [
-                    self::KEY_ANNOTATION_PROCESSORS =>
-                        [
-                            HandlerInterface::ANNOTATION_PROCESSOR_KEY => [
-                                self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . HandlerInterface::class,
-                                self::KEY_STATIC_CONTEXT_RECORD => [
-                                    self::CONTEXT_KEY_ROUTE_PATH => $this->getRoutePath(),
-                                    self::CONTEXT_KEY_ROUTE_NAME => $this->getRouteName(),
-                                ],
-                            ],
-                        ],
-                ];
-        }
-
-        return $this;
-    }
+//    public function addRepositoryHandlerInterface() : TemplateInterface
+//    {
+//        if ($this->hasRouteName() && $this->hasRoutePath()) {
+//            $this->supporting_actors[self::KEY_HANDLER_INTERFACE] =
+//                [
+//                    self::KEY_ANNOTATION_PROCESSORS =>
+//                        [
+//                            HandlerInterface::ANNOTATION_PROCESSOR_KEY => [
+//                                self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . HandlerInterface::class,
+//                                self::KEY_STATIC_CONTEXT_RECORD => [
+//                                    self::CONTEXT_KEY_ROUTE_PATH => $this->getRoutePath(),
+//                                    self::CONTEXT_KEY_ROUTE_NAME => $this->getRouteName(),
+//                                ],
+//                            ],
+//                        ],
+//                ];
+//        }
+//
+//        return $this;
+//    }
 
     protected function getNamespaceAnnotationProcessorArray(string $namespace) : array
     {
@@ -170,7 +174,7 @@ class Template implements TemplateInterface
         return $this->supporting_actors;
     }
 
-    public function getRoutePath() : string
+    protected function getRoutePath() : string
     {
         if ($this->route_path === null) {
             throw new \LogicException('Template route_path has not been set.');
@@ -187,7 +191,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function hasRoutePath() : bool
+    protected function hasRoutePath() : bool
     {
         return $this->route_path !== null;
     }
@@ -209,7 +213,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function hasRouteName() : bool
+    protected function hasRouteName() : bool
     {
         return $this->route_name !== null;
     }
@@ -231,7 +235,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function hasProperties() : bool
+    protected function hasProperties() : bool
     {
         return $this->properties !== null;
     }
@@ -251,27 +255,5 @@ class Template implements TemplateInterface
         }
         $this->project_name = $project_name;
         return $this;
-    }
-
-    public function getSupportingActorGroup()
-    {
-        if ($this->supporting_actor_group === null) {
-            throw new \LogicException('Template supporting_actor_group has not been set.');
-        }
-        return $this->supporting_actor_group;
-    }
-
-    public function setSupportingActorGroup(string $supporting_actor_group): TemplateInterface
-    {
-        if ($this->supporting_actor_group !== null) {
-            throw new \LogicException('Template supporting_actor_group is already set.');
-        }
-        $this->supporting_actor_group = $supporting_actor_group;
-        return $this;
-    }
-
-    public function hasSupportingActorGroup() : bool
-    {
-        return $this->supporting_actor_group !== null;
     }
 }

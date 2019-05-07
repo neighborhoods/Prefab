@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\SupportingActorGroup\TypedObject\FactoryInterface:
+    class: Neighborhoods\Prefab\SupportingActorGroup\TypedObject\Factory
+    public: false
+    shared: true
+    calls:
+      - [setTypedObject, ['@Neighborhoods\Prefab\SupportingActorGroup\TypedObjectInterface']]
