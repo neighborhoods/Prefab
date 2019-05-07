@@ -2,4 +2,4 @@ services:
   Neighborhoods\Prefab\SupportingActorGroup\TypedObjectInterface:
     class: Neighborhoods\Prefab\SupportingActorGroup\TypedObject
     calls:
-      - [setBuildConfiguration, ['@Neighborhoods\Prefab\BuildConfigurationInterface']]
+      - [setTemplateFactory, ['@Neighborhoods\Prefab\Bradfab\Template\FactoryInterface']]

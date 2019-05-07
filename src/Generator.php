@@ -134,6 +134,8 @@ class Generator implements GeneratorInterface
                     ->setBuildConfiguration($buildConfiguration)
                     ->setDaoName($daoName)
                     ->getSupportingActorConfig();
+            default:
+                throw new \RuntimeException('Invalid supporting actor group ' . $buildConfiguration->getSupportingActorGroup());
         }
     }
 
