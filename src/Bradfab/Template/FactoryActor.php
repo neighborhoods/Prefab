@@ -4,15 +4,10 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Bradfab\Template;
 
 
-class FactoryActor
+class FactoryActor implements FactoryActorInterface
 {
-    public const FACTORY_NO_PHP = 'Factory'; //todo what to name this
+    use AwareTraitActor\Factory\AwareTrait;
 
-    public const FACTORY_ACTOR_KEY = 'Factory.php';
-    public const FACTORY_INTERFACE_ACTOR_KEY = 'FactoryInterface.php';
-    public const FACTORY_SERVICE_FILE_ACTOR_KEY = 'Factory.service.yml';
-
-    /** @var string */
     protected $key_prefix;
 
     public function getActorConfiguration() : array
@@ -23,7 +18,9 @@ class FactoryActor
             $prefix . self::FACTORY_ACTOR_KEY => $this->getFactoryActor(),
             $prefix . self::FACTORY_INTERFACE_ACTOR_KEY => $this->getFactoryInterfaceActor(),
             $prefix . self::FACTORY_SERVICE_FILE_ACTOR_KEY => $this->getFactoryServiceFileActor(),
-            $prefix . self::FACTORY_NO_PHP . '\\' . AwareTraitActor::ACTOR_KEY => (new AwareTraitActor())->getActorConfiguration()[AwareTraitActor::ACTOR_KEY]
+            $prefix . self::FACTORY_ACTOR . '\\' . AwareTraitActor::ACTOR_KEY =>
+                $this->getAwareTraitActorFactory()->create()
+                    ->getActorConfiguration()[AwareTraitActor::ACTOR_KEY]
         ];
     }
 
@@ -50,7 +47,7 @@ class FactoryActor
         return $this->key_prefix;
     }
 
-    public function setKeyPrefix(string $key_prefix) : FactoryActor
+    public function setKeyPrefix(string $key_prefix) : FactoryActorInterface
     {
         if ($this->key_prefix !== null) {
             throw new \LogicException('FactoryActor key_prefix is already set.');

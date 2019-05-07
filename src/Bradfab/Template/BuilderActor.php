@@ -6,13 +6,10 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
 
-class BuilderActor
+class BuilderActor implements BuilderActorInterface
 {
-    public const BUILDER_KEY = 'Builder';
-
-    public const BUILDER_ACTOR_KEY = 'Builder.php';
-    public const BUILDER_INTERFACE_ACTOR_KEY = 'BuilderInterface.php';
-    public const BUILDER_SERVICE_FILE_ACTOR_KEY = 'Builder.service.yml';
+    use AwareTraitActor\Factory\AwareTrait;
+    use FactoryActor\Factory\AwareTrait;
 
     protected const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
     protected const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
@@ -29,10 +26,16 @@ class BuilderActor
                 self::BUILDER_ACTOR_KEY => $this->getBuilderActor(),
                 self::BUILDER_INTERFACE_ACTOR_KEY => $this->getBuilderInterfaceActor(),
                 self::BUILDER_SERVICE_FILE_ACTOR_KEY => $this->getBuilderServiceFileActory(),
-                self::BUILDER_KEY . '\\' . AwareTraitActor::ACTOR_KEY => (new AwareTraitActor())->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
+                self::BUILDER_KEY . '\\' . AwareTraitActor::ACTOR_KEY =>
+                    $this->getAwareTraitActorFactory()->create()
+                        ->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
             ];
 
-        return array_merge($config, (new FactoryActor())->setKeyPrefix(self::BUILDER_KEY)->getActorConfiguration());
+        return array_merge(
+            $config,
+            $this->getFactoryActorFactory()->create()
+                ->setKeyPrefix(self::BUILDER_KEY)->getActorConfiguration()
+        );
     }
 
     protected function getBuilderActor() : ?array
@@ -73,7 +76,7 @@ class BuilderActor
         return null;
     }
 
-    protected function getProperties()
+    protected function getProperties() : array
     {
         if ($this->properties === null) {
             throw new \LogicException('BuilderActor properties has not been set.');
@@ -81,7 +84,7 @@ class BuilderActor
         return $this->properties;
     }
 
-    public function setProperties($properties)
+    public function setProperties($properties) : BuilderActorInterface
     {
         if ($this->properties !== null) {
             throw new \LogicException('BuilderActor properties is already set.');
@@ -90,7 +93,7 @@ class BuilderActor
         return $this;
     }
 
-    public function hasProperties() : bool
+    protected function hasProperties() : bool
     {
         return $this->properties !== null;
     }

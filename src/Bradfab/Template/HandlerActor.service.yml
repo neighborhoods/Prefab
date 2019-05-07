@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\Bradfab\Template\HandlerActorInterface:
+    class: Neighborhoods\Prefab\Bradfab\Template\HandlerActor
+    calls:
+      - [setAwareTraitActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor\FactoryInterface']]

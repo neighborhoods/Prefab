@@ -9,13 +9,9 @@ use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface;
 use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
 use Neighborhoods\Prefab\Bradfab\Template;
 
-class HandlerActor
+class HandlerActor implements HandlerActorInterface
 {
-    public const HANDLER_KEY = 'Map\Repository\Handler';
-
-    public const HANDLER_ACTOR_KEY = 'Map\Repository\Handler.php';
-    public const HANDLER_INTERFACE_ACTOR_KEY = 'Map\Repository\HandlerInterface.php';
-    public const HANDLER_SERVICE_FILE_ACTOR_KEY = 'Map\Repository\Handler.service.yml';
+    use AwareTraitActor\Factory\AwareTrait;
 
     protected $project_name;
     protected $route_path;
@@ -28,7 +24,9 @@ class HandlerActor
                 self::HANDLER_ACTOR_KEY => $this->getHandlerActor(),
                 self::HANDLER_INTERFACE_ACTOR_KEY => $this->getHandlerInterfaceActor(),
                 self::HANDLER_SERVICE_FILE_ACTOR_KEY => $this->getHandlerServiceFileActor(),
-                self::HANDLER_KEY . '\\' . AwareTraitActor::ACTOR_KEY => (new AwareTraitActor())->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
+                self::HANDLER_KEY . '\\' . AwareTraitActor::ACTOR_KEY =>
+                    $this->getAwareTraitActorFactory()->create()
+                        ->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
             ];
 
         return $config;
@@ -89,7 +87,7 @@ class HandlerActor
 
     }
 
-    protected function getProjectName()
+    protected function getProjectName() : string
     {
         if ($this->project_name === null) {
             throw new \LogicException('HandlerActor project_name has not been set.');
@@ -97,7 +95,7 @@ class HandlerActor
         return $this->project_name;
     }
 
-    public function setProjectName($project_name)
+    public function setProjectName($project_name) : HandlerActorInterface
     {
         if ($this->project_name !== null) {
             throw new \LogicException('HandlerActor project_name is already set.');
@@ -114,7 +112,7 @@ class HandlerActor
         return $this->route_path;
     }
 
-    public function setRoutePath(string $route_path)
+    public function setRoutePath(string $route_path) : HandlerActorInterface
     {
         if ($this->route_path !== null) {
             throw new \LogicException('HandlerActor route_path is already set.');
@@ -136,7 +134,7 @@ class HandlerActor
         return $this->route_name;
     }
 
-    public function setRouteName(string $route_name)
+    public function setRouteName(string $route_name) : HandlerActorInterface
     {
         if ($this->route_name !== null) {
             throw new \LogicException('HandlerActor route_name is already set.');

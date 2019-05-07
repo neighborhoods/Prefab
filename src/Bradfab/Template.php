@@ -3,22 +3,26 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Bradfab;
 
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
 use Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor;
 use Neighborhoods\Prefab\Bradfab\Template\BuilderActor;
 use Neighborhoods\Prefab\Bradfab\Template\FactoryActor;
 use Neighborhoods\Prefab\Bradfab\Template\HandlerActor;
 use Neighborhoods\Prefab\Bradfab\Template\MapActor;
+use Neighborhoods\Prefab\Bradfab\Template\MapBuilderActor;
 use Neighborhoods\Prefab\Bradfab\Template\RepositoryActor;
 use Symfony\Component\Yaml\Yaml;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
 
 class Template implements TemplateInterface
 {
+    use AwareTraitActor\Factory\AwareTrait;
+    use BuilderActor\Factory\AwareTrait;
+    use FactoryActor\Factory\AwareTrait;
+    use HandlerActor\Factory\AwareTrait;
+    use MapActor\Factory\AwareTrait;
+    use MapBuilderActor\Factory\AwareTrait;
+    use RepositoryActor\Factory\AwareTrait;
+
     protected const KEY_SUPPORTING_ACTORS = 'supporting_actors';
     protected const KEY_REPOSITORY = 'Map\Repository.php';
     protected const KEY_REPOSITORY_INTERFACE = 'Map\RepositoryInterface.php';
@@ -55,24 +59,30 @@ class Template implements TemplateInterface
 
     public function getFabricationConfig() : array
     {
-        return [self::KEY_SUPPORTING_ACTORS => $this->getSupportingActorsConfig()];
+        return [self::KEY_SUPPORTING_ACTORS => $this->supporting_actors];
     }
 
     public function addAwareTraitActor() : TemplateInterface
     {
-        $this->supporting_actors = array_merge($this->supporting_actors, (new AwareTraitActor())->getActorConfiguration());
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $this->getAwareTraitActorFactory()->create()->getActorConfiguration()
+        );
         return $this;
     }
 
     public function addFactoryActor() : TemplateInterface
     {
-        $this->supporting_actors = array_merge($this->supporting_actors, (new FactoryActor())->getActorConfiguration());
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $this->getFactoryActorFactory()->create()->getActorConfiguration()
+        );
         return $this;
     }
 
     public function addBuilder() : TemplateInterface
     {
-        $builderActor = new BuilderActor();
+        $builderActor = $this->getBuilderActorFactory()->create();
         if ($this->hasProperties()) {
             $builderActor->setProperties($this->getProperties());
         }
@@ -85,7 +95,7 @@ class Template implements TemplateInterface
 
     public function addMap() : TemplateInterface
     {
-        $map = new MapActor();
+        $map = $this->getMapActorFactory()->create();
 
         $this->supporting_actors = array_merge($this->supporting_actors, $map->getActorConfiguration());
 
@@ -93,7 +103,7 @@ class Template implements TemplateInterface
     }
     public function addHandler() : TemplateInterface
     {
-        $handler = new HandlerActor();
+        $handler = $this->getHandlerActorFactory()->create();
 
         if ($this->hasRoutePath()) {
             $handler->setRoutePath($this->getRoutePath())
@@ -111,7 +121,7 @@ class Template implements TemplateInterface
 
     public function addRepository() : TemplateInterface
     {
-        $repository = new RepositoryActor();
+        $repository = $this->getRepositoryActorFactory()->create();
 
         $this->supporting_actors = array_merge(
             $this->supporting_actors,
@@ -120,27 +130,6 @@ class Template implements TemplateInterface
 
         return $this;
     }
-
-//    public function addRepositoryHandlerInterface() : TemplateInterface
-//    {
-//        if ($this->hasRouteName() && $this->hasRoutePath()) {
-//            $this->supporting_actors[self::KEY_HANDLER_INTERFACE] =
-//                [
-//                    self::KEY_ANNOTATION_PROCESSORS =>
-//                        [
-//                            HandlerInterface::ANNOTATION_PROCESSOR_KEY => [
-//                                self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . HandlerInterface::class,
-//                                self::KEY_STATIC_CONTEXT_RECORD => [
-//                                    self::CONTEXT_KEY_ROUTE_PATH => $this->getRoutePath(),
-//                                    self::CONTEXT_KEY_ROUTE_NAME => $this->getRouteName(),
-//                                ],
-//                            ],
-//                        ],
-//                ];
-//        }
-//
-//        return $this;
-//    }
 
     protected function getNamespaceAnnotationProcessorArray(string $namespace) : array
     {
@@ -153,25 +142,6 @@ class Template implements TemplateInterface
                         self::CONTEXT_KEY_NAMESPACE => $namespace,
                     ],
             ];
-    }
-
-    protected function getSupportingActorsConfig() : array
-    {
-        if ($this->supporting_actors === null) {
-            $supportingActorGroup = $this->hasSupportingActorGroup()
-                ? $this->getSupportingActorGroup()
-                : self::SUPPORTING_ACTOR_GROUP_FULL;
-
-            $supportingActorsConfigFile =
-                $this->supportingActorConfigFiles[$supportingActorGroup] ??
-                $this->supportingActorConfigFiles[self::SUPPORTING_ACTOR_GROUP_FULL];
-
-            // Warn about provided group not being found?
-
-            $this->supporting_actors = Yaml::parseFile(__DIR__ . '/' . $supportingActorsConfigFile);
-        }
-
-        return $this->supporting_actors;
     }
 
     protected function getRoutePath() : string

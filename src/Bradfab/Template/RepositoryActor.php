@@ -9,13 +9,9 @@ use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
 use Neighborhoods\Prefab\Bradfab\Template;
 
-class RepositoryActor
+class RepositoryActor implements RepositoryActorInterface
 {
-    public const REPOSITORY_KEY = 'Map\Repository';
-
-    public const REPOSITORY_ACTOR_KEY = 'Map\Repository.php';
-    public const REPOSITORY_INTERFACE_ACTOR_KEY = 'Map\RepositoryInterface.php';
-    public const REPOSITORY_SERVICE_FILE_ACTOR_KEY = 'Map\Repository.service.yml';
+    use AwareTraitActor\Factory\AwareTrait;
 
     protected $project_name;
 
@@ -26,7 +22,9 @@ class RepositoryActor
                 self::REPOSITORY_ACTOR_KEY => $this->getRepositoryActor(),
                 self::REPOSITORY_INTERFACE_ACTOR_KEY => $this->getRepositoryInterfaceActor(),
                 self::REPOSITORY_SERVICE_FILE_ACTOR_KEY => $this->getRepositoryServiceFileActor(),
-                self::REPOSITORY_KEY . '\\' . AwareTraitActor::ACTOR_KEY => (new AwareTraitActor())->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
+                self::REPOSITORY_KEY . '\\' . AwareTraitActor::ACTOR_KEY =>
+                    $this->getAwareTraitActorFactory()->create()
+                        ->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
             ];
 
         return $config;
@@ -92,7 +90,7 @@ class RepositoryActor
         return [Template::KEY_ANNOTATION_PROCESSORS => $annotationProcessors];
     }
 
-    public function getProjectName()
+    protected function getProjectName() : string
     {
         if ($this->project_name === null) {
             throw new \LogicException('RepositoryActor project_name has not been set.');
@@ -100,7 +98,7 @@ class RepositoryActor
         return $this->project_name;
     }
 
-    public function setProjectName($project_name)
+    public function setProjectName($project_name) : RepositoryActorInterface
     {
         if ($this->project_name !== null) {
             throw new \LogicException('RepositoryActor project_name is already set.');
