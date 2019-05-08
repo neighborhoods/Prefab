@@ -9,6 +9,8 @@ use Neighborhoods\Bradfab\AnnotationProcessorInterface;
 class HandlerInterface implements AnnotationProcessorInterface
 {
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\HandlerInterface-CONSTANTS';
+    public const CONTEXT_KEY_ROUTE_PATH = 'route_path';
+    public const CONTEXT_KEY_ROUTE_NAME = 'route_name';
 
     protected $context;
 
@@ -37,8 +39,8 @@ EOF;
 
     public function getReplacement() : string
     {
-        $path = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_path'];
-        $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()['route_name'];
+        $path = $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::CONTEXT_KEY_ROUTE_PATH];
+        $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::CONTEXT_KEY_ROUTE_NAME];
         $name = strtoupper($name);
 
         return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);

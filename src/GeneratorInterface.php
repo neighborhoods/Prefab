@@ -8,7 +8,7 @@ interface GeneratorInterface
 
     public function setProjectName(string $projectName) : GeneratorInterface;
 
-    public function setProjectDir(string $projectDir) : GeneratorInterface;
+    public function setProjectRoot(string $projectDir) : GeneratorInterface;
 
     public function appendBuildPlan(BuildPlanInterface $buildPlan) : GeneratorInterface;
 

@@ -5,6 +5,10 @@ namespace Neighborhoods\Prefab;
 
 interface BuildConfigurationInterface
 {
+    public const SUPPORTING_ACTOR_GROUP_COMPLETE = 'complete';
+    public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
+    public const SUPPORTING_ACTOR_GROUP_MINIMAL = 'minimal';
+
     public function getTableName() : string;
 
     public function setTableName(string $tableName) : BuildConfigurationInterface;
@@ -40,4 +44,10 @@ interface BuildConfigurationInterface
     public function setProjectDir(string $projectDir) : BuildConfigurationInterface;
 
     public function getProjectDir() : string;
+
+    public function setSupportingActorGroup(string $supporting_actor_group) : BuildConfigurationInterface;
+
+    public function getSupportingActorGroup() : string;
+
+    public function hasSupportingActorGroup() : bool;
 }

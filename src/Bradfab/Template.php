@@ -3,214 +3,130 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\Bradfab;
 
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\HandlerInterface;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
+use Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor;
+use Neighborhoods\Prefab\Bradfab\Template\BuilderActor;
+use Neighborhoods\Prefab\Bradfab\Template\FactoryActor;
+use Neighborhoods\Prefab\Bradfab\Template\HandlerActor;
+use Neighborhoods\Prefab\Bradfab\Template\MapActor;
+use Neighborhoods\Prefab\Bradfab\Template\MapBuilderActor;
+use Neighborhoods\Prefab\Bradfab\Template\RepositoryActor;
 use Symfony\Component\Yaml\Yaml;
-use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
 
 class Template implements TemplateInterface
 {
+    use AwareTraitActor\Factory\AwareTrait;
+    use BuilderActor\Factory\AwareTrait;
+    use FactoryActor\Factory\AwareTrait;
+    use HandlerActor\Factory\AwareTrait;
+    use MapActor\Factory\AwareTrait;
+    use MapBuilderActor\Factory\AwareTrait;
+    use RepositoryActor\Factory\AwareTrait;
+
     protected const KEY_SUPPORTING_ACTORS = 'supporting_actors';
     protected const KEY_REPOSITORY = 'Map\Repository.php';
     protected const KEY_REPOSITORY_INTERFACE = 'Map\RepositoryInterface.php';
     protected const KEY_HANDLER_INTERFACE = 'Map\Repository\HandlerInterface.php';
     protected const KEY_HANDLER = 'Map\Repository\Handler.php';
     protected const KEY_HANDLER_SERVICE_FILE = 'Map\Repository\Handler.service.yml';
-    protected const KEY_REPOSITORY_SERVICE_FILE = 'Map\Repository.service.yml';
     protected const KEY_BUILDER = 'Builder.php';
     protected const KEY_NAMESPACE_ANNOTATION_PROCESSOR = 'Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor';
 
-    protected const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
-    protected const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
-    protected const KEY_STATIC_CONTEXT_RECORD = 'static_context_record';
+    public const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
+    public const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
+    public const KEY_STATIC_CONTEXT_RECORD = 'static_context_record';
 
     protected const CONTEXT_KEY_ROUTE_PATH = 'route_path';
     protected const CONTEXT_KEY_ROUTE_NAME = 'route_name';
-    protected const CONTEXT_KEY_PROPERTIES = 'properties';
-    protected const CONTEXT_KEY_NAMESPACES = 'namespaces';
-    protected const CONTEXT_KEY_NAMESPACE = 'namespace';
-    protected const CONTEXT_KEY_PROJECT_NAME = 'project_name';
+
+    public const CONTEXT_KEY_NAMESPACES = 'namespaces';
+    public const CONTEXT_KEY_NAMESPACE = 'namespace';
+    public const CONTEXT_KEY_PROJECT_NAME = 'project_name';
+
+    protected const SUPPORTING_ACTOR_GROUP_FULL = 'full';
+    protected const SUPPORTING_ACTOR_GROUP_REDUCED = 'reduced';
+
+    protected $supportingActorConfigFiles = [
+        self::SUPPORTING_ACTOR_GROUP_FULL => 'AllSupportingActors.yml',
+        self::SUPPORTING_ACTOR_GROUP_REDUCED => 'ReducedSupportingActors.yml'
+    ];
 
     protected $route_path;
     protected $route_name;
     protected $properties;
     protected $project_name;
-
-    protected $all_supporting_actors;
+    protected $supporting_actors = [];
 
     public function getFabricationConfig() : array
     {
-        $this->configureHandler();
-        $this->configureRepositoryHandlerInterface();
-        $this->configureHandlerServiceFile();
-
-        $this->configureRepository();
-        $this->configureRepositoryInterface();
-        $this->configureRepositoryServiceFile();
-
-        $this->configureBuilder();
-
-        return $this->getAllSupportingActorsConfig();
+        return [self::KEY_SUPPORTING_ACTORS => $this->supporting_actors];
     }
 
-    protected function configureBuilder() : TemplateInterface
+    public function addAwareTraitActor() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
-        $propertyArray = [];
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $this->getAwareTraitActorFactory()->create()->getActorConfiguration()
+        );
+        return $this;
+    }
 
-        foreach ($this->getProperties() as $propertyName => $propertyValues) {
-            $propertyArray[$propertyName] = [
-                'nullable' => $propertyValues['nullable'] ?? false,
-            ];
+    public function addFactoryActor() : TemplateInterface
+    {
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $this->getFactoryActorFactory()->create()->getActorConfiguration()
+        );
+        return $this;
+    }
+
+    public function addBuilder() : TemplateInterface
+    {
+        $builderActor = $this->getBuilderActorFactory()->create();
+        if ($this->hasProperties()) {
+            $builderActor->setProperties($this->getProperties());
         }
 
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_BUILDER] =
-            [
-                self::KEY_ANNOTATION_PROCESSORS =>
-                    [
-                        Builder::ANNOTATION_PROCESSOR_KEY => [
-                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . Builder::class,
-                            self::KEY_STATIC_CONTEXT_RECORD => [
-                                self::CONTEXT_KEY_PROPERTIES => $propertyArray,
-                            ],
-                        ],
-                    ],
-            ];
+        $this->supporting_actors =
+            array_merge($this->supporting_actors, $builderActor->getActorConfiguration());
 
-        $this->all_supporting_actors = $config;
         return $this;
     }
 
-    protected function configureHandler() : TemplateInterface
+    public function addMap() : TemplateInterface
     {
-        $config = $this->getAllSupportingActorsConfig();
-        $annotationProcessors = [];
+        $map = $this->getMapActorFactory()->create();
 
-        $namespaces = [
-            'Http\Message' => 'use \Neighborhoods\PROJECTNAME\Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;',
-            'SearchCriteria' => 'use \Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;',
-        ];
+        $this->supporting_actors = array_merge($this->supporting_actors, $map->getActorConfiguration());
 
-        foreach ($namespaces as $key => $namespace) {
-            $annotationProcessors[Handler::ANNOTATION_PROCESSOR_KEY . '-' . $key] =
-                $this->getNamespaceAnnotationProcessorArray($namespace);
+        return $this;
+    }
+    public function addHandler() : TemplateInterface
+    {
+        $handler = $this->getHandlerActorFactory()->create();
+
+        if ($this->hasRoutePath()) {
+            $handler->setRoutePath($this->getRoutePath())
+                ->setRouteName($this->getRouteName());
         }
 
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $handler->setProjectName($this->getProjectName())->getActorConfiguration()
+        );
 
-        $this->all_supporting_actors = $config;
         return $this;
     }
 
-    protected function configureHandlerServiceFile() : TemplateInterface
+
+    public function addRepository() : TemplateInterface
     {
-        $namespace = '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface';
+        $repository = $this->getRepositoryActorFactory()->create();
 
-        $config = $this->getAllSupportingActorsConfig();
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS][self::KEY_NAMESPACE_ANNOTATION_PROCESSOR] =
-            $this->getNamespaceAnnotationProcessorArray($namespace);
-
-        $this->all_supporting_actors = $config;
-        return $this;
-    }
-
-    protected function configureRepositoryServiceFile() : TemplateInterface
-    {
-        $config = $this->getAllSupportingActorsConfig();
-        $annotationProcessors = [];
-
-        $namespaces = [
-            'HttpMessage' => '@Neighborhoods\PROJECTNAME\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface',
-            'SearchCriteria' => '@Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface',
-        ];
-
-        foreach ($namespaces as $key => $namespace) {
-            $annotationProcessors[NamespaceAnnotationProcessor::ANNOTATION_PROCESSOR_KEY . '-' . $key] =
-                $this->getNamespaceAnnotationProcessorArray($namespace);
-        }
-
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_REPOSITORY_SERVICE_FILE][self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
-
-        $this->all_supporting_actors = $config;
-        return $this;
-    }
-
-    protected function configureRepository() : TemplateInterface
-    {
-        $config = $this->getAllSupportingActorsConfig();
-
-        $namespaces = [
-            'Neighborhoods\PROJECTNAME\Prefab5\Doctrine',
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria',
-        ];
-
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_REPOSITORY] =
-            [
-                self::KEY_ANNOTATION_PROCESSORS =>
-                    [
-                        Repository::ANNOTATION_PROCESSOR_KEY  => [
-                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . Repository::class,
-                            self::KEY_STATIC_CONTEXT_RECORD => [
-                                self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                                self::CONTEXT_KEY_NAMESPACES => $namespaces,
-                            ]
-                        ]
-                    ]
-            ];
-
-        $this->all_supporting_actors = $config;
-        return $this;
-    }
-
-    protected function configureRepositoryInterface() : TemplateInterface
-    {
-        $config = $this->getAllSupportingActorsConfig();
-
-        $namespaces = [
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
-        ];
-
-        $config[self::KEY_SUPPORTING_ACTORS][self::KEY_REPOSITORY_INTERFACE] =
-            [
-                self::KEY_ANNOTATION_PROCESSORS =>
-                    [
-                        RepositoryInterface::ANNOTATION_PROCESSOR_KEY => [
-                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryInterface::class,
-                            self::KEY_STATIC_CONTEXT_RECORD => [
-                                self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                                self::CONTEXT_KEY_NAMESPACES => $namespaces,
-                            ],
-                        ],
-                    ],
-            ];
-
-        $this->all_supporting_actors = $config;
-        return $this;
-    }
-
-    protected function configureRepositoryHandlerInterface() : TemplateInterface
-    {
-        if ($this->hasRouteName() && $this->hasRoutePath()) {
-            $config = $this->getAllSupportingActorsConfig();
-            $config[self::KEY_SUPPORTING_ACTORS][self::KEY_HANDLER_INTERFACE] =
-                [
-                    self::KEY_ANNOTATION_PROCESSORS =>
-                        [
-                            HandlerInterface::ANNOTATION_PROCESSOR_KEY => [
-                                self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . HandlerInterface::class,
-                                self::KEY_STATIC_CONTEXT_RECORD => [
-                                    self::CONTEXT_KEY_ROUTE_PATH => $this->getRoutePath(),
-                                    self::CONTEXT_KEY_ROUTE_NAME => $this->getRouteName(),
-                                ],
-                            ],
-                        ],
-                ];
-            $this->all_supporting_actors = $config;
-        }
+        $this->supporting_actors = array_merge(
+            $this->supporting_actors,
+            $repository->setProjectName($this->getProjectName())->getActorConfiguration()
+        );
 
         return $this;
     }
@@ -218,26 +134,17 @@ class Template implements TemplateInterface
     protected function getNamespaceAnnotationProcessorArray(string $namespace) : array
     {
         return
-        [
-            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . NamespaceAnnotationProcessor::class,
-            self::KEY_STATIC_CONTEXT_RECORD =>
-                [
-                    self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                    self::CONTEXT_KEY_NAMESPACE => $namespace,
-                ],
-        ];
+            [
+                self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . NamespaceAnnotationProcessor::class,
+                self::KEY_STATIC_CONTEXT_RECORD =>
+                    [
+                        self::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
+                        self::CONTEXT_KEY_NAMESPACE => $namespace,
+                    ],
+            ];
     }
 
-    protected function getAllSupportingActorsConfig() : array
-    {
-        if ($this->all_supporting_actors === null) {
-            $this->all_supporting_actors = Yaml::parseFile(__DIR__ . '/AllSupportingActors.yml');
-        }
-
-        return $this->all_supporting_actors;
-    }
-
-    public function getRoutePath() : string
+    protected function getRoutePath() : string
     {
         if ($this->route_path === null) {
             throw new \LogicException('Template route_path has not been set.');
@@ -254,7 +161,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function hasRoutePath() : bool
+    protected function hasRoutePath() : bool
     {
         return $this->route_path !== null;
     }
@@ -276,7 +183,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function hasRouteName() : bool
+    protected function hasRouteName() : bool
     {
         return $this->route_name !== null;
     }
@@ -298,7 +205,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    public function hasProperties() : bool
+    protected function hasProperties() : bool
     {
         return $this->properties !== null;
     }
