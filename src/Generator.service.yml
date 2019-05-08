@@ -9,4 +9,4 @@ services:
     - [setTemplateFactory, ['@Neighborhoods\Prefab\Bradfab\Template\FactoryInterface']]
     - [setAllSupportingActorsFactory, ['@Neighborhoods\Prefab\SupportingActorGroup\AllSupportingActors\FactoryInterface']]
     - [setCollectionFactory, ['@Neighborhoods\Prefab\SupportingActorGroup\Collection\FactoryInterface']]
-    - [setTypedObjectFactory, ['@Neighborhoods\Prefab\SupportingActorGroup\TypedObject\FactoryInterface']]
+    - [setMinimalFactory, ['@Neighborhoods\Prefab\SupportingActorGroup\Minimal\FactoryInterface']]

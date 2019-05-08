@@ -21,7 +21,7 @@ class Generator implements GeneratorInterface
     use Prefab\Bradfab\Template\Factory\AwareTrait;
     use SupportingActorGroup\AllSupportingActors\Factory\AwareTrait;
     use SupportingActorGroup\Collection\Factory\AwareTrait;
-    use SupportingActorGroup\TypedObject\Factory\AwareTrait;
+    use SupportingActorGroup\Minimal\Factory\AwareTrait;
 
     protected $buildPlans;
     protected $httpSrcDir;
@@ -130,7 +130,7 @@ class Generator implements GeneratorInterface
                     ->setDaoName($daoName)
                     ->getSupportingActorConfig();
             case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
-                return $this->getTypedObjectFactory()->create()
+                return $this->getMinimalFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->setDaoName($daoName)
                     ->getSupportingActorConfig();

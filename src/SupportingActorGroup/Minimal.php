@@ -7,7 +7,7 @@ namespace Neighborhoods\Prefab\SupportingActorGroup;
 use Neighborhoods\Prefab\Bradfab\Template;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 
-class TypedObject implements TypedObjectInterface
+class Minimal implements MinimalInterface
 {
     use Template\Factory\AwareTrait;
 
@@ -37,15 +37,15 @@ class TypedObject implements TypedObjectInterface
     protected function getDaoName() : string
     {
         if ($this->daoName === null) {
-            throw new \LogicException('TypedObject daoName has not been set.');
+            throw new \LogicException('Minimal daoName has not been set.');
         }
         return $this->daoName;
     }
 
-    public function setDaoName(string $daoName) : TypedObjectInterface
+    public function setDaoName(string $daoName) : MinimalInterface
     {
         if ($this->daoName !== null) {
-            throw new \LogicException('TypedObject daoName is already set.');
+            throw new \LogicException('Minimal daoName is already set.');
         }
         $this->daoName = $daoName;
         return $this;
@@ -54,15 +54,15 @@ class TypedObject implements TypedObjectInterface
     protected function getBuildConfiguration() : BuildConfigurationInterface
     {
         if ($this->buildConfiguration === null) {
-            throw new \LogicException('TypedObject buildConfiguration has not been set.');
+            throw new \LogicException('Minimal buildConfiguration has not been set.');
         }
         return $this->buildConfiguration;
     }
 
-    public function setBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : TypedObjectInterface
+    public function setBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : MinimalInterface
     {
         if ($this->buildConfiguration !== null) {
-            throw new \LogicException('TypedObject buildConfiguration is already set.');
+            throw new \LogicException('Minimal buildConfiguration is already set.');
         }
         $this->buildConfiguration = $buildConfiguration;
         return $this;
