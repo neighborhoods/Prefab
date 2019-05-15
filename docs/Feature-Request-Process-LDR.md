@@ -20,7 +20,7 @@ We want to follow Protean's [Expectations of Projects and Sprints](https://githu
 as much as possible. Specifically, sprinted work with Retros and Sprint Commitments. 
 This means owners will review all known requests before setting Sprint Commitments.
 
-To help owners prioritize Prefab requests, we propose clients create JIRA tickets in the [Prefab project](https://55places.atlassian.net/browse/PREF) with descriptions using the following template:
+To help owners prioritize Prefab requests, we propose clients create JIRA tickets in the [Prefab project](https://55places.atlassian.net/browse/PREF) using the [feature-request] tag and descriptions using the following template:
 ```
 h3. Problem: 
  * A succinct description of the problem you are encountering when 
