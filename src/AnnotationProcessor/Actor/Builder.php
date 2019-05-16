@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
 use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
 use Neighborhoods\Bradfab\AnnotationProcessorInterface;
+use Neighborhoods\Prefab\BuildConfigurationInterface;
 
 class Builder implements AnnotationProcessorInterface
 {
@@ -12,6 +13,15 @@ class Builder implements AnnotationProcessorInterface
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
 
+    protected const NEIGHBORHOODS_NAMESPACE = 'Neighborhoods\\';
+
+    protected const COMPLEX_OBJECT_BUILDER_METHOD =
+"
+            \$this->getMV5PropertyInteriorFeaturesBuilderFactory()
+                ->create()
+                ->setRecord(\$record)
+                ->build();
+";
     protected const NULLABLE_PROPERTY_METHOD_PATTERN =
 "
         if (isset(\$record[ActorInterface::PROP_%s])) {
@@ -47,6 +57,11 @@ class Builder implements AnnotationProcessorInterface
 
         foreach ($properties as $propertyName => $property) {
 
+            if ($this->isPropertyComplexObject($property['database_column_name']))
+            {
+//                $method =
+            }
+
             $camelCaseName = '';
             $nameArray = explode('_', $propertyName);
             foreach ($nameArray as $part) {
@@ -70,5 +85,10 @@ class Builder implements AnnotationProcessorInterface
         }
 
         return $replacement;
+    }
+
+    protected function isPropertyComplexObject(string $type) : bool
+    {
+        return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
     }
 }
