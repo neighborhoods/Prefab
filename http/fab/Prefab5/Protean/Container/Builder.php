@@ -48,18 +48,34 @@ class Builder implements BuilderInterface
             if (file_exists($containerCacheFilePath)) {
                 require_once $containerCacheFilePath;
                 $containerClass = sprintf('\\%s', $this->getContainerName());
-                $containerBuilder = new $containerClass;
-            } else {
-                if ($this->getCanBuildZendExpressive()) {
-                    $this->buildZendExpressive();
+
+                // TODO: PREF-146 - For some reason the class isn't found even when it exists in the
+                // the cached file. For now, we just delete the file and recreate the container but we
+                // should figure out why this is happening
+                if (!class_exists($containerClass)) {
+                    unlink($containerCacheFilePath);
+                    $containerBuilder = $this->buildContainerBuilder();
+                } else {
+                    $containerBuilder = new $containerClass;
                 }
-                $this->cacheSymfonyContainerBuilder();
-                $containerBuilder = $this->getSymfonyContainerBuilder();
+
+            } else {
+                $containerBuilder = $this->buildContainerBuilder();
             }
             $this->container = $containerBuilder;
         }
 
         return $this->container;
+    }
+
+    protected function buildContainerBuilder() : ContainerBuilder
+    {
+        if ($this->getCanBuildZendExpressive()) {
+            $this->buildZendExpressive();
+        }
+        $this->cacheSymfonyContainerBuilder();
+        $containerBuilder = $this->getSymfonyContainerBuilder();
+        return $containerBuilder;
     }
 
     /** @deprecated */
