@@ -49,9 +49,9 @@ class Builder implements BuilderInterface
                 require_once $containerCacheFilePath;
                 $containerClass = sprintf('\\%s', $this->getContainerName());
 
-                // TODO: PREF-146 - For some reason the class isn't found even when it exists in the
-                // the cached file. For now, we just delete the file and recreate the container but we
-                // should figure out why this is happening
+                // TODO: PREF-146 - For some reason the class occasionally isn't found even when it exists
+                // in the the cached file. For now, we just delete the file and recreate the container but
+                // we should figure out why this is happening
                 if (!class_exists($containerClass)) {
                     unlink($containerCacheFilePath);
                     $containerBuilder = $this->buildContainerBuilder();
