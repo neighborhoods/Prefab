@@ -40,13 +40,18 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 
     public function addDirectoryPathFilter(string $directoryPathFilter) : DiscoverableDirectoriesInterface
     {
+        $directoryPathFilter = (substr($directoryPathFilter, -1) === '/')
+            ? $directoryPathFilter
+            : $directoryPathFilter . '/';
+
         if (isset($this->directory_filters[$directoryPathFilter])) {
             throw new \LogicException(
                 sprintf('FilesystemProperties directory_filter[%s] is already set.', $directoryPathFilter)
             );
         }
         foreach ($this->directory_filters as $existingDirectoryFilter) {
-            if (strpos($existingDirectoryFilter, $directoryPathFilter) === 0) {
+            if (strpos($existingDirectoryFilter, $directoryPathFilter) === 0
+                || strpos($directoryPathFilter, $existingDirectoryFilter) === 0) {
                 throw new \LogicException(
                     sprintf(
                         'FilesystemProperties directory_filter[%s] is a parent node of [%s].',
