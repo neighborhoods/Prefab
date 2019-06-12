@@ -20,35 +20,32 @@ We want to follow Protean's [Expectations of Projects and Sprints](https://githu
 as much as possible. Specifically, sprinted work with Retros and Sprint Commitments. 
 This means owners will review all known requests before setting Sprint Commitments.
 
-To help owners prioritize Prefab requests, we propose clients create JIRA tickets in the [Prefab project](https://55places.atlassian.net/browse/PREF) using the [feature-request] tag and descriptions using the following template:
-```
-h3. Problem: 
- * A succinct description of the problem you are encountering when 
-   using Prefab or with the resulting generated code.
+To help owners prioritize Prefab requests, we propose clients create JIRA tickets in the [Prefab project](https://55places.atlassian.net/browse/PREF) using the `Feature Request` issue type and filling out the following fields:
+
+##### Problem:
+- A succinct description of the problem you are encountering when 
+using Prefab or with the resulting generated code.
    
-h3. Desired Outcome:
- * A clearly explained result of the requested feature/support
+##### Desired Outcome:
+- A clearly explained result of the requested feature/support
  
-h3. Urgency/Desired Due Date:
- * Is this a blocker for a time sensitive task?
-```
+##### Urgency:
+- Is this a blocker for a time sensitive task? Do you have a desired due date?
 
 ## Backward Incompatible Changes
 None
 
 ## Example 1
-```
-h3. Problem: 
- * We have noticed that as our HTTP container grows in size, response times have been slowing significantly. 
+##### Problem: 
+ We have noticed that as our HTTP container grows in size, response times have been slowing significantly. 
    
-h3. Desired Outcome:
- * We would like a way to only include what is needed for individual requests so they aren't slowed down by 
+##### Desired Outcome:
+ We would like a way to only include what is needed for individual requests so they aren't slowed down by 
  including a bunch of unnecessary files in the Symfony containers.
  
-h3. Urgency/Desired Due Date:
- * Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would 
+##### Urgency/Desired Due Date:
+ Listing Service is currently too slow to launch without this feature and has a deadline of 6/1. It would 
  be great if we could have a couple weeks of leeway to integrate this feature before launch, so desired date: 5/13.
-```
 
 ## Counterexample 1
 "I have a PR for something I needed to change in Prefab. Can you take a look?"
