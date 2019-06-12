@@ -27,7 +27,7 @@ To help owners prioritize Prefab requests, we propose clients create JIRA ticket
 using Prefab or with the resulting generated code.
    
 ##### Desired Outcome:
-- A clearly explained result of the requested feature/support
+- A clearly explained result of the requested feature/support.
  
 ##### Urgency:
 - Is this a blocker for a time sensitive task? Do you have a desired due date?
