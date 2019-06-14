@@ -15,19 +15,29 @@ interface SearchCriteriaInterface extends \JsonSerializable
 
     public function getFilters(): Filter\MapInterface;
 
+    public function hasFilters() : bool;
+
     public function getSortOrders(): SortOrder\MapInterface;
 
     public function addSortOrder(SortOrderInterface $sortOrder): SearchCriteriaInterface;
+
+    public function hasSortOrders() : bool;
 
     public function getPageSize(): int;
 
     public function setPageSize(int $pageSize): SearchCriteriaInterface;
 
+    public function hasPageSize() : bool;
+
     public function getCurrentPage(): int;
 
     public function setCurrentPage(int $currentPage): SearchCriteriaInterface;
 
+    public function hasCurrentPage() : bool;
+
     public function addVisitor(VisitorInterface $visitor): SearchCriteriaInterface;
 
     public function getVisitor(string $identity): VisitorInterface;
+
+    public function toQueryString(): string;
 }

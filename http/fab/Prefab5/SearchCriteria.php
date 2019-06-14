@@ -18,6 +18,8 @@ class SearchCriteria implements SearchCriteriaInterface
     use Visitor\Map\Factory\AwareTrait;
     use QueryBuilder\Visitor\Factory\AwareTrait;
 
+    private const QUERY_STRING_PARAM_SEPARATOR = '&';
+
     /** @var Filter\MapInterface */
     protected $filters;
     /** @var SortOrder\MapInterface */
@@ -52,6 +54,11 @@ class SearchCriteria implements SearchCriteriaInterface
         return $this->filters;
     }
 
+    public function hasFilters(): bool
+    {
+        return $this->filters !== null;
+    }
+
     public function getSortOrders(): SortOrder\MapInterface
     {
         if ($this->sortOrders === null) {
@@ -68,6 +75,11 @@ class SearchCriteria implements SearchCriteriaInterface
         $this->getSortOrders()[] = $sortOrder;
 
         return $this;
+    }
+
+    public function hasSortOrders(): bool
+    {
+        return $this->sortOrders !== null;
     }
 
     protected function getVisitors() : Visitor\MapInterface
@@ -118,6 +130,11 @@ class SearchCriteria implements SearchCriteriaInterface
         return $this;
     }
 
+    public function hasPageSize(): bool
+    {
+        return $this->pageSize !== null;
+    }
+
     public function getCurrentPage(): int
     {
         if ($this->currentPage === null) {
@@ -138,5 +155,79 @@ class SearchCriteria implements SearchCriteriaInterface
         $this->currentPage = $currentPage;
 
         return $this;
+    }
+
+    public function hasCurrentPage(): bool
+    {
+        return $this->currentPage !== null;
+    }
+
+    public function toQueryString() : string
+    {
+        $filters = $this->filtersToQueryString();
+        $sorts = $this->sortsToQueryString();
+        $pageSize = $this->pageSizeToQueryString();
+        $currentPage = $this->currentPageToQueryString();
+
+        $queryString = '?' . $filters
+            . (($sorts) ? self::QUERY_STRING_PARAM_SEPARATOR . $sorts : '')
+            . (($pageSize) ? self::QUERY_STRING_PARAM_SEPARATOR . $pageSize : '')
+            . (($currentPage) ? self::QUERY_STRING_PARAM_SEPARATOR . $currentPage : '');
+
+        return $queryString;
+    }
+
+    protected function filtersToQueryString(): string
+    {
+        if(!$this->hasFilters()) {
+            return '';
+        }
+
+        $queryStringFilters = [];
+        foreach ($this->getFilters() as $i => $filter) {
+            $glue = sprintf('searchCriteria[filters][%s][glue]=%s', $i, $filter->getGlue());
+            $field = sprintf('searchCriteria[filters][%s][field]=%s', $i, $filter->getField());
+            $condition = sprintf('searchCriteria[filters][%s][condition]=%s', $i, $filter->getCondition());
+            $values = [];
+            foreach ($filter->getValues() as $j => $value) {
+                $values[] = sprintf('searchCriteria[filters][%s][values][%s]=%s', $i, $j, $value);
+            }
+
+            $queryStringFilter = $glue
+                . self::QUERY_STRING_PARAM_SEPARATOR . $field
+                . self::QUERY_STRING_PARAM_SEPARATOR . $condition
+                . self::QUERY_STRING_PARAM_SEPARATOR . implode(self::QUERY_STRING_PARAM_SEPARATOR, $values);
+
+            $queryStringFilters[] = $queryStringFilter;
+        }
+
+        return implode(self::QUERY_STRING_PARAM_SEPARATOR, $queryStringFilters);
+    }
+
+    protected function sortsToQueryString(): string
+    {
+        if(!$this->hasSortOrders()) {
+            return '';
+        }
+
+        $queryStringSorts = [];
+        foreach ($this->getSortOrders() as $i => $sort) {
+            $field = sprintf('searchCriteria[sortOrder][%s][field]=%s', $i, $sort->getField());
+            $direction = sprintf('searchCriteria[sortOrder][%s][direction]=%s', $i, $sort->getDirection());
+
+            $queryStringSorts[] = $field . self::QUERY_STRING_PARAM_SEPARATOR . $direction;
+        }
+
+        return implode(self::QUERY_STRING_PARAM_SEPARATOR, $queryStringSorts);
+    }
+
+    protected function pageSizeToQueryString(): string
+    {
+        return $this->hasPageSize() ? sprintf('searchCriteria[pageSize]=%s', $this->getPageSize()) : '';
+    }
+
+    protected function currentPageToQueryString(): string
+    {
+        return $this->hasCurrentPage() ? sprintf('searchCriteria[currentPage]=%s', $this->getCurrentPage()) : '';
     }
 }
