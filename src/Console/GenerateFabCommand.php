@@ -24,6 +24,6 @@ class GenerateFabCommand extends Command implements GenerateFabCommandInterface
 
     protected function execute(InputInterface $input, OutputInterface $output) : GenerateFabCommandInterface
     {
-
+        return $this;
     }
 }

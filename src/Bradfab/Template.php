@@ -161,7 +161,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    protected function hasRoutePath() : bool
+    public function hasRoutePath() : bool
     {
         return $this->route_path !== null;
     }
@@ -183,7 +183,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    protected function hasRouteName() : bool
+    public function hasRouteName() : bool
     {
         return $this->route_name !== null;
     }
@@ -205,7 +205,7 @@ class Template implements TemplateInterface
         return $this;
     }
 
-    protected function hasProperties() : bool
+    public function hasProperties() : bool
     {
         return $this->properties !== null;
     }

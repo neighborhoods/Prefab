@@ -13,24 +13,22 @@ class Builder implements AnnotationProcessorInterface
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
 
-    protected const NEIGHBORHOODS_NAMESPACE = 'Neighborhoods\\';
+    protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
 
-    protected const COMPLEX_OBJECT_BUILDER_METHOD =
-"
-            \$this->getMV5PropertyInteriorFeaturesBuilderFactory()
-                ->create()
-                ->setRecord(\$record)
-                ->build();
-";
-    protected const NULLABLE_PROPERTY_METHOD_PATTERN =
-"
-        if (isset(\$record[ActorInterface::PROP_%s])) {
-            \$Actor->set%s(\$record[ActorInterface::PROP_%s]);
-        }\n
-";
+    protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
+    \$Actor->set%s(
+            \$this->get%sBuilderFactory()->create()->setRecord(\$record['%s'])->build();
+        );
+EOF;
 
-    protected const NON_NULLABLE_PROPERTY_METHOD_PATTERN =
-"        \$Actor->set%s(\$record[ActorInterface::PROP_%s]);\n";
+    protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
+"\$Actor->set%s(\$record[ActorInterface::PROP_%s]);";
+
+    protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
+    if (isset(\$record[ActorInterface::PROP_%s])) {
+    %s
+    }
+EOF;
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -57,30 +55,41 @@ class Builder implements AnnotationProcessorInterface
 
         foreach ($properties as $propertyName => $property) {
 
-            if ($this->isPropertyComplexObject($property['database_column_name']))
-            {
-//                $method =
-            }
-
             $camelCaseName = '';
             $nameArray = explode('_', $propertyName);
             foreach ($nameArray as $part) {
                 $camelCaseName .= ucfirst($part);
             }
 
-            if ($property['nullable'] === true) {
-                $replacement .= sprintf(
-                    self::NULLABLE_PROPERTY_METHOD_PATTERN,
-                    strtoupper($propertyName),
+            if ($this->isPropertyComplexObject($property['php_type'])) {
+                $method = sprintf(
+                    self::COMPLEX_OBJECT_BUILDER_METHOD,
                     $camelCaseName,
-                    strtoupper($propertyName)
+                    $this->getFullyQualifiedNameForType($property['php_type']),
+                    $property['database_column_name']
                 );
+
+                if ($property['nullable'] === true) {
+                    $method = sprintf(
+                                self::NULLABLE_PROPERTY_METHOD_PATTERN,
+                                strtoupper($propertyName),
+                                $method
+                              );
+                }
+
+                $replacement .= $method . "\n";
             } else {
-                $replacement .= sprintf(
-                    self::NON_NULLABLE_PROPERTY_METHOD_PATTERN,
-                    $camelCaseName,
-                    strtoupper($propertyName)
-                );
+                $method = sprintf(self::NON_COMPLEX_OBJECT_METHOD_PATTERN, $camelCaseName, strtoupper($propertyName));
+
+                if ($property['nullable'] === true) {
+                    $replacement .= sprintf(
+                        self::NULLABLE_PROPERTY_METHOD_PATTERN,
+                        strtoupper($propertyName),
+                        "\t" . $method
+                    );
+                } else {
+                    $replacement .= '   ' . $method . "\n";
+                }
             }
         }
 
@@ -90,5 +99,19 @@ class Builder implements AnnotationProcessorInterface
     protected function isPropertyComplexObject(string $type) : bool
     {
         return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
+    }
+
+    protected function getFullyQualifiedNameForType(string $property) : string
+    {
+        $property = str_replace('Interface', '', $property);
+        $propertyArray = explode('\\', $property);
+
+        // $propertyArray[0] will be an empty string due to the leading \
+        // Unset Neighborhoods
+        unset($propertyArray[1]);
+        // Unset Service Name
+        unset($propertyArray[2]);
+
+        return implode('', $propertyArray);
     }
 }
