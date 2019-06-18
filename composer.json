@@ -29,7 +29,7 @@
     "symfony/console": "^4.0",
     "symfony/dependency-injection": "^4.0",
     "symfony/expression-language": "^4.0",
-    "symfony/filesystem": "^4.0",
+    "symfony/filesystem": "4.1",
     "symfony/finder": "^4.0",
     "symfony/yaml": "^4.0",
     "zendframework/zend-code": "^3.3",
