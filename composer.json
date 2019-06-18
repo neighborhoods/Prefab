@@ -48,7 +48,7 @@
     "mikey179/vfsStream": "^1.6"
   },
   "replace": {
-    "symfony/finder": "*"
+    "neighborhoods/bradfab": "*"
   },
   "autoload": {
     "psr-4": {
