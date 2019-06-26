@@ -22,14 +22,18 @@
   "require": {
     "php": "^7.2",
     "jsoumelidis/zend-sf-di-config": "^0.3",
-    "neighborhoods/bradfab": "1.0.0-beta8",
+    "neighborhoods/bradfab": "1.x-symfony-filesystem-downgrade-dev",
     "neighborhoods/bakery": "^1.0",
     "doctrine/dbal": "^2.7",
     "symfony/config": "^4.0",
     "symfony/console": "^4.0",
     "symfony/dependency-injection": "^4.0",
     "symfony/expression-language": "^4.0",
+<<<<<<< HEAD
     "symfony/filesystem": "^4.3",
+=======
+    "symfony/filesystem": "4.1",
+>>>>>>> 5.x
     "symfony/finder": "^4.0",
     "symfony/yaml": "^4.0",
     "zendframework/zend-code": "^3.3",
@@ -41,7 +45,8 @@
     "zendframework/zend-expressive-helpers": "^5.0",
     "zendframework/zend-http": "^2.8",
     "zendframework/zend-problem-details": "^1.0",
-    "zendframework/zend-stdlib": "^3.1"
+    "zendframework/zend-stdlib": "^3.1",
+    "neighborhoods/bradfab": "1.0.0-beta8"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4",
