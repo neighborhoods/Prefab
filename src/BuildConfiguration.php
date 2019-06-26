@@ -13,7 +13,9 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $rootSaveLocation;
     protected $projectName;
     protected $httpRoute;
+    protected $httpVerbs;
     protected $projectDir;
+    protected $supportingActorGroup;
 
     public function getTableName() : string
     {
@@ -115,6 +117,33 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this;
     }
 
+    public function hasHttpRoute() : bool
+    {
+        return $this->httpRoute !== null;
+    }
+
+    public function getHttpVerbs() : array
+    {
+        if ($this->httpVerbs === null) {
+            throw new \LogicException('BuildConfiguration httpVerbs has not been set.');
+        }
+        return $this->httpVerbs;
+    }
+
+    public function setHttpVerbs(array $httpVerbs): BuildConfigurationInterface
+    {
+        if ($this->httpVerbs !== null) {
+            throw new \LogicException('BuildConfiguration httpVerbs is already set.');
+        }
+        $this->httpVerbs = $httpVerbs;
+        return $this;
+    }
+
+    public function hasHttpVerbs() : bool
+    {
+        return $this->httpVerbs !== null;
+    }
+
     public function getProjectDir() : string
     {
         if ($this->projectDir === null) {
@@ -130,5 +159,27 @@ class BuildConfiguration implements BuildConfigurationInterface
         }
         $this->projectDir = $projectDir;
         return $this;
+    }
+
+    public function getSupportingActorGroup(): string
+    {
+        if ($this->supportingActorGroup === null) {
+            throw new \LogicException('BuildConfiguration supportingActorGroup has not been set.');
+        }
+        return $this->supportingActorGroup;
+    }
+
+    public function setSupportingActorGroup(string $supportingActorGroup): BuildConfigurationInterface
+    {
+        if ($this->supportingActorGroup !== null) {
+            throw new \LogicException('BuildConfiguration supportingActorGroup is already set.');
+        }
+        $this->supportingActorGroup = $supportingActorGroup;
+        return $this;
+    }
+
+    public function hasSupportingActorGroup() : bool
+    {
+        return $this->supportingActorGroup !== null;
     }
 }

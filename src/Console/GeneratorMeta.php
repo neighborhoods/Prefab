@@ -14,7 +14,8 @@ class GeneratorMeta implements GeneratorMetaInterface
     protected $daoString;
     protected $daoIdentityField;
     protected $httpRoute;
-    
+    protected $httpVerbs;
+
     public function getDaoProperties() : array
     {
         if ($this->daoProperties === null) {
@@ -149,6 +150,33 @@ class GeneratorMeta implements GeneratorMetaInterface
         }
         $this->httpRoute = $httpRoute;
         return $this;
+    }
+
+    public function hasHttpRoute() : bool
+    {
+        return $this->httpRoute !== null;
+    }
+
+    public function getHttpVerbs() : array
+    {
+        if ($this->httpVerbs === null) {
+            throw new \LogicException('GeneratorMeta httpVerbs has not been set.');
+        }
+        return $this->httpVerbs;
+    }
+
+    public function setHttpVerbs(array $httpVerbs): GeneratorMetaInterface
+    {
+        if ($this->httpVerbs !== null) {
+            throw new \LogicException('GeneratorMeta httpVerbs is already set.');
+        }
+        $this->httpVerbs = $httpVerbs;
+        return $this;
+    }
+
+    public function hasHttpVerbs() : bool
+    {
+        return $this->httpVerbs !== null;
     }
     
 }

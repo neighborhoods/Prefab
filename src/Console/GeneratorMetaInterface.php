@@ -36,4 +36,12 @@ interface GeneratorMetaInterface
     public function getHttpRoute() : string;
 
     public function setHttpRoute(string $httpRoute) : GeneratorMetaInterface;
+
+    public function hasHttpRoute() : bool;
+
+    public function getHttpVerbs() : array;
+
+    public function setHttpVerbs(array $httpVerbs) : GeneratorMetaInterface;
+
+    public function hasHttpVerbs() : bool;
 }

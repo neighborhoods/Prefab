@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\LoggerInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger

@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\SupportingActorGroup\MinimalInterface:
+    class: Neighborhoods\Prefab\SupportingActorGroup\Minimal
+    calls:
+      - [setTemplateFactory, ['@Neighborhoods\Prefab\Bradfab\Template\FactoryInterface']]

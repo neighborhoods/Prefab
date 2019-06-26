@@ -5,6 +5,10 @@ namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Comp
 
 use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
+/**
+ * @deprecated
+ * @see \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler
+ */
 class ExceptionHandler implements ExceptionHandlerInterface
 {
     public function __invoke(\Throwable $throwable): ExceptionHandlerInterface

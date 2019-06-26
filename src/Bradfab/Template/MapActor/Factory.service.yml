@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\Bradfab\Template\MapActor\FactoryInterface:
+    class: Neighborhoods\Prefab\Bradfab\Template\MapActor\Factory
+    public: false
+    shared: true
+    calls:
+      - [setMapActor, ['@Neighborhoods\Prefab\Bradfab\Template\MapActorInterface']]

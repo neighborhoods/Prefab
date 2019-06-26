@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection;
 
+/**
+ * @deprecated
+ * @see \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler
+ */
 class ErrorHandler implements ErrorHandlerInterface
 {
     public function __invoke(

@@ -68,9 +68,9 @@ class Decorator implements DecoratorInterface
     public function get(string $path, $middleware, string $name = null): Router\Route
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            $route = $this->getZendExpressiveApplicationDecorator()->get($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplicationDecorator()->get($path, $middleware, $name . '-GET');
         } else {
-            $route = $this->getZendExpressiveApplication()->get($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplication()->get($path, $middleware, $name . '-GET');
         }
 
         return $route;
@@ -79,9 +79,9 @@ class Decorator implements DecoratorInterface
     public function post(string $path, $middleware, $name = null): Router\Route
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            $route = $this->getZendExpressiveApplicationDecorator()->post($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplicationDecorator()->post($path, $middleware, $name . '-POST');
         } else {
-            $route = $this->getZendExpressiveApplication()->post($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplication()->post($path, $middleware, $name . '-POST');
         }
 
         return $route;
@@ -90,9 +90,9 @@ class Decorator implements DecoratorInterface
     public function put(string $path, $middleware, string $name = null): Router\Route
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            $route = $this->getZendExpressiveApplicationDecorator()->put($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplicationDecorator()->put($path, $middleware, $name . '-PUT');
         } else {
-            $route = $this->getZendExpressiveApplication()->put($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplication()->put($path, $middleware, $name . '-PUT');
         }
 
         return $route;
@@ -101,9 +101,9 @@ class Decorator implements DecoratorInterface
     public function patch(string $path, $middleware, string $name = null): Router\Route
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            $route = $this->getZendExpressiveApplicationDecorator()->patch($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplicationDecorator()->patch($path, $middleware, $name . '-PATCH');
         } else {
-            $route = $this->getZendExpressiveApplication()->patch($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplication()->patch($path, $middleware, $name . '-PATCH');
         }
 
         return $route;
@@ -112,9 +112,9 @@ class Decorator implements DecoratorInterface
     public function delete(string $path, $middleware, string $name = null): Router\Route
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            $route = $this->getZendExpressiveApplicationDecorator()->delete($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplicationDecorator()->delete($path, $middleware, $name . '-DELETE');
         } else {
-            $route = $this->getZendExpressiveApplication()->delete($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplication()->delete($path, $middleware, $name . '-DELETE');
         }
 
         return $route;
@@ -123,9 +123,9 @@ class Decorator implements DecoratorInterface
     public function any(string $path, $middleware, string $name = null): Router\Route
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            $route = $this->getZendExpressiveApplicationDecorator()($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplicationDecorator()($path, $middleware, $name . '-ANY');
         } else {
-            $route = $this->getZendExpressiveApplication()->any($path, $middleware, $name);
+            $route = $this->getZendExpressiveApplication()->any($path, $middleware, $name . '-ANY');
         }
 
         return $route;

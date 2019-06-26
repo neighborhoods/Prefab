@@ -1,0 +1,11 @@
+services:
+  Neighborhoods\Prefab\Bradfab\TemplateInterface:
+    class: Neighborhoods\Prefab\Bradfab\Template
+    calls:
+      - [setRepositoryActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\RepositoryActor\FactoryInterface']]
+      - [setHandlerActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\HandlerActor\FactoryInterface']]
+      - [setMapActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\MapActor\FactoryInterface']]
+      - [setBuilderActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\BuilderActor\FactoryInterface']]
+      - [setFactoryActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\FactoryActor\FactoryInterface']]
+      - [setMapBuilderActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\MapBuilderActor\FactoryInterface']]
+      - [setAwareTraitActorFactory, ['@Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor\FactoryInterface']]
