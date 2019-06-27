@@ -8,7 +8,7 @@ use Neighborhoods\Prefab\DaoPropertyInterface;
 class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
-    /** @var array */
+
     protected $record;
 
     public function build() : DaoPropertyInterface
@@ -16,12 +16,11 @@ class Builder implements BuilderInterface
         $daoproperty = $this->getDaoPropertyFactory()->create();
         $record = $this->getRecord();
 
-        $daoproperty->setName();
+        $daoproperty->setName($record['name']);
         $daoproperty->setDataType($record['php_type']);
 
         $daoproperty->setNullable($record['nullable'] ?? false);
-        $daoproperty->setRecordKey($record['nullable']);
-
+        $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name']);
 
         return $daoproperty;
     }

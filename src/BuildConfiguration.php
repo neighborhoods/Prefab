@@ -60,9 +60,9 @@ class BuildConfiguration implements BuildConfigurationInterface
     }
 
     // TODO: Make this a property object instead of a key and array
-    public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface
+    public function appendDaoProperty(DaoPropertyInterface $daoProperty) : BuildConfigurationInterface
     {
-        $this->daoProperties[$propertyName] = $values;
+        $this->daoProperties[] = $daoProperty;
         return $this;
     }
 

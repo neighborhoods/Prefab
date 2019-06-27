@@ -113,10 +113,6 @@ class Generator implements GeneratorInterface
 
     protected function getSupportingActorConfigForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : array
     {
-        if (!$buildConfiguration->hasSupportingActorGroup()) {
-            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
-        }
-
         switch ($buildConfiguration->getSupportingActorGroup()) {
             case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE:
                 return $this->getAllSupportingActorsFactory()->create()
@@ -204,9 +200,8 @@ class Generator implements GeneratorInterface
         $bradfab->run();
 
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
-
         $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
-//        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
+
         return $this;
     }
 

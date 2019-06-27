@@ -5,7 +5,6 @@ namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
 use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
 use Neighborhoods\Bradfab\AnnotationProcessorInterface;
-use Neighborhoods\Prefab\BuildConfigurationInterface;
 
 class Builder implements AnnotationProcessorInterface
 {
@@ -17,8 +16,8 @@ class Builder implements AnnotationProcessorInterface
 
     protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
     \$Actor->set%s(
-            \$this->get%sBuilderFactory()->create()->setRecord(\$record['%s'])->build();
-        );
+            \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
+    );
 EOF;
 
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
@@ -61,12 +60,12 @@ EOF;
                 $camelCaseName .= ucfirst($part);
             }
 
-            if ($this->isPropertyComplexObject($property['php_type'])) {
+            if ($this->isPropertyComplexObject($property['data_type'])) {
                 $method = sprintf(
                     self::COMPLEX_OBJECT_BUILDER_METHOD,
                     $camelCaseName,
-                    $this->getFullyQualifiedNameForType($property['php_type']),
-                    $property['database_column_name']
+                    $this->getFullyQualifiedNameForType($property['data_type']),
+                    strtoupper($propertyName)
                 );
 
                 if ($property['nullable'] === true) {

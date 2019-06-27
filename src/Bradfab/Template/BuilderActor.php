@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
+use Neighborhoods\Prefab\DaoPropertyInterface;
 
 class BuilderActor implements BuilderActorInterface
 {
@@ -46,9 +47,11 @@ class BuilderActor implements BuilderActorInterface
 
         $propertyArray = [];
 
-        foreach ($this->getProperties() as $propertyName => $propertyValues) {
-            $propertyArray[$propertyName] = [
-                'nullable' => $propertyValues['nullable'] ?? false,
+        /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getProperties() as $daoProperty) {
+            $propertyArray[$daoProperty->getName()] = [
+                'nullable' => $daoProperty->isNullable(),
+                'data_type' => $daoProperty->getDataType(),
             ];
         }
 
