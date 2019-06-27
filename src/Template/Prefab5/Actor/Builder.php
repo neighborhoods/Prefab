@@ -8,7 +8,8 @@ use Neighborhoods\Bradfab\Template\ActorInterface;
 class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
-
+    /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-AwareTraits
+     */
     protected $record;
 
     public function build(): ActorInterface

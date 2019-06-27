@@ -5,3 +5,5 @@ services:
     shared: false
     calls:
       - [setActorFactory, ['@Neighborhoods\Bradfab\Template\Actor\FactoryInterface']]
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderServiceFile
+*/

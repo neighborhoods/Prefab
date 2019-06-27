@@ -17,16 +17,17 @@ class Builder implements AnnotationProcessorInterface
     protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
     \$Actor->set%s(
             \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
-    );
+        );
 EOF;
 
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
-"\$Actor->set%s(\$record[ActorInterface::PROP_%s]);";
+"\t\t\$Actor->set%s(\$record[ActorInterface::PROP_%s]);";
 
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
-    if (isset(\$record[ActorInterface::PROP_%s])) {
-    %s
-    }
+        if (isset(\$record[ActorInterface::PROP_%s])) {
+            %s
+        }
+    
 EOF;
 
     public function getAnnotationProcessorContext() : ContextInterface
@@ -72,7 +73,7 @@ EOF;
                     $method = sprintf(
                                 self::NULLABLE_PROPERTY_METHOD_PATTERN,
                                 strtoupper($propertyName),
-                                $method
+                                trim($method)
                               );
                 }
 
@@ -84,7 +85,7 @@ EOF;
                     $replacement .= sprintf(
                         self::NULLABLE_PROPERTY_METHOD_PATTERN,
                         strtoupper($propertyName),
-                        "\t" . $method
+                        trim($method)
                     );
                 } else {
                     $replacement .= '   ' . $method . "\n";
@@ -100,12 +101,17 @@ EOF;
         return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
     }
 
+    /**
+     *  Converts a fully qualified actor name into its camel case variable name
+     *  Example: \Neighborhoods\SomeService\MV1\NoahInterface -> MV1Noah
+     */
     protected function getFullyQualifiedNameForType(string $property) : string
     {
+        // Example: \Neighborhoods\SomeService\MV1\Actor
         $property = str_replace('Interface', '', $property);
         $propertyArray = explode('\\', $property);
 
-        // $propertyArray[0] will be an empty string due to the leading \
+        // $propertyArray[0] will be an empty string due to leading \
         // Unset Neighborhoods
         unset($propertyArray[1]);
         // Unset Service Name
