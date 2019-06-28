@@ -31,7 +31,7 @@ EOF;
         if (isset(\$record[ActorInterface::PROP_%s])) {
             %s
         }
-    
+
 EOF;
 
     public function getAnnotationProcessorContext() : ContextInterface
