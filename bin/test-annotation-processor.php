@@ -12,22 +12,22 @@ $replacement = $annotationProcessor->setAnnotationProcessorContext(
             [
                 'properties' => [
                     'alias' => [
-                        'php_type' => 'int',
+                        'data_type' => 'int',
                         'database_column_name' => 'alias',
                         'nullable' => false,
                     ],
                     'address' => [
-                        'php_type' => '\Neighborhoods\PropertyService\MV1\AddressInterface',
+                        'data_type' => '\Neighborhoods\PropertyService\MV1\AddressInterface',
                         'database_column_name' => 'address_1',
                         'nullable' => false,
                     ],
                     'other_address' => [
-                        'php_type' => '\Neighborhoods\PropertyService\MV1\AddressInterface',
+                        'data_type' => '\Neighborhoods\PropertyService\MV1\AddressInterface',
                         'database_column_name' => 'address_1',
                         'nullable' => true,
                     ],
                     'parcelapn' => [
-                        'php_type' => 'string',
+                        'data_type' => 'string',
                         'database_column_name' => 'parcelapn',
                         'nullable' => true,
                     ],

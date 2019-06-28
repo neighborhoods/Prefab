@@ -47,7 +47,7 @@ EOF;
 
             if ($this->isPropertyComplexObject($property['data_type'])) {
                 $dataType = str_replace('Interface', '', $property['data_type']);
-                $replacement .= 'use ' . $dataType . '\\Builder\\Factory\\AwareTrait;' . PHP_EOL;
+                $replacement .= "\tuse " . $dataType . '\\Builder\\Factory\\AwareTrait;' . PHP_EOL;
             }
         }
 

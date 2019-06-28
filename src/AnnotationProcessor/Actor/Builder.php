@@ -13,15 +13,19 @@ class Builder implements AnnotationProcessorInterface
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
 
     protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
-
     protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
-    \$Actor->set%s(
+        \$Actor->set%s(
             \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
         );
 EOF;
 
+    protected const COMPLEX_OBJECT_MAP_BUILDER_METHOD = <<< EOF
+        \$Actor->set%s(
+            \$this->get%sBuilderFactory()->create()->setRecords(\$record[ActorInterface::PROP_%s])->build()
+        );
+EOF;
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
-"\t\t\$Actor->set%s(\$record[ActorInterface::PROP_%s]);";
+"\t\t\$Actor->set%s(%s\$record[ActorInterface::PROP_%s]);";
 
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
         if (isset(\$record[ActorInterface::PROP_%s])) {
@@ -62,8 +66,14 @@ EOF;
             }
 
             if ($this->isPropertyComplexObject($property['data_type'])) {
+                if (strpos($property['data_type'], 'MapInterface') !== false) {
+                    $pattern = self::COMPLEX_OBJECT_MAP_BUILDER_METHOD;
+                } else {
+                    $pattern = self::COMPLEX_OBJECT_BUILDER_METHOD;
+                }
+
                 $method = sprintf(
-                    self::COMPLEX_OBJECT_BUILDER_METHOD,
+                    $pattern,
                     $camelCaseName,
                     $this->getFullyQualifiedNameForType($property['data_type']),
                     strtoupper($propertyName)
@@ -79,7 +89,14 @@ EOF;
 
                 $replacement .= $method . "\n";
             } else {
-                $method = sprintf(self::NON_COMPLEX_OBJECT_METHOD_PATTERN, $camelCaseName, strtoupper($propertyName));
+
+                if ($property['data_type'] === 'float') {
+                    $typeCast = '(float)';
+                } else {
+                    $typeCast = '';
+                }
+
+                $method = sprintf(self::NON_COMPLEX_OBJECT_METHOD_PATTERN, $camelCaseName, $typeCast, strtoupper($propertyName));
 
                 if ($property['nullable'] === true) {
                     $replacement .= sprintf(
