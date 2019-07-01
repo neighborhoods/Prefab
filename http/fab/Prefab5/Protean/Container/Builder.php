@@ -154,7 +154,7 @@ class Builder implements BuilderInterface
                 ]
             );
 
-            unlink($temporaryFilePath);
+            $this->deleteCachedContainer($temporaryFilePath);
 
         } else if (strlen($containerClass) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
             // This signals that Symfony PHPDumper may have failed to convert the entire container class to a string when dumping
