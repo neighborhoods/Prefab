@@ -80,7 +80,12 @@ class Builder implements BuilderInterface
         if ($this->getCanBuildZendExpressive()) {
             $this->buildZendExpressive();
         }
-        $this->cacheSymfonyContainerBuilder();
+        try {
+            $this->cacheSymfonyContainerBuilder();
+        } catch (\Throwable $throwable) {
+            (new NewRelic())->noticeThrowable($throwable);
+        }
+        
         $containerBuilder = $this->getSymfonyContainerBuilder();
         return $containerBuilder;
     }
