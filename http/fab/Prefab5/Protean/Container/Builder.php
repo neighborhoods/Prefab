@@ -21,6 +21,7 @@ class Builder implements BuilderInterface
     protected const SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT = false;
 
     protected const INCORRECT_WRITE_LENGTH_EVENT_KEY = 'SymfonyContainerCacheWriteLengthMismatch';
+    protected const TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED = 'TemporaryContainerCacheFileNotRenamed';
     protected const SUSPICOUS_CLASS_LENGTH_EVENT_KEY = 'SymfonyDumpSuspiciousClassLength';
     // A semi-arbitrary size in bytes that signals that the Symfony PHP dumper may have failed to convert the entire file to string
     protected const SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD = 300;
@@ -53,7 +54,7 @@ class Builder implements BuilderInterface
                 // in the the cached file. For now, we just delete the file and recreate the container but
                 // we should figure out why this is happening
                 if (!class_exists($containerClass)) {
-                    unlink($containerCacheFilePath);
+                    $this->deleteCachedContainer($containerCacheFilePath);
                     $containerBuilder = $this->buildContainerBuilder();
                 } else {
                     $containerBuilder = new $containerClass;
@@ -66,6 +67,12 @@ class Builder implements BuilderInterface
         }
 
         return $this->container;
+    }
+
+    protected function deleteCachedContainer(string $containerCacheFilePath)
+    {
+        unlink($containerCacheFilePath);
+        opcache_invalidate($containerCacheFilePath);
     }
 
     protected function buildContainerBuilder() : ContainerBuilder
@@ -117,9 +124,23 @@ class Builder implements BuilderInterface
     {
         $containerBuilder = $this->getSymfonyContainerBuilder();
         $containerClass = (new PhpDumper($containerBuilder))->dump(['class' => $this->getContainerName()]);
+        // A possible issue is that the process is dying during the write. So write to a temporary file, then
+        // transactionally rename it
+        $temporaryFilePath = $this->getFilesystemProperties()->getSymfonyContainerFilePath() . '-temp';
+        if (file_exists($temporaryFilePath)) {
+            (new NewRelic())->recordCustomEvent(
+                self::TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED,
+                [
+                    'filepath' => $temporaryFilePath,
+                    'class' => $containerClass
+                ]
+            );
+        }
+
         $writtenBytes = file_put_contents(
-            $this->getFilesystemProperties()->getSymfonyContainerFilePath(),
-            $containerClass
+            $temporaryFilePath,
+            $containerClass,
+            LOCK_EX
         );
 
         // This signals a failure of file_put_contents to write the entirety of the file to disk
@@ -133,7 +154,7 @@ class Builder implements BuilderInterface
                 ]
             );
 
-            unlink($this->getFilesystemProperties()->getSymfonyContainerFilePath());
+            unlink($temporaryFilePath);
 
         } else if (strlen($containerClass) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
             // This signals that Symfony PHPDumper may have failed to convert the entire container class to a string when dumping
@@ -147,6 +168,7 @@ class Builder implements BuilderInterface
             );
         }
 
+        rename($temporaryFilePath, $this->getFilesystemProperties()->getSymfonyContainerFilePath());
         return $this;
     }
 
