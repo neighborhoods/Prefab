@@ -206,7 +206,7 @@ class Generator implements GeneratorInterface
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
 
         $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
-//        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
+        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
         return $this;
     }
 
