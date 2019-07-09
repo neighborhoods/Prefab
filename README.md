@@ -37,8 +37,9 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
         - Name of the database column containing the unique identifier for a given DAO
     - `properties`
         - The class properties of the DAO. Each property should have:
-            - `php_type`
+            - `data_type`
                 - The type of object the property represents. This can be a primitive or a fully qualified namespaced object
+                - Note: This used to be called `php_type` which is maintained for backwards compatibility
             - `record_key`
                 - Name of the key containing the data that populates the class property
                 - Note: This used to be called `database_column_name` which is still maintained for backwards compatibility 
@@ -67,19 +68,19 @@ dao:
    - delete
   properties:
     id:
-      php_type: int
+      data_type: int
       record_key: id
       nullable: false
     email:
-      php_type: string
+      data_type: string
       record_key: email
       nullable: true
     first_name:
-      php_type: string
+      data_type: string
       record_key: fname
       nullable: false
     last_name:
-      php_type: string
+      data_type: string
       record_key: lname
       nullable: false
 ```
