@@ -7,7 +7,7 @@ namespace Neighborhoods\Prefab;
 class DaoProperty implements DaoPropertyInterface
 {
     protected $name;
-    protected $dataType;
+    protected $data_type;
     protected $nullable;
     protected $record_key;
 
@@ -30,18 +30,18 @@ class DaoProperty implements DaoPropertyInterface
 
     public function getDataType() : string
     {
-        if ($this->dataType === null) {
+        if ($this->data_type === null) {
             throw new \LogicException('DaoProperty dataType has not been set.');
         }
-        return $this->dataType;
+        return $this->data_type;
     }
 
-    public function setDataType(string $dataType) : DaoPropertyInterface
+    public function setDataType(string $data_type) : DaoPropertyInterface
     {
-        if ($this->dataType !== null) {
+        if ($this->data_type !== null) {
             throw new \LogicException('DaoProperty dataType is already set.');
         }
-        $this->dataType = $dataType;
+        $this->data_type = $data_type;
         return $this;
     }
 
