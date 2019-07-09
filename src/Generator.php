@@ -200,8 +200,9 @@ class Generator implements GeneratorInterface
         $bradfab->run();
 
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
-        $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
 
+        $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
+        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
         return $this;
     }
 
