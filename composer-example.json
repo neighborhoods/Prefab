@@ -20,12 +20,8 @@
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "git@github.com:neighborhoods/prefab.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:neighborhoods/Bakery.git"
+      "type": "composer",
+      "url": "https://satis.neighborhoods.com"
     }
   ],
   "config": {
@@ -33,8 +29,8 @@
   },
   "require": {
     "php": "^7.2",
-    "neighborhoods/prefab": "4.x-dev",
-    "neighborhoods/bakery": "dev-master"
+    "neighborhoods/prefab": "^5.11",
+    "neighborhoods/bakery": "^1.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -51,5 +47,7 @@
         "test-fab/"
       ]
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
