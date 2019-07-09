@@ -54,6 +54,7 @@ class Template implements TemplateInterface
     protected $route_path;
     protected $route_name;
     protected $properties;
+    protected $identity_field;
     protected $project_name;
     protected $supporting_actors = [];
 
@@ -96,6 +97,10 @@ class Template implements TemplateInterface
     public function addMap() : TemplateInterface
     {
         $map = $this->getMapActorFactory()->create();
+
+        if ($this->hasIdentityField()) {
+            $map->setIdentityField($this->getIdentityField());
+        }
 
         $this->supporting_actors = array_merge($this->supporting_actors, $map->getActorConfiguration());
 
@@ -225,5 +230,27 @@ class Template implements TemplateInterface
         }
         $this->project_name = $project_name;
         return $this;
+    }
+
+    protected function getIdentityField() : string
+    {
+        if ($this->identity_field === null) {
+            throw new \LogicException('Template identity_field has not been set.');
+        }
+        return $this->identity_field;
+    }
+
+    public function setIdentityField(string $identity_field) : TemplateInterface
+    {
+        if ($this->identity_field !== null) {
+            throw new \LogicException('Template identity_field is already set.');
+        }
+        $this->identity_field = $identity_field;
+        return $this;
+    }
+
+    protected function hasIdentityField() : bool
+    {
+        return $this->identity_field !== null;
     }
 }

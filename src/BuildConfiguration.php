@@ -51,6 +51,11 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this;
     }
 
+    public function hasDaoIdentityField() : bool
+    {
+        return $this->daoIdentityField !== null;
+    }
+
     public function getDaoProperties() : array
     {
         if ($this->daoProperties === null) {

@@ -25,10 +25,13 @@ class Builder implements BuilderInterface
         $configArray = $this->getConfigFromYaml();
 
         $buildConfiguration->setTableName($configArray['dao']['table_name'])
-            ->setDaoIdentityField($configArray['dao']['identity_field'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
+
+        if (!empty($configArray['dao']['identity_field'])) {
+            $buildConfiguration->setDaoIdentityField($configArray['dao']['identity_field']);
+        }
 
         if (!empty($configArray['dao']['http_route'])) {
             $buildConfiguration->setHttpRoute($configArray['dao']['http_route']);

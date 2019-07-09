@@ -27,4 +27,5 @@ interface TemplateInterface
 
     public function setProjectName(string $project_name) : TemplateInterface;
 
+    public function setIdentityField(string $identity_field) : TemplateInterface;
 }

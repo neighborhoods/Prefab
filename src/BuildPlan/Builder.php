@@ -91,7 +91,9 @@ class Builder implements BuilderInterface
     protected function addDaoInterfaceToPlan(GeneratorMetaInterface $meta) : BuilderInterface
     {
         $daoInterfaceGenerator = $this->getActorDAOInterfaceGeneratorFactory()->create();
-        $meta->setDaoIdentityField($this->getBuildConfiguration()->getDaoIdentityField());
+        if ($this->getBuildConfiguration()->hasDaoIdentityField()) {
+            $meta->setDaoIdentityField($this->getBuildConfiguration()->getDaoIdentityField());
+        }
         $meta->setTableName($this->getBuildConfiguration()->getTableName());
         $daoInterfaceGenerator->setMeta($meta);
         $this->appendGeneratorToBuildPlan($daoInterfaceGenerator);

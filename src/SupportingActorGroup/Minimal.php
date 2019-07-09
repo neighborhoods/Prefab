@@ -20,6 +20,12 @@ class Minimal implements MinimalInterface
             ->setProjectName($this->getBuildConfiguration()->getProjectName())
             ->setProperties($this->getBuildConfiguration()->getDaoProperties());
 
+        if ($this->getBuildConfiguration()->hasDaoIdentityField()) {
+            $supportingActorConfig->setIdentityField(
+                $this->getBuildConfiguration()->getDaoIdentityField()
+            );
+        }
+
         if ($this->getBuildConfiguration()->hasHttpRoute()) {
             $supportingActorConfig->setRoutePath($this->getBuildConfiguration()->getHttpRoute());
             $supportingActorConfig->setRouteName($this->getDaoName());

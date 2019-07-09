@@ -12,4 +12,5 @@ interface MapBuilderActorInterface
     public const MAP_BUILDER_SERVICE_FILE_ACTOR_KEY = 'Map\Builder.service.yml';
 
     public function getActorConfiguration() : array;
+    public function setIdentityField($identity_field) : MapBuilderActorInterface;
 }

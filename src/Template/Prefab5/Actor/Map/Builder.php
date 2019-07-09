@@ -21,7 +21,9 @@ class Builder implements BuilderInterface
         foreach ($this->getRecords() as $record) {
             $builder = $this->getActorBuilderFactory()->create();
             $item = $builder->setRecord($record)->build();
-            $map[$item->getId()] = $item; // remove or change index field as desired
+            /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field
+            $map[]
+        */ = $item;
         }
 
         return $map;
