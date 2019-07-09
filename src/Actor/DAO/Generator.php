@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\Actor\DAO;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\StringReplacer;
 use Symfony\Component\Yaml\Yaml;
 
@@ -91,9 +92,10 @@ EOF;
     {
         $methodString = '';
 
-        foreach ($this->getMeta()->getDaoProperties() as $property => $values) {
+        /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getMeta()->getDaoProperties() as $daoProperty) {
             $camelCaseProperty = '';
-            $propertyArray = explode('_', $property);
+            $propertyArray = explode('_', $daoProperty->getName());
 
             foreach ($propertyArray as $part) {
                 $camelCaseProperty .= ucfirst($part);
@@ -109,13 +111,13 @@ EOF;
                     self::DAO_NAME_PLACEHOLDER,
                     self::CAMEL_CASE_PROPERTYNAME_PLACEHOLDER,
                     self::PROPERTY_NAME_PLACEHOLDER,
-                    self::PROPERTY_TYPE_PLACEHOLDER
+                    self::PROPERTY_TYPE_PLACEHOLDER,
                 ],
                 [
                     $this->getMeta()->getDaoName(),
                     $camelCaseProperty,
-                    $property,
-                    $values['php_type']
+                    $daoProperty->getName(),
+                    $daoProperty->getDataType(),
                 ],
                 $methodString
             );
@@ -128,8 +130,9 @@ EOF;
     {
        $classPropertiesString = '';
 
-       foreach ($this->getMeta()->getDaoProperties() as $property => $values) {
-           $classPropertiesString .= "\t" . 'protected $' . $property . ";\n";
+       /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getMeta()->getDaoProperties() as $daoProperty) {
+           $classPropertiesString .= "\t" . 'protected $' . $daoProperty->getName() . ";\n";
        }
 
        return $classPropertiesString;
@@ -146,8 +149,8 @@ EOF;
                     'class' => $class,
                     'public' => false,
                     'shared' => true,
-                ]
-            ]
+                ],
+            ],
         ];
 
         $preparedYaml = Yaml::dump($yaml, 4, 2);

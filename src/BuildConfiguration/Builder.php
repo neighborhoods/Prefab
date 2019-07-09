@@ -7,10 +7,12 @@ namespace Neighborhoods\Prefab\BuildConfiguration;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
+use Neighborhoods\Prefab\DaoProperty;
 
 class Builder implements BuilderInterface
 {
     use BuildConfiguration\Factory\AwareTrait;
+    use DaoProperty\Builder\Factory\AwareTrait;
 
     protected $yamlFilePath;
     protected $projectName;
@@ -36,10 +38,19 @@ class Builder implements BuilderInterface
 
         if (!empty($configArray['dao']['supporting_actor_group'])) {
             $buildConfiguration->setSupportingActorGroup($configArray['dao']['supporting_actor_group']);
+        } else {
+            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
         }
 
         foreach ($configArray['dao']['properties'] as $key => $values) {
-            $buildConfiguration->appendDaoProperty($key, $values);
+            $record = $values;
+            $record['name'] = $key;
+
+            $buildConfiguration->appendDaoProperty(
+                $this->getDaoPropertyBuilderFactory()->create()
+                    ->setRecord($record)
+                    ->build()
+            );
         }
 
         return $buildConfiguration;

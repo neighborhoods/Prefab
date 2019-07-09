@@ -5,6 +5,9 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderFactoryTrait;
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderServiceFile;
+use Neighborhoods\Prefab\DaoPropertyInterface;
 
 class BuilderActor implements BuilderActorInterface
 {
@@ -25,7 +28,7 @@ class BuilderActor implements BuilderActorInterface
             [
                 self::BUILDER_ACTOR_KEY => $this->getBuilderActor(),
                 self::BUILDER_INTERFACE_ACTOR_KEY => $this->getBuilderInterfaceActor(),
-                self::BUILDER_SERVICE_FILE_ACTOR_KEY => $this->getBuilderServiceFileActory(),
+                self::BUILDER_SERVICE_FILE_ACTOR_KEY => $this->getBuilderServiceFileActor(),
                 self::BUILDER_KEY . '\\' . AwareTraitActor::ACTOR_KEY =>
                     $this->getAwareTraitActorFactory()->create()
                         ->getActorConfiguration()[AwareTraitActor::ACTOR_KEY],
@@ -46,9 +49,11 @@ class BuilderActor implements BuilderActorInterface
 
         $propertyArray = [];
 
-        foreach ($this->getProperties() as $propertyName => $propertyValues) {
-            $propertyArray[$propertyName] = [
-                'nullable' => $propertyValues['nullable'] ?? false,
+        /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getProperties() as $daoProperty) {
+            $propertyArray[$daoProperty->getName()] = [
+                'nullable' => $daoProperty->isNullable(),
+                'data_type' => $daoProperty->getDataType(),
             ];
         }
 
@@ -62,6 +67,12 @@ class BuilderActor implements BuilderActorInterface
                                 self::CONTEXT_KEY_PROPERTIES => $propertyArray,
                             ],
                         ],
+                        BuilderFactoryTrait::ANNOTATION_PROCESSOR_KEY => [
+                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . BuilderFactoryTrait::class,
+                            self::KEY_STATIC_CONTEXT_RECORD => [
+                                self::CONTEXT_KEY_PROPERTIES => $propertyArray,
+                            ],
+                        ]
                     ],
             ];
     }
@@ -71,9 +82,30 @@ class BuilderActor implements BuilderActorInterface
         return null;
     }
 
-    protected function getBuilderServiceFileActory() : ?array
+    protected function getBuilderServiceFileActor() : ?array
     {
-        return null;
+        $propertyArray = [];
+
+        /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getProperties() as $daoProperty) {
+            $propertyArray[$daoProperty->getName()] = [
+                'nullable' => $daoProperty->isNullable(),
+                'data_type' => $daoProperty->getDataType(),
+            ];
+        }
+
+        return
+            [
+                self::KEY_ANNOTATION_PROCESSORS =>
+                    [
+                        BuilderServiceFile::ANNOTATION_PROCESSOR_KEY => [
+                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . BuilderServiceFile::class,
+                            self::KEY_STATIC_CONTEXT_RECORD => [
+                                self::CONTEXT_KEY_PROPERTIES => $propertyArray,
+                            ],
+                        ],
+                    ],
+            ];
     }
 
     protected function getProperties() : array

@@ -1,0 +1,9 @@
+echo
+echo "\xF0\x9F\xA5\x9A Bradfabbing fabrication files in src/"
+
+BRADFAB_TARGET_APPLICATION_SOURCE_PATH=$PWD/src \
+BRADFAB_TARGET_APPLICATION_FABRICATION_PATH=$PWD/bradfab \
+BRADFAB_FABRICATOR_TEMPLATE_ACTOR_DIRECTORY_PATH=$PWD/src/Template/Prefab5/Actor \
+BRADFAB_TARGET_APPLICATION_NAMESPACE=Neighborhoods\\Prefab\\ \
+vendor/bin/bradfab
+

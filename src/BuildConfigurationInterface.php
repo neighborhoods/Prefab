@@ -19,7 +19,7 @@ interface BuildConfigurationInterface
 
     public function getDaoProperties() : array;
 
-    public function appendDaoProperty(string $propertyName, array $values) : BuildConfigurationInterface;
+    public function appendDaoProperty(DaoPropertyInterface $propertyName) : BuildConfigurationInterface;
 
     public function getRootSaveLocation() : string;
 
