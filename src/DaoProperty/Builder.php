@@ -17,7 +17,7 @@ class Builder implements BuilderInterface
         $record = $this->getRecord();
 
         $daoproperty->setName($record['name']);
-        $daoproperty->setDataType($record['php_type']);
+        $daoproperty->setDataType($record['data_type'] ?? $record['php_type']);
 
         $daoproperty->setNullable($record['nullable'] ?? false);
         $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name']);
