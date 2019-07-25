@@ -12,4 +12,5 @@ interface MapActorInterface
     public const MAP_SERVICE_FILE_ACTOR_KEY = 'Map.service.yml';
 
     public function getActorConfiguration() : array;
+    public function setIdentityField($identity_field) : MapActorInterface;
 }

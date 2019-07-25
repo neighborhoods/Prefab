@@ -17,6 +17,8 @@ interface BuildConfigurationInterface
 
     public function setDaoIdentityField(string $daoIdentityField) : BuildConfigurationInterface;
 
+    public function hasDaoIdentityField() : bool;
+
     public function getDaoProperties() : array;
 
     public function appendDaoProperty(DaoPropertyInterface $propertyName) : BuildConfigurationInterface;

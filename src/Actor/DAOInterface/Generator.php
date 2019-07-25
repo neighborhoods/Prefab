@@ -50,7 +50,6 @@ class Generator implements GeneratorInterface
     {
         $fileContent = str_replace(self::DAO_NAME_PLACEHOLDER, $this->getMeta()->getDaoName(), $fileContent);
         $fileContent = str_replace(self::TABLE_NAME_PLACEHOLDER, $this->getMeta()->getTableName(), $fileContent);
-        $fileContent = str_replace(self::IDENTITY_FIELD, $this->getMeta()->getDaoIdentityField(), $fileContent);
         $fileContent = str_replace(self::METHODS_PLACEHOLDER, $this->getClassMethodsString(), $fileContent);
         $fileContent = str_replace(self::DATABASE_PROPERTIES_PLACEHOLDER, $this->getDatabaseConstantsString(), $fileContent);
 
