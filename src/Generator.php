@@ -31,6 +31,7 @@ class Generator implements GeneratorInterface
     protected $srcLocation;
     protected $projectName;
     protected $fileSystem;
+    protected $bradFabricator;
 
     protected function configure()
     {
@@ -182,27 +183,11 @@ class Generator implements GeneratorInterface
 
     protected function fabricateSupportingActors() : GeneratorInterface
     {
-        $filesystem = $this->getFileSystem();
-        $filesystem->mkdir([__DIR__ . '/../bradfab/', __DIR__ . '/../fabricatedFiles/']);
+        $this->getBradFabricator()
+            ->setProjectName($this->getProjectName())
+            ->setProjectRoot($this->getProjectRoot())
+            ->fabricateSupportingActors();
 
-        // Where the Bradfab fabrication files were saved
-        putenv('BRADFAB_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
-        // Where to put the supporting actors
-        putenv('BRADFAB_TARGET_APPLICATION_FABRICATION_PATH=' . realpath(__DIR__ . '/../fabricatedFiles'));
-        // Where to find the templates to generate the supporting actors
-        putenv('BRADFAB_FABRICATOR_TEMPLATE_ACTOR_DIRECTORY_PATH='  . realpath(__DIR__ . '/Template/Prefab5/Actor'));
-        // Namespace of the generated files
-        putenv('BRADFAB_TARGET_APPLICATION_NAMESPACE=Neighborhoods\\'. $this->getProjectName() . '\\');
-
-        $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../../bradfab/'));
-
-        $bradfab = (new Bradfab())->setProteanContainerBuilder($proteanContainerBuilder);
-        $bradfab->run();
-
-        $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
-
-        $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
-        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
         return $this;
     }
 
@@ -339,14 +324,6 @@ class Generator implements GeneratorInterface
         return $directoryPath;
     }
 
-    public function getFileSystem() : Filesystem
-    {
-        if ($this->fileSystem === null) {
-            $this->fileSystem = new Filesystem();
-        }
-
-        return $this->fileSystem;
-    }
 
     public function setFileSystem(Filesystem $fileSystem) : GeneratorInterface
     {
@@ -356,4 +333,22 @@ class Generator implements GeneratorInterface
         $this->fileSystem = $fileSystem;
         return $this;
     }
+
+    protected function getBradFabricator() : BradFabricatorInterface
+    {
+        if ($this->bradFabricator === null) {
+            throw new \LogicException('Generator bradFabricator has not been set.');
+        }
+        return $this->bradFabricator;
+    }
+
+    public function setBradFabricator(BradFabricatorInterface $bradFabricator) : GeneratorInterface
+    {
+        if ($this->bradFabricator !== null) {
+            throw new \LogicException('Generator bradFabricator is already set.');
+        }
+        $this->bradFabricator = $bradFabricator;
+        return $this;
+    }
+
 }
