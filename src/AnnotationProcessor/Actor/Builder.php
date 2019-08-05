@@ -27,6 +27,9 @@ EOF;
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
 "\t\t\$Actor->set%s(%s\$record[ActorInterface::PROP_%s]);";
 
+    protected const NON_COMPLEX_OBJECT_METHOD_PATTERN_JSON_DECODE =
+"\t\t\$Actor->set%s(%sjson_decode(\$record[ActorInterface::PROP_%s], true));";
+
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
         if (isset(\$record[ActorInterface::PROP_%s])) {
             %s
@@ -96,7 +99,13 @@ EOF;
                     $typeCast = '';
                 }
 
-                $method = sprintf(self::NON_COMPLEX_OBJECT_METHOD_PATTERN, $camelCaseName, $typeCast, strtoupper($propertyName));
+                if ($property['data_type'] === 'array') {
+                    $pattern = self::NON_COMPLEX_OBJECT_METHOD_PATTERN_JSON_DECODE;
+                } else {
+                    $pattern = self::NON_COMPLEX_OBJECT_METHOD_PATTERN;
+                }
+
+                $method = sprintf($pattern, $camelCaseName, $typeCast, strtoupper($propertyName));
 
                 if ($property['nullable'] === true) {
                     $replacement .= sprintf(
