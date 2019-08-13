@@ -38,11 +38,11 @@ class BuilderServiceFile implements AnnotationProcessorInterface
         $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()['properties'];
 
         $replacement = '';
-
+        $builtDataTypes = [];
         foreach ($properties as $propertyName => $property) {
             $propertyType = $property['data_type'];
-            if ($this->isPropertyComplexObject($propertyType)) {
-
+            if ($this->isPropertyComplexObject($propertyType) && !in_array($propertyType, $builtDataTypes)) {
+                $builtDataTypes[] = $propertyType;
                 $fullyQualifiedName = $this->getFullyQualifiedNameForType($propertyType);
 
                 $dataType = ltrim($property['data_type'], '\\');
