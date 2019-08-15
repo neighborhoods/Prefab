@@ -43,11 +43,13 @@ EOF;
 
         $replacement = '';
 
+        $builtTraits = [];
         foreach ($properties as $propertyName => $property) {
 
-            if ($this->isPropertyComplexObject($property['data_type'])) {
+            if ($this->isPropertyComplexObject($property['data_type']) && ! in_array($property['data_type'], $builtTraits)) {
                 $dataType = str_replace('Interface', '', $property['data_type']);
                 $replacement .= "\tuse " . $dataType . '\\Builder\\Factory\\AwareTrait;' . PHP_EOL;
+                $builtTraits[] = $property['data_type'];
             }
         }
 
