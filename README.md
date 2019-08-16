@@ -124,9 +124,10 @@ The top level key in the buildable directories file for each group should be the
 
 **Example**
 ```yaml
-MV1/property:
+# Place this file at the root of your application.
+mv1/property: # The URI to the component Handler.
   buildable_directories:
-    - MV1/Property
+    - MV1/Property # The relative path to the directory of the component.
   welcome_baskets:
     - Doctrine\DBAL
     - PDO
@@ -136,9 +137,9 @@ MV1/property:
     - SearchCriteria
   appended_paths:
     - some/other/dir
-MV2:
+mv2: # The URI to the component Handler.
   buildable_directories:
-    - MV2
+    - MV2 # The relative path to the directory of the component.
   welcome_baskets:
     - Doctrine\DBAL
     - PDO
