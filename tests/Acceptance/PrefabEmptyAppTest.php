@@ -63,14 +63,14 @@ dao:
   http_route: /users/{searchCriteria:}
   properties:
     id:
-      php_type: string
-      database_column_name: id
+      data_type: string
+      record_key: id
     username:
-      php_type: string
-      database_column_name: username
+      data_type: string
+      record_key: username
     email:
-      php_type: string
-      database_column_name: email
+      data_type: string
+      record_key: email
 EOF;
 
         mkdir(

@@ -6,15 +6,19 @@
   "keywords": [
     "prefab"
   ],
-  "repositories": {
-    "prefab": {
+  "repositories": [
+    {
       "type": "path",
       "url": "/prefab-source",
       "options": {
         "symlink": false
       }
+    },
+    {
+      "type": "composer",
+      "url": "https://satis.neighborhoods.com"
     }
-  },
+  ],
   "config": {
     "sort-packages": true
   },

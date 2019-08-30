@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f5d7b84ce88252eb7d08779d53932cf",
+    "content-hash": "cbca31a8205ac25883dc72e94ec83b90",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -361,6 +361,55 @@
                 "zf"
             ],
             "time": "2018-04-11T15:48:02+00:00"
+        },
+        {
+            "name": "neighborhoods/bakery",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:neighborhoods/Bakery.git",
+                "reference": "46596bf01c4a8d5759dcd30d9baf1f9b2c03d538"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neighborhoods/Bakery/zipball/46596bf01c4a8d5759dcd30d9baf1f9b2c03d538",
+                "reference": "46596bf01c4a8d5759dcd30d9baf1f9b2c03d538",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "symfony/dependency-injection": "^4.1"
+            },
+            "bin": [
+                "bin/bakery"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Neighborhoods\\Bakery\\": [
+                        "src",
+                        "fab"
+                    ]
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Brad Wilson",
+                    "email": "brad.wilson@neighborhoods.com"
+                }
+            ],
+            "description": "Leverages the PHP 7+ Opcache extension to compile source code and save the binary representation to disk.",
+            "keywords": [
+                "bakery"
+            ],
+            "support": {
+                "source": "https://github.com/neighborhoods/Bakery/tree/1.0.0",
+                "issues": "https://github.com/neighborhoods/Bakery/issues"
+            },
+            "time": "2019-04-16T19:44:52+00:00"
         },
         {
             "name": "neighborhoods/bradfab",
@@ -1482,6 +1531,55 @@
                 "shim"
             ],
             "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v4.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "e89969c00d762349f078db1128506f7f3dcc0d4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/e89969c00d762349f078db1128506f7f3dcc0d4a",
+                "reference": "e89969c00d762349f078db1128506f7f3dcc0d4a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-08-26T08:26:39+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -4184,55 +4282,6 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
-        },
-        {
-            "name": "symfony/process",
-            "version": "v4.1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/process.git",
-                "reference": "3e83acef94d979b1de946599ef86b3a352abcdc9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/3e83acef94d979b1de946599ef86b3a352abcdc9",
-                "reference": "3e83acef94d979b1de946599ef86b3a352abcdc9",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Process\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "https://symfony.com",
-            "time": "2018-10-14T20:48:13+00:00"
         },
         {
             "name": "theseer/tokenizer",

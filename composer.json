@@ -41,12 +41,12 @@
     "zendframework/zend-http": "^2.8",
     "zendframework/zend-problem-details": "^1.0",
     "zendframework/zend-stdlib": "^3.1",
-    "neighborhoods/bradfab": "1.0.0-beta8"
+    "neighborhoods/bradfab": "1.0.0-beta8",
+    "symfony/process": "^4.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4",
-    "mikey179/vfsStream": "^1.6",
-    "symfony/process": "^4.1"
+    "mikey179/vfsStream": "^1.6"
   },
   "autoload": {
     "psr-4": {
