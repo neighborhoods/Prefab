@@ -4,33 +4,42 @@
 namespace Neighborhoods\Prefab;
 
 use Neighborhoods\Prefab\HttpSkeleton;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Yaml\Yaml;
+use Neighborhoods\Prefab;
+use Neighborhoods\Bradfab\Bradfab;
+use Neighborhoods\Bradfab\Protean\Container\Builder;
+use Neighborhoods\Prefab\SupportingActorGroup;
 
 class Generator implements GeneratorInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use BuildPlan\Builder\Factory\AwareTrait;
+    use Prefab\Bradfab\Template\Factory\AwareTrait;
+    use SupportingActorGroup\AllSupportingActors\Factory\AwareTrait;
+    use SupportingActorGroup\Collection\Factory\AwareTrait;
+    use SupportingActorGroup\Minimal\Factory\AwareTrait;
 
     protected $buildPlans;
-    protected $daoName;
-    protected $daoNamespace;
-    protected $daoRelativePath;
     protected $httpSrcDir;
     protected $stagedHttpDir;
-    protected $projectDir;
+    protected $projectRoot;
     protected $fabLocation;
     protected $srcLocation;
     protected $projectName;
+    protected $fileSystem;
+    protected $bradFabricator;
 
     protected function configure()
     {
         $this->setHttpSrcDir(__DIR__ . '/../http');
         $this->setStagedHttpDir(__DIR__ . '/../stagedHttp');
 
-        $this->setSrcLocation($this->projectDir . 'src/');
-        $this->setFabLocation( $this->projectDir . 'fab/');
+        $this->setSrcLocation($this->getProjectRoot() . 'src/');
+        $this->setFabLocation($this->getProjectRoot() . 'fab/');
 
         return $this;
     }
@@ -53,6 +62,9 @@ class Generator implements GeneratorInterface
         $this->generatePrefab();
         echo ">> Success.\n";
 
+        echo ">> Bradfabbing supporting actors\n";
+        $this->fabricateSupportingActors();
+
         echo ">> Protean Prefab complete.\n";
         echo "\n";
 
@@ -67,10 +79,12 @@ class Generator implements GeneratorInterface
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
             $configuration = $this->getBuildConfigurationBuilderFactory()->create()
-                ->setYamlFilePath($dao->getPath() . '/' . $dao->getFilename())
+                ->setYamlFilePath($dao->getRealPath())
                 ->setProjectName($this->getProjectName())
+                ->setProjectRoot($this->getProjectRoot())
                 ->build();
 
+            $this->generateBradfabTemplate($configuration, $dao);
             $this->appendBuildPlan(
                 $this->getBuildPlanBuilderFactory()->create()
                     ->setBuildConfiguration($configuration)
@@ -81,13 +95,62 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
+    protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
+    {
+        $configArray = $this->getSupportingActorConfigForBuildConfiguration($configuration, $this->getNameForDao($dao));
+
+        $writeFilePath = $this->getWritePathForDao($dao);
+        $directory = $this->getWriteDirectoryForDao($writeFilePath);
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $yaml = Yaml::dump($configArray, 10);
+        file_put_contents($writeFilePath, $yaml);
+
+        return $this;
+    }
+
+    protected function getSupportingActorConfigForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : array
+    {
+        switch ($buildConfiguration->getSupportingActorGroup()) {
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE:
+                return $this->getAllSupportingActorsFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->setDaoName($daoName)
+                    ->getSupportingActorConfig();
+                break;
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COLLECTION:
+                return $this->getCollectionFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->setDaoName($daoName)
+                    ->getSupportingActorConfig();
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
+                return $this->getMinimalFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->setDaoName($daoName)
+                    ->getSupportingActorConfig();
+            default:
+                throw new \RuntimeException('Invalid supporting actor group ' . $buildConfiguration->getSupportingActorGroup());
+        }
+    }
+
+    protected function getNameForDao(SplFileInfo $dao) : string
+    {
+        $name = explode('/src/', $dao->getRealPath())[1];
+        $name = implode('', explode('/', $name));
+        $name = str_replace('.prefab.definition.yml', '', $name);
+
+        return $name;
+    }
     protected function generateHttpSkeleton() : GeneratorInterface
     {
         $generator = $this->getHttpSkeletonGeneratorFactory()->create();
         $generator->setProjectName($this->getProjectName())
-            ->setSrcDirectory($this->srcLocation)
-            ->setHttpSourceDirectory($this->httpSrcDir)
-            ->setTargetDirectory($this->projectDir)
+            ->setSrcDirectory($this->getSrcLocation())
+            ->setHttpSourceDirectory($this->getHttpSrcDir())
+            ->setTargetDirectory($this->getProjectRoot())
             ->generate();
 
         return $this;
@@ -105,29 +168,27 @@ class Generator implements GeneratorInterface
 
     protected function getProjectNameFromComposer() : string
     {
-        $finder = new Finder();
-        $finder->name('composer.json')->in($this->projectDir)->exclude('vendor');
+        $composerFilePath = $this->getProjectRoot() . '/composer.json';
 
-        $matchCount = $finder->count();
-        if ($matchCount < 1) {
-            throw new \RuntimeException('Could not find composer file for project.');
-        } elseif ($matchCount > 1) {
-            throw new \RuntimeException('Found more than one composer file.');
-        } else {
-            $iterator = $finder->getIterator();
-            $iterator->rewind();
-            $composerFile = $iterator->current();
-        }
-
-        if (!$composerFile) {
+        if (!file_exists($composerFilePath)) {
             throw new \RuntimeException('Could not access composer file for project.');
         }
 
-        $composerContents = json_decode($composerFile->getContents(), true);
+        $composerContents = json_decode(file_get_contents($composerFilePath), true);
         $fullNamespace = key($composerContents['autoload']['psr-4']);
         $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
         return $projectName;
+    }
+
+    protected function fabricateSupportingActors() : GeneratorInterface
+    {
+        $this->getBradFabricator()
+            ->setProjectName($this->getProjectName())
+            ->setProjectRoot($this->getProjectRoot())
+            ->fabricateSupportingActors();
+
+        return $this;
     }
 
     protected function getProjectName() : string
@@ -147,20 +208,20 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function getProjectDir() : string
+    protected function getProjectRoot() : string
     {
-        if ($this->projectDir === null) {
+        if ($this->projectRoot === null) {
             throw new \LogicException('Generator projectDir has not been set.');
         }
-        return $this->projectDir;
+        return $this->projectRoot;
     }
 
-    public function setProjectDir(string $projectDir) : GeneratorInterface
+    public function setProjectRoot(string $projectRoot) : GeneratorInterface
     {
-        if ($this->projectDir !== null) {
+        if ($this->projectRoot !== null) {
             throw new \LogicException('Generator projectDir is already set.');
         }
-        $this->projectDir = $projectDir;
+        $this->projectRoot = $projectRoot;
         return $this;
     }
 
@@ -245,4 +306,49 @@ class Generator implements GeneratorInterface
         $this->srcLocation = $srcLocation;
         return $this;
     }
+
+    protected function getWritePathForDao(SplFileInfo $dao) : string
+    {
+        $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
+        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
+
+        $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
+        return $writeFilePath;
+    }
+
+    protected function getWriteDirectoryForDao(string $writeFilePath) : string
+    {
+        $directoryPathArray = explode('/', $writeFilePath);
+        unset($directoryPathArray[count($directoryPathArray) - 1]);
+        $directoryPath = implode('/', $directoryPathArray);
+        return $directoryPath;
+    }
+
+
+    public function setFileSystem(Filesystem $fileSystem) : GeneratorInterface
+    {
+        if ($this->fileSystem !== null) {
+            throw new \LogicException('Generator fileSystem is already set.');
+        }
+        $this->fileSystem = $fileSystem;
+        return $this;
+    }
+
+    protected function getBradFabricator() : BradFabricatorInterface
+    {
+        if ($this->bradFabricator === null) {
+            throw new \LogicException('Generator bradFabricator has not been set.');
+        }
+        return $this->bradFabricator;
+    }
+
+    public function setBradFabricator(BradFabricatorInterface $bradFabricator) : GeneratorInterface
+    {
+        if ($this->bradFabricator !== null) {
+            throw new \LogicException('Generator bradFabricator is already set.');
+        }
+        $this->bradFabricator = $bradFabricator;
+        return $this;
+    }
+
 }

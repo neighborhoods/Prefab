@@ -1,0 +1,4 @@
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime\ExceptionInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime\Exception
+    shared: false

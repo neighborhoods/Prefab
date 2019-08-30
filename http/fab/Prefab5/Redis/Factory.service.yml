@@ -1,0 +1,12 @@
+parameters:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_port: '%env(REDIS_PORT)%'
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_host: '%env(REDIS_HOST)%'
+services:
+  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface:
+    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Factory
+    public: false
+    shared: true
+    calls:
+      - [addOption, [!php/const \Redis::OPT_READ_TIMEOUT, '-1']]
+      - [setHost, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_host%']]
+      - [setPort, ['%Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_port%']]

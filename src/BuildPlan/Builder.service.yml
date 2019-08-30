@@ -1,0 +1,8 @@
+services:
+  Neighborhoods\Prefab\BuildPlan\BuilderInterface:
+    class: Neighborhoods\Prefab\BuildPlan\Builder
+    calls:
+      - [setBuildPlanFactory, ['@Neighborhoods\Prefab\BuildPlan\FactoryInterface']]
+      - [setConsoleGeneratorMetaFactory, ['@Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface']]
+      - [setActorDAOInterfaceGeneratorFactory, ['@Neighborhoods\Prefab\Actor\DAOInterface\Generator\FactoryInterface']]
+      - [setActorDAOGeneratorFactory, ['@Neighborhoods\Prefab\Actor\DAO\Generator\FactoryInterface']]

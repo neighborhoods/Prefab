@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\DaoProperty\FactoryInterface:
+    class: Neighborhoods\Prefab\DaoProperty\Factory
+    calls:
+    - [setDaoProperty, ['@Neighborhoods\Prefab\DaoPropertyInterface']]

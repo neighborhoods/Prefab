@@ -7,15 +7,17 @@ namespace Neighborhoods\Prefab\BuildConfiguration;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
+use Neighborhoods\Prefab\DaoProperty;
 
 class Builder implements BuilderInterface
 {
     use BuildConfiguration\Factory\AwareTrait;
+    use DaoProperty\Builder\Factory\AwareTrait;
 
     protected $yamlFilePath;
     protected $projectName;
-    /** @var string */
     protected $daoNamespace;
+    protected $projectRoot;
 
     public function build() : BuildConfigurationInterface
     {
@@ -23,14 +25,35 @@ class Builder implements BuilderInterface
         $configArray = $this->getConfigFromYaml();
 
         $buildConfiguration->setTableName($configArray['dao']['table_name'])
-            ->setDaoIdentityField($configArray['dao']['identity_field'])
-            ->setHttpRoute($configArray['dao']['http_route'])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
-            ->setProjectDir($this->getProjectDirFromYamlPath())
+            ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
 
+        if (!empty($configArray['dao']['identity_field'])) {
+            $buildConfiguration->setDaoIdentityField($configArray['dao']['identity_field']);
+        }
+
+        if (!empty($configArray['dao']['http_route'])) {
+            $buildConfiguration->setHttpRoute($configArray['dao']['http_route']);
+            $httpVerbs = ($configArray['dao']['http_verbs']) ?? ['GET'];
+            $buildConfiguration->setHttpVerbs($httpVerbs);
+        }
+
+        if (!empty($configArray['dao']['supporting_actor_group'])) {
+            $buildConfiguration->setSupportingActorGroup($configArray['dao']['supporting_actor_group']);
+        } else {
+            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
+        }
+
         foreach ($configArray['dao']['properties'] as $key => $values) {
-            $buildConfiguration->appendDaoProperty($key, $values);
+            $record = $values;
+            $record['name'] = $key;
+
+            $buildConfiguration->appendDaoProperty(
+                $this->getDaoPropertyBuilderFactory()->create()
+                    ->setRecord($record)
+                    ->build()
+            );
         }
 
         return $buildConfiguration;
@@ -38,16 +61,7 @@ class Builder implements BuilderInterface
 
     protected function getFabDirFromYamlPath() : string
     {
-        // Explode and remove the vendor portion of the filepath. Replace src/ with fab/
-        $pathArray = explode('vendor', $this->getYamlFilePath());
-        $path = $pathArray[0] . 'fab/' . array_slice(explode('src/', $pathArray[1]), -1)[0];
-
-        return $path;
-    }
-
-    protected function getProjectDirFromYamlPath() : string
-    {
-        return explode('vendor/', $this->getYamlFilePath())[0];
+        return str_replace('/src/', '/fab/', $this->getYamlFilePath());
     }
 
     protected function getConfigFromYaml() : array
@@ -88,4 +102,22 @@ class Builder implements BuilderInterface
         $this->projectName = $projectName;
         return $this;
     }
+
+    protected function getProjectRoot() : string
+    {
+        if ($this->projectRoot === null) {
+            throw new \LogicException('Builder projectRoot has not been set.');
+        }
+        return $this->projectRoot;
+    }
+
+    public function setProjectRoot(string $projectRoot) : BuilderInterface
+    {
+        if ($this->projectRoot !== null) {
+            throw new \LogicException('Builder projectRoot is already set.');
+        }
+        $this->projectRoot = $projectRoot;
+        return $this;
+    }
+
 }

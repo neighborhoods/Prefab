@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\Actor\DAOInterface;
 use Neighborhoods\Prefab\Console\GeneratorInterface;
 use Neighborhoods\Prefab\Console\GeneratorMetaInterface;
 use Neighborhoods\Prefab\ClassSaver;
+use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\StringReplacer;
 
 class Generator implements GeneratorInterface
@@ -49,7 +50,6 @@ class Generator implements GeneratorInterface
     {
         $fileContent = str_replace(self::DAO_NAME_PLACEHOLDER, $this->getMeta()->getDaoName(), $fileContent);
         $fileContent = str_replace(self::TABLE_NAME_PLACEHOLDER, $this->getMeta()->getTableName(), $fileContent);
-        $fileContent = str_replace(self::IDENTITY_FIELD, $this->getMeta()->getDaoIdentityField(), $fileContent);
         $fileContent = str_replace(self::METHODS_PLACEHOLDER, $this->getClassMethodsString(), $fileContent);
         $fileContent = str_replace(self::DATABASE_PROPERTIES_PLACEHOLDER, $this->getDatabaseConstantsString(), $fileContent);
 
@@ -64,8 +64,9 @@ class Generator implements GeneratorInterface
     {
         $constantsString = '';
 
-        foreach ($this->getMeta()->getDaoProperties() as $property => $values) {
-            $constantsString .= sprintf("\t" . self::DATABASE_CONSTANT_PATTERN, strtoupper($property), $values['database_column_name']) . "\n";
+        /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getMeta()->getDaoProperties() as $daoProperty) {
+            $constantsString .= sprintf("\t" . self::DATABASE_CONSTANT_PATTERN, strtoupper($daoProperty->getName()), $daoProperty->getRecordKey()) . "\n";
         }
 
         return $constantsString;
@@ -75,16 +76,17 @@ class Generator implements GeneratorInterface
     {
         $methodString = '';
 
-        foreach ($this->getMeta()->getDaoProperties() as $property => $values) {
+        /** @var DaoPropertyInterface $daoProperty */
+        foreach ($this->getMeta()->getDaoProperties() as $daoProperty) {
             $camelCaseProperty = '';
-            $propertyArray = explode('_', $property);
+            $propertyArray = explode('_', $daoProperty->getName());
 
             foreach ($propertyArray as $part) {
                 $camelCaseProperty .= ucfirst($part);
             }
 
-            $methodString .= sprintf("\t" . self::GET_METHOD_PATTERN, $camelCaseProperty, $values['php_type']) . "\n";
-            $methodString .= sprintf("\t" . self::SET_METHOD_PATTERN, $camelCaseProperty, $values['php_type'], $property, $this->getMeta()->getDaoName()) . "\n";
+            $methodString .= sprintf("\t" . self::GET_METHOD_PATTERN, $camelCaseProperty, $daoProperty->getDataType()) . "\n";
+            $methodString .= sprintf("\t" . self::SET_METHOD_PATTERN, $camelCaseProperty, $daoProperty->getDataType(), $daoProperty->getName(), $this->getMeta()->getDaoName()) . "\n";
             $methodString .= sprintf("\t" . self::HAS_METHOD_PATTERN, $camelCaseProperty) . "\n";
         }
 
