@@ -10,6 +10,9 @@ class Repository implements AnnotationProcessorInterface
 {
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName';
 
+    public const KEY_NAMESPACES = 'namespaces';
+    public const KEY_PROJECT_NAME = 'project_name';
+
     protected $context;
 
     public function getAnnotationProcessorContext() : ContextInterface
@@ -32,9 +35,9 @@ class Repository implements AnnotationProcessorInterface
     public function getReplacement() : string
     {
         $paths = '';
-        $projectName = $this->getAnnotationProcessorContext()->getStaticContextRecord()['project_name'];
+        $projectName = $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::KEY_PROJECT_NAME];
 
-        foreach ($this->getAnnotationProcessorContext()->getStaticContextRecord()['namespaces'] as $namespace) {
+        foreach ($this->getAnnotationProcessorContext()->getStaticContextRecord()[self::KEY_NAMESPACES] as $namespace) {
             $paths  .= 'use ' . str_replace('PROJECTNAME',  $projectName, $namespace) . ';' . PHP_EOL;
         }
 

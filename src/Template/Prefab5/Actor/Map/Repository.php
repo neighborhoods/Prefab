@@ -8,7 +8,8 @@ use Neighborhoods\Bradfab\Template\ActorInterface;
 use Doctrine\DBAL\Connection;
 use Neighborhoods\Bradfab\Template\Actor;
 use Neighborhoods\Bradfab\Template\Actor\MapInterface;
-/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName */
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName 
+ */
 class Repository implements RepositoryInterface
 {
     use Actor\Map\Builder\Factory\AwareTrait;
@@ -16,6 +17,11 @@ class Repository implements RepositoryInterface
     use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 
     protected $connection;
+
+    protected const JSON_COLUMNS = [
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-JsonColumns
+ */
+    ];
 
     public function createBuilder() : \Neighborhoods\Bradfab\Template\Actor\Map\BuilderInterface
     {
@@ -29,6 +35,12 @@ class Repository implements RepositoryInterface
         $queryBuilder = $queryBuilderBuilder->build();
         $queryBuilder->from(\Neighborhoods\Bradfab\Template\ActorInterface::TABLE_NAME)->select('*');
         $records = $queryBuilder->execute()->fetchAll();
+
+        foreach ($records as $key => $record) {
+            foreach (self::JSON_COLUMNS as $jsonColumn) {
+                $records[$key][$jsonColumn] = json_decode($records[$key][$jsonColumn], true);
+            }
+        }
 
         return $this->createBuilder()->setRecords($records)->build();
     }

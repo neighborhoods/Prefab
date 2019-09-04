@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab;
 
 
-class DaoProperty implements DaoPropertyInterface
+class DaoProperty implements DaoPropertyInterface, \JsonSerializable
 {
     protected $name;
     protected $data_type;
@@ -77,5 +77,10 @@ class DaoProperty implements DaoPropertyInterface
         }
         $this->record_key = $record_key;
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

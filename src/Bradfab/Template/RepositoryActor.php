@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInterface;
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryJsonColumns;
 use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
 use Neighborhoods\Prefab\Bradfab\Template;
 
@@ -14,6 +15,7 @@ class RepositoryActor implements RepositoryActorInterface
     use AwareTraitActor\Factory\AwareTrait;
 
     protected $project_name;
+    protected $properties;
 
     public function getActorConfiguration() : array
     {
@@ -37,16 +39,24 @@ class RepositoryActor implements RepositoryActorInterface
             'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
             'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria',
         ];
-
-
+        
+        $propertyArray = json_decode(json_encode($this->getProperties()), true);
+        var_export($propertyArray);
         return [
             Template::KEY_ANNOTATION_PROCESSORS =>
                 [
                     Repository::ANNOTATION_PROCESSOR_KEY => [
                         Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . Repository::class,
                         Template::KEY_STATIC_CONTEXT_RECORD => [
-                            Template::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                            Template::CONTEXT_KEY_NAMESPACES => $namespaces,
+                            Repository::KEY_PROJECT_NAME => $this->getProjectName(),
+                            Repository::KEY_NAMESPACES => $namespaces,
+                        ],
+                    ],
+                    RepositoryJsonColumns::ANNOTATION_PROCESSOR_KEY => [
+                        Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryJsonColumns::class,
+                        Template::KEY_STATIC_CONTEXT_RECORD => [
+                            RepositoryJsonColumns::KEY_PROJECT_NAME => $this->getProjectName(),
+                            RepositoryJsonColumns::KEY_PROPERTIES => $propertyArray,
                         ],
                     ],
                 ],
@@ -60,17 +70,17 @@ class RepositoryActor implements RepositoryActorInterface
         ];
 
         return [
-                Template::KEY_ANNOTATION_PROCESSORS =>
-                    [
-                        RepositoryInterface::ANNOTATION_PROCESSOR_KEY => [
-                            Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryInterface::class,
-                            Template::KEY_STATIC_CONTEXT_RECORD => [
-                                Template::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
-                                Template::CONTEXT_KEY_NAMESPACES => $namespaces,
-                            ],
+            Template::KEY_ANNOTATION_PROCESSORS =>
+                [
+                    RepositoryInterface::ANNOTATION_PROCESSOR_KEY => [
+                        Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryInterface::class,
+                        Template::KEY_STATIC_CONTEXT_RECORD => [
+                            Template::CONTEXT_KEY_PROJECT_NAME => $this->getProjectName(),
+                            Template::CONTEXT_KEY_NAMESPACES => $namespaces,
                         ],
                     ],
-            ];
+                ],
+        ];
     }
 
     protected function getRepositoryServiceFileActor() : ?array
@@ -104,6 +114,24 @@ class RepositoryActor implements RepositoryActorInterface
             throw new \LogicException('RepositoryActor project_name is already set.');
         }
         $this->project_name = $project_name;
+        return $this;
+    }
+
+
+    protected function getProperties() : array
+    {
+        if ($this->properties === null) {
+            throw new \LogicException('RepositoryActor properties has not been set.');
+        }
+        return $this->properties;
+    }
+
+    public function setProperties(array $properties) : RepositoryActorInterface
+    {
+        if ($this->properties !== null) {
+            throw new \LogicException('RepositoryActor properties is already set.');
+        }
+        $this->properties = $properties;
         return $this;
     }
 

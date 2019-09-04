@@ -27,9 +27,6 @@ EOF;
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
 "\t\t\$Actor->set%s(%s\$record[ActorInterface::PROP_%s]);";
 
-    protected const NON_COMPLEX_OBJECT_METHOD_PATTERN_JSON_DECODE =
-"\t\t\$Actor->set%s(%sjson_decode(\$record[ActorInterface::PROP_%s], true));";
-
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
         if (isset(\$record[ActorInterface::PROP_%s])) {
             %s
@@ -62,60 +59,10 @@ EOF;
 
         foreach ($properties as $propertyName => $property) {
 
-            $camelCaseName = '';
-            $nameArray = explode('_', $propertyName);
-            foreach ($nameArray as $part) {
-                $camelCaseName .= ucfirst($part);
-            }
-
             if ($this->isPropertyComplexObject($property['data_type'])) {
-                if (strpos($property['data_type'], 'MapInterface') !== false) {
-                    $pattern = self::COMPLEX_OBJECT_MAP_BUILDER_METHOD;
-                } else {
-                    $pattern = self::COMPLEX_OBJECT_BUILDER_METHOD;
-                }
-
-                $method = sprintf(
-                    $pattern,
-                    $camelCaseName,
-                    $this->getFullyQualifiedNameForType($property['data_type']),
-                    strtoupper($propertyName)
-                );
-
-                if ($property['nullable'] === true) {
-                    $method = sprintf(
-                                self::NULLABLE_PROPERTY_METHOD_PATTERN,
-                                strtoupper($propertyName),
-                                trim($method)
-                              );
-                }
-
-                $replacement .= $method . "\n";
+                $replacement .= $this->getSetterForComplexObject($property, $propertyName);
             } else {
-
-                if ($property['data_type'] === 'float') {
-                    $typeCast = '(float)';
-                } else {
-                    $typeCast = '';
-                }
-
-                if ($property['data_type'] === 'array') {
-                    $pattern = self::NON_COMPLEX_OBJECT_METHOD_PATTERN_JSON_DECODE;
-                } else {
-                    $pattern = self::NON_COMPLEX_OBJECT_METHOD_PATTERN;
-                }
-
-                $method = sprintf($pattern, $camelCaseName, $typeCast, strtoupper($propertyName));
-
-                if ($property['nullable'] === true) {
-                    $replacement .= sprintf(
-                        self::NULLABLE_PROPERTY_METHOD_PATTERN,
-                        strtoupper($propertyName),
-                        trim($method)
-                    );
-                } else {
-                    $replacement .= '   ' . $method . "\n";
-                }
+                $replacement .= $this->getSetterForNonComplexObject($property, $propertyName);
             }
         }
 
@@ -144,5 +91,67 @@ EOF;
         unset($propertyArray[2]);
 
         return implode('', $propertyArray);
+    }
+
+    protected function getCamelCasePropertyName(string $propertyName) : string
+    {
+        $camelCaseName = '';
+        $nameArray = explode('_', $propertyName);
+        foreach ($nameArray as $part) {
+            $camelCaseName .= ucfirst($part);
+        }
+        return $camelCaseName;
+    }
+
+    protected function getSetterForComplexObject(array $property, string $propertyName) : string
+    {
+        if (strpos($property['data_type'], 'MapInterface') !== false) {
+            $pattern = self::COMPLEX_OBJECT_MAP_BUILDER_METHOD;
+        } else {
+            $pattern = self::COMPLEX_OBJECT_BUILDER_METHOD;
+        }
+
+        $method = sprintf(
+            $pattern,
+            $this->getCamelCasePropertyName($propertyName),
+            $this->getFullyQualifiedNameForType($property['data_type']),
+            strtoupper($propertyName)
+        );
+
+        if ($property['nullable'] === true) {
+            $method = sprintf(
+                self::NULLABLE_PROPERTY_METHOD_PATTERN,
+                strtoupper($propertyName),
+                trim($method)
+            );
+        }
+
+        return $method . "\n";
+    }
+
+    protected function getSetterForNonComplexObject(array $property, string $propertyName) : string
+    {
+        if ($property['data_type'] === 'float') {
+            $typeCast = '(float)';
+        } else {
+            $typeCast = '';
+        }
+
+        $method = sprintf(
+            self::NON_COMPLEX_OBJECT_METHOD_PATTERN,
+            $this->getCamelCasePropertyName($propertyName),
+            $typeCast,
+            strtoupper($propertyName)
+        );
+
+        if ($property['nullable'] === true) {
+            return sprintf(
+                self::NULLABLE_PROPERTY_METHOD_PATTERN,
+                strtoupper($propertyName),
+                trim($method)
+            );
+        } else {
+            return '   ' . $method . "\n";
+        }
     }
 }
