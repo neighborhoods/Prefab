@@ -10,7 +10,6 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
 {
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-JsonColumns';
 
-    public const KEY_PROJECT_NAME = 'project_name';
     public const KEY_PROPERTIES = 'properties';
 
     protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
