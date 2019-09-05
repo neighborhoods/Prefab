@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 
-interface BuilderInterface extends SearchCriteria\BuilderInterface
+interface BuilderInterface
 {
+    /**
+     * @deprecated Use the constants in Prefab5\SearchCriteria\BuilderInterface
+     */
     public const DIRECTION = 'direction';
     public const PAGE_SIZE = 'pageSize';
     public const CONDITION = 'condition';
