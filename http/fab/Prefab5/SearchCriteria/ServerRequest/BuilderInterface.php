@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest;
 
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 interface BuilderInterface
@@ -20,6 +21,8 @@ interface BuilderInterface
     public const FIELD = 'field';
     public const SEARCH_CRITERIA = 'searchCriteria';
     public const SORT_ORDER = 'sortOrder';
+
+    public function build(): SearchCriteriaInterface;
 
     public function setPsrHttpMessageServerRequest(ServerRequestInterface $psrHttpMessageServerRequest);
 }
