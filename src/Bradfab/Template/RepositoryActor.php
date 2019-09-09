@@ -41,7 +41,7 @@ class RepositoryActor implements RepositoryActorInterface
         ];
         
         $propertyArray = json_decode(json_encode($this->getProperties()), true);
-        var_export($propertyArray);
+
         return [
             Template::KEY_ANNOTATION_PROCESSORS =>
                 [
