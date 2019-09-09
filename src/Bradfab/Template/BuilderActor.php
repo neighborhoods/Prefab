@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder;
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderBuildForInsertMethod;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderFactoryTrait;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderServiceFile;
 use Neighborhoods\Prefab\DaoPropertyInterface;
@@ -54,6 +55,7 @@ class BuilderActor implements BuilderActorInterface
             $propertyArray[$daoProperty->getName()] = [
                 'nullable' => $daoProperty->isNullable(),
                 'data_type' => $daoProperty->getDataType(),
+                'created_on_insert' => $daoProperty->isCreatedOnInsert(),
             ];
         }
 
@@ -72,7 +74,12 @@ class BuilderActor implements BuilderActorInterface
                             self::KEY_STATIC_CONTEXT_RECORD => [
                                 self::CONTEXT_KEY_PROPERTIES => $propertyArray,
                             ],
-                        ]
+                        ],
+                        BuilderBuildForInsertMethod::ANNOTATION_PROCESSOR_KEY => [
+                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . BuilderBuildForInsertMethod::class,
+                            self::KEY_STATIC_CONTEXT_RECORD => [
+                                self::CONTEXT_KEY_PROPERTIES => $propertyArray,
+                            ],
                     ],
             ];
     }
@@ -91,6 +98,7 @@ class BuilderActor implements BuilderActorInterface
             $propertyArray[$daoProperty->getName()] = [
                 'nullable' => $daoProperty->isNullable(),
                 'data_type' => $daoProperty->getDataType(),
+                'created_on_insert' => $daoProperty->isCreatedOnInsert(),
             ];
         }
 

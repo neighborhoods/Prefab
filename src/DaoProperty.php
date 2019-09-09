@@ -10,6 +10,7 @@ class DaoProperty implements DaoPropertyInterface, \JsonSerializable
     protected $data_type;
     protected $nullable;
     protected $record_key;
+    protected $created_on_insert;
 
     public function getName() : string
     {
@@ -76,6 +77,23 @@ class DaoProperty implements DaoPropertyInterface, \JsonSerializable
             throw new \LogicException('DaoProperty record_key is already set.');
         }
         $this->record_key = $record_key;
+        return $this;
+    }
+
+    public function isCreatedOnInsert() : bool
+    {
+        if ($this->created_on_insert === null) {
+            throw new \LogicException('DaoProperty created_on_insert has not been set.');
+        }
+        return $this->created_on_insert;
+    }
+
+    public function setCreatedOnInsert(bool $createdOnInsert) : DaoPropertyInterface
+    {
+        if ($this->created_on_insert !== null) {
+            throw new \LogicException('DaoProperty created_on_insert is already set.');
+        }
+        $this->created_on_insert = $createdOnInsert;
         return $this;
     }
 

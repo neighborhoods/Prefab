@@ -21,6 +21,7 @@ class Builder implements BuilderInterface
 
         $daoproperty->setNullable($record['nullable'] ?? false);
         $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name']);
+        $daoproperty->setCreatedOnInsert($record['created_on_insert'] ?? false);
 
         return $daoproperty;
     }

@@ -9,5 +9,7 @@ interface BuilderInterface
 {
     public function build(): ActorInterface;
 
+    public function buildForInsert(): ActorInterface;
+
     public function setRecord(array $record): BuilderInterface;
 }
