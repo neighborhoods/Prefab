@@ -14,4 +14,6 @@ interface RepositoryActorInterface
     public function getActorConfiguration() : array;
 
     public function setProjectName($project_name) : RepositoryActorInterface;
+
+    public function setProperties(array $properties) : RepositoryActorInterface;
 }

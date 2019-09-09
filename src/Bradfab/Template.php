@@ -130,7 +130,9 @@ class Template implements TemplateInterface
 
         $this->supporting_actors = array_merge(
             $this->supporting_actors,
-            $repository->setProjectName($this->getProjectName())->getActorConfiguration()
+            $repository->setProjectName($this->getProjectName())
+                ->setProperties($this->getProperties())
+                ->getActorConfiguration()
         );
 
         return $this;
