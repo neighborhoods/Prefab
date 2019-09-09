@@ -80,6 +80,7 @@ class BuilderActor implements BuilderActorInterface
                             self::KEY_STATIC_CONTEXT_RECORD => [
                                 self::CONTEXT_KEY_PROPERTIES => $propertyArray,
                             ],
+                        ],
                     ],
             ];
     }
