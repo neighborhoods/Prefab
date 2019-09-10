@@ -46,16 +46,6 @@ class PrefabEmptyAppTest extends TestCase
      */
     public function shouldGenerateSimpleDao(): void
     {
-        $expectedOutput = <<<EOF
->> Copying the skeleton...
->> Success.
->> Assembling the Prefab build plan...
->> Success.
->> Generating Prefab machinery...
->> Success.
->> Protean Prefab complete.
-EOF;
-
         $daoYaml = <<<EOF
 dao:
   table_name: users
@@ -89,11 +79,6 @@ EOF;
         static::assertSame(
             0,
             $process->getExitCode()
-        );
-
-        static::assertSame(
-            trim($expectedOutput),
-            trim($process->getOutput())
         );
     }
 }

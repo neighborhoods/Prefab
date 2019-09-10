@@ -24,7 +24,8 @@
   },
   "require": {
     "php": "^7.2",
-    "neighborhoods/prefab": "@dev"
+    "neighborhoods/prefab": "*@dev",
+    "neighborhoods/bradfab": "1.0.0-beta8"
   },
   "autoload": {
     "psr-4": {

@@ -145,9 +145,7 @@ class TestEnvironment
     private function runDockerImage(): TestEnvironment
     {
         $process = $this->createProcess(self::COMMAND_RUN_DOCKER);
-
         $process->setTimeout(null);
-
         $process->mustRun(self::printCommandOutput());
 
         $this->dockerImageId = trim($process->getOutput());
