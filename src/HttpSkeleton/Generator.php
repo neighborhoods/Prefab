@@ -43,7 +43,6 @@ class Generator implements GeneratorInterface
 
         $this->getFileSystem()->mirror($this->getStagedDirectory(), $this->getTargetDirectory(), null, $options);
         $this->getFileSystem()->remove($this->getStagedDirectory());
-        $this->getFileSystem()->chmod($this->getTargetDirectory() . 'data', 0766, umask(), true);
 
         return $this;
     }
