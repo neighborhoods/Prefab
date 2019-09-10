@@ -9,6 +9,8 @@ interface BuilderInterface
 {
     public function build(): MapInterface;
 
+    public function buildForInsert(): MapInterface;
+
     public function setRecords(array $records): BuilderInterface;
 }
 

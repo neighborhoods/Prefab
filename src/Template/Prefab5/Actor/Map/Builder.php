@@ -29,6 +29,21 @@ class Builder implements BuilderInterface
         return $map;
     }
 
+    public function buildForInsert() : MapInterface
+    {
+        $map = $this->getActorMapFactory()->create();
+        foreach ($this->getRecords() as $index => $record) {
+            $builder = $this->getActorBuilderFactory()->create();
+            $item = $builder->setRecord($record)->buildForInsert();
+            $itemIndex = /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field-ternary
+            $index
+             */;
+            $map[$itemIndex] = $item;
+        }
+
+        return $map;
+    }
+
     protected function getRecords() : array
     {
         if ($this->records === null) {

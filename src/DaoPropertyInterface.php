@@ -20,4 +20,8 @@ interface DaoPropertyInterface
     public function getRecordKey() : string;
 
     public function setRecordKey(string $record_key) : DaoPropertyInterface;
+
+    public function isCreatedOnInsert() : bool;
+
+    public function setCreatedOnInsert(bool $createdOnInsert) : DaoPropertyInterface;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\Bradfab\Template;
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder;
-
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\BuilderBuildForInsertMethod;
 
 class MapBuilderActor implements MapBuilderActorInterface
 {
@@ -50,7 +50,13 @@ class MapBuilderActor implements MapBuilderActorInterface
                                 self::CONTEXT_KEY_IDENTITY_FIELD => $this->getIdentityField(),
                             ],
                         ],
-                    ],
+                        BuilderBuildForInsertMethod::ANNOTATION_PROCESSOR_KEY => [
+                            self::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . BuilderBuildForInsertMethod::class,
+                            self::KEY_STATIC_CONTEXT_RECORD => [
+                                self::CONTEXT_KEY_IDENTITY_FIELD => $this->getIdentityField(),
+                            ],
+                        ],
+                    ]
             ];
     }
 

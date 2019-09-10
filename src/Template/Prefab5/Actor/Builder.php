@@ -24,6 +24,18 @@ class Builder implements BuilderInterface
         return $Actor;
     }
 
+    public function buildForInsert(): ActorInterface
+    {
+        $Actor = $this->getActorFactory()->create();
+
+        $record = $this->getRecord();
+
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-buildForInsert
+ */
+
+        return $Actor;
+    }
+
     protected function getRecord(): array
     {
         if ($this->record === null) {
