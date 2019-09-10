@@ -6,17 +6,17 @@ namespace Neighborhoods\Prefab\AnnotationProcessor\Actor\Map;
 use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
 use Neighborhoods\Bradfab\AnnotationProcessorInterface;
 
-class Builder implements AnnotationProcessorInterface
+class BuilderBuildForInsertMethod implements AnnotationProcessorInterface
 {
-    protected const GET_IDENTITY_FIELD_METHOD_PATTERN = '$map[$item->get%s()]';
+    protected const IDENTITY_FIELD_TERNARY_METHOD_PATTERN = '$item->has%s() ? $item->get%s() : $index';
     protected $context;
 
-    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field';
+    public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field-ternary';
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
         if ($this->context === null) {
-            throw new \LogicException('Builder context has not been set.');
+            throw new \LogicException('BuilderBuildForInsertMethod context has not been set.');
         }
         return $this->context;
     }
@@ -24,7 +24,7 @@ class Builder implements AnnotationProcessorInterface
     public function setAnnotationProcessorContext(ContextInterface $context) : AnnotationProcessorInterface
     {
         if ($this->context !== null) {
-            throw new \LogicException('Builder context is already set.');
+            throw new \LogicException('BuilderBuildForInsertMethod context is already set.');
         }
         $this->context = $context;
         return $this;
@@ -38,6 +38,6 @@ class Builder implements AnnotationProcessorInterface
             $camelCaseName .= ucfirst($part);
         }
 
-        return sprintf(self::GET_IDENTITY_FIELD_METHOD_PATTERN, $camelCaseName);
+        return sprintf(self::IDENTITY_FIELD_TERNARY_METHOD_PATTERN, $camelCaseName, $camelCaseName);
     }
 }
