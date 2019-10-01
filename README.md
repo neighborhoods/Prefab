@@ -46,6 +46,10 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
             - `nullable`
                 - Whether or not this property can be null. If true, the builder method will surround this property with isset() before attempting to set the value on the DAO
                 - If not set, defaults to false
+            - `created_on_insert`
+                - This denotes properties that are not expected to be present before inserting the record into the database.
+                - If true, the buildForInsert() method will surround this property with isset() before attempting to set the value on the DAO. However, the build() method will still require this property when building a record from the database.
+                - If not set, defaults to false
                 
 Prefab also enforces
 * A contract version namespace (e.g. `MV1`, `DOR1`, `RETS1`, etc.). This MUST be present under `src/`.
@@ -71,18 +75,24 @@ dao:
       data_type: int
       record_key: id
       nullable: false
+      created_on_insert: true
     email:
       data_type: string
       record_key: email
       nullable: true
     first_name:
       data_type: string
-      record_key: fname
+      record_key: first_name
       nullable: false
     last_name:
       data_type: string
-      record_key: lname
+      record_key: last_name
       nullable: false
+    created_at:
+      data_type: string
+      record_key: created_at
+      nullable: false
+      created_on_insert: true
 ```
 
 ## Supporting Actor Groups
