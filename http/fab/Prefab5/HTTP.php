@@ -30,6 +30,8 @@ class HTTP implements HTTPInterface
             (new NewRelic())->noticeThrowable($throwable);
         }
 
+        $this->finishRequest();
+
         return $this;
     }
 
@@ -66,4 +68,10 @@ class HTTP implements HTTPInterface
         return $urlArray[1] . '/' . $urlArray[2];
     }
 
+    protected function finishRequest()
+    {
+        session_write_close();
+        fastcgi_finish_request();
+        return $this;
+    }
 }
