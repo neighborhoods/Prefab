@@ -1,18 +1,17 @@
-# Neighborhoods Prefab
-A code generation tool. Takes the busywork out of building [Protean](https://github.com/neighborhoods/protean)-compliant applications.
+# Prefab
+A code generation tool. Takes the busywork out of building strongly-typed, patterned HTTP applications.
 
-## Protean Docs and FAQs
-Protean is an application architecture specification. The specification is canonically defined in https://github.com/neighborhoods/protean. Docs and FAQs can be bound there.
+## Getting Started
 
-## Running Prefab
+### Running Prefab
 - In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
-- Create your `dao.prefab.definition.yml` file as outlined [here](./docs/PrefabDefinition.md).
+- Create your `dao.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
 - From the root of your project run `./vendor/bin/prefab`
     - This will add all of the supporting files needed to create a working API endpoint
 
-## Feature Requests
+### Prefab Use Cases
 
-Refer to the [Feature Request LDR](docs/Feature-Request-Process-LDR.md) for information on how to submit a new feature request to the Prefab owners.
+Working examples of Prefab can be found in the [PrefabFitness repository](https://github.com/neighborhoods/PrefabFitness). 
 
 ## Prefab Definition File Specification
 
@@ -32,7 +31,7 @@ The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. T
         - This field is optional
     - `http_verbs`
         - HTTP methods allowed for a DAO. Can include get, post, put, patch, and delete.
-        - Note: Since mutatitve and destuctive actions are not yet patterned for repositories, you will need to override the generated handler to call the proper repository method.
+        - Note: Since mutative and destructive actions are not yet patterned for repositories, you will need to override the generated handler to call the proper repository method.
     - `identity_field`
         - Name of the database column containing the unique identifier for a given DAO
     - `properties`
@@ -97,40 +96,49 @@ dao:
 
 ## Supporting Actor Groups
 
-There are multiple use cases for using Prefab to generate the supporting actors for a given DAO. Prefab supports generating different subsets of actors to support those use cases. For information on how to specify a supporting actor group, see the [Prefab definition file specification](#prefab-definition-file-specification) above. The following supporting actor groups are available:
+Prefab supports generating different subsets of supporting actors to support various use cases. For information on how to specify a supporting actor group, see the [Prefab definition file specification](#prefab-definition-file-specification). The following supporting actor groups are available:
 - `complete` - Generates all supporting actors.  This should be used when you need to be able to build an actor from storage and return it via HTTP.
     - Included supporting actors
         - Factory
         - Builder
-        - AwareTraits
+        - Aware Traits
         - Repository
         - Map
         - Map Builder
         - Handler
-- `collection` - Generates supporting actors for building and handling groups of strongly typed objects. This is often used to represent a collection of actors in a JSON database column. 
+- `collection` - Generates supporting actors for building and handling groups of typed objects. This is often used to represent a collection of actors in a JSON database column. 
     - Included supporting actors
         - Factory
         - Builder
-        - AwareTraits
+        - Aware Traits
         - Map
         - Map Builder
-- `minimal` - Generates the minimum number of supporting actors to build an actor. This can be used to represent a single, strongly typed object.
+- `minimal` - Generates the minimum number of supporting actors to build an actor. This can be used to represent a single, typed object.
     - Included supporting actors
         - Factory
         - Builder
-        - AwareTraits
+        - Aware Traits
         
 ## Subset Container Buildable Directories
 
-As Symfony containers get bigger, the response times for HTTP requests rise.  To prevent slow response times, Prefab implemented user-defined subset container building. Prefab users can define what is included in a container for individual requests, so only what is needed is included in each container. The purpose of this document is to define the usage of the `http-buildable-directories.yml` file.
+As Symfony containers get bigger, the response times for HTTP requests increase.  To prevent slow response times, Prefab supports user-defined subset container building. Prefab users can define what should be included in the Symfony container for each route, so only the necessary actors are initialized.  This buildable directory file is optional and Prefab will build the entirety of `src/` and `fab/` by default if the file is not found. If the file is present, then all routes MUST have a corresponding key with directories to be built.
 
-The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. Example: `property_service.neighborhoods.com/MV1/property/{searchCriteria}` would build all directories under the `MV1/property` key in the file below.
+- Note: On the first request, Prefab will write this file to disk as a PHP array in the directory `data/cache/Opcache/HTTPBuildableDirectoryMap`. When making changes to the Buildable Directory File, the cached file must be deleted in order for changes to be reflected in the code.  It is also highly recommended to ensure [Opcache](https://www.php.net/manual/en/book.opcache.php) is enabled in production to prevent a read from disk on every HTTP request. 
 
-`buildable_directories` - These are the directories of your actors that you want to include for a request. Example: Having an `MV1/property` buildable directory will include `fab/MV1/property` and `src/MV1/property` in the container.
+The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. If a key with the first two parts of the URI is not found, Prefab will then check for a key with just the first part of the URI.
+- Examples
+    - `neighborhoods.com/mv1/property/{searchCriteria}` would build all directories under the `mv1/property` key in the example file below
+    - `neighborhoods.com/mv2/property/{searchCriteria}` would build all directories under the `mv2` key in the example file below
 
-`welcome_baskets` - These are the namespaces of actors that Prefab generates that would like to include in a request. Example: `Doctrine\DBAL` will include all of the files under the `Doctrine\DBAL` namespace that are in `fab/Prefab5/Doctrine/DBAL`.
+`buildable_directories` - Represents the directories of HTTP actors you would like to include for a given request. Each buildable directory will include the corresponding path under both `src/` and `fab/`. Since the `buildable_directories` represents paths, **forward slashes** (/) should be used as a separator.
+- Example: 
+    - A buildable directory of `MV1/property` will include `fab/MV1/property` (if it exists) and `src/MV1/property` (if it exists) in the container.
 
-`appended_paths` - These are any additional paths that you may want included in your container. Paths are relative to the root of your project. 
+`welcome_baskets` - These are the namespaces of the HTTP machinery that Prefab generates that should be included in a request. Since `welcome_baskets` represent namespaces, **backslashes** (\\) should be used as a separator.
+- Example: 
+    - `Doctrine\DBAL` will include all files under the `Doctrine\DBAL` namespace that are in `fab/Prefab5/Doctrine/DBAL`.
+
+`appended_paths` - These are any additional paths that you want included in your container that are not under `fab/` or `src/`. Paths are relative to the root of your project.  Since `appended_path` represents paths, **forward slashes** (/) should be used as a separator.
 
 **Example**
 ```yaml
@@ -162,7 +170,7 @@ mv2: # The URI to the component Handler.
 
 ```
 
-Since there are now many containers that will be built, the legacy method of Bakery pre-baking the containers using `include index.php;` will no longer work. In order to prebuild your containers, add the following script to your `bin/` directory and include the script in your `composer.json` file after `vendor/bin/prefab` but before `vendor/bin/bakery`
+By default, Symfony containers are built on the first HTTP request. Since this can add a significant amount of time to the first request, it is recommended that you prebuild your containers before serving production traffic. This can be accomplished by adding the following script to your `bin/` directory and including it as a `post-update-cmd` and/or `post-install-cmd` script in your `composer.json` file after `vendor/bin/prefab`.
 
 ``` php
 #!/usr/bin/env php
@@ -171,7 +179,7 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
+use ReplaceThisWithYourVendorName\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
 
 $primer = new ContainerBuilder\Primer();
 $primer->primeContainers();
@@ -181,13 +189,9 @@ return;
 ```
 
 ## Debug Mode
-- Debug mode can be enabled by setting the environment variable `DEBUG_MODE = "true"`
+Debug mode can be enabled by setting the environment variable `DEBUG_MODE=true`. Enabling debug mode will output additional details about exceptions and errors thrown during HTTP requests.  Note that this requires a valid container to be built in order to be used. If there is an error during container building (eg. A missing Symfony service file), you will not have the additional visibility provided by debug mode.
 
 ## Fitness
-In order to capture the use cases for this product, and to ensure that this product is fit to handle each use case, every codebase that is designed to be composed into another codebase to perform useful work MUST have an accompanying `Fitness` repository.
+In order to capture the use cases for this product and to ensure this product is fit to handle each use case, every codebase that is designed to be composed into another codebase to perform useful work MUST have an accompanying `Fitness` repository.
 
-The `Fitness` repository for `Prefab` is located in [`PrefabFitness`](https://github.com/neighborhoods/PrefabFitness).
-
-All features and changes to `Prefab` MUST have an accompanying use case in this `Fitness` repository and MUST have an adopted RFC in `Protean`.
-
-Bugfixes MUST have a PR with all `Prefab` owners approval and an accompanying ticket that is linked in the PR. Bugfixes SHOULD have a use case in the `Fitness` repository, but do not need an adopted RFC in `Protean`.
+The `Fitness` repository for `Prefab` is located at [`PrefabFitness`](https://github.com/neighborhoods/PrefabFitness).
