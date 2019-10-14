@@ -59,13 +59,9 @@ class Generator implements GeneratorInterface
         echo ">> Success.\n";
 
         echo ">> Generating Prefab machinery...\n";
-        $this->generatePrefab();
-        echo ">> Success.\n";
+        $this->generatePrefabActors();
 
-        echo ">> Bradfabbing supporting actors\n";
-        $this->fabricateSupportingActors();
-
-        echo ">> Protean Prefab complete.\n";
+        echo ">> Prefab complete.\n";
         echo "\n";
 
         return $this;
@@ -156,11 +152,21 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function generatePrefab() : GeneratorInterface
+    protected function generatePrefabActors() : GeneratorInterface
     {
-        /** @var BuildPlanInterface $buildPlan */
-        foreach ($this->getBuildPlans() as $buildPlan) {
-            $buildPlan->execute();
+        if ($this->hasBuildPlans()) {
+            foreach ($this->getBuildPlans() as $buildPlan) {
+                $buildPlan->execute();
+            }
+
+            $this->getBradFabricator()
+                ->setProjectName($this->getProjectName())
+                ->setProjectRoot($this->getProjectRoot())
+                ->fabricateSupportingActors();
+        } else {
+            echo 'No Prefab definition files found in ' . $this->getSrcLocation() . PHP_EOL;
+            echo 'Note: Prefab definition files can not be saved in the root of src/.' .
+                ' They MUST be located in a versioned directory under src/' . PHP_EOL;
         }
 
         return $this;
@@ -223,6 +229,11 @@ class Generator implements GeneratorInterface
         }
         $this->projectRoot = $projectRoot;
         return $this;
+    }
+
+    protected function hasBuildPlans() : bool
+    {
+        return $this->buildPlans !== null;
     }
 
     protected function getBuildPlans() : array
