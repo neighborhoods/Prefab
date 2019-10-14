@@ -11,6 +11,6 @@ interface HTTPBuildableDirectoryMapInterface
 
     public function flush() : HTTPBuildableDirectoryMapInterface;
 
-    public function getBuildableDirectoryMap() : array;
+    public function getBuildableDirectoryMap() : ?array;
 
 }
