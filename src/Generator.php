@@ -50,19 +50,25 @@ class Generator implements GeneratorInterface
         $this->setProjectName($this->getProjectNameFromComposer());
 
         echo "\n";
-        echo ">> Copying the skeleton...\n";
+        echo ">> Copying the skeleton...";
         $this->generateHttpSkeleton();
-        echo ">> Success.\n";
+        echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
-        echo ">> Assembling the Prefab build plan...\n";
+        echo ">> Assembling the Prefab build plan...";
         $this->generateBuildPlan();
-        echo ">> Success.\n";
+        echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
-        echo ">> Generating Prefab machinery...\n";
-        $this->generatePrefabActors();
+        if ($this->hasBuildPlans()) {
+            echo ">> Generating Prefab machinery...";
+            $this->generatePrefabActors();
+            echo "\e[0;32m success. \e[0m" . PHP_EOL;
+        } else {
+            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
+            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
+                " They MUST be located in a versioned directory under src/" . PHP_EOL;
+        }
 
-        echo ">> Prefab complete.\n";
-        echo "\n";
+        echo PHP_EOL . "\e[0;32mPrefab complete.\e[0m" . PHP_EOL;
 
         return $this;
     }
@@ -154,20 +160,14 @@ class Generator implements GeneratorInterface
 
     protected function generatePrefabActors() : GeneratorInterface
     {
-        if ($this->hasBuildPlans()) {
-            foreach ($this->getBuildPlans() as $buildPlan) {
-                $buildPlan->execute();
-            }
-
-            $this->getBradFabricator()
-                ->setProjectName($this->getProjectName())
-                ->setProjectRoot($this->getProjectRoot())
-                ->fabricateSupportingActors();
-        } else {
-            echo 'No Prefab definition files found in ' . $this->getSrcLocation() . PHP_EOL;
-            echo 'Note: Prefab definition files can not be saved in the root of src/.' .
-                ' They MUST be located in a versioned directory under src/' . PHP_EOL;
+        foreach ($this->getBuildPlans() as $buildPlan) {
+            $buildPlan->execute();
         }
+
+        $this->getBradFabricator()
+            ->setProjectName($this->getProjectName())
+            ->setProjectRoot($this->getProjectRoot())
+            ->fabricateSupportingActors();
 
         return $this;
     }
