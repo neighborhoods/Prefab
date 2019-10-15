@@ -35,10 +35,10 @@ class HTTP implements HTTPInterface
 
     protected function getContainerBuilder() : Protean\Container\BuilderInterface
     {
-        try {
-            $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
-        } catch (BuildableDirectoryFileNotFound\Exception $exception) {
-            // No YAML file found. Build full container
+        $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
+
+        // No YAML file found. Build full container
+        if ($httpBuildableDirectoryMap === null) {
             $this->getProteanContainerBuilder()->buildZendExpressive();
             $this->getProteanContainerBuilder()->setContainerName('HTTP');
             return $this->getProteanContainerBuilder();
