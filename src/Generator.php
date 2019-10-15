@@ -165,7 +165,7 @@ class Generator implements GeneratorInterface
                 ->fabricateSupportingActors();
         } else {
             echo 'No Prefab definition files found in ' . $this->getSrcLocation() . PHP_EOL;
-            echo 'Note: Prefab definition files can not be saved in the root of src/.' .
+            echo 'Note: Prefab definition files cannot be saved in the root of src/.' .
                 ' They MUST be located in a versioned directory under src/' . PHP_EOL;
         }
 
