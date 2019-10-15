@@ -49,24 +49,14 @@ class Generator implements GeneratorInterface
         $this->configure();
         $this->setProjectName($this->getProjectNameFromComposer());
 
-        echo "\n";
-        echo ">> Copying the skeleton...";
+        echo PHP_EOL . ">> Copying the skeleton...";
         $this->generateHttpSkeleton();
-        echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
         echo ">> Assembling the Prefab build plan...";
         $this->generateBuildPlan();
-        echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
-        if ($this->hasBuildPlans()) {
-            echo ">> Generating Prefab machinery...";
-            $this->generatePrefabActors();
-            echo "\e[0;32m success. \e[0m" . PHP_EOL;
-        } else {
-            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
-            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
-                " They MUST be located in a versioned directory under src/" . PHP_EOL;
-        }
+        echo ">> Generating Prefab machinery...";
+        $this->generatePrefabActors();
 
         echo PHP_EOL . "\e[0;32mPrefab complete.\e[0m" . PHP_EOL;
 
@@ -93,6 +83,8 @@ class Generator implements GeneratorInterface
                     ->build()
             );
         }
+
+        echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
         return $this;
     }
@@ -155,19 +147,30 @@ class Generator implements GeneratorInterface
             ->setTargetDirectory($this->getProjectRoot())
             ->generate();
 
+        echo "\e[0;32m success. \e[0m" . PHP_EOL;
+
         return $this;
     }
 
     protected function generatePrefabActors() : GeneratorInterface
     {
-        foreach ($this->getBuildPlans() as $buildPlan) {
-            $buildPlan->execute();
-        }
+        if ($this->hasBuildPlans()) {
+            foreach ($this->getBuildPlans() as $buildPlan) {
+                $buildPlan->execute();
+            }
 
-        $this->getBradFabricator()
-            ->setProjectName($this->getProjectName())
-            ->setProjectRoot($this->getProjectRoot())
-            ->fabricateSupportingActors();
+            $this->getBradFabricator()
+                ->setProjectName($this->getProjectName())
+                ->setProjectRoot($this->getProjectRoot())
+                ->fabricateSupportingActors();
+
+            echo "\e[0;32m success. \e[0m" . PHP_EOL;
+        } else {
+            echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
+            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
+            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
+                " They MUST be located in a versioned directory under src/" . PHP_EOL;
+        }
 
         return $this;
     }
