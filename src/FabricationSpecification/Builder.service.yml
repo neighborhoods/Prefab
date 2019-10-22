@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\BuilderInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Builder
+    calls:
+      - [setFabricationSpecificationAllSupportingActorsBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder\FactoryInterface']]

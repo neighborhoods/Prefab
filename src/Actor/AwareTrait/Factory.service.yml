@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\Actor\AwareTrait\FactoryInterface:
+    class: Neighborhoods\Prefab\Actor\AwareTrait\Factory
+    public: false
+    shared: true
+    calls:
+      - [setActor, ['@Neighborhoods\Prefab\Actor\AwareTraitInterface']]

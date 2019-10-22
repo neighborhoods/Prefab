@@ -1,11 +1,11 @@
 <?php
 
-namespace Neighborhoods\Buphalo\Template\Actor\Repository;
+namespace Neighborhoods\BuphaloTemplateTree\Actor\Repository;
 
 class Handler implements HandlerInterface
 {
 
-    use \Neighborhoods\Buphalo\Template\Actor\Map\Repository\AwareTrait;
+    use \Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository\AwareTrait;
     /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler-ProjectName-Http\Message
      */
     /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository\Handler-ProjectName-SearchCriteria
@@ -23,7 +23,7 @@ class Handler implements HandlerInterface
         return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
-    protected function get() : \Neighborhoods\Buphalo\Template\Actor\MapInterface
+    protected function get() : \Neighborhoods\BuphaloTemplateTree\Actor\MapInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());

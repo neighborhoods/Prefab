@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Buphalo\Template\Actor\Factory;
+namespace Neighborhoods\BuphaloTemplateTree\Actor\Factory;
 
-use Neighborhoods\Buphalo\Template\Actor\FactoryInterface;
+use Neighborhoods\BuphaloTemplateTree\Actor\FactoryInterface;
 
 trait AwareTrait
 {

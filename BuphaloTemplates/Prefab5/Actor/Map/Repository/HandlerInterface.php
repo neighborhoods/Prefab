@@ -1,6 +1,6 @@
 <?php
 
-namespace Neighborhoods\Buphalo\Template\Actor\Map\Repository;
+namespace Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
 
 interface HandlerInterface extends \Psr\Http\Server\RequestHandlerInterface
 {

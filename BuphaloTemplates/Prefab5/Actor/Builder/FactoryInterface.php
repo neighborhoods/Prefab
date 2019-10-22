@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Buphalo\Template\Actor\Builder;
+namespace Neighborhoods\BuphaloTemplateTree\Actor\Builder;
 
-use Neighborhoods\Buphalo\Template\Actor\BuilderInterface;
+use Neighborhoods\BuphaloTemplateTree\Actor\BuilderInterface;
 
 interface FactoryInterface
 {

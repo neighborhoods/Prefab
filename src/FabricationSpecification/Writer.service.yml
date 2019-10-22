@@ -1,0 +1,3 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\WriterInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Writer

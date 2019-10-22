@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Buphalo\Template\Actor\Map;
+namespace Neighborhoods\BuphaloTemplateTree\Actor\Map;
 
-use Neighborhoods\Buphalo\Template\ActorInterface;
+use Neighborhoods\BuphaloTemplateTree\ActorInterface;
 
 use Doctrine\DBAL\Connection;
-use Neighborhoods\Buphalo\Template\Actor;
-use Neighborhoods\Buphalo\Template\Actor\MapInterface;
+use Neighborhoods\BuphaloTemplateTree\Actor;
+use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName
  */
 class Repository implements RepositoryInterface
@@ -23,17 +23,17 @@ class Repository implements RepositoryInterface
  */
     ];
 
-    public function createBuilder() : \Neighborhoods\Buphalo\Template\Actor\Map\BuilderInterface
+    public function createBuilder() : \Neighborhoods\BuphaloTemplateTree\Actor\Map\BuilderInterface
     {
         return $this->getActorMapBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : \Neighborhoods\Buphalo\Template\Actor\MapInterface
+    public function get(SearchCriteriaInterface $searchCriteria) : \Neighborhoods\BuphaloTemplateTree\Actor\MapInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
         $queryBuilder = $queryBuilderBuilder->build();
-        $queryBuilder->from(\Neighborhoods\Buphalo\Template\ActorInterface::TABLE_NAME)->select('*');
+        $queryBuilder->from(\Neighborhoods\BuphaloTemplateTree\ActorInterface::TABLE_NAME)->select('*');
         $records = $queryBuilder->execute()->fetchAll();
 
         foreach ($records as $key => $record) {

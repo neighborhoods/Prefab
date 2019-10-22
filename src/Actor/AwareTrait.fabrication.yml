@@ -1,0 +1,3 @@
+actors:
+  <ActorName>/Factory/AwareTrait.php:
+    template: Actor/Factory/Awaretrait.php

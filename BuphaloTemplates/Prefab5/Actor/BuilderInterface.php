@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Buphalo\Template\Actor;
+namespace Neighborhoods\BuphaloTemplateTree\Actor;
 
-use Neighborhoods\Buphalo\Template\ActorInterface;
+use Neighborhoods\BuphaloTemplateTree\ActorInterface;
 
 interface BuilderInterface
 {

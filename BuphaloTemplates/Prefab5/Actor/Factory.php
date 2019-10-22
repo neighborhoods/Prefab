@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Buphalo\Template\Actor;
+namespace Neighborhoods\BuphaloTemplateTree\Actor;
 
-use Neighborhoods\Buphalo\Template\ActorInterface;
+use Neighborhoods\BuphaloTemplateTree\ActorInterface;
 
 class Factory implements FactoryInterface
 {
     use AwareTrait;
-
     public function create(): ActorInterface
     {
         return clone $this->getActor();

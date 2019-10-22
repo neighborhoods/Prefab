@@ -1,14 +1,14 @@
 <?php
 
-namespace Neighborhoods\Buphalo\Template\Actor\Map;
+namespace Neighborhoods\BuphaloTemplateTree\Actor\Map;
 
-use Neighborhoods\Buphalo\Template\Actor\MapInterface;
+use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
 
 class Builder implements BuilderInterface
 {
 
-    use \Neighborhoods\Buphalo\Template\Actor\Map\Factory\AwareTrait;
-    use \Neighborhoods\Buphalo\Template\Actor\Builder\Factory\AwareTrait;
+    use \Neighborhoods\BuphaloTemplateTree\Actor\Map\Factory\AwareTrait;
+    use \Neighborhoods\BuphaloTemplateTree\Actor\Builder\Factory\AwareTrait;
 
     /**
      * @var array

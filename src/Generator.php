@@ -7,21 +7,15 @@ use Neighborhoods\Prefab\HttpSkeleton;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Yaml\Yaml;
-use Neighborhoods\Prefab;
-use Neighborhoods\Bradfab\Bradfab;
-use Neighborhoods\Bradfab\Protean\Container\Builder;
-use Neighborhoods\Prefab\SupportingActorGroup;
 
 class Generator implements GeneratorInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use BuildPlan\Builder\Factory\AwareTrait;
-    use Prefab\Bradfab\Template\Factory\AwareTrait;
-    use SupportingActorGroup\AllSupportingActors\Factory\AwareTrait;
-    use SupportingActorGroup\Collection\Factory\AwareTrait;
-    use SupportingActorGroup\Minimal\Factory\AwareTrait;
+    use Bradfab\Template\Factory\AwareTrait;
+    use FabricationSpecification\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\FabricationSpecification\Writer\Factory\AwareTrait;
 
     protected $buildPlans;
     protected $httpSrcDir;
@@ -91,43 +85,20 @@ class Generator implements GeneratorInterface
 
     protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
-        $configArray = $this->getSupportingActorConfigForBuildConfiguration($configuration, $this->getNameForDao($dao));
-
-        $writeFilePath = $this->getWritePathForDao($dao);
-        $directory = $this->getWriteDirectoryForDao($writeFilePath);
-
-        if (!file_exists($directory)) {
-            mkdir($directory, 0777, true);
-        }
-
-        $yaml = Yaml::dump($configArray, 10);
-        file_put_contents($writeFilePath, $yaml);
+        $fabricationSpecification = $this->getFabricationSpecificationForBuildConfiguration($configuration, $this->getNameForDao($dao));
+        $this->getFabricationSpecificationWriterFactory()->create()
+            ->setFabricationSpecification($fabricationSpecification)
+            ->setWritePath($this->getWritePathForDao($dao))
+            ->write();
 
         return $this;
     }
 
-    protected function getSupportingActorConfigForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : array
+    protected function getFabricationSpecificationForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : FabricationSpecificationInterface
     {
-        switch ($buildConfiguration->getSupportingActorGroup()) {
-            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE:
-                return $this->getAllSupportingActorsFactory()->create()
-                    ->setBuildConfiguration($buildConfiguration)
-                    ->setDaoName($daoName)
-                    ->getSupportingActorConfig();
-                break;
-            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COLLECTION:
-                return $this->getCollectionFactory()->create()
-                    ->setBuildConfiguration($buildConfiguration)
-                    ->setDaoName($daoName)
-                    ->getSupportingActorConfig();
-            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
-                return $this->getMinimalFactory()->create()
-                    ->setBuildConfiguration($buildConfiguration)
-                    ->setDaoName($daoName)
-                    ->getSupportingActorConfig();
-            default:
-                throw new \RuntimeException('Invalid supporting actor group ' . $buildConfiguration->getSupportingActorGroup());
-        }
+         return $this->getFabricationSpecificationBuilderFactory()->create()
+            ->setBuildConfiguration($buildConfiguration)
+            ->build();
     }
 
     protected function getNameForDao(SplFileInfo $dao) : string
@@ -330,8 +301,10 @@ class Generator implements GeneratorInterface
         return $writeFilePath;
     }
 
-    protected function getWriteDirectoryForDao(string $writeFilePath) : string
+    protected function getWriteDirectoryForDao(SplFileInfo $dao) : string
     {
+        $writeFilePath = $this->getWritePathForDao($dao);
+
         $directoryPathArray = explode('/', $writeFilePath);
         unset($directoryPathArray[count($directoryPathArray) - 1]);
         $directoryPath = implode('/', $directoryPathArray);

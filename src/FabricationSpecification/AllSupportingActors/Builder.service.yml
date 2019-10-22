@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\BuilderInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder
+    calls:
+      - [setFabricationSpecificationFactory, ['@Neighborhoods\Prefab\FabricationSpecification\FactoryInterface']]
+      - [setActorAwareTraitFactory, ['@Neighborhoods\Prefab\Actor\AwareTrait\FactoryInterface']]
+      - [setActorMapFactory, ['@Neighborhoods\Prefab\Actor\Map\FactoryInterface']]
