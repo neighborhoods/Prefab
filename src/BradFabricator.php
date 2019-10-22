@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab;
 
-use Neighborhoods\Bradfab\Bradfab;
+use Neighborhoods\Buphalo\Buphalo;
 use Symfony\Component\Filesystem\Filesystem;
-use Neighborhoods\Bradfab\Protean\Container\Builder;
+use Neighborhoods\Buphalo\Protean\Container\Builder;
 
 class BradFabricator implements BradFabricatorInterface
 {
@@ -18,18 +18,24 @@ class BradFabricator implements BradFabricatorInterface
         $filesystem = $this->getFileSystem();
         $filesystem->mkdir([__DIR__ . '/../bradfab/', __DIR__ . '/../fabricatedFiles/']);
 
-        // Where the Bradfab fabrication files were saved
-        putenv('BRADFAB_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
-        // Where to put the supporting actors
-        putenv('BRADFAB_TARGET_APPLICATION_FABRICATION_PATH=' . realpath(__DIR__ . '/../fabricatedFiles'));
-        // Where to find the templates to generate the supporting actors
-        putenv('BRADFAB_FABRICATOR_TEMPLATE_ACTOR_DIRECTORY_PATH='  . realpath(__DIR__ . '/Template/Prefab5/Actor'));
+        // Where the Buphalo fabrication files are located
+        putenv('BUPHALO_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
+        // Where to put the generated supporting actors
+        putenv('BUPHALO_TARGET_APPLICATION_FABRICATION_PATH=' . realpath(__DIR__ . '/../fabricatedFiles'));
+        // Where the supporting actor templates are located
+        putenv('BUPHALO_FABRICATOR_TEMPLATE_TREE_DIRECTORY_PATH='  . realpath(__DIR__ . '/BuphaloTemplates/Prefab5'));
         // Namespace of the generated files
-        putenv('BRADFAB_TARGET_APPLICATION_NAMESPACE=Neighborhoods\\'. $this->getProjectName() . '\\');
+        putenv('BUPHALO_TARGET_APPLICATION_NAMESPACE=Neighborhoods\\'. $this->getProjectName() . '\\');
 
-        $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../../bradfab/'));
+        putenv('Neighborhoods_Buphalo_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths='. realpath(__DIR__ . '/BuphaloTemplates/Prefab5'));
+        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\Buphalo\\');
+        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__SourceDirectoryPath='. realpath(__DIR__ . '/../../../neighborhoods/buphalo/src'));
+        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__FabricationDirectoryPath='. realpath(__DIR__ . '/../../../neighborhoods/buphalo/fab'));
 
-        $bradfab = (new Bradfab())->setProteanContainerBuilder($proteanContainerBuilder);
+
+        $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../../buphalo/'));
+
+        $bradfab = (new Buphalo())->setProteanContainerBuilder($proteanContainerBuilder);
         $bradfab->run();
 
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));

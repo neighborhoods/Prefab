@@ -324,7 +324,7 @@ class Generator implements GeneratorInterface
     protected function getWritePathForDao(SplFileInfo $dao) : string
     {
         $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
-        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.fabrication.yml';
+        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.buphalo.v1.fabrication.yml';
 
         $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
         return $writeFilePath;

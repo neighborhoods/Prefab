@@ -1,0 +1,8 @@
+services:
+  Neighborhoods\Buphalo\Template\Actor\Repository\HandlerInterface:
+    class: Neighborhoods\Buphalo\Template\Actor\Repository\Handler
+    public: false
+    shared: false
+    calls:
+      - [setActorMapRepository, ['@Neighborhoods\Buphalo\Template\Actor\RepositoryInterface']]
+      - [setSearchCriteriaServerRequestBuilderFactory, ['/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor */']]

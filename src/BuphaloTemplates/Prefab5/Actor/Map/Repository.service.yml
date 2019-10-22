@@ -1,0 +1,11 @@
+services:
+  Neighborhoods\Buphalo\Template\Actor\Map\RepositoryInterface:
+    class: Neighborhoods\Buphalo\Template\Actor\Map\Repository
+    public: false
+    shared: true
+    calls:
+      - [setDoctrineDBALConnectionDecoratorRepository, ['/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor-HttpMessage
+      */']]
+      - [setActorMapBuilderFactory, ['@Neighborhoods\Buphalo\Template\Actor\Map\Builder\FactoryInterface']]
+      - [setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory, ['/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor-SearchCriteria
+      */']]

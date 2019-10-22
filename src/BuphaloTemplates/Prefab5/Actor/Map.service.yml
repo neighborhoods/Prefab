@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Buphalo\Template\Actor\MapInterface:
+    class: Neighborhoods\Buphalo\Template\Actor\Map
+    public: false
+    shared: false
