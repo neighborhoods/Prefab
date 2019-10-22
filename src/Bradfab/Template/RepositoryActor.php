@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInsertElementMethod;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryJsonColumns;
 use Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor;
@@ -56,6 +57,12 @@ class RepositoryActor implements RepositoryActorInterface
                         Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryJsonColumns::class,
                         Template::KEY_STATIC_CONTEXT_RECORD => [
                             RepositoryJsonColumns::KEY_PROPERTIES => $propertyArray,
+                        ],
+                    ],
+                    RepositoryInsertElementMethod::ANNOTATION_PROCESSOR_KEY => [
+                        Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryInsertElementMethod::class,
+                        Template::KEY_STATIC_CONTEXT_RECORD => [
+                            RepositoryInsertElementMethod::KEY_PROPERTIES => $propertyArray,
                         ],
                     ],
                 ],
