@@ -14,7 +14,6 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
 
     protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
     protected const JSON_COLUMN_ARRAY_ITEM_PATTERN = "\t\tActorInterface::PROP_%s,\n";
-    protected const COMPLEX_OBJECT_NAMESPACE_PREFIX = '\\Neighborhoods\\';
 
     protected $context;
 

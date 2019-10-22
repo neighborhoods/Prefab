@@ -7,41 +7,35 @@ use Neighborhoods\Buphalo\Buphalo;
 use Symfony\Component\Filesystem\Filesystem;
 use Neighborhoods\Buphalo\Protean\Container\Builder;
 
-class BradFabricator implements BradFabricatorInterface
+class Fabricator implements FabricatorInterface
 {
     protected $project_name;
     protected $project_root;
     protected $file_system;
 
-    public function fabricateSupportingActors() : BradFabricatorInterface
+    public function fabricateSupportingActors() : FabricatorInterface
     {
         $filesystem = $this->getFileSystem();
-        $filesystem->mkdir([__DIR__ . '/../bradfab/', __DIR__ . '/../fabricatedFiles/']);
+        $filesystem->mkdir([__DIR__ . '/../BuphaloFabFiles/', __DIR__ . '/../fabricatedFiles/']);
 
-        // Where the Buphalo fabrication files are located
-        putenv('BUPHALO_TARGET_APPLICATION_SOURCE_PATH=' . realpath(__DIR__ . '/../bradfab'));
-        // Where to put the generated supporting actors
-        putenv('BUPHALO_TARGET_APPLICATION_FABRICATION_PATH=' . realpath(__DIR__ . '/../fabricatedFiles'));
         // Where the supporting actor templates are located
-        putenv('BUPHALO_FABRICATOR_TEMPLATE_TREE_DIRECTORY_PATH='  . realpath(__DIR__ . '/BuphaloTemplates/Prefab5'));
+        putenv('Neighborhoods_Buphalo_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths='. realpath(__DIR__ . '/../BuphaloTemplates/Prefab5'));
         // Namespace of the generated files
-        putenv('BUPHALO_TARGET_APPLICATION_NAMESPACE=Neighborhoods\\'. $this->getProjectName() . '\\');
-
-        putenv('Neighborhoods_Buphalo_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths='. realpath(__DIR__ . '/BuphaloTemplates/Prefab5'));
-        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\Buphalo\\');
-        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__SourceDirectoryPath='. realpath(__DIR__ . '/../../../neighborhoods/buphalo/src'));
-        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__FabricationDirectoryPath='. realpath(__DIR__ . '/../../../neighborhoods/buphalo/fab'));
-
+        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\'. $this->getProjectName() . '\\');
+        // Where the Buphalo fabrication files are located
+        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__SourceDirectoryPath='. realpath(__DIR__ . '/../BuphaloFabFiles'));
+        // Directory to save the generated supporting actors
+        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__FabricationDirectoryPath='. realpath(__DIR__ . '/../fabricatedFiles'));
 
         $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../../buphalo/'));
 
-        $bradfab = (new Buphalo())->setProteanContainerBuilder($proteanContainerBuilder);
-        $bradfab->run();
+        $buphalo = (new Buphalo())->setProteanContainerBuilder($proteanContainerBuilder);
+        $buphalo->run();
 
         $filesystem->mirror(realpath(__DIR__ . '/../fabricatedFiles'), realpath($this->getProjectRoot() . '/fab'));
 
         $filesystem->remove(realpath(__DIR__ . '/../fabricatedFiles/'));
-        $filesystem->remove(realpath(__DIR__ . '/../bradfab/'));
+        $filesystem->remove(realpath(__DIR__ . '/../BuphaloFabFiles/'));
 
         return $this;
     }
@@ -54,7 +48,7 @@ class BradFabricator implements BradFabricatorInterface
         return $this->project_root;
     }
 
-    public function setProjectRoot(string $project_root) : BradFabricatorInterface
+    public function setProjectRoot(string $project_root) : FabricatorInterface
     {
         if ($this->project_root !== null) {
             throw new \LogicException('BradFabricator projectRoot is already set.');
@@ -73,7 +67,7 @@ class BradFabricator implements BradFabricatorInterface
         return $this->file_system;
     }
 
-    public function setFileSystem(Filesystem $file_system) : BradFabricatorInterface
+    public function setFileSystem(Filesystem $file_system) : FabricatorInterface
     {
         if ($this->file_system !== null) {
             throw new \LogicException('BradFabricator file_system is already set.');
@@ -90,7 +84,7 @@ class BradFabricator implements BradFabricatorInterface
         return $this->project_name;
     }
 
-    public function setProjectName($project_name) : BradFabricatorInterface
+    public function setProjectName($project_name) : FabricatorInterface
     {
         if ($this->project_name !== null) {
             throw new \LogicException('BradFabricator project_name is already set.');

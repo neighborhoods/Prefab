@@ -326,7 +326,7 @@ class Generator implements GeneratorInterface
         $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
         $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.buphalo.v1.fabrication.yml';
 
-        $writeFilePath = __DIR__ . '/../bradfab/' . $daoRelativePath;
+        $writeFilePath = __DIR__ . '/../BuphaloFabFiles/' . $daoRelativePath;
         return $writeFilePath;
     }
 
@@ -348,7 +348,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function getBradFabricator() : BradFabricatorInterface
+    protected function getBradFabricator() : FabricatorInterface
     {
         if ($this->bradFabricator === null) {
             throw new \LogicException('Generator bradFabricator has not been set.');
@@ -356,7 +356,7 @@ class Generator implements GeneratorInterface
         return $this->bradFabricator;
     }
 
-    public function setBradFabricator(BradFabricatorInterface $bradFabricator) : GeneratorInterface
+    public function setFabricator(FabricatorInterface $bradFabricator) : GeneratorInterface
     {
         if ($this->bradFabricator !== null) {
             throw new \LogicException('Generator bradFabricator is already set.');

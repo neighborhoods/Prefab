@@ -5,7 +5,7 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 interface BuilderActorInterface
 {
-    public const BUILDER_KEY = 'Builder';
+    public const BUILDER_KEY = '/Builder';
 
     public const BUILDER_ACTOR_KEY = 'Builder.php';
     public const BUILDER_INTERFACE_ACTOR_KEY = 'BuilderInterface.php';

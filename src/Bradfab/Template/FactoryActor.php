@@ -18,7 +18,7 @@ class FactoryActor implements FactoryActorInterface
             $prefix . self::FACTORY_ACTOR_KEY => $this->getFactoryActor(),
             $prefix . self::FACTORY_INTERFACE_ACTOR_KEY => $this->getFactoryInterfaceActor(),
             $prefix . self::FACTORY_SERVICE_FILE_ACTOR_KEY => $this->getFactoryServiceFileActor(),
-            $prefix . self::FACTORY_ACTOR . '\\' . AwareTraitActor::ACTOR_KEY =>
+            $prefix . self::FACTORY_ACTOR . AwareTraitActor::ACTOR_KEY =>
                 $this->getAwareTraitActorFactory()->create()
                     ->getActorConfiguration()[AwareTraitActor::ACTOR_KEY]
         ];

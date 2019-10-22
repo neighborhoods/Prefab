@@ -23,33 +23,16 @@ class Template implements TemplateInterface
     use MapBuilderActor\Factory\AwareTrait;
     use RepositoryActor\Factory\AwareTrait;
 
-    protected const KEY_SUPPORTING_ACTORS = 'supporting_actors';
-    protected const KEY_REPOSITORY = 'Map\Repository.php';
-    protected const KEY_REPOSITORY_INTERFACE = 'Map\RepositoryInterface.php';
-    protected const KEY_HANDLER_INTERFACE = 'Map\Repository\HandlerInterface.php';
-    protected const KEY_HANDLER = 'Map\Repository\Handler.php';
-    protected const KEY_HANDLER_SERVICE_FILE = 'Map\Repository\Handler.service.yml';
-    protected const KEY_BUILDER = 'Builder.php';
-    protected const KEY_NAMESPACE_ANNOTATION_PROCESSOR = 'Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor';
+    protected const KEY_ACTORS = 'actors';
 
+    public const KEY_ACTOR_KEY_PREFIX = '<ActorName>';
     public const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
     public const KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME = 'processor_fqcn';
     public const KEY_STATIC_CONTEXT_RECORD = 'static_context_record';
 
-    protected const CONTEXT_KEY_ROUTE_PATH = 'route_path';
-    protected const CONTEXT_KEY_ROUTE_NAME = 'route_name';
-
     public const CONTEXT_KEY_NAMESPACES = 'namespaces';
     public const CONTEXT_KEY_NAMESPACE = 'namespace';
     public const CONTEXT_KEY_PROJECT_NAME = 'project_name';
-
-    protected const SUPPORTING_ACTOR_GROUP_FULL = 'full';
-    protected const SUPPORTING_ACTOR_GROUP_REDUCED = 'reduced';
-
-    protected $supportingActorConfigFiles = [
-        self::SUPPORTING_ACTOR_GROUP_FULL => 'AllSupportingActors.yml',
-        self::SUPPORTING_ACTOR_GROUP_REDUCED => 'ReducedSupportingActors.yml'
-    ];
 
     protected $route_path;
     protected $route_name;
@@ -60,7 +43,7 @@ class Template implements TemplateInterface
 
     public function getFabricationConfig() : array
     {
-        return [self::KEY_SUPPORTING_ACTORS => $this->supporting_actors];
+        return [self::KEY_ACTORS => $this->supporting_actors];
     }
 
     public function addAwareTraitActor() : TemplateInterface
