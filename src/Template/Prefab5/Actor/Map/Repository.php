@@ -6,6 +6,8 @@ namespace Neighborhoods\Bradfab\Template\Actor\Map;
 use Neighborhoods\Bradfab\Template\ActorInterface;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Neighborhoods\Bradfab\Template\Actor;
 use Neighborhoods\Bradfab\Template\Actor\MapInterface;
 /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName 
@@ -45,10 +47,47 @@ class Repository implements RepositoryInterface
         return $this->createBuilder()->setRecords($records)->build();
     }
 
-    public function save(MapInterface $property) : RepositoryInterface
+    /** @deprecated - use insert() */
+    public function save(MapInterface $map) : RepositoryInterface
     {
-        // TODO: Implement Save Method
+        return $this->insert($map);
+    }
+
+    public function insert(MapInterface $map) : RepositoryInterface
+    {
+        $connection = $this->getConnection();
+        try {
+            $connection->beginTransaction();
+            foreach ($map as $record) {
+                $this->insertElement($connection->createQueryBuilder(), $record);
+            }
+            $connection->commit();
+        } catch (\Throwable $e) {
+            $connection->rollBack();
+            throw $e;
+        }
+
         return $this;
+    }
+
+    protected function insertElement(QueryBuilder $queryBuilder,
+                                     ActorInterface $Actor) : ActorInterface
+    {
+        $values = [];
+
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-insertElement
+ */
+
+        $queryBuilder
+            ->insert(ActorInterface::TABLE_NAME)
+            ->values($values);
+        $queryBuilder->execute();
+        $lastInsertId = $queryBuilder->getConnection()->lastInsertId();
+        if (!is_numeric($lastInsertId)) {
+            throw new \LogicException('Actor inserted with non-numeric ID: ' . $lastInsertId);
+        }
+
+        return $Actor;
     }
 
     protected function getConnection() : Connection
