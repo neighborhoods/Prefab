@@ -9,6 +9,8 @@ use Neighborhoods\Prefab\FabricationSpecificationInterface;
 class Builder implements BuilderInterface
 {
     use \Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
@@ -21,21 +23,16 @@ class Builder implements BuilderInterface
                 return $this->getFabricationSpecificationAllSupportingActorsBuilderFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->build();
-//            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COLLECTION:
-//                return $this->getCollectionFactory()->create()
-//                    ->setBuildConfiguration($buildConfiguration)
-//                    ->setDaoName($daoName)
-//                    ->getSupportingActorConfig();
-//            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
-//                return $this->getMinimalFactory()->create()
-//                    ->setBuildConfiguration($buildConfiguration)
-//                    ->setDaoName($daoName)
-//                    ->getSupportingActorConfig();
-            default:
-                return $this->getFabricationSpecificationAllSupportingActorsBuilderFactory()->create()
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COLLECTION:
+                return $this->getFabricationSpecificationCollectionBuilderFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->build();
-//                throw new \RuntimeException('Invalid supporting actor group ' . $buildConfiguration->getSupportingActorGroup());
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
+                return $this->getFabricationSpecificationMinimalBuilderFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->build();
+            default:
+                throw new \RuntimeException('Invalid supporting actor group ' . $buildConfiguration->getSupportingActorGroup());
         }
     }
 

@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\FabricationSpecification\MapInterface:
-    class: Neighborhoods\Prefab\FabricationSpecification\Map
-    public: false
-    shared: false

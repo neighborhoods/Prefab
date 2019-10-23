@@ -5,8 +5,6 @@ services:
     calls:
     - [setBuildConfigurationBuilderFactory, ['@Neighborhoods\Prefab\BuildConfiguration\Builder\FactoryInterface']]
     - [setHttpSkeletonGeneratorFactory, ['@Neighborhoods\Prefab\HttpSkeleton\Generator\FactoryInterface']]
-    - [setBuildPlanBuilderFactory, ['@Neighborhoods\Prefab\BuildPlan\Builder\FactoryInterface']]
-    - [setTemplateFactory, ['@Neighborhoods\Prefab\Bradfab\Template\FactoryInterface']]
     - [setFabricator, ['@Neighborhoods\Prefab\FabricatorInterface']]
     - [setFabricationSpecificationBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Builder\FactoryInterface']]
     - [setFabricationSpecificationWriterFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Writer\FactoryInterface']]

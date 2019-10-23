@@ -12,8 +12,7 @@ class Writer implements WriterInterface
     protected const KEY_TEMPLATE = 'template';
 
     protected $fabricationSpecification;
-    protected $writeDirectory;
-    protected $filename;
+    protected $writePath;
 
     public function write() : WriterInterface
     {
@@ -63,18 +62,18 @@ class Writer implements WriterInterface
 
     protected function getWritePath() : string
     {
-        if ($this->writeDirectory === null) {
+        if ($this->writePath === null) {
             throw new \LogicException('Writer writePath has not been set.');
         }
-        return $this->writeDirectory;
+        return $this->writePath;
     }
 
     public function setWritePath(string $writeDirectory) : WriterInterface
     {
-        if ($this->writeDirectory !== null) {
+        if ($this->writePath !== null) {
             throw new \LogicException('Writer writePath is already set.');
         }
-        $this->writeDirectory = $writeDirectory;
+        $this->writePath = $writeDirectory;
         return $this;
     }
 }

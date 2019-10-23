@@ -3,5 +3,5 @@ services:
     class: Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder
     calls:
       - [setFabricationSpecificationFactory, ['@Neighborhoods\Prefab\FabricationSpecification\FactoryInterface']]
-      - [setActorAwareTraitFactory, ['@Neighborhoods\Prefab\Actor\AwareTrait\FactoryInterface']]
+      - [setActorFactory, ['@Neighborhoods\Prefab\Actor\FactoryInterface']]
       - [setActorMapFactory, ['@Neighborhoods\Prefab\Actor\Map\FactoryInterface']]

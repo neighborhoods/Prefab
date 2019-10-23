@@ -4,7 +4,6 @@
 namespace Neighborhoods\Prefab;
 
 use Neighborhoods\Prefab\HttpSkeleton;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -12,28 +11,19 @@ class Generator implements GeneratorInterface
 {
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
-    use BuildPlan\Builder\Factory\AwareTrait;
-    use Bradfab\Template\Factory\AwareTrait;
     use FabricationSpecification\Builder\Factory\AwareTrait;
     use \Neighborhoods\Prefab\FabricationSpecification\Writer\Factory\AwareTrait;
 
-    protected $buildPlans;
     protected $httpSrcDir;
-    protected $stagedHttpDir;
     protected $projectRoot;
-    protected $fabLocation;
     protected $srcLocation;
     protected $projectName;
-    protected $fileSystem;
     protected $bradFabricator;
 
     protected function configure()
     {
         $this->setHttpSrcDir(__DIR__ . '/../http');
-        $this->setStagedHttpDir(__DIR__ . '/../stagedHttp');
-
         $this->setSrcLocation($this->getProjectRoot() . 'src/');
-        $this->setFabLocation($this->getProjectRoot() . 'fab/');
 
         return $this;
     }
@@ -60,7 +50,7 @@ class Generator implements GeneratorInterface
     protected function generateBuildPlan() : GeneratorInterface
     {
         $finder = new Finder();
-        $daos = $finder->files()->name('*' . BuildPlan\Builder::DAO_YML_SUFFIX)->in($this->srcLocation);
+        $daos = $finder->files()->name('*' . '.prefab.definition.yml')->in($this->srcLocation);
 
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
@@ -71,11 +61,6 @@ class Generator implements GeneratorInterface
                 ->build();
 
             $this->generateBradfabTemplate($configuration, $dao);
-            $this->appendBuildPlan(
-                $this->getBuildPlanBuilderFactory()->create()
-                    ->setBuildConfiguration($configuration)
-                    ->build()
-            );
         }
 
         echo "\e[0;32m success. \e[0m" . PHP_EOL;
@@ -85,7 +70,7 @@ class Generator implements GeneratorInterface
 
     protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
-        $fabricationSpecification = $this->getFabricationSpecificationForBuildConfiguration($configuration, $this->getNameForDao($dao));
+        $fabricationSpecification = $this->getFabricationSpecificationForBuildConfiguration($configuration);
         $this->getFabricationSpecificationWriterFactory()->create()
             ->setFabricationSpecification($fabricationSpecification)
             ->setWritePath($this->getWritePathForDao($dao))
@@ -94,21 +79,13 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function getFabricationSpecificationForBuildConfiguration(BuildConfigurationInterface $buildConfiguration, string $daoName) : FabricationSpecificationInterface
+    protected function getFabricationSpecificationForBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : FabricationSpecificationInterface
     {
          return $this->getFabricationSpecificationBuilderFactory()->create()
             ->setBuildConfiguration($buildConfiguration)
             ->build();
     }
 
-    protected function getNameForDao(SplFileInfo $dao) : string
-    {
-        $name = explode('/src/', $dao->getRealPath())[1];
-        $name = implode('', explode('/', $name));
-        $name = str_replace('.prefab.definition.yml', '', $name);
-
-        return $name;
-    }
     protected function generateHttpSkeleton() : GeneratorInterface
     {
         $generator = $this->getHttpSkeletonGeneratorFactory()->create();
@@ -125,23 +102,19 @@ class Generator implements GeneratorInterface
 
     protected function generatePrefabActors() : GeneratorInterface
     {
-        if ($this->hasBuildPlans()) {
-            foreach ($this->getBuildPlans() as $buildPlan) {
-                $buildPlan->execute();
-            }
+        $this->getFabricator()
+            ->setProjectName($this->getProjectName())
+            ->setProjectRoot($this->getProjectRoot())
+            ->fabricateSupportingActors();
 
-            $this->getBradFabricator()
-                ->setProjectName($this->getProjectName())
-                ->setProjectRoot($this->getProjectRoot())
-                ->fabricateSupportingActors();
+        echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
-            echo "\e[0;32m success. \e[0m" . PHP_EOL;
-        } else {
-            echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
-            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
-            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
-                " They MUST be located in a versioned directory under src/" . PHP_EOL;
-        }
+//        } else {
+//            echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
+//            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
+//            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
+//                " They MUST be located in a versioned directory under src/" . PHP_EOL;
+//        }
 
         return $this;
     }
@@ -159,16 +132,6 @@ class Generator implements GeneratorInterface
         $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
 
         return $projectName;
-    }
-
-    protected function fabricateSupportingActors() : GeneratorInterface
-    {
-        $this->getBradFabricator()
-            ->setProjectName($this->getProjectName())
-            ->setProjectRoot($this->getProjectRoot())
-            ->fabricateSupportingActors();
-
-        return $this;
     }
 
     protected function getProjectName() : string
@@ -205,25 +168,6 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function hasBuildPlans() : bool
-    {
-        return $this->buildPlans !== null;
-    }
-
-    protected function getBuildPlans() : array
-    {
-        if ($this->buildPlans === null) {
-            throw new \LogicException('Generator buildPlans has not been set.');
-        }
-        return $this->buildPlans;
-    }
-
-    public function appendBuildPlan(BuildPlanInterface $buildPlan) : GeneratorInterface
-    {
-        $this->buildPlans[] = $buildPlan;
-        return $this;
-    }
-
     protected function getHttpSrcDir() : string
     {
         if ($this->httpSrcDir === null) {
@@ -238,40 +182,6 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator httpSrcDir is already set.');
         }
         $this->httpSrcDir = $httpSrcDir;
-        return $this;
-    }
-
-    protected function getStagedHttpDir() : string
-    {
-        if ($this->stagedHttpDir === null) {
-            throw new \LogicException('Generator stagedHttpDir has not been set.');
-        }
-        return $this->stagedHttpDir;
-    }
-
-    public function setStagedHttpDir(string $stagedHttpDir) : GeneratorInterface
-    {
-        if ($this->stagedHttpDir !== null) {
-            throw new \LogicException('Generator stagedHttpDir is already set.');
-        }
-        $this->stagedHttpDir = $stagedHttpDir;
-        return $this;
-    }
-
-    protected function getFabLocation() : string
-    {
-        if ($this->fabLocation === null) {
-            throw new \LogicException('Generator fabLocation has not been set.');
-        }
-        return $this->fabLocation;
-    }
-
-    public function setFabLocation(string $fabLocation) : GeneratorInterface
-    {
-        if ($this->fabLocation !== null) {
-            throw new \LogicException('Generator fabLocation is already set.');
-        }
-        $this->fabLocation = $fabLocation;
         return $this;
     }
 
@@ -301,27 +211,7 @@ class Generator implements GeneratorInterface
         return $writeFilePath;
     }
 
-    protected function getWriteDirectoryForDao(SplFileInfo $dao) : string
-    {
-        $writeFilePath = $this->getWritePathForDao($dao);
-
-        $directoryPathArray = explode('/', $writeFilePath);
-        unset($directoryPathArray[count($directoryPathArray) - 1]);
-        $directoryPath = implode('/', $directoryPathArray);
-        return $directoryPath;
-    }
-
-
-    public function setFileSystem(Filesystem $fileSystem) : GeneratorInterface
-    {
-        if ($this->fileSystem !== null) {
-            throw new \LogicException('Generator fileSystem is already set.');
-        }
-        $this->fileSystem = $fileSystem;
-        return $this;
-    }
-
-    protected function getBradFabricator() : FabricatorInterface
+    protected function getFabricator() : FabricatorInterface
     {
         if ($this->bradFabricator === null) {
             throw new \LogicException('Generator bradFabricator has not been set.');

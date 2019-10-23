@@ -1,6 +1,0 @@
-services:
-  Neighborhoods\Prefab\Actor\AwareTraitInterface:
-    class: Neighborhoods\Prefab\Actor
-    calls:
-      - ['setActorKey', ['<ActorName>/AwareTrait.php']]
-      - ['setTemplatePath', ['Actor/AwareTrait.php']]

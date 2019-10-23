@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors;
+namespace Neighborhoods\Prefab\FabricationSpecification\Minimal;
 
 use Neighborhoods\Prefab\ActorConfiguration;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
@@ -24,34 +24,6 @@ class Builder implements BuilderInterface
         ActorConfiguration\Actor\FactoryInterface::class,
         ActorConfiguration\Actor\FactoryServiceFile::class,
         ActorConfiguration\Actor\Factory\AwareTrait::class,
-        ActorConfiguration\Actor\Builder::class,
-        ActorConfiguration\Actor\BuilderInterface::class,
-        ActorConfiguration\Actor\BuilderServiceFile::class,
-        ActorConfiguration\Actor\Builder\AwareTrait::class,
-        ActorConfiguration\Actor\Builder\Factory::class,
-        ActorConfiguration\Actor\Builder\FactoryInterface::class,
-        ActorConfiguration\Actor\Builder\FactoryServiceFile::class,
-        ActorConfiguration\Actor\Builder\Factory\AwareTrait::class,
-        ActorConfiguration\Actor\Map::class,
-        ActorConfiguration\Actor\MapInterface::class,
-        ActorConfiguration\Actor\MapServiceFile::class,
-        ActorConfiguration\Actor\Map\AwareTrait::class,
-        ActorConfiguration\Actor\Map\Factory::class,
-        ActorConfiguration\Actor\Map\FactoryInterface::class,
-        ActorConfiguration\Actor\Map\FactoryServiceFile::class,
-        ActorConfiguration\Actor\Map\Factory\AwareTrait::class,
-        ActorConfiguration\Actor\Map\Builder::class,
-        ActorConfiguration\Actor\Map\BuilderInterface::class,
-        ActorConfiguration\Actor\Map\BuilderServiceFile::class,
-        ActorConfiguration\Actor\Map\Builder\AwareTrait::class,
-        ActorConfiguration\Actor\Map\Builder\Factory::class,
-        ActorConfiguration\Actor\Map\Builder\FactoryInterface::class,
-        ActorConfiguration\Actor\Map\Builder\FactoryServiceFile::class,
-        ActorConfiguration\Actor\Map\Builder\Factory\AwareTrait::class,
-        ActorConfiguration\Actor\Map\Repository::class,
-        ActorConfiguration\Actor\Map\RepositoryInterface::class,
-        ActorConfiguration\Actor\Map\RepositoryServiceFile::class,
-        ActorConfiguration\Actor\Map\Repository\Handler::class,
     ];
 
     public function build() : FabricationSpecificationInterface

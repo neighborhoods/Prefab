@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\Prefab\Actor\Map\FactoryInterface:
-    class: Neighborhoods\Prefab\Actor\Map\Factory
-    public: false
-    shared: true
-    calls:
-      - [setActorMap, ['@Neighborhoods\Prefab\Actor\MapInterface']]

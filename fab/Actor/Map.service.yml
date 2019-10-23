@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\Actor\MapInterface:
-    class: Neighborhoods\Prefab\Actor\Map
-    public: false
-    shared: false
