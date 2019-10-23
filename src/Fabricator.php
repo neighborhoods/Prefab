@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab;
 
-use Neighborhoods\Buphalo\Buphalo;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterfaceBuphalo;
 use Symfony\Component\Filesystem\Filesystem;
 use Neighborhoods\Buphalo\Protean\Container\Builder;
 

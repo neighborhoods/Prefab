@@ -1,5 +1,5 @@
 services:
   Neighborhoods\BuphaloTemplateTree\ActorInterface:
-    class: Neighborhoods\BuphaloTemplateTree\PLACEHOLDER
+    class: Neighborhoods\BuphaloTemplateTree\Actor
     public: false
     shared: false

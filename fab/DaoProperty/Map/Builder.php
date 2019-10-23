@@ -8,7 +8,7 @@ class Builder implements BuilderInterface
 {
 
     use \Neighborhoods\BuphaloDaoProperty\Map\BuilderTree\Map\Factory\AwareTrait;
-    use \Neighborhoods\BuphaloDaoProperty\Map\BuilderTree\Factory\AwareTrait;
+    use \Neighborhoods\BuphaloDaoProperty\Map\BuilderTree\Builder\Factory\AwareTrait;
 
     /**
      * @var array

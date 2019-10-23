@@ -5,4 +5,4 @@ services:
     shared: false
     calls:
       - [setDaoPropertyMapFactory, ['@Neighborhoods\Prefab\DaoProperty\Map\FactoryInterface']]
-      - [setDaoPropertyBuilderFactory, ['@Neighborhoods\Prefab\DaoProperty\FactoryInterface']]
+      - [setDaoPropertyBuilderFactory, ['@Neighborhoods\Prefab\DaoProperty\Builder\FactoryInterface']]
