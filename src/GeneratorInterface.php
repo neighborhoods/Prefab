@@ -14,5 +14,5 @@ interface GeneratorInterface
 
     public function setSrcLocation(string $srcLocation) : GeneratorInterface;
 
-    public function setFabricator(FabricatorInterface $bradFabricator) : GeneratorInterface;
+    public function setFabricator(FabricatorInterface $fabricator) : GeneratorInterface;
 }

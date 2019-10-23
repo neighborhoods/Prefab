@@ -18,7 +18,7 @@ class Generator implements GeneratorInterface
     protected $projectRoot;
     protected $srcLocation;
     protected $projectName;
-    protected $bradFabricator;
+    protected $fabricator;
 
     protected function configure()
     {
@@ -33,11 +33,8 @@ class Generator implements GeneratorInterface
         $this->configure();
         $this->setProjectName($this->getProjectNameFromComposer());
 
-        echo PHP_EOL . ">> Copying the skeleton...";
+        echo PHP_EOL . ">> Copying HTTP machinery...";
         $this->generateHttpSkeleton();
-
-        echo ">> Assembling the Prefab build plan...";
-        $this->generateBuildPlan();
 
         echo ">> Generating Prefab machinery...";
         $this->generatePrefabActors();
@@ -47,28 +44,7 @@ class Generator implements GeneratorInterface
         return $this;
     }
 
-    protected function generateBuildPlan() : GeneratorInterface
-    {
-        $finder = new Finder();
-        $daos = $finder->files()->name('*' . '.prefab.definition.yml')->in($this->srcLocation);
-
-        /** @var SplFileInfo $dao */
-        foreach ($daos as $dao) {
-            $configuration = $this->getBuildConfigurationBuilderFactory()->create()
-                ->setYamlFilePath($dao->getRealPath())
-                ->setProjectName($this->getProjectName())
-                ->setProjectRoot($this->getProjectRoot())
-                ->build();
-
-            $this->generateBradfabTemplate($configuration, $dao);
-        }
-
-        echo "\e[0;32m success. \e[0m" . PHP_EOL;
-
-        return $this;
-    }
-
-    protected function generateBradfabTemplate(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
+    protected function writeFabricationSpecificationToDisk(BuildConfigurationInterface $configuration, SplFileInfo $dao) : GeneratorInterface
     {
         $fabricationSpecification = $this->getFabricationSpecificationForBuildConfiguration($configuration);
         $this->getFabricationSpecificationWriterFactory()->create()
@@ -102,19 +78,36 @@ class Generator implements GeneratorInterface
 
     protected function generatePrefabActors() : GeneratorInterface
     {
+        $finder = new Finder();
+        // TODO: Put the file extension somewhere as a constant
+        $daos = $finder->files()->name('*.prefab.definition.yml')->in($this->srcLocation);
+
+        if (count($daos) === 0) {
+            echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
+            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
+            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
+                " They MUST be located in a versioned directory under src/" . PHP_EOL;
+
+            return $this;
+        }
+
+        /** @var SplFileInfo $dao */
+        foreach ($daos as $dao) {
+            $configuration = $this->getBuildConfigurationBuilderFactory()->create()
+                ->setYamlFilePath($dao->getRealPath())
+                ->setProjectName($this->getProjectName())
+                ->setProjectRoot($this->getProjectRoot())
+                ->build();
+
+            $this->writeFabricationSpecificationToDisk($configuration, $dao);
+        }
+
         $this->getFabricator()
             ->setProjectName($this->getProjectName())
             ->setProjectRoot($this->getProjectRoot())
             ->fabricateSupportingActors();
 
         echo "\e[0;32m success. \e[0m" . PHP_EOL;
-
-//        } else {
-//            echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
-//            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
-//            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
-//                " They MUST be located in a versioned directory under src/" . PHP_EOL;
-//        }
 
         return $this;
     }
@@ -213,18 +206,18 @@ class Generator implements GeneratorInterface
 
     protected function getFabricator() : FabricatorInterface
     {
-        if ($this->bradFabricator === null) {
-            throw new \LogicException('Generator bradFabricator has not been set.');
+        if ($this->fabricator === null) {
+            throw new \LogicException('Generator fabricator has not been set.');
         }
-        return $this->bradFabricator;
+        return $this->fabricator;
     }
 
-    public function setFabricator(FabricatorInterface $bradFabricator) : GeneratorInterface
+    public function setFabricator(FabricatorInterface $fabricator) : GeneratorInterface
     {
-        if ($this->bradFabricator !== null) {
-            throw new \LogicException('Generator bradFabricator is already set.');
+        if ($this->fabricator !== null) {
+            throw new \LogicException('Generator fabricator is already set.');
         }
-        $this->bradFabricator = $bradFabricator;
+        $this->fabricator = $fabricator;
         return $this;
     }
 
