@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\FactoryInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\Factory
+    public: false
+    shared: true
+    calls:
+      - [setFabricationSpecificationCollectionBuilder, ['@Neighborhoods\Prefab\FabricationSpecification\Collection\BuilderInterface']]
