@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75140db2555fc427ca9c8651b32d0a82",
+    "content-hash": "2e7c492e33b41be492c4c30619afafb9",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -412,73 +412,18 @@
             "time": "2019-04-16T19:44:52+00:00"
         },
         {
-            "name": "neighborhoods/bradfab",
-            "version": "1.0.0-beta8",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:neighborhoods/Bradfab.git",
-                "reference": "1a096c24f1d61ec71d646e44c6745e4c5ae2b934"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neighborhoods/Bradfab/zipball/1a096c24f1d61ec71d646e44c6745e4c5ae2b934",
-                "reference": "1a096c24f1d61ec71d646e44c6745e4c5ae2b934",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2",
-                "symfony/config": "^4.2",
-                "symfony/console": "^4.2",
-                "symfony/dependency-injection": "^4.2",
-                "symfony/expression-language": "^4.2",
-                "symfony/filesystem": "^4.2",
-                "symfony/finder": "^4.2",
-                "symfony/yaml": "^4.2"
-            },
-            "bin": [
-                "bin/bradfab"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Neighborhoods\\Bradfab\\": [
-                        "src",
-                        "fab"
-                    ]
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Brad Wilson",
-                    "email": "brad.wilson@neighborhoods.com"
-                }
-            ],
-            "description": "Bradfab fabricates patterns.",
-            "keywords": [
-                "Bradfab"
-            ],
-            "support": {
-                "source": "https://github.com/neighborhoods/Bradfab/tree/1.0.0-beta8",
-                "issues": "https://github.com/neighborhoods/Bradfab/issues"
-            },
-            "time": "2018-12-28T01:27:57+00:00"
-        },
-        {
             "name": "neighborhoods/buphalo",
-            "version": "1.0.0-beta9",
+            "version": "1.0.0-RC3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:neighborhoods/Buphalo.git",
-                "reference": "6b39216e19a40683f0a552875d08398f6b21857d"
+                "reference": "dfac5430ed77d19e8d127c5f456c28f76eb9fe34"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://satis.neighborhoods.com/dist/neighborhoods/buphalo/neighborhoods-buphalo-6b39216e19a40683f0a552875d08398f6b21857d-zip-4da2fe.tar",
-                "reference": "6b39216e19a40683f0a552875d08398f6b21857d",
-                "shasum": "0a2eea3da210298edfd56c895981022362a62ebc"
+                "url": "https://satis.neighborhoods.com/dist/neighborhoods/buphalo/neighborhoods-buphalo-dfac5430ed77d19e8d127c5f456c28f76eb9fe34-zip-a20269.tar",
+                "reference": "dfac5430ed77d19e8d127c5f456c28f76eb9fe34",
+                "shasum": "86e99005dc716ce1bc682084fa7f5e6bb6423834"
             },
             "require": {
                 "ext-json": "*",
@@ -491,7 +436,9 @@
                 "symfony/yaml": "^4.2"
             },
             "bin": [
-                "bin/buphalo"
+                "bin/v1/buphalo",
+                "bin/v1/makephar",
+                "bin/v1/upgrade"
             ],
             "type": "library",
             "autoload": {
@@ -520,7 +467,7 @@
                 "Buphalo",
                 "Code Generation"
             ],
-            "time": "2019-10-14T16:47:21+00:00"
+            "time": "2019-10-23T16:09:41+00:00"
         },
         {
             "name": "nikic/fast-route",
