@@ -8,6 +8,6 @@ interface AnnotationProcessorInterface
      public function getProcessorFullyQualifiedClassname(): string;
      public function setProcessorFullyQualifiedClassname(string $processorFullyQualifiedClassname): AnnotationProcessorInterface;
 
-     public function getStaticContextRecord(): string;
-     public function setStaticContextRecord(string $staticContextRecord): AnnotationProcessorInterface;
+     public function getStaticContextRecord(): array;
+     public function setStaticContextRecord(array $staticContextRecord): AnnotationProcessorInterface;
 }

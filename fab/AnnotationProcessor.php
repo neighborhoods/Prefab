@@ -8,7 +8,7 @@ class AnnotationProcessor implements AnnotationProcessorInterface
     /** @var string */
     private $processorFullyQualifiedClassname;
 
-    /** @var string */
+    /** @var array */
     private $staticContextRecord;
 
      public function getProcessorFullyQualifiedClassname(): string
@@ -31,7 +31,7 @@ class AnnotationProcessor implements AnnotationProcessorInterface
          return $this;
      }
 
-     public function getStaticContextRecord(): string
+     public function getStaticContextRecord(): array
      {
          if ($this->staticContextRecord === null) {
              throw new \LogicException('staticContextRecord has not been set');
@@ -40,7 +40,7 @@ class AnnotationProcessor implements AnnotationProcessorInterface
          return $this->staticContextRecord;
      }
      
-     public function setStaticContextRecord(string $staticContextRecord): AnnotationProcessorInterface
+     public function setStaticContextRecord(array $staticContextRecord): AnnotationProcessorInterface
      {
          if ($this->staticContextRecord !== null) {
              throw new \LogicException('staticContextRecord has already been set');

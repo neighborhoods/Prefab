@@ -8,7 +8,7 @@ actors:
           - name: processorFullyQualifiedClassname
             type: string
           - name: staticContextRecord
-            type: string
+            type: array
   <ActorName>.service.yml:
     template: Actor.service.yml
   <ActorName>Interface.php:
@@ -20,7 +20,7 @@ actors:
           - name: processorFullyQualifiedClassname
             type: string
           - name: staticContextRecord
-            type: string
+            type: array
   <ActorName>/AwareTrait.php:
     template: Actor/Awaretrait.php
   <ActorName>/Factory.php:

@@ -5,10 +5,10 @@ namespace Neighborhoods\Prefab;
 
 class FabricationSpecification implements FabricationSpecificationInterface
 {
-    /** @var \Neighborhoods\Prefab\MapInterface */
+    /** @var \Neighborhoods\Prefab\Actor\MapInterface */
     private $actorMap;
 
-     public function getFabricationSpecificationMap(): \Neighborhoods\Prefab\MapInterface
+     public function getActorMap(): \Neighborhoods\Prefab\Actor\MapInterface
      {
          if ($this->actorMap === null) {
              throw new \LogicException('actorMap has not been set');
@@ -17,7 +17,7 @@ class FabricationSpecification implements FabricationSpecificationInterface
          return $this->actorMap;
      }
      
-     public function setFabricationSpecificationMap(\Neighborhoods\Prefab\MapInterface $actorMap): FabricationSpecificationInterface
+     public function setActorMap(\Neighborhoods\Prefab\Actor\MapInterface $actorMap): FabricationSpecificationInterface
      {
          if ($this->actorMap !== null) {
              throw new \LogicException('actorMap has already been set');
