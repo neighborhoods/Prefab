@@ -1,3 +1,5 @@
 services:
   Neighborhoods\Prefab\AnnotationProcessorInterface:
     class: Neighborhoods\Prefab\AnnotationProcessor
+    public: false
+    shared: false

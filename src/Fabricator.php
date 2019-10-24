@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab;
 
-use Neighborhoods\Buphalo\V1\AnnotationProcessorInterfaceBuphalo;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
+use Neighborhoods\Buphalo\V1\Buphalo;
 use Symfony\Component\Filesystem\Filesystem;
-use Neighborhoods\Buphalo\Protean\Container\Builder;
+use Neighborhoods\Buphalo\V1\Protean\Container\Builder;
 
 class Fabricator implements FabricatorInterface
 {

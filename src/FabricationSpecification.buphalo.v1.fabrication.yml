@@ -1,4 +1,22 @@
 actors:
+  <ActorName>.php:
+    template: Actor.php
+    annotation_processors:
+      DaoPropertiesAndAccessors:
+        processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAO
+        static_context_record:
+          - name: actorMap
+            type: \Neighborhoods\Prefab\Actor\MapInterface
+  <ActorName>.service.yml:
+    template: Actor.service.yml
+  <ActorName>Interface.php:
+    template: ActorInterface.php
+    annotation_processors:
+      DaoAccessors:
+        processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAOInterface
+        static_context_record:
+          - name: actorMap
+            type: \Neighborhoods\Prefab\Actor\MapInterface
   <ActorName>/AwareTrait.php:
     template: Actor/Awaretrait.php
   <ActorName>/Factory.php:

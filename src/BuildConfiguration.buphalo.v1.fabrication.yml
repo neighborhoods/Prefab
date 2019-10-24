@@ -5,9 +5,23 @@ actors:
       DaoPropertiesAndAccessors:
         processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAO
         static_context_record:
-          - name: processorFullyQualifiedClassname
+          - name: tableName
             type: string
-          - name: staticContextRecord
+          - name: daoIdentityField
+            type: string
+          - name: daoProperties
+            type: array
+          - name: rootSaveLocation
+            type: string
+          - name: projectName
+            type: string
+          - name: httpRoute
+            type: string
+          - name: httpVerbs
+            type: array
+          - name: projectDir
+            type: string
+          - name: supportingActorGroup
             type: string
   <ActorName>.service.yml:
     template: Actor.service.yml
@@ -17,10 +31,28 @@ actors:
       DaoAccessors:
         processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAOInterface
         static_context_record:
-          - name: processorFullyQualifiedClassname
-            type: string
-          - name: staticContextRecord
-            type: string
+        - name: tableName
+          type: string
+        - name: daoIdentityField
+          type: string
+        - name: daoProperties
+          type: array
+        - name: projectName
+          type: string
+        - name: rootSaveLocation
+          type: string
+        - name: httpRoute
+          type: string
+        - name: httpRoute
+          type: string
+        - name: httpRoute
+          type: string
+        - name: httpVerbs
+          type: array
+        - name: projectDir
+          type: string
+        - name: supportingActorGroup
+          type: string
   <ActorName>/AwareTrait.php:
     template: Actor/Awaretrait.php
   <ActorName>/Factory.php:

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\BuildConfiguration;
 
-
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
@@ -16,7 +15,6 @@ class Builder implements BuilderInterface
 
     protected $yamlFilePath;
     protected $projectName;
-    protected $daoNamespace;
     protected $projectRoot;
 
     public function build() : BuildConfigurationInterface
