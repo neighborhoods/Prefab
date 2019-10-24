@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\AnnotationProcessor\MapInterface:
-    class: Neighborhoods\Prefab\AnnotationProcessor\Map
-    public: false
-    shared: false

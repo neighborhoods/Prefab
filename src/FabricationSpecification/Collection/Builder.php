@@ -60,6 +60,7 @@ class Builder implements BuilderInterface
             $actorMap->append(
                 $this->getActorFactory()->create()
                     ->setActorKey($actor::ACTOR_KEY)
+                    ->setAnnotationProcessorMap()
                     ->setTemplatePath($actor::TEMPLATE_PATH)
             );
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\FabricationSpecification\Minimal;
 
 use Neighborhoods\Prefab\ActorConfiguration;
+use Neighborhoods\Prefab\AnnotationProcessorRecord;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\FabricationSpecificationInterface;
 
@@ -12,6 +13,7 @@ class Builder implements BuilderInterface
     use \Neighborhoods\Prefab\FabricationSpecification\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Map\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\AnnotationProcessorRecord\Map\Builder\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
@@ -36,12 +38,35 @@ class Builder implements BuilderInterface
             $actorMap->append(
                 $this->getActorFactory()->create()
                     ->setActorKey($actor::ACTOR_KEY)
-                    ->setTemplatePath($actor::TEMPLATE_PATH)
+                    ->setActorInterfacePath($actor::TEMPLATE_PATH)
+                    ->setAnnotationProcessorRecordMap(
+                        $this->getAnnotationProcessorRecordMapBuilderFactory()->create()
+                            ->setRecords()
+                            ->build()
+                    )
             );
         }
 
         return $this->getFabricationSpecificationFactory()->create()
             ->setActorMap($actorMap);
+    }
+
+    protected function buildAnnotationProcessorMapForActor(string $actor) : AnnotationProcessorRecord\Map
+    {
+        $antProcBuilderFactoryArray = [
+            BuilderBuildForInsertMethod_BuilderFactory::class,
+            BuilderBuildForUpdateMethod_BuilderFactory::class
+        ];
+
+        $antProcMap = $this->getAntProcMapFactory()->create();
+        foreach ($antProcBuilderFactoryArray as $antProcBuilderFactory) {
+            $antProcBuilder = $antProcBuilderFactory->create();
+            $antProcBuilder->setBuildConfiguration($this->getBuildConfiguration());
+            $antProc = $antProcBuilder->build();
+            $antProcMap->append($antProc);
+        }
+
+        return $antProcMap;
     }
 
     protected function getBuildConfiguration() : BuildConfigurationInterface

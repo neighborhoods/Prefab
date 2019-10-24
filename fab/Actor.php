@@ -5,8 +5,8 @@ namespace Neighborhoods\Prefab;
 
 class Actor implements ActorInterface
 {
-    /** @var \Neighborhoods\Prefab\AnnotationProcessor\Map */
-    private $annotationProcessorMap;
+    /** @var \Neighborhoods\Prefab\AnnotationProcessorRecord\Map */
+    private $annotationProcessorRecordMap;
 
     /** @var string */
     private $actorKey;
@@ -14,22 +14,22 @@ class Actor implements ActorInterface
     /** @var string */
     private $templatePath;
 
-     public function getAnnotationProcessorMap(): \Neighborhoods\Prefab\AnnotationProcessor\Map
+     public function getAnnotationProcessorRecordMap(): \Neighborhoods\Prefab\AnnotationProcessorRecord\Map
      {
-         if ($this->annotationProcessorMap === null) {
-             throw new \LogicException('annotationProcessorMap has not been set');
+         if ($this->annotationProcessorRecordMap === null) {
+             throw new \LogicException('annotationProcessorRecordMap has not been set');
          }
          
-         return $this->annotationProcessorMap;
+         return $this->annotationProcessorRecordMap;
      }
      
-     public function setAnnotationProcessorMap(\Neighborhoods\Prefab\AnnotationProcessor\Map $annotationProcessorMap): ActorInterface
+     public function setAnnotationProcessorRecordMap(\Neighborhoods\Prefab\AnnotationProcessorRecord\Map $annotationProcessorRecordMap): ActorInterface
      {
-         if ($this->annotationProcessorMap !== null) {
-             throw new \LogicException('annotationProcessorMap has already been set');
+         if ($this->annotationProcessorRecordMap !== null) {
+             throw new \LogicException('annotationProcessorRecordMap has already been set');
          }
          
-         $this->annotationProcessorMap = $annotationProcessorMap;
+         $this->annotationProcessorRecordMap = $annotationProcessorRecordMap;
          
          return $this;
      }

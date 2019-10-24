@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\Prefab\AnnotationProcessor\Map\FactoryInterface:
-    class: Neighborhoods\Prefab\AnnotationProcessor\Map\Factory
-    public: false
-    shared: true
-    calls:
-      - [setAnnotationProcessorMap, ['@Neighborhoods\Prefab\AnnotationProcessor\MapInterface']]

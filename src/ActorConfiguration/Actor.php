@@ -7,4 +7,7 @@ interface Actor
 {
     public const ACTOR_KEY = '<ActorName>.php';
     public const TEMPLATE_PATH = 'Actor.php';
+    public const ANNOTATION_PROCESSOR_RECORD_BUILDERS = [
+
+    ];
 }
