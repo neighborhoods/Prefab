@@ -90,6 +90,39 @@ class Repository implements RepositoryInterface
         return $Actor;
     }
 
+    public function update(MapInterface $map) : RepositoryInterface
+    {
+        $connection = $this->getConnection();
+        try {
+            $connection->beginTransaction();
+            foreach ($map as $record) {
+                $this->updateElement($connection->createQueryBuilder(), $record);
+            }
+            $connection->commit();
+        } catch (\Throwable $e) {
+            $connection->rollBack();
+            throw $e;
+        }
+
+        return $this;
+    }
+
+    protected function updateElement(QueryBuilder $queryBuilder,
+                                     ActorInterface $Actor) : ActorInterface
+    {
+        $values = [];
+
+/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-updateElement
+ */
+
+        $queryBuilder
+            ->insert(ActorInterface::TABLE_NAME)
+            ->values($values);
+        $queryBuilder->execute();
+
+        return $Actor;
+    }
+
     protected function getConnection() : Connection
     {
         if ($this->connection === null) {
