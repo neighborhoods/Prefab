@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\AnnotationProcessorRecordInterface:
+    class: Neighborhoods\Prefab\AnnotationProcessorRecord
+    public: false
+    shared: false
