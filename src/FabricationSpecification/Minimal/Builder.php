@@ -13,7 +13,7 @@ class Builder implements BuilderInterface
     use \Neighborhoods\Prefab\FabricationSpecification\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Map\Factory\AwareTrait;
-    use \Neighborhoods\Prefab\AnnotationProcessorRecord\Map\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\AnnotationProcessorRecord\Map\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
@@ -35,6 +35,8 @@ class Builder implements BuilderInterface
         $actorMap = $this->getActorMapFactory()->create();
 
         foreach ($this->actorCollection as $actor) {
+            $annotationProcessorMap = $this->buildAnnotationProcessorMapForActor($actor);
+
             $actorMap->append(
                 $this->getActorFactory()->create()
                     ->setActorKey($actor::ACTOR_KEY)
@@ -53,13 +55,8 @@ class Builder implements BuilderInterface
 
     protected function buildAnnotationProcessorMapForActor(string $actor) : AnnotationProcessorRecord\Map
     {
-        $antProcBuilderFactoryArray = [
-            BuilderBuildForInsertMethod_BuilderFactory::class,
-            BuilderBuildForUpdateMethod_BuilderFactory::class
-        ];
-
-        $antProcMap = $this->getAntProcMapFactory()->create();
-        foreach ($antProcBuilderFactoryArray as $antProcBuilderFactory) {
+        $annotationProcessorMap = $this->getAnnotationProcessorRecordMapFactory()->create();
+        foreach ($actor::ANNOTATION_PROCESSOR_RECORD_BUILDERS as $antProcBuilderFactory) {
             $antProcBuilder = $antProcBuilderFactory->create();
             $antProcBuilder->setBuildConfiguration($this->getBuildConfiguration());
             $antProc = $antProcBuilder->build();

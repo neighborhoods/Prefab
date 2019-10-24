@@ -35,6 +35,8 @@ actors:
     template: Actor/Map/Factory.service.yml
   <ActorName>/Map/FactoryInterface.php:
     template: Actor/Map/FactoryInterface.php
+  <ActorName>/Map/Factory/AwareTrait.php:
+    template: Actor/Map/Factory/AwareTrait.php
   <ActorName>/Map.php:
     template: Actor/Map.php
   <ActorName>/Map/AwareTrait.php:
