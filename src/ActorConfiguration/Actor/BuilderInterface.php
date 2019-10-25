@@ -7,4 +7,5 @@ interface BuilderInterface
 {
     public const ACTOR_KEY = '<ActorName>/BuilderInterface.php';
     public const TEMPLATE_PATH = 'Actor/BuilderInterface.php';
+    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
 }

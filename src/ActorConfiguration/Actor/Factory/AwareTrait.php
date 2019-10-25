@@ -12,4 +12,5 @@ interface AwareTrait
     public const ANNOTATION_PROCESSORS = [
         Prefab::class
     ];
+    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
 }

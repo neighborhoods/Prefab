@@ -1,27 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\AnnotationProcessorRecord\Actor\DaoPropertiesAndAccessors;
+namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\ActorInterface\DaoPropertiesAndAccessors;
 
-use Neighborhoods\Prefab\AnnotationProcessor;
-use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
-use Neighborhoods\Prefab\AnnotationProcessorRecord;
 use Neighborhoods\Prefab\DaoPropertyInterface;
 
 class Builder implements BuilderInterface
 {
-    use AnnotationProcessorRecord\Factory\AwareTrait;
-
     protected $buildConfiguration;
 
-    public function build() : AnnotationProcessorRecordInterface
+    public function build() : array
     {
-        /** @var AnnotationProcessorRecordInterface $annotationProcessorRecord */
-        $annotationProcessorRecord = $this-$this->getAnnotationProcessorRecordFactory()->create();
-
         $buildConfiguration = $this->getBuildConfiguration();
-
         $staticContextRecord = [];
 
         /** @var DaoPropertyInterface $property */
@@ -32,10 +23,7 @@ class Builder implements BuilderInterface
             ];
         }
 
-        $annotationProcessorRecord->setProcessorFullyQualifiedClassname(AnnotationProcessor\DAO::class);
-        $annotationProcessorRecord->setStaticContextRecord($staticContextRecord);
-
-        return $annotationProcessorRecord;
+        return $staticContextRecord;
     }
 
     public function getBuildConfiguration() : BuildConfigurationInterface

@@ -5,8 +5,8 @@ namespace Neighborhoods\Prefab;
 
 interface ActorInterface
 {
-     public function getAnnotationProcessorRecordMap(): \Neighborhoods\Prefab\AnnotationProcessorRecord\Map;
-     public function setAnnotationProcessorRecordMap(\Neighborhoods\Prefab\AnnotationProcessorRecord\Map $annotationProcessorRecordMap): ActorInterface;
+     public function getAnnotationProcessorRecordMap(): \Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface;
+     public function setAnnotationProcessorRecordMap(\Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface $annotationProcessorRecordMap): ActorInterface;
 
      public function getActorKey(): string;
      public function setActorKey(string $actorKey): ActorInterface;

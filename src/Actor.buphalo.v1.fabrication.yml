@@ -6,7 +6,7 @@ actors:
         processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAO
         static_context_record:
           - name: annotationProcessorRecordMap
-            type: \Neighborhoods\Prefab\AnnotationProcessorRecord\Map
+            type: \Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface
           - name: actorKey
             type: string
           - name: templatePath
@@ -20,7 +20,7 @@ actors:
         processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAOInterface
         static_context_record:
           - name: annotationProcessorRecordMap
-            type: \Neighborhoods\Prefab\AnnotationProcessorRecord\Map
+            type: \Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface
           - name: actorKey
             type: string
           - name: templatePath

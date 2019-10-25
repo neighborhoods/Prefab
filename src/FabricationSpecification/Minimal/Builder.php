@@ -14,6 +14,7 @@ class Builder implements BuilderInterface
     use \Neighborhoods\Prefab\Actor\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Map\Factory\AwareTrait;
     use \Neighborhoods\Prefab\AnnotationProcessorRecord\Map\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
@@ -30,8 +31,6 @@ class Builder implements BuilderInterface
 
     public function build() : FabricationSpecificationInterface
     {
-        $buildConfiguration = $this->getBuildConfiguration();
-
         $actorMap = $this->getActorMapFactory()->create();
 
         foreach ($this->actorCollection as $actor) {
@@ -41,11 +40,7 @@ class Builder implements BuilderInterface
                 $this->getActorFactory()->create()
                     ->setActorKey($actor::ACTOR_KEY)
                     ->setActorInterfacePath($actor::TEMPLATE_PATH)
-                    ->setAnnotationProcessorRecordMap(
-                        $this->getAnnotationProcessorRecordMapBuilderFactory()->create()
-                            ->setRecords()
-                            ->build()
-                    )
+                    ->setAnnotationProcessorRecordMap($annotationProcessorMap)
             );
         }
 
@@ -53,17 +48,20 @@ class Builder implements BuilderInterface
             ->setActorMap($actorMap);
     }
 
-    protected function buildAnnotationProcessorMapForActor(string $actor) : AnnotationProcessorRecord\Map
+    protected function buildAnnotationProcessorMapForActor(string $actor) : AnnotationProcessorRecord\MapInterface
     {
         $annotationProcessorMap = $this->getAnnotationProcessorRecordMapFactory()->create();
-        foreach ($actor::ANNOTATION_PROCESSOR_RECORD_BUILDERS as $antProcBuilderFactory) {
-            $antProcBuilder = $antProcBuilderFactory->create();
-            $antProcBuilder->setBuildConfiguration($this->getBuildConfiguration());
-            $antProc = $antProcBuilder->build();
-            $antProcMap->append($antProc);
+        /** @noinspection PhpUndefinedFieldInspection */
+        foreach ($actor::STATIC_CONTEXT_RECORD_BUILDERS as $annotationProcessorRecordBuilder) {
+            $annotationProcessorBuilder = $this->getAnnotationProcessorRecordBuilderFactory()->create();
+            $annotationProcessor = $annotationProcessorBuilder->setStaticContextRecordBuilder((new $annotationProcessorRecordBuilder))
+                ->setBuildConfiguration($this->getBuildConfiguration())
+                ->build();
+
+            $annotationProcessorMap->append($annotationProcessor);
         }
 
-        return $antProcMap;
+        return $annotationProcessorMap;
     }
 
     protected function getBuildConfiguration() : BuildConfigurationInterface

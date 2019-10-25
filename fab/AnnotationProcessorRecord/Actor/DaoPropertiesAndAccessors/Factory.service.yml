@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\Prefab\AnnotationProcessorRecord\Actor\DaoPropertiesAndAccessors\FactoryInterface:
-    class: Neighborhoods\Prefab\AnnotationProcessorRecord\Actor\DaoPropertiesAndAccessors\Factory
-    public: false
-    shared: true
-    calls:
-      - [setAnnotationProcessorRecordActorDaoPropertiesAndAccessors, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\Actor\DaoPropertiesAndAccessorsInterface']]

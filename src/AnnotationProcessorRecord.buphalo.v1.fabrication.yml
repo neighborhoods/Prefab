@@ -45,3 +45,13 @@ actors:
     template: Actor/Map.service.yml
   <ActorName>/MapInterface.php:
     template: Actor/MapInterface.php
+  <ActorName>/BuilderInterface.php:
+    template: Actor/BuilderInterface.php
+  <ActorName>/Builder/Factory.php:
+    template: Actor/Builder/Factory.php
+  <ActorName>/Builder/Factory/AwareTrait.php:
+    template: Actor/Builder/Factory/AwareTrait.php
+  <ActorName>/Builder/Factory.service.yml:
+    template: Actor/Builder/Factory.service.yml
+  <ActorName>/Builder/FactoryInterface.php:
+    template: Actor/Builder/FactoryInterface.php

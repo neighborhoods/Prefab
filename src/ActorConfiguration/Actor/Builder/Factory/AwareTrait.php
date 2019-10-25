@@ -7,4 +7,5 @@ interface AwareTrait
 {
     public const ACTOR_KEY = '<ActorName>/Builder/Factory/AwareTrait.php';
     public const TEMPLATE_PATH = 'Actor/Builder/Factory/AwareTrait.php';
+    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
 }

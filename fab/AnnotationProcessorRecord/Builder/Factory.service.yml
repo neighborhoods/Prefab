@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\FactoryInterface:
+    class: Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\Factory
+    public: false
+    shared: true
+    calls:
+      - [setAnnotationProcessorRecordBuilder, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\BuilderInterface']]

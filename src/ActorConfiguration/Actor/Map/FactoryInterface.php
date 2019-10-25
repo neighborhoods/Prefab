@@ -7,4 +7,5 @@ interface FactoryInterface
 {
     public const ACTOR_KEY = '<ActorName>/Map/FactoryInterface.php';
     public const TEMPLATE_PATH = 'Actor/Map/FactoryInterface.php';
+    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
 }

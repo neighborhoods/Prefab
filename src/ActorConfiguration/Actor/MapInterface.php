@@ -7,4 +7,5 @@ interface MapInterface
 {
     public const ACTOR_KEY = '<ActorName>/MapInterface.php';
     public const TEMPLATE_PATH = 'Actor/MapInterface.php';
+    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
 }
