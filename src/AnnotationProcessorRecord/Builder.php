@@ -16,6 +16,7 @@ class Builder implements BuilderInterface
     protected $buildConfiguration;
     protected $staticContextRecordBuilder;
     protected $annotationProcessorKey;
+    protected $processorFullyQualifiedClassname;
 
     public function build() : AnnotationProcessorRecordInterface
     {
@@ -27,7 +28,7 @@ class Builder implements BuilderInterface
             ->build();
 
         $annotationProcessorRecord->setAnnotationProcessorKey($this->getAnnotationProcessorKey());
-        $annotationProcessorRecord->setProcessorFullyQualifiedClassname(AnnotationProcessor\DAO::class);
+        $annotationProcessorRecord->setProcessorFullyQualifiedClassname($this->getProcessorFullyQualifiedClassname());
         $annotationProcessorRecord->setStaticContextRecord($staticContextRecord);
 
         return $annotationProcessorRecord;
@@ -81,6 +82,23 @@ class Builder implements BuilderInterface
             throw new \LogicException('Builder annotationProcessorKey is already set.');
         }
         $this->annotationProcessorKey = $annotationProcessorKey;
+        return $this;
+    }
+
+    protected function getProcessorFullyQualifiedClassname() : string
+    {
+        if ($this->processorFullyQualifiedClassname === null) {
+            throw new \LogicException('Builder processorFullyQualifiedClassname has not been set.');
+        }
+        return $this->processorFullyQualifiedClassname;
+    }
+
+    public function setProcessorFullyQualifiedClassname(string $processorFullyQualifiedClassname) : BuilderInterface
+    {
+        if ($this->processorFullyQualifiedClassname !== null) {
+            throw new \LogicException('Builder processorFullyQualifiedClassname is already set.');
+        }
+        $this->processorFullyQualifiedClassname = $processorFullyQualifiedClassname;
         return $this;
     }
 }

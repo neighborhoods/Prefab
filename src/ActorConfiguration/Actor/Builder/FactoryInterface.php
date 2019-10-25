@@ -7,5 +7,5 @@ interface FactoryInterface
 {
     public const ACTOR_KEY = '<ActorName>/Builder/FactoryInterface.php';
     public const TEMPLATE_PATH = 'Actor/Builder/FactoryInterface.php';
-    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
+    public const ANNOTATION_PROCESSORS = [];
 }

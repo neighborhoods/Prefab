@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\FabricationSpecification\Minimal;
 
 use Neighborhoods\Prefab\ActorConfiguration;
 use Neighborhoods\Prefab\AnnotationProcessorRecord;
+use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\FabricationSpecificationInterface;
 
@@ -52,10 +53,12 @@ class Builder implements BuilderInterface
     {
         $annotationProcessorMap = $this->getAnnotationProcessorRecordMapFactory()->create();
         /** @noinspection PhpUndefinedFieldInspection */
-        foreach ($actor::STATIC_CONTEXT_RECORD_BUILDERS as $annotationKey => $annotationProcessorRecordBuilder) {
+        foreach ($actor::ANNOTATION_PROCESSORS as $annotationProcessor) {
             $annotationProcessorBuilder = $this->getAnnotationProcessorRecordBuilderFactory()->create();
-            $annotationProcessor = $annotationProcessorBuilder->setAnnotationProcessorKey($annotationKey)
-                ->setStaticContextRecordBuilder((new $annotationProcessorRecordBuilder))
+            $annotationProcessor = $annotationProcessorBuilder
+                ->setAnnotationProcessorKey($annotationProcessor[AnnotationProcessorRecordInterface::KEY_ANNOTATION_PROCESSOR_KEY])
+                ->setStaticContextRecordBuilder((new $annotationProcessor[AnnotationProcessorRecordInterface::KEY_STATIC_CONTEXT_RECORD_BUILDER]))
+                ->setProcessorFullyQualifiedClassname($annotationProcessor[AnnotationProcessorRecordInterface::KEY_ANNOTATION_PROCESSOR_FULLY_QUALIFIED_CLASS_NAME])
                 ->setBuildConfiguration($this->getBuildConfiguration())
                 ->build();
 

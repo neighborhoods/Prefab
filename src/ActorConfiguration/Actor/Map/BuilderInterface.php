@@ -7,5 +7,5 @@ interface BuilderInterface
 {
     public const ACTOR_KEY = '<ActorName>/Map/BuilderInterface.php';
     public const TEMPLATE_PATH = 'Actor/Map/BuilderInterface.php';
-    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
+    public const ANNOTATION_PROCESSORS = [];
 }

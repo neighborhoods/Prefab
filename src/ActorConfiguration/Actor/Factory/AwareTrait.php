@@ -9,8 +9,5 @@ interface AwareTrait
 {
     public const ACTOR_KEY = '<ActorName>/Factory/AwareTrait.php';
     public const TEMPLATE_PATH = 'Actor/Factory/AwareTrait.php';
-    public const ANNOTATION_PROCESSORS = [
-        Prefab::class
-    ];
-    public const STATIC_CONTEXT_RECORD_BUILDERS = [];
+    public const ANNOTATION_PROCESSORS = [];
 }

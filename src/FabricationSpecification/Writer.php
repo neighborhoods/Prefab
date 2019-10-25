@@ -38,11 +38,10 @@ class Writer implements WriterInterface
                     self::KEY_TEMPLATE => $actor->getTemplatePath()
                 ];
 
-            if (!empty($fabricationArray)) {
-                $fabricationArray[self::KEY_ACTORS][$actor->getActorKey()] =
-                    [
-                        self::KEY_ANNOTATION_PROCESSORS => $annotationProcessors
-                    ];
+            if (!empty($annotationProcessors)) {
+                $fabricationArray[self::KEY_ACTORS]
+                    [$actor->getActorKey()]
+                        [self::KEY_ANNOTATION_PROCESSORS] = $annotationProcessors;
             }
         }
 
