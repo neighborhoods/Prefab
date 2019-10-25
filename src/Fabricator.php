@@ -20,13 +20,13 @@ class Fabricator implements FabricatorInterface
         $filesystem->mkdir([__DIR__ . '/../BuphaloFabFiles/', __DIR__ . '/../fabricatedFiles/']);
 
         // Where the supporting actor templates are located
-        putenv('Neighborhoods_Buphalo_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths='. realpath(__DIR__ . '/../BuphaloTemplates/Prefab5'));
+        putenv('Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths='. realpath(__DIR__ . '/../BuphaloTemplates/Prefab5'));
         // Namespace of the generated files
-        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\'. $this->getProjectName() . '\\');
+        putenv('Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\'. $this->getProjectName() . '\\');
         // Where the Buphalo fabrication files are located
-        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__SourceDirectoryPath='. realpath(__DIR__ . '/../BuphaloFabFiles'));
+        putenv('Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath='. realpath(__DIR__ . '/../BuphaloFabFiles'));
         // Directory to save the generated supporting actors
-        putenv('Neighborhoods_Buphalo_TargetApplication_BuilderInterface__FabricationDirectoryPath='. realpath(__DIR__ . '/../fabricatedFiles'));
+        putenv('Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirectoryPath='. realpath(__DIR__ . '/../fabricatedFiles'));
 
         $proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../../buphalo/'));
 
