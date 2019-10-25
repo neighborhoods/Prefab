@@ -5,32 +5,15 @@ namespace Neighborhoods\Prefab;
 
 class BuildConfiguration implements BuildConfigurationInterface
 {
-    /** @var string */
     private $tableName;
-
-    /** @var string */
     private $daoIdentityField;
-
-    /** @var array */
     private $daoProperties;
-
-    /** @var string */
     private $rootSaveLocation;
-
-    /** @var string */
     private $projectName;
-
-    /** @var string */
     private $httpRoute;
-
-    /** @var array */
     private $httpVerbs;
-
-    /** @var string */
     private $projectDir;
-
-    /** @var string */
-    private $supportingBuildConfigurationGroup;
+    private $supportingActorGroup;
 
      public function getTableName(): string
      {
@@ -192,23 +175,46 @@ class BuildConfiguration implements BuildConfigurationInterface
          return $this;
      }
 
-     public function getSupportingBuildConfigurationGroup(): string
-     {
-         if ($this->supportingBuildConfigurationGroup === null) {
-             throw new \LogicException('supportingBuildConfigurationGroup has not been set');
-         }
-         
-         return $this->supportingBuildConfigurationGroup;
-     }
-     
-     public function setSupportingBuildConfigurationGroup(string $supportingBuildConfigurationGroup): BuildConfigurationInterface
-     {
-         if ($this->supportingBuildConfigurationGroup !== null) {
-             throw new \LogicException('supportingBuildConfigurationGroup has already been set');
-         }
-         
-         $this->supportingBuildConfigurationGroup = $supportingBuildConfigurationGroup;
-         
-         return $this;
-     }
+    public function hasDaoIdentityField() : bool
+    {
+        return $this->daoIdentityField !== null;
+    }
+
+    public function appendDaoProperty(DaoPropertyInterface $daoProperty) : BuildConfigurationInterface
+    {
+        $this->daoProperties[] = $daoProperty;
+        return $this;
+    }
+
+    public function hasHttpRoute() : bool
+    {
+        return $this->httpRoute !== null;
+    }
+
+    public function hasHttpVerbs() : bool
+    {
+        return $this->httpVerbs !== null;
+    }
+
+    public function getSupportingActorGroup() : string
+    {
+        if ($this->supportingActorGroup === null) {
+            throw new \LogicException('BuildConfiguration supportingActorGroup has not been set.');
+        }
+        return $this->supportingActorGroup;
+    }
+
+    public function setSupportingActorGroup(string $supportingActorGroup) : BuildConfigurationInterface
+    {
+        if ($this->supportingActorGroup !== null) {
+            throw new \LogicException('BuildConfiguration supportingActorGroup is already set.');
+        }
+        $this->supportingActorGroup = $supportingActorGroup;
+        return $this;
+    }
+
+    public function hasSupportingActorGroup() : bool
+    {
+        return $this->supportingActorGroup !== null;
+    }
 }

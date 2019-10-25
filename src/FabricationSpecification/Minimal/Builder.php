@@ -39,7 +39,7 @@ class Builder implements BuilderInterface
             $actorMap->append(
                 $this->getActorFactory()->create()
                     ->setActorKey($actor::ACTOR_KEY)
-                    ->setActorInterfacePath($actor::TEMPLATE_PATH)
+                    ->setTemplatePath($actor::TEMPLATE_PATH)
                     ->setAnnotationProcessorRecordMap($annotationProcessorMap)
             );
         }
@@ -52,9 +52,10 @@ class Builder implements BuilderInterface
     {
         $annotationProcessorMap = $this->getAnnotationProcessorRecordMapFactory()->create();
         /** @noinspection PhpUndefinedFieldInspection */
-        foreach ($actor::STATIC_CONTEXT_RECORD_BUILDERS as $annotationProcessorRecordBuilder) {
+        foreach ($actor::STATIC_CONTEXT_RECORD_BUILDERS as $annotationKey => $annotationProcessorRecordBuilder) {
             $annotationProcessorBuilder = $this->getAnnotationProcessorRecordBuilderFactory()->create();
-            $annotationProcessor = $annotationProcessorBuilder->setStaticContextRecordBuilder((new $annotationProcessorRecordBuilder))
+            $annotationProcessor = $annotationProcessorBuilder->setAnnotationProcessorKey($annotationKey)
+                ->setStaticContextRecordBuilder((new $annotationProcessorRecordBuilder))
                 ->setBuildConfiguration($this->getBuildConfiguration())
                 ->build();
 

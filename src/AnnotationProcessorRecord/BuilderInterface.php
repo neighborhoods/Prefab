@@ -11,5 +11,7 @@ interface BuilderInterface
 
     public function setBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : BuilderInterface;
 
-    public function setStaticContextRecordBuilder(BuildConfigurationInterface $buildConfiguration) : BuilderInterface;
+    public function setStaticContextRecordBuilder(StaticContextRecord\BuilderInterface $buildConfiguration) : BuilderInterface;
+
+    public function setAnnotationProcessorKey(string $annotationProcessorKey) : BuilderInterface;
 }

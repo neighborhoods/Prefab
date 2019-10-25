@@ -15,44 +15,38 @@ class Builder implements BuilderInterface
 
     protected $buildConfiguration;
     protected $staticContextRecordBuilder;
+    protected $annotationProcessorKey;
 
     public function build() : AnnotationProcessorRecordInterface
     {
         /** @var AnnotationProcessorRecordInterface $annotationProcessorRecord */
-        $annotationProcessorRecord = $this-$this->getAnnotationProcessorRecordFactory()->create();
+        $annotationProcessorRecord = $this->getAnnotationProcessorRecordFactory()->create();
 
-        $buildConfiguration = $this->getBuildConfiguration();
+        $staticContextRecord = $this->getStaticContextRecordBuilder()
+            ->setBuildConfiguration($this->getBuildConfiguration())
+            ->build();
 
-        $staticContextRecord = [];
-
-        /** @var DaoPropertyInterface $property */
-        foreach ($buildConfiguration->getDaoProperties() as $property) {
-            $staticContextRecord[] = [
-                'name' => $property->getName(),
-                'type' => $property->getDataType()
-            ];
-        }
-
+        $annotationProcessorRecord->setAnnotationProcessorKey($this->getAnnotationProcessorKey());
         $annotationProcessorRecord->setProcessorFullyQualifiedClassname(AnnotationProcessor\DAO::class);
         $annotationProcessorRecord->setStaticContextRecord($staticContextRecord);
 
         return $annotationProcessorRecord;
     }
 
-    public function getStaticContextRecordBuilder() : BuildConfigurationInterface
+    protected function getStaticContextRecordBuilder() : StaticContextRecord\BuilderInterface
     {
-        if ($this->buildConfiguration === null) {
+        if ($this->staticContextRecordBuilder === null) {
             throw new \LogicException('Builder buildConfiguration has not been set.');
         }
-        return $this->buildConfiguration;
+        return $this->staticContextRecordBuilder;
     }
 
-    public function setStaticContextRecordBuilder(BuildConfigurationInterface $buildConfiguration) : BuilderInterface
+    public function setStaticContextRecordBuilder(StaticContextRecord\BuilderInterface $staticContextRecordBuilder) : BuilderInterface
     {
-        if ($this->buildConfiguration !== null) {
+        if ($this->staticContextRecordBuilder !== null) {
             throw new \LogicException('Builder buildConfiguration is already set.');
         }
-        $this->buildConfiguration = $buildConfiguration;
+        $this->staticContextRecordBuilder = $staticContextRecordBuilder;
         return $this;
     }
 
@@ -70,6 +64,23 @@ class Builder implements BuilderInterface
             throw new \LogicException('Builder buildConfiguration is already set.');
         }
         $this->buildConfiguration = $buildConfiguration;
+        return $this;
+    }
+
+    protected function getAnnotationProcessorKey() : string
+    {
+        if ($this->annotationProcessorKey === null) {
+            throw new \LogicException('Builder annotationProcessorKey has not been set.');
+        }
+        return $this->annotationProcessorKey;
+    }
+
+    public function setAnnotationProcessorKey(string $annotationProcessorKey) : BuilderInterface
+    {
+        if ($this->annotationProcessorKey !== null) {
+            throw new \LogicException('Builder annotationProcessorKey is already set.');
+        }
+        $this->annotationProcessorKey = $annotationProcessorKey;
         return $this;
     }
 }

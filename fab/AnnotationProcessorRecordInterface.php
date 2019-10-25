@@ -10,4 +10,7 @@ interface AnnotationProcessorRecordInterface
 
      public function getStaticContextRecord(): array;
      public function setStaticContextRecord(array $staticContextRecord): AnnotationProcessorRecordInterface;
+
+     public function getAnnotationProcessorKey(): string;
+     public function setAnnotationProcessorKey(string $annotationProcessorKey): AnnotationProcessorRecordInterface;
 }

@@ -6,3 +6,4 @@ services:
       - [setActorMapFactory, ['@Neighborhoods\Prefab\Actor\Map\FactoryInterface']]
       - [setActorFactory, ['@Neighborhoods\Prefab\Actor\FactoryInterface']]
       - [setAnnotationProcessorRecordMapFactory, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\Map\FactoryInterface']]
+      - [setAnnotationProcessorRecordBuilderFactory, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\FactoryInterface']]

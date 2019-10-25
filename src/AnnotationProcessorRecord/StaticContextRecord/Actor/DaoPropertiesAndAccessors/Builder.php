@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Act
 
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\DaoPropertyInterface;
+use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
 
 class Builder implements BuilderInterface
 {
@@ -26,7 +27,7 @@ class Builder implements BuilderInterface
         return $staticContextRecord;
     }
 
-    public function getBuildConfiguration() : BuildConfigurationInterface
+    protected function getBuildConfiguration() : BuildConfigurationInterface
     {
         if ($this->buildConfiguration === null) {
             throw new \LogicException('Builder buildConfiguration has not been set.');

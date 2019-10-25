@@ -54,7 +54,7 @@ class Actor implements ActorInterface
          return $this;
      }
 
-     public function getActorPath(): string
+     public function getTemplatePath(): string
      {
          if ($this->templatePath === null) {
              throw new \LogicException('templatePath has not been set');
@@ -63,7 +63,7 @@ class Actor implements ActorInterface
          return $this->templatePath;
      }
      
-     public function setActorPath(string $templatePath): ActorInterface
+     public function setTemplatePath(string $templatePath): ActorInterface
      {
          if ($this->templatePath !== null) {
              throw new \LogicException('templatePath has already been set');

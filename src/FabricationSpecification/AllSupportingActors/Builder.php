@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors;
 
 use Neighborhoods\Prefab\ActorConfiguration;
+use Neighborhoods\Prefab\AnnotationProcessorRecord;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\FabricationSpecificationInterface;
 
@@ -12,6 +13,8 @@ class Builder implements BuilderInterface
     use \Neighborhoods\Prefab\FabricationSpecification\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Factory\AwareTrait;
     use \Neighborhoods\Prefab\Actor\Map\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\AnnotationProcessorRecord\Map\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
@@ -56,20 +59,38 @@ class Builder implements BuilderInterface
 
     public function build() : FabricationSpecificationInterface
     {
-        $buildConfiguration = $this->getBuildConfiguration();
-
         $actorMap = $this->getActorMapFactory()->create();
 
         foreach ($this->actorCollection as $actor) {
+            $annotationProcessorMap = $this->buildAnnotationProcessorMapForActor($actor);
+
             $actorMap->append(
                 $this->getActorFactory()->create()
                     ->setActorKey($actor::ACTOR_KEY)
                     ->setTemplatePath($actor::TEMPLATE_PATH)
+                    ->setAnnotationProcessorRecordMap($annotationProcessorMap)
             );
         }
 
         return $this->getFabricationSpecificationFactory()->create()
             ->setActorMap($actorMap);
+    }
+
+    protected function buildAnnotationProcessorMapForActor(string $actor) : AnnotationProcessorRecord\MapInterface
+    {
+        $annotationProcessorMap = $this->getAnnotationProcessorRecordMapFactory()->create();
+        /** @noinspection PhpUndefinedFieldInspection */
+        foreach ($actor::STATIC_CONTEXT_RECORD_BUILDERS as $annotationKey => $annotationProcessorRecordBuilder) {
+            $annotationProcessorBuilder = $this->getAnnotationProcessorRecordBuilderFactory()->create();
+            $annotationProcessor = $annotationProcessorBuilder->setAnnotationProcessorKey($annotationKey)
+                ->setStaticContextRecordBuilder((new $annotationProcessorRecordBuilder))
+                ->setBuildConfiguration($this->getBuildConfiguration())
+                ->build();
+
+            $annotationProcessorMap->append($annotationProcessor);
+        }
+
+        return $annotationProcessorMap;
     }
 
     protected function getBuildConfiguration() : BuildConfigurationInterface

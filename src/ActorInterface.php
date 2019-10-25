@@ -11,6 +11,6 @@ interface ActorInterface
      public function getActorKey(): string;
      public function setActorKey(string $actorKey): ActorInterface;
 
-     public function getActorInterfacePath(): string;
-     public function setActorInterfacePath(string $templatePath): ActorInterface;
+     public function getTemplatePath(): string;
+     public function setTemplatePath(string $templatePath): ActorInterface;
 }

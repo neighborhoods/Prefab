@@ -5,6 +5,7 @@ namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Act
 
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\DaoPropertyInterface;
+use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
 
 class Builder implements BuilderInterface
 {

@@ -11,6 +11,10 @@ class Writer implements WriterInterface
     protected const KEY_ACTORS = 'actors';
     protected const KEY_TEMPLATE = 'template';
 
+    protected const KEY_ANNOTATION_PROCESSORS = 'annotation_processors';
+    protected const KEY_PROCESSOR_FQCN = 'processor_fqcn';
+    protected const KEY_STATIC_CONTEXT_RECORD= 'static_context_record';
+
     protected $fabricationSpecification;
     protected $writePath;
 
@@ -20,10 +24,26 @@ class Writer implements WriterInterface
 
         $fabricationArray = [];
         foreach ($fabricationSpecification->getActorMap() as $actor) {
+            $annotationProcessors = [];
+
+            foreach ($actor->getAnnotationProcessorRecordMap() as $annotationProcessorRecord) {
+                $annotationProcessors[$annotationProcessorRecord->getAnnotationProcessorKey()] = [
+                    self::KEY_PROCESSOR_FQCN => $annotationProcessorRecord->getProcessorFullyQualifiedClassname(),
+                    self::KEY_STATIC_CONTEXT_RECORD => $annotationProcessorRecord->getStaticContextRecord()
+                ];
+            }
+
             $fabricationArray[self::KEY_ACTORS][$actor->getActorKey()] =
                 [
                     self::KEY_TEMPLATE => $actor->getTemplatePath()
                 ];
+
+            if (!empty($fabricationArray)) {
+                $fabricationArray[self::KEY_ACTORS][$actor->getActorKey()] =
+                    [
+                        self::KEY_ANNOTATION_PROCESSORS => $annotationProcessors
+                    ];
+            }
         }
 
         $writeDirectory = $this->getDirectoryFromWritePath($this->getWritePath());

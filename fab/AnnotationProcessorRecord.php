@@ -8,6 +8,12 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
     /** @var string */
     private $processorFullyQualifiedClassname;
 
+    /** @var array */
+    private $staticContextRecord;
+
+    /** @var string */
+    private $annotationProcessorKey;
+
      public function getProcessorFullyQualifiedClassname(): string
      {
          if ($this->processorFullyQualifiedClassname === null) {
@@ -24,6 +30,46 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          }
          
          $this->processorFullyQualifiedClassname = $processorFullyQualifiedClassname;
+         
+         return $this;
+     }
+
+     public function getStaticContextRecord(): array
+     {
+         if ($this->staticContextRecord === null) {
+             throw new \LogicException('staticContextRecord has not been set');
+         }
+         
+         return $this->staticContextRecord;
+     }
+     
+     public function setStaticContextRecord(array $staticContextRecord): AnnotationProcessorRecordInterface
+     {
+         if ($this->staticContextRecord !== null) {
+             throw new \LogicException('staticContextRecord has already been set');
+         }
+         
+         $this->staticContextRecord = $staticContextRecord;
+         
+         return $this;
+     }
+
+     public function getAnnotationProcessorKey(): string
+     {
+         if ($this->annotationProcessorKey === null) {
+             throw new \LogicException('annotationProcessorKey has not been set');
+         }
+         
+         return $this->annotationProcessorKey;
+     }
+     
+     public function setAnnotationProcessorKey(string $annotationProcessorKey): AnnotationProcessorRecordInterface
+     {
+         if ($this->annotationProcessorKey !== null) {
+             throw new \LogicException('annotationProcessorKey has already been set');
+         }
+         
+         $this->annotationProcessorKey = $annotationProcessorKey;
          
          return $this;
      }
