@@ -116,7 +116,11 @@ class Repository implements RepositoryInterface
  */
 
         $queryBuilder
-            ->insert(ActorInterface::TABLE_NAME)
+            ->update(ActorInterface::TABLE_NAME)
+            ->where($queryBuilder->expr()->eq(
+        /** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-updateElementIdentityField
+         */
+            ))
             ->values($values);
         $queryBuilder->execute();
 

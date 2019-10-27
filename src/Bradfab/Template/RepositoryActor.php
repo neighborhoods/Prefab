@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\Bradfab\Template;
 
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInsertElementMethod;
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryUpdateElementIdentityField;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryUpdateElementMethod;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryInterface;
 use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryJsonColumns;
@@ -18,6 +19,7 @@ class RepositoryActor implements RepositoryActorInterface
 
     protected $project_name;
     protected $properties;
+    protected $identity_field;
 
     public function getActorConfiguration() : array
     {
@@ -70,6 +72,12 @@ class RepositoryActor implements RepositoryActorInterface
                         Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryUpdateElementMethod::class,
                         Template::KEY_STATIC_CONTEXT_RECORD => [
                             RepositoryUpdateElementMethod::KEY_PROPERTIES => $propertyArray,
+                        ],
+                    ],
+                    RepositoryUpdateElementIdentityField::ANNOTATION_PROCESSOR_KEY => [
+                        Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryUpdateElementIdentityField::class,
+                        Template::KEY_STATIC_CONTEXT_RECORD => [
+                            RepositoryUpdateElementIdentityField::KEY_IDENTITY_FIELD => $this->getIdentityField(),
                         ],
                     ],
                 ],
@@ -145,6 +153,23 @@ class RepositoryActor implements RepositoryActorInterface
             throw new \LogicException('RepositoryActor properties is already set.');
         }
         $this->properties = $properties;
+        return $this;
+    }
+
+    public function getIdentityField()
+    {
+        if ($this->identity_field === null) {
+            throw new \LogicException('RepositoryActor identity_field has not been set.');
+        }
+        return $this->identity_field;
+    }
+
+    public function setIdentityField(string $identity_field): RepositoryActorInterface
+    {
+        if ($this->identity_field !== null) {
+            throw new \LogicException('RepositoryActor identity_field is already set.');
+        }
+        $this->identity_field = $identity_field;
         return $this;
     }
 
