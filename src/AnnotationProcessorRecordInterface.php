@@ -11,10 +11,13 @@ interface AnnotationProcessorRecordInterface
 
     public function getProcessorFullyQualifiedClassname(): string;
     public function setProcessorFullyQualifiedClassname(string $processorFullyQualifiedClassname): AnnotationProcessorRecordInterface;
+    public function hasProcessorFullyQualifiedClassname() : bool;
 
     public function getStaticContextRecord(): array;
     public function setStaticContextRecord(array $staticContextRecord): AnnotationProcessorRecordInterface;
+    public function hasStaticContextRecord() : bool;
 
     public function getAnnotationProcessorKey(): string;
     public function setAnnotationProcessorKey(string $annotationProcessorKey): AnnotationProcessorRecordInterface;
+    public function hasAnnotationProcessorKey() : bool;
 }

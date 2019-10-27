@@ -86,7 +86,9 @@ class Builder implements BuilderInterface
                 ->setBuildConfiguration($this->getBuildConfiguration())
                 ->build();
 
-            $annotationProcessorMap->append($annotationProcessor);
+            if ($annotationProcessor->hasAnnotationProcessorKey()) {
+                $annotationProcessorMap->append($annotationProcessor);
+            }
         }
 
         return $annotationProcessorMap;

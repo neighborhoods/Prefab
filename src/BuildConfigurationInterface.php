@@ -52,4 +52,10 @@ interface BuildConfigurationInterface
     public function getSupportingActorGroup() : string;
 
     public function hasSupportingActorGroup() : bool;
+
+    public function getDaoName() : string;
+
+    public function setDaoName(string $daoName) : BuildConfigurationInterface;
+
+    public function hasDaoName() : bool;
 }

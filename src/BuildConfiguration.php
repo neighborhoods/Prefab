@@ -7,6 +7,7 @@ class BuildConfiguration implements BuildConfigurationInterface
 {
     private $tableName;
     private $daoIdentityField;
+    private $daoName;
     private $daoProperties;
     private $rootSaveLocation;
     private $projectName;
@@ -216,5 +217,27 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasSupportingActorGroup() : bool
     {
         return $this->supportingActorGroup !== null;
+    }
+
+    public function getDaoName() : string
+    {
+        if ($this->daoName === null) {
+            throw new \LogicException('BuildConfiguration daoName has not been set.');
+        }
+        return $this->daoName;
+    }
+
+    public function setDaoName(string $daoName) : BuildConfigurationInterface
+    {
+        if ($this->daoName !== null) {
+            throw new \LogicException('BuildConfiguration daoName is already set.');
+        }
+        $this->daoName = $daoName;
+        return $this;
+    }
+
+    public function hasDaoName() : bool
+    {
+        return $this->daoName !== null;
     }
 }

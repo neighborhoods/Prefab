@@ -34,6 +34,11 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          return $this;
      }
 
+     public function hasProcessorFullyQualifiedClassname() : bool
+     {
+         return $this->processorFullyQualifiedClassname !== null;
+     }
+
      public function getStaticContextRecord(): array
      {
          if ($this->staticContextRecord === null) {
@@ -54,6 +59,11 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          return $this;
      }
 
+     public function hasStaticContextRecord() : bool
+     {
+         return $this->staticContextRecord !== null;
+     }
+
      public function getAnnotationProcessorKey(): string
      {
          if ($this->annotationProcessorKey === null) {
@@ -72,5 +82,10 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          $this->annotationProcessorKey = $annotationProcessorKey;
          
          return $this;
+     }
+
+     public function hasAnnotationProcessorKey() : bool
+     {
+         return $this->annotationProcessorKey !== null;
      }
 }

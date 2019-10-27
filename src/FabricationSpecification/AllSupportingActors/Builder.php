@@ -56,6 +56,7 @@ class Builder implements BuilderInterface
         ActorConfiguration\Actor\Map\RepositoryInterface::class,
         ActorConfiguration\Actor\Map\RepositoryServiceFile::class,
         ActorConfiguration\Actor\Map\Repository\Handler::class,
+        ActorConfiguration\Actor\Map\Repository\HandlerInterface::class,
     ];
 
     public function build() : FabricationSpecificationInterface
@@ -90,7 +91,9 @@ class Builder implements BuilderInterface
                 ->setBuildConfiguration($this->getBuildConfiguration())
                 ->build();
 
-            $annotationProcessorMap->append($annotationProcessor);
+            if ($annotationProcessor->hasAnnotationProcessorKey()) {
+                $annotationProcessorMap->append($annotationProcessor);
+            }
         }
 
         return $annotationProcessorMap;

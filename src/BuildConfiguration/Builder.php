@@ -27,6 +27,8 @@ class Builder implements BuilderInterface
             ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
 
+        $buildConfiguration->setDaoName($configArray['dao']['name']);
+
         if (!empty($configArray['dao']['identity_field'])) {
             $buildConfiguration->setDaoIdentityField($configArray['dao']['identity_field']);
         }
