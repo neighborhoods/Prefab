@@ -132,6 +132,7 @@ class Template implements TemplateInterface
             $this->supporting_actors,
             $repository->setProjectName($this->getProjectName())
                 ->setProperties($this->getProperties())
+                ->setIdentityField($this->getIdentityField())
                 ->getActorConfiguration()
         );
 
