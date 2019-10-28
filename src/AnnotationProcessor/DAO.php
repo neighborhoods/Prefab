@@ -55,31 +55,48 @@ EOC;
 
     }
 
-    private function buildAccessors($name, $type): string
+    private function buildAccessors(string $propertyName, $type): string
     {
-        $upperName = ucfirst($name);
+        $pascalCaseName = $this->getPascalCaseName($propertyName);
         $interface = $this->getAnnotationProcessorContext()->getFabricationFile()->getFileName() . 'Interface';
 
         return <<<EOC
-     public function get$upperName(): $type
+     public function get$pascalCaseName(): $type
      {
-         if (\$this->$name === null) {
-             throw new \LogicException('$name has not been set');
+         if (\$this->$propertyName === null) {
+             throw new \LogicException('$propertyName has not been set');
          }
          
-         return \$this->$name;
+         return \$this->$propertyName;
      }
      
-     public function set$upperName($type \$$name): $interface
+     public function set$pascalCaseName($type \$$propertyName): $interface
      {
-         if (\$this->$name !== null) {
-             throw new \LogicException('$name has already been set');
+         if (\$this->$propertyName !== null) {
+             throw new \LogicException('$propertyName has already been set');
          }
          
-         \$this->$name = \$$name;
-         
+         \$this->$propertyName = \$$propertyName;
          return \$this;
      }
+     
+     public function has$pascalCaseName(): bool
+     {
+        return \$this->$propertyName !== null;
+     }
+     
 EOC;
+    }
+
+    private function getPascalCaseName(string $propertyName) : string
+    {
+        $propertyArray = explode('_', $propertyName);
+
+        $pascalCaseName = '';
+        foreach ($propertyArray as $propertyPart) {
+            $pascalCaseName .= ucfirst($propertyPart);
+        }
+
+        return $pascalCaseName;
     }
 }

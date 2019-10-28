@@ -20,7 +20,8 @@ class Builder implements BuilderInterface
         foreach ($buildConfiguration->getDaoProperties() as $property) {
             $staticContextRecord[] = [
                 'name' => $property->getName(),
-                'type' => $property->getDataType()
+                'type' => $property->getDataType(),
+                'record_key' => $property->getRecordKey()
             ];
         }
 
