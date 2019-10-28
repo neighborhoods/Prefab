@@ -38,6 +38,7 @@ class Builder implements BuilderInterface
         $routeName = str_replace('/', '', $routeNameArray[1]);
         return strtoupper($routeName);
     }
+
     protected function getBuildConfiguration() : BuildConfigurationInterface
     {
         if ($this->buildConfiguration === null) {

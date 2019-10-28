@@ -55,6 +55,7 @@ class Builder implements BuilderInterface
         ActorConfiguration\Actor\Map\Repository::class,
         ActorConfiguration\Actor\Map\RepositoryInterface::class,
         ActorConfiguration\Actor\Map\RepositoryServiceFile::class,
+        ActorConfiguration\Actor\Map\Repository\AwareTrait::class,
         ActorConfiguration\Actor\Map\Repository\Handler::class,
         ActorConfiguration\Actor\Map\Repository\HandlerInterface::class,
     ];

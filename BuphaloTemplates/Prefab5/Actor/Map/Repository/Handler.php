@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
+
+use Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
 
 class Handler implements HandlerInterface
 {
 
-    use \Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository\AwareTrait;
+    use Repository\AwareTrait;
     /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-ProjectName-Http\Message
      */
     /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-ProjectName-SearchCriteria
