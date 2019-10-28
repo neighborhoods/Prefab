@@ -3,12 +3,13 @@
 namespace Neighborhoods\BuphaloTemplateTree\Actor\Map;
 
 use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
+use Neighborhoods\BuphaloTemplateTree\Actor;
 
 class Builder implements BuilderInterface
 {
 
-    use \Neighborhoods\BuphaloTemplateTree\Actor\Map\Factory\AwareTrait;
-    use \Neighborhoods\BuphaloTemplateTree\Actor\Builder\Factory\AwareTrait;
+    use Actor\Map\Factory\AwareTrait;
+    use Actor\Builder\Factory\AwareTrait;
 
     /**
      * @var array

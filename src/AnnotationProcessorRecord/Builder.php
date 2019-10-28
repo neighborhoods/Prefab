@@ -23,11 +23,11 @@ class Builder implements BuilderInterface
         /** @var AnnotationProcessorRecordInterface $annotationProcessorRecord */
         $annotationProcessorRecord = $this->getAnnotationProcessorRecordFactory()->create();
 
-        if ($this->getBuildConfiguration()->hasHttpRoute()) {
-            $staticContextRecord = $this->getStaticContextRecordBuilder()
-                ->setBuildConfiguration($this->getBuildConfiguration())
-                ->build();
+        $staticContextRecord = $this->getStaticContextRecordBuilder()
+            ->setBuildConfiguration($this->getBuildConfiguration())
+            ->build();
 
+        if (!empty($staticContextRecord)) {
             $annotationProcessorRecord->setAnnotationProcessorKey($this->getAnnotationProcessorKey());
             $annotationProcessorRecord->setProcessorFullyQualifiedClassname($this->getProcessorFullyQualifiedClassname());
             $annotationProcessorRecord->setStaticContextRecord($staticContextRecord);

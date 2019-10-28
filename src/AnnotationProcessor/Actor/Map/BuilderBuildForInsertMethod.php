@@ -12,6 +12,7 @@ class BuilderBuildForInsertMethod implements AnnotationProcessorInterface
     protected $context;
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field-ternary';
+    public const CONTEXT_KEY_IDENTITY_FIELD = 'identity_field';
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
