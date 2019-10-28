@@ -7,6 +7,7 @@ use Neighborhoods\BuphaloTemplateTree\ActorInterface;
 
 use Doctrine\DBAL\Connection;
 use Neighborhoods\BuphaloTemplateTree\Actor;
+use Neighborhoods\BuphaloTemplateTree\Actor\Map;
 use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName
  */
@@ -23,17 +24,17 @@ class Repository implements RepositoryInterface
  */
     ];
 
-    public function createBuilder() : \Neighborhoods\BuphaloTemplateTree\Actor\Map\BuilderInterface
+    public function createBuilder() : Map\BuilderInterface
     {
         return $this->getActorMapBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : \Neighborhoods\BuphaloTemplateTree\Actor\MapInterface
+    public function get(SearchCriteriaInterface $searchCriteria) : MapInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
         $queryBuilder = $queryBuilderBuilder->build();
-        $queryBuilder->from(\Neighborhoods\BuphaloTemplateTree\ActorInterface::TABLE_NAME)->select('*');
+        $queryBuilder->from(ActorInterface::TABLE_NAME)->select('*');
         $records = $queryBuilder->execute()->fetchAll();
 
         foreach ($records as $key => $record) {

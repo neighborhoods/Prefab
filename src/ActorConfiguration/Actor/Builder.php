@@ -29,4 +29,5 @@ interface Builder
             AnnotationProcessorRecordInterface::KEY_STATIC_CONTEXT_RECORD_BUILDER => \Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Actor\Builder\BuilderFactoryAwareTraits\Builder::class,
             AnnotationProcessorRecordInterface::KEY_ANNOTATION_PROCESSOR_FULLY_QUALIFIED_CLASS_NAME => \Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderFactoryTrait::class,
         ],
-    ];}
+    ];
+}
