@@ -23,4 +23,5 @@ interface Handler
             AnnotationProcessorRecordInterface::KEY_STATIC_CONTEXT_RECORD_BUILDER => \Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Actor\Map\Repository\Handler\ProjectNamespaceSearchCriteria\Builder::class,
             AnnotationProcessorRecordInterface::KEY_ANNOTATION_PROCESSOR_FULLY_QUALIFIED_CLASS_NAME => \Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor::class,
         ],
-    ];}
+    ];
+}

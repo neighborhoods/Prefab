@@ -58,6 +58,7 @@ class Builder implements BuilderInterface
         ActorConfiguration\Actor\Map\Repository\AwareTrait::class,
         ActorConfiguration\Actor\Map\Repository\Handler::class,
         ActorConfiguration\Actor\Map\Repository\HandlerInterface::class,
+        ActorConfiguration\Actor\Map\Repository\HandlerServiceFile::class,
     ];
 
     public function build() : FabricationSpecificationInterface
