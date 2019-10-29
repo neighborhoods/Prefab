@@ -93,6 +93,60 @@ dao:
       nullable: false
       created_on_insert: true
 ```
+## Search Criteria
+
+Search Criteria is a data mining query language (DMQL) utilized by Prefab applications to provide a flexible API that enables HTTP clients to define how they want to ask for data rather than services explicitly implementing each use case. Search Criteria consists of filters along with optional sort order and pagination instructions.
+
+### Filters
+
+Search Criteria filters are used to define the `WHERE` clause of a database query. Filters should be included as an array under the searchCriteria[filters] key. Each filter consists of the following:
+
+Query Parameter Key: `searchCriteria[filters]`
+
+| Key | Data Type | Description |
+|-----|---------|------|
+| `field` | string | The database column the filter applies to |
+| `condition` | string | The condition to query by. See below for a full list of conditions |
+| `values` | array | The values to include in a query. If a condition is used that only applies to a single value (eg. `=`) any values after the first will be ignored |
+| `glue` | string | The condition to use when grouping filters together. Can be either `and` or `or` |
+
+#### Conditions
+
+| Key | Condition | Description |
+|------|----|----------|
+| `eq` | `=` | Will match values that `= values[0]` |
+| `neq` | `<>` | Will match values that `!= values[0]` |
+| `in` | `IN` | Will match values that are in `values` |
+| `nin` | `NOT IN` | Will match values that are not in `values` |
+| `lt` | `<` | Will match values that are less than `values[0]` |
+| `lte` | `<=` | Will match values that are less than or equal to `values[0]` |
+| `gt` | `>` | Will match values that are greater than `values[0]` |
+| `gte` | `>=` | Will match values that are greater than or equal to `values[0]` |
+| `like` | `LIKE` | Will match values that are like `values[0]` |
+| `nlike` | `NOT LIKE` | Will match values that are not like `values[0]` |
+| `is_null` | `IS NULL` | Will match values where `field` is null |
+| `is_not_null` | `IS NOT NULL` | Will match values where `field` is not null |
+| `st_contains` | `ST_Contains(field, st_geomfromtext(value))` | Will match values where `field` contains `values[0]` |
+| `st_dwithin` | `ST_DWithin(field, center, radius)` | Will match values where `field` is within point `values['center']` with a radius of `values['radius']` |
+| `st_within` | `ST_Within(field, st_buffer(st_geomfromtext(center), radius))` | Will match values where `field` is within point `values['center']` with a radius of `values['radius']` |
+| `contains` | `field @> ARRAY[values]` | Will match values where json `field` contains all `values` |
+| `overlaps` | `field && ARRAY[values]` | Will match values where json `field` contains any `values` |
+| `jsonb_key_exist` | `jsonb_exists(field, value)` | Will match where `values[0]` exists as a jsonb key in `field`|
+
+### Sort Order
+
+A sort order is used to define the order in which data should be returned. It consists of an array with field and a direction.
+
+Query Parameter Key: `searchCriteria[sortOrder]`
+
+| Key | Description | 
+|-----|------|
+| `field` | Database column the sort applies to |
+| `direction` | The order to be applied to the sort. Can be either `asc` or `desc` |
+
+### Pagination
+
+A page size can be defined in order to limit the number of results returned by a query. Set a page size by providing an integer under the key `searchCriteria[pageSize]`. You can retrieve additional pages of data by supplying a current page. Set the current page by providing an integer under the key `searchCriteria[currentPage]`.
 
 ## Supporting Actor Groups
 
