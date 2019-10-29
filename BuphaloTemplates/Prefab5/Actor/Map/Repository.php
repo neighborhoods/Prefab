@@ -111,19 +111,15 @@ class Repository implements RepositoryInterface
     protected function updateElement(QueryBuilder $queryBuilder,
                                      ActorInterface $Actor) : ActorInterface
     {
-        $values = [];
-
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-updateElement
  */
-
         $queryBuilder
             ->update(ActorInterface::TABLE_NAME)
             ->where($queryBuilder->expr()->eq(
         /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-updateElementIdentityField
           // TODO: Add identity field for where clause
          */
-            ))
-            ->values($values);
+            ));
         $queryBuilder->execute();
 
         return $Actor;

@@ -22,6 +22,7 @@ class Builder implements BuilderInterface
                 'name' => $property->getName(),
                 'data_type' => $property->getDataType(),
                 'nullable' => $property->getNullable(),
+                'created_on_insert' => $property->getCreatedOnInsert()
             ];
         }
 
