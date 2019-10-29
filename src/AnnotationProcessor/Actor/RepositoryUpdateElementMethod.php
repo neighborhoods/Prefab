@@ -15,11 +15,13 @@ class RepositoryUpdateElementMethod implements AnnotationProcessorInterface
     protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
 
     protected const CREATE_NAMED_PARAMETER_SIMPLE_PROPERTY_PATTERN = <<< EOF
-     \$queryBuilder->set(ActorInterface::PROP_%s, \$Actor->get%s());
+     \$queryBuilder->set(ActorInterface::PROP_%s, 
+            \$queryBuilder->createNamedParameter(\$Actor->get%s()));
 EOF;
 
     protected const CREATE_NAMED_PARAMETER_COMPLEX_PROPERTY_PATTERN = <<< EOF
-     \$queryBuilder->set(ActorInterface::PROP_%s, json_encode(\$Actor->get%s()));
+     \$queryBuilder->set(ActorInterface::PROP_%s, 
+            \$queryBuilder->createNamedParameter(json_encode(\$Actor->get%s()));
 EOF;
 
     protected const NULLABLE_PROPERTY_CONDITION_PATTERN = <<< EOF
