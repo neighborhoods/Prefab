@@ -58,4 +58,10 @@ interface BuildConfigurationInterface
     public function setDaoName(string $daoName) : BuildConfigurationInterface;
 
     public function hasDaoName() : bool;
+
+    public function getActorNamespace() : string;
+
+    public function setActorNamespace(string $actorNamespace) : BuildConfigurationInterface;
+
+    public function hasActorNamespace() : bool;
 }

@@ -15,6 +15,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     private $httpVerbs;
     private $projectDir;
     private $supportingActorGroup;
+    private $actorNamespace;
 
      public function getTableName(): string
      {
@@ -239,5 +240,27 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasDaoName() : bool
     {
         return $this->daoName !== null;
+    }
+
+    public function getActorNamespace() : string
+    {
+        if ($this->actorNamespace === null) {
+            throw new \LogicException('BuildConfiguration actorNamespace has not been set.');
+        }
+        return $this->actorNamespace;
+    }
+
+    public function setActorNamespace(string $actorNamespace) : BuildConfigurationInterface
+    {
+        if ($this->actorNamespace !== null) {
+            throw new \LogicException('BuildConfiguration actorNamespace is already set.');
+        }
+        $this->actorNamespace = $actorNamespace;
+        return $this;
+    }
+
+    public function hasActorNamespace() : bool
+    {
+        return $this->actorNamespace !== null;
     }
 }

@@ -99,6 +99,10 @@ class Generator implements GeneratorInterface
                 ->setProjectRoot($this->getProjectRoot())
                 ->build();
 
+            if ($configuration->hasHttpVerbs()) {
+                $this->addHandlerToRouteFile($configuration);
+            }
+
             $this->writeFabricationSpecificationToDisk($configuration, $dao);
         }
 
@@ -110,6 +114,42 @@ class Generator implements GeneratorInterface
         echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
         return $this;
+    }
+
+    // TODO: This was ported from the old version of Prefab as-is due to time constraints. This should be done more elegantly.
+    protected function addHandlerToRouteFile(BuildConfigurationInterface $buildConfiguration) : GeneratorInterface
+    {
+        // Symfony Yaml doesn't support adding !php/const, so we have to create the string and append it to the end of the file
+        $routePath = $buildConfiguration->getProjectDir() . 'fab/Prefab5/Zend/Expressive/Application/Decorator.service.yml';
+        $file = file_get_contents($routePath);
+        $routes = $this->formatRoutes($buildConfiguration);
+        foreach ($routes as $route) {
+            $file .= $route;
+        }
+        file_put_contents($routePath, $file);
+        return $this;
+    }
+
+    protected function formatRoutes(BuildConfigurationInterface $buildConfiguration): array
+    {
+        $routes = [];
+        $truncatedNamespace = explode('/fab/', $buildConfiguration->getRootSaveLocation())[1];
+        $truncatedNamespace = str_replace('.prefab.definition.yml', '', $truncatedNamespace);
+
+        $fullDaoName = implode('', explode('/', $truncatedNamespace));
+
+        foreach ($buildConfiguration->getHttpVerbs() as $httpVerb) {
+            $verb = strtolower($httpVerb);
+            $line =
+                "    - [" . $verb .
+                ", [!php/const \\" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() .
+                "\Map\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
+                "'@?" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() . "\Map\Repository\HandlerInterface'," .
+                "!php/const \\" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() .
+                "\Map\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
+            $routes[] = $line;
+        }
+        return $routes;
     }
 
     protected function getProjectNameFromComposer() : string

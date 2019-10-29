@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\BuphaloTemplateTree;
 
-interface ActorInterface
+interface ActorInterface extends \JsonSerializable
 {
 /** @neighborhoods-buphalo:annotation-processor TableName
     // No table name has been define for this actor
