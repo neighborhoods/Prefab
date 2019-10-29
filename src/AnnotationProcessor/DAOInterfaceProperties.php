@@ -5,12 +5,10 @@ namespace Neighborhoods\Prefab\AnnotationProcessor;
 use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
 use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
-class DAOInterface implements AnnotationProcessorInterface
+class DAOInterfaceProperties implements AnnotationProcessorInterface
 {
     /** @var ContextInterface */
     private $context;
-
-    private const PROP_CONSTANT_PATTERN = "public const PROP_%s = '%s';";
 
     public function setAnnotationProcessorContext(ContextInterface $Context)
     {
