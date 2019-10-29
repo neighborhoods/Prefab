@@ -9,28 +9,19 @@
   "scripts": {
     "post-update-cmd": [
       "vendor/bin/prefab",
-      "@composer dump-autoload -a",
-      "vendor/bin/bakery"
+      "@composer dump-autoload -a"
     ],
     "post-install-cmd": [
       "vendor/bin/prefab",
-      "@composer dump-autoload -a",
-      "vendor/bin/bakery"
+      "@composer dump-autoload -a"
     ]
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://satis.neighborhoods.com"
-    }
-  ],
   "config": {
     "sort-packages": true
   },
   "require": {
-    "php": "^7.2",
-    "neighborhoods/prefab": "^5.11",
-    "neighborhoods/bakery": "^1.0.0"
+    "php": "^7.0",
+    "neighborhoods/prefab": "^5.0"
   },
   "autoload": {
     "psr-4": {
