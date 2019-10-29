@@ -140,6 +140,8 @@ class Visitor implements VisitorInterface
             $this->getQueryBuilder()->andWhere($where);
         } elseif ($filter->getGlue() === 'or') {
             $this->getQueryBuilder()->orWhere($where);
+        } else {
+            throw new \LogicException('Unknown filter glue ' . $filter->getGlue());
         }
 
         return $this;
