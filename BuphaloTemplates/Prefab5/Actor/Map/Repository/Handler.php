@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
 
 use Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
+use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
 
 class Handler implements HandlerInterface
 {
@@ -26,7 +27,7 @@ class Handler implements HandlerInterface
         return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
-    protected function get() : \Neighborhoods\BuphaloTemplateTree\Actor\MapInterface
+    protected function get() : MapInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
