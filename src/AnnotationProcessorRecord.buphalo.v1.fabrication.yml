@@ -1,0 +1,67 @@
+actors:
+  <ActorName>.php:
+    template: Actor.php
+    annotation_processors:
+      DaoPropertiesAndAccessors:
+        processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAO
+        static_context_record:
+          - name: processorFullyQualifiedClassname
+            type: string
+          - name: staticContextRecord
+            type: array
+          - name: annotationProcessorKey
+            type: string
+  <ActorName>.service.yml:
+    template: Actor.service.yml
+  <ActorName>Interface.php:
+    template: ActorInterface.php
+    annotation_processors:
+      DaoAccessors:
+        processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAOInterface
+        static_context_record:
+          - name: processorFullyQualifiedClassname
+            type: string
+          - name: staticContextRecord
+            type: array
+          - name: annotationProcessorKey
+            type: string
+  <ActorName>/AwareTrait.php:
+    template: Actor/Awaretrait.php
+  <ActorName>/Factory.php:
+    template: Actor/Factory.php
+  <ActorName>/Factory.service.yml:
+    template: Actor/Factory.service.yml
+  <ActorName>/FactoryInterface.php:
+    template: Actor/FactoryInterface.php
+  <ActorName>/Factory/AwareTrait.php:
+    template: Actor/Factory/Awaretrait.php
+  <ActorName>/Map/Factory.php:
+    template: Actor/Map/Factory.php
+  <ActorName>/Map/Factory.service.yml:
+    template: Actor/Map/Factory.service.yml
+  <ActorName>/Map/FactoryInterface.php:
+    template: Actor/Map/FactoryInterface.php
+  <ActorName>/Map/Factory/AwareTrait.php:
+    template: Actor/Map/Factory/AwareTrait.php
+  <ActorName>/Map.php:
+    template: Actor/Map.php
+  <ActorName>/Map/AwareTrait.php:
+    template: Actor/Map/AwareTrait.php
+  <ActorName>/Map.service.yml:
+    template: Actor/Map.service.yml
+  <ActorName>/MapInterface.php:
+    template: Actor/MapInterface.php
+  <ActorName>/BuilderInterface.php:
+    template: Actor/BuilderInterface.php
+  <ActorName>/Builder.service.yml:
+    template: Actor/Builder.service.yml
+  <ActorName>/Builder/AwareTrait.php:
+    template: Actor/Builder/AwareTrait.php
+  <ActorName>/Builder/Factory.php:
+    template: Actor/Builder/Factory.php
+  <ActorName>/Builder/Factory/AwareTrait.php:
+    template: Actor/Builder/Factory/AwareTrait.php
+  <ActorName>/Builder/Factory.service.yml:
+    template: Actor/Builder/Factory.service.yml
+  <ActorName>/Builder/FactoryInterface.php:
+    template: Actor/Builder/FactoryInterface.php

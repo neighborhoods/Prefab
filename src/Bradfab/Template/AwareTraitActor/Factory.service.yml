@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor\FactoryInterface:
-    class: Neighborhoods\Prefab\Bradfab\Template\AwareTraitActor\Factory
-    public: false
-    shared: true
-    calls:
-      - [setAwareTraitActor, ['@Neighborhoods\Prefab\Bradfab\Template\AwareTraitActorInterface']]

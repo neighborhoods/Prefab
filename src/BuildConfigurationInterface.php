@@ -21,7 +21,7 @@ interface BuildConfigurationInterface
 
     public function getDaoProperties() : array;
 
-    public function appendDaoProperty(DaoPropertyInterface $propertyName) : BuildConfigurationInterface;
+    public function appendDaoProperty(DaoPropertyInterface $daoProperty) : BuildConfigurationInterface;
 
     public function getRootSaveLocation() : string;
 
@@ -52,4 +52,16 @@ interface BuildConfigurationInterface
     public function getSupportingActorGroup() : string;
 
     public function hasSupportingActorGroup() : bool;
+
+    public function getDaoName() : string;
+
+    public function setDaoName(string $daoName) : BuildConfigurationInterface;
+
+    public function hasDaoName() : bool;
+
+    public function getActorNamespace() : string;
+
+    public function setActorNamespace(string $actorNamespace) : BuildConfigurationInterface;
+
+    public function hasActorNamespace() : bool;
 }

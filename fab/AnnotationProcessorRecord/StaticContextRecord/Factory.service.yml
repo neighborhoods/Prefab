@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\FactoryInterface:
+    class: Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Factory
+    public: false
+    shared: true
+    calls:
+      - [setAnnotationProcessorRecordStaticContextRecord, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface']]

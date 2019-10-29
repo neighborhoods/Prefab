@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
-use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
-use Neighborhoods\Bradfab\AnnotationProcessorInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class RepositoryUpdateElementMethod implements AnnotationProcessorInterface
 {
@@ -15,12 +15,12 @@ class RepositoryUpdateElementMethod implements AnnotationProcessorInterface
     protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
 
     protected const CREATE_NAMED_PARAMETER_SIMPLE_PROPERTY_PATTERN = <<< EOF
-     \$values[ActorInterface::PROP_%s] = 
-            \$queryBuilder->createNamedParameter(\$Actor->get%s());
+     \$queryBuilder->set(ActorInterface::PROP_%s, 
+            \$queryBuilder->createNamedParameter(\$Actor->get%s()));
 EOF;
 
     protected const CREATE_NAMED_PARAMETER_COMPLEX_PROPERTY_PATTERN = <<< EOF
-     \$values[ActorInterface::PROP_%s] = 
+     \$queryBuilder->set(ActorInterface::PROP_%s, 
             \$queryBuilder->createNamedParameter(json_encode(\$Actor->get%s()));
 EOF;
 
@@ -57,6 +57,10 @@ EOF;
         $replacement = '';
 
         foreach ($properties as $property) {
+            if ($property['created_on_insert'] === true) {
+                continue;
+            }
+
             $propertyName = $property['name'];
             $camelCasePropertyName = $this->getCamelCasePropertyName($propertyName);
 

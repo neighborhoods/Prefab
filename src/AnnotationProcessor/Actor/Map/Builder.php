@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessor\Actor\Map;
 
-use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
-use Neighborhoods\Bradfab\AnnotationProcessorInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class Builder implements AnnotationProcessorInterface
 {
@@ -12,6 +12,7 @@ class Builder implements AnnotationProcessorInterface
     protected $context;
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field';
+    public const CONTEXT_KEY_IDENTITY_FIELD = 'identity_field';
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -33,7 +34,7 @@ class Builder implements AnnotationProcessorInterface
     public function getReplacement() : string
     {
         $camelCaseName = '';
-        $nameArray = explode('_', $this->getAnnotationProcessorContext()->getStaticContextRecord()['identity_field']);
+        $nameArray = explode('_', $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::CONTEXT_KEY_IDENTITY_FIELD]);
         foreach ($nameArray as $part) {
             $camelCaseName .= ucfirst($part);
         }

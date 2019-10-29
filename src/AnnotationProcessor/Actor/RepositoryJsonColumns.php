@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
-use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
-use Neighborhoods\Bradfab\AnnotationProcessorInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class RepositoryJsonColumns implements AnnotationProcessorInterface
 {
@@ -14,7 +14,6 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
 
     protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
     protected const JSON_COLUMN_ARRAY_ITEM_PATTERN = "\t\tActorInterface::PROP_%s,\n";
-    protected const COMPLEX_OBJECT_NAMESPACE_PREFIX = '\\Neighborhoods\\';
 
     protected $context;
 

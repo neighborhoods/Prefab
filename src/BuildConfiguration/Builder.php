@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\BuildConfiguration;
 
-
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
@@ -16,7 +15,6 @@ class Builder implements BuilderInterface
 
     protected $yamlFilePath;
     protected $projectName;
-    protected $daoNamespace;
     protected $projectRoot;
 
     public function build() : BuildConfigurationInterface
@@ -28,6 +26,10 @@ class Builder implements BuilderInterface
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
+
+        $buildConfiguration->setDaoName($configArray['dao']['name']);
+
+        $buildConfiguration->setActorNamespace($this->buildActorNamespace());
 
         if (!empty($configArray['dao']['identity_field'])) {
             $buildConfiguration->setDaoIdentityField($configArray['dao']['identity_field']);
@@ -57,6 +59,17 @@ class Builder implements BuilderInterface
         }
 
         return $buildConfiguration;
+    }
+
+    protected function buildActorNamespace() : string
+    {
+        $filepath = explode('/src/', $this->getYamlFilePath())[1];
+        $filepath = str_replace('.prefab.definition.yml', '', $filepath);
+        $filepathArray = explode('/', $filepath);
+        array_pop($filepathArray);
+        $truncatedFilepath = implode('\\', $filepathArray);
+
+        return 'Neighborhoods\\' . $this->getProjectName() . '\\' . $truncatedFilepath;
     }
 
     protected function getFabDirFromYamlPath() : string

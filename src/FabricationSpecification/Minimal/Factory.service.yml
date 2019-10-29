@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\Minimal\FactoryInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Minimal\Factory
+    public: false
+    shared: true
+    calls:
+      - [setFabricationSpecificationMinimal, ['@Neighborhoods\Prefab\FabricationSpecification\MinimalInterface']]
