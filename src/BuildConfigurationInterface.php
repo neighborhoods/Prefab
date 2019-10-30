@@ -5,6 +5,8 @@ namespace Neighborhoods\Prefab;
 
 interface BuildConfigurationInterface
 {
+    public const PREFAB_DEFINITION_FILE_EXTENSION = '.prefab.definition.yml';
+
     public const SUPPORTING_ACTOR_GROUP_COMPLETE = 'complete';
     public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
     public const SUPPORTING_ACTOR_GROUP_MINIMAL = 'minimal';

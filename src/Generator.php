@@ -79,8 +79,7 @@ class Generator implements GeneratorInterface
     protected function generatePrefabActors() : GeneratorInterface
     {
         $finder = new Finder();
-        // TODO: Put the file extension somewhere as a constant
-        $daos = $finder->files()->name('*.prefab.definition.yml')->in($this->srcLocation);
+        $daos = $finder->files()->name('*' . BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION)->in($this->srcLocation);
 
         if (count($daos) === 0) {
             echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
@@ -134,7 +133,7 @@ class Generator implements GeneratorInterface
     {
         $routes = [];
         $truncatedNamespace = explode('/fab/', $buildConfiguration->getRootSaveLocation())[1];
-        $truncatedNamespace = str_replace('.prefab.definition.yml', '', $truncatedNamespace);
+        $truncatedNamespace = str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $truncatedNamespace);
 
         $fullDaoName = implode('', explode('/', $truncatedNamespace));
 
@@ -238,7 +237,7 @@ class Generator implements GeneratorInterface
     protected function getWritePathForDao(SplFileInfo $dao) : string
     {
         $daoRelativePath = explode('/src/', $dao->getRealPath())[1];
-        $daoRelativePath = str_replace('.prefab.definition.yml', '', $daoRelativePath) . '.buphalo.v1.fabrication.yml';
+        $daoRelativePath = str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $daoRelativePath) . '.buphalo.v1.fabrication.yml';
 
         $writeFilePath = __DIR__ . '/../BuphaloFabFiles/' . $daoRelativePath;
         return $writeFilePath;
