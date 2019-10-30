@@ -5,7 +5,7 @@ A code generation tool. Takes the busywork out of building strongly-typed, patte
 
 ### Running Prefab
 - In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
-- Create your `dao.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
+- Create your `Actor.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
 - From the root of your project run `./vendor/bin/prefab`
     - This will add all of the supporting files needed to create a working API endpoint
 
@@ -15,83 +15,81 @@ Working examples of Prefab can be found in the [PrefabFitness repository](https:
 
 ## Prefab Definition File Specification
 
-The purpose of this document is to define the components needed to generate an HTTP endpoint for a DAO from a `.prefab.definition.yml` file
+The purpose of this document is to define the components needed to generate an HTTP endpoint for an actor from a `.prefab.definition.yml` file
 
-The file must be named {DAONAME}.prefab.definition.yml and saved under `src/`. They should be stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
-- `dao`
-    - `table_name`
-        - Name of the database table containing the data that populates the DAO
-    - `supporting_actor_group`
-        - The collection of supporting actors you need generated for the actor
-        - Can be one of `complete`, `collection`, or `minimal`
-        - This field is optional and defaults to `complete`
-        - See [below](#supporting-actor-groups) for more information
-    - `http_route`
-        - The http route that corresponds with the DAO
-        - This field is optional
-    - `http_verbs`
-        - HTTP methods allowed for a DAO. Can include get, post, put, patch, and delete.
-        - Note: Since mutative and destructive actions are not yet patterned for repositories, you will need to override the generated handler to call the proper repository method.
-    - `identity_field`
-        - Name of the database column containing the unique identifier for a given DAO
-    - `properties`
-        - The class properties of the DAO. Each property should have:
-            - `data_type`
-                - The type of object the property represents. This can be a primitive or a fully qualified namespaced object
-                - Note: This used to be called `php_type` which is maintained for backwards compatibility
-            - `record_key`
-                - Name of the key containing the data that populates the class property
-                - Note: This used to be called `database_column_name` which is still maintained for backwards compatibility 
-            - `nullable`
-                - Whether or not this property can be null. If true, the builder method will surround this property with isset() before attempting to set the value on the DAO
-                - If not set, defaults to false
-            - `created_on_insert`
-                - This denotes properties that are not expected to be present before inserting the record into the database.
-                - If true, the buildForInsert() method will surround this property with isset() before attempting to set the value on the DAO. However, the build() method will still require this property when building a record from the database.
-                - If not set, defaults to false
+The file must be named {ACTORNAME}.prefab.definition.yml and saved under `src/`. They should be stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
+- `table_name`
+    - Name of the database table containing the data that populates the actor
+- `supporting_actor_group`
+    - The collection of supporting actors you need generated for the actor
+    - Can be one of `complete`, `collection`, or `minimal`
+    - This field is optional and defaults to `complete`
+    - See [below](#supporting-actor-groups) for more information
+- `http_route`
+    - The HTTP route to access the actor
+    - This field is optional and unnecessary if you don't want to expose the actor to HTTP traffic
+- `http_verbs`
+    - HTTP methods allowed for an actor. Can include `GET`, `POST`, `PUT`, `PATCH`, and `DELETE`.
+    - Note: Since mutative and destructive actions are not yet patterned for repositories, you will need to override the generated handler to call the proper repository method.
+- `identity_field`
+    - Name of the database column that uniquely identifies a record for the actor
+- `properties`
+    - The class properties of the actor. Each property should have:
+        - `data_type`
+            - The type of object the property represents. This can be a primitive or a fully qualified namespaced object
+            - Note: This used to be called `php_type` which is maintained for backwards compatibility
+        - `record_key`
+            - Name of the key containing the data that populates the class property
+            - Note: This used to be called `database_column_name` which is still maintained for backwards compatibility 
+        - `nullable`
+            - Whether or not this property can be null. If true, the builder method will surround this property with isset() before attempting to set the value on the actor
+            - If not set, defaults to false
+        - `created_on_insert`
+            - This denotes properties that are not expected to be present before inserting the record into the database.
+            - If true, the buildForInsert() method will surround this property with isset() before attempting to set the value on the actor. However, the build() method will still require this property when building a record from the database.
+            - If not set, defaults to false
                 
 Prefab also enforces
 * A contract version namespace (e.g. `MV1`, `DOR1`, `RETS1`, etc.). This MUST be present under `src/`.
 * A `{VENDOR}\{PRODUCT_NAME}` PSR-4 namespace convention (e.g. `Neighborhoods\Prefab`). This MUST be defined in `composer.json`.
 
-### Example structure of a DAO yaml file:
+### Example structure of a Prefab definition file:
 
 Filename: `User.prefab.definition.yml`
 ```yaml
-dao:
-  table_name: mv1_user
-  identity_field: id
-  supporting_actor_group: complete
-  http_route: /mv1/users/{searchCriteria:}
-  http_verbs:
-   - get
-   - post
-   - put
-   - patch
-   - delete
-  properties:
-    id:
-      data_type: int
-      record_key: id
-      nullable: false
-      created_on_insert: true
-    email:
-      data_type: string
-      record_key: email
-      nullable: true
-    first_name:
-      data_type: string
-      record_key: first_name
-      nullable: false
-    last_name:
-      data_type: string
-      record_key: last_name
-      nullable: false
-    created_at:
-      data_type: string
-      record_key: created_at
-      nullable: false
-      created_on_insert: true
+table_name: mv1_user
+identity_field: id
+supporting_actor_group: complete
+http_route: /mv1/users/{searchCriteria:}
+http_verbs:
+- get
+- post
+- put
+- patch
+- delete
+properties:
+id:
+  data_type: int
+  record_key: id
+  nullable: false
+  created_on_insert: true
+email:
+  data_type: string
+  record_key: email
+  nullable: true
+first_name:
+  data_type: string
+  record_key: first_name
+  nullable: false
+last_name:
+  data_type: string
+  record_key: last_name
+  nullable: false
+created_at:
+  data_type: string
+  record_key: created_at
+  nullable: false
+  created_on_insert: true
 ```
 ## Search Criteria
 
