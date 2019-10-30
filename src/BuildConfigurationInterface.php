@@ -9,6 +9,16 @@ interface BuildConfigurationInterface
     public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
     public const SUPPORTING_ACTOR_GROUP_MINIMAL = 'minimal';
 
+    public const KEY_DAO = 'dao';
+    public const KEY_TABLE_NAME = 'table_name';
+    public const KEY_NAME = 'name';
+    public const KEY_IDENTITY_FIELD = 'identity_field';
+    public const KEY_HTTP_ROUTE = 'http_route';
+    public const KEY_HTTP_VERBS = 'http_verbs';
+    public const HTTP_VERB_GET = 'GET';
+    public const KEY_SUPPORTING_ACTOR_GROUP = 'supporting_actor_group';
+    public const KEY_PROPERTIES = 'properties';
+
     public function getTableName() : string;
 
     public function setTableName(string $tableName) : BuildConfigurationInterface;

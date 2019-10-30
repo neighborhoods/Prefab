@@ -20,36 +20,40 @@ class Builder implements BuilderInterface
     public function build() : BuildConfigurationInterface
     {
         $buildConfiguration = $this->getBuildConfigurationFactory()->create();
-        $configArray = $this->getConfigFromYaml();
+        $prefabDefinitionFileArray = $this->getConfigFromYaml();
 
-        $buildConfiguration->setTableName($configArray['dao']['table_name'])
+        if (isset($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO])) {
+            $prefabDefinitionFileArray = $prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO];
+        }
+        
+        $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
 
-        $buildConfiguration->setDaoName($configArray['dao']['name']);
+        $buildConfiguration->setDaoName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_NAME]);
 
         $buildConfiguration->setActorNamespace($this->buildActorNamespace());
 
-        if (!empty($configArray['dao']['identity_field'])) {
-            $buildConfiguration->setDaoIdentityField($configArray['dao']['identity_field']);
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_IDENTITY_FIELD])) {
+            $buildConfiguration->setDaoIdentityField($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_IDENTITY_FIELD]);
         }
 
-        if (!empty($configArray['dao']['http_route'])) {
-            $buildConfiguration->setHttpRoute($configArray['dao']['http_route']);
-            $httpVerbs = ($configArray['dao']['http_verbs']) ?? ['GET'];
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_HTTP_ROUTE])) {
+            $buildConfiguration->setHttpRoute($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_HTTP_ROUTE]);
+            $httpVerbs = ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_HTTP_VERBS]) ?? [BuildConfigurationInterface::HTTP_VERB_GET];
             $buildConfiguration->setHttpVerbs($httpVerbs);
         }
 
-        if (!empty($configArray['dao']['supporting_actor_group'])) {
-            $buildConfiguration->setSupportingActorGroup($configArray['dao']['supporting_actor_group']);
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP])) {
+            $buildConfiguration->setSupportingActorGroup($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP]);
         } else {
             $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
         }
 
-        foreach ($configArray['dao']['properties'] as $key => $values) {
+        foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES] as $key => $values) {
             $record = $values;
-            $record['name'] = $key;
+            $record[BuildConfigurationInterface::KEY_NAME] = $key;
 
             $buildConfiguration->appendDaoProperty(
                 $this->getDaoPropertyBuilderFactory()->create()
