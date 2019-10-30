@@ -2,7 +2,7 @@
   "name": "neighborhoods/prefab",
   "type": "library",
   "description": "Neighborhoods Prefab builds Protean machinery.",
-  "license": "proprietary",
+  "license": "MIT",
   "keywords": [],
   "bin": [
     "bin/prefab"
