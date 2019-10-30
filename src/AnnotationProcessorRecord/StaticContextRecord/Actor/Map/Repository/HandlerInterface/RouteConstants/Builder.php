@@ -28,7 +28,7 @@ class Builder implements BuilderInterface
     protected function getRouteNameForDao() : string
     {
         $filePath = $this->getBuildConfiguration()->getRootSaveLocation();
-        $filePath = str_replace('.prefab.definition.yml', '', $filePath);
+        $filePath = str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $filePath);
         $routeNameArray = explode('/fab/', $filePath);
 
         if (!isset($routeNameArray[1])) {

@@ -67,7 +67,7 @@ class Builder implements BuilderInterface
     protected function buildActorNamespace() : string
     {
         $filepath = explode('/src/', $this->getYamlFilePath())[1];
-        $filepath = str_replace('.prefab.definition.yml', '', $filepath);
+        $filepath = str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $filepath);
         $filepathArray = explode('/', $filepath);
         array_pop($filepathArray);
         $truncatedFilepath = implode('\\', $filepathArray);
@@ -79,7 +79,7 @@ class Builder implements BuilderInterface
     {
         $filepathArray = explode('/', $this->getYamlFilePath());
         $filename = array_pop($filepathArray);
-        return str_replace('.prefab.definition.yml', '', $filename);
+        return str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $filename);
     }
 
     protected function getFabDirFromYamlPath() : string
