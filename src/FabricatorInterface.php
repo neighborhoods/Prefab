@@ -13,6 +13,8 @@ interface FabricatorInterface
 
     public function setProjectName($project_name) : FabricatorInterface;
 
+    public function setVendorName(string $vendor_name) : FabricatorInterface;
+
     public function setFileSystem(Filesystem $file_system) : FabricatorInterface;
 
 }

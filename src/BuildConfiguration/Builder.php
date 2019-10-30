@@ -14,6 +14,7 @@ class Builder implements BuilderInterface
     use DaoProperty\Builder\Factory\AwareTrait;
 
     protected $yamlFilePath;
+    protected $vendorName;
     protected $projectName;
     protected $projectRoot;
 
@@ -29,6 +30,7 @@ class Builder implements BuilderInterface
         $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectRoot())
+            ->setVendorName($this->getVendorName())
             ->setProjectName($this->getProjectName());
 
         $buildConfiguration->setDaoName($this->getActorNameFromFilepath());
@@ -72,7 +74,7 @@ class Builder implements BuilderInterface
         array_pop($filepathArray);
         $truncatedFilepath = implode('\\', $filepathArray);
 
-        return 'Neighborhoods\\' . $this->getProjectName() . '\\' . $truncatedFilepath;
+        return $this->getVendorName() . '\\' . $this->getProjectName() . '\\' . $truncatedFilepath;
     }
 
     protected function getActorNameFromFilepath() : string
@@ -143,4 +145,20 @@ class Builder implements BuilderInterface
         return $this;
     }
 
+    protected function getVendorName() : string
+    {
+        if ($this->vendorName === null) {
+            throw new \LogicException('Builder vendorName has not been set.');
+        }
+        return $this->vendorName;
+    }
+
+    public function setVendorName(string $vendorName) : BuilderInterface
+    {
+        if ($this->vendorName !== null) {
+            throw new \LogicException('Builder vendorName is already set.');
+        }
+        $this->vendorName = $vendorName;
+        return $this;
+    }
 }
