@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "842988e5a2570184137ff4a52ca821fa",
+    "content-hash": "9ea392b1914179c0c506b02a18d0886b",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -361,55 +361,6 @@
                 "zf"
             ],
             "time": "2018-04-11T15:48:02+00:00"
-        },
-        {
-            "name": "neighborhoods/bakery",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:neighborhoods/Bakery.git",
-                "reference": "46596bf01c4a8d5759dcd30d9baf1f9b2c03d538"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neighborhoods/Bakery/zipball/46596bf01c4a8d5759dcd30d9baf1f9b2c03d538",
-                "reference": "46596bf01c4a8d5759dcd30d9baf1f9b2c03d538",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2",
-                "symfony/dependency-injection": "^4.1"
-            },
-            "bin": [
-                "bin/bakery"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Neighborhoods\\Bakery\\": [
-                        "src",
-                        "fab"
-                    ]
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Brad Wilson",
-                    "email": "brad.wilson@neighborhoods.com"
-                }
-            ],
-            "description": "Leverages the PHP 7+ Opcache extension to compile source code and save the binary representation to disk.",
-            "keywords": [
-                "bakery"
-            ],
-            "support": {
-                "source": "https://github.com/neighborhoods/Bakery/tree/1.0.0",
-                "issues": "https://github.com/neighborhoods/Bakery/issues"
-            },
-            "time": "2019-04-16T19:44:52+00:00"
         },
         {
             "name": "neighborhoods/buphalo",
@@ -2794,16 +2745,16 @@
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.12.1",
+            "version": "2.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "7b870a7515f3a35afbecc39d63f34a861f40f58b"
+                "reference": "fd24920c2afcf2a70d11f67c3457f8f509453a62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/7b870a7515f3a35afbecc39d63f34a861f40f58b",
-                "reference": "7b870a7515f3a35afbecc39d63f34a861f40f58b",
+                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/fd24920c2afcf2a70d11f67c3457f8f509453a62",
+                "reference": "fd24920c2afcf2a70d11f67c3457f8f509453a62",
                 "shasum": ""
             },
             "require": {
@@ -2863,7 +2814,7 @@
                 "validator",
                 "zf"
             ],
-            "time": "2019-10-12T12:17:57+00:00"
+            "time": "2019-10-29T08:33:25+00:00"
         }
     ],
     "packages-dev": [
@@ -4331,7 +4282,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2"
+        "php": "^7.0"
     },
     "platform-dev": []
 }
