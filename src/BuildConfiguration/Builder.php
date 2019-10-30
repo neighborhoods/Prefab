@@ -31,8 +31,7 @@ class Builder implements BuilderInterface
             ->setProjectDir($this->getProjectRoot())
             ->setProjectName($this->getProjectName());
 
-        $buildConfiguration->setDaoName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_NAME]);
-
+        $buildConfiguration->setDaoName($this->getActorNameFromFilepath());
         $buildConfiguration->setActorNamespace($this->buildActorNamespace());
 
         if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_IDENTITY_FIELD])) {
@@ -74,6 +73,13 @@ class Builder implements BuilderInterface
         $truncatedFilepath = implode('\\', $filepathArray);
 
         return 'Neighborhoods\\' . $this->getProjectName() . '\\' . $truncatedFilepath;
+    }
+
+    protected function getActorNameFromFilepath() : string
+    {
+        $filepathArray = explode('/', $this->getYamlFilePath());
+        $filename = array_pop($filepathArray);
+        return str_replace('.prefab.definition.yml', '', $filename);
     }
 
     protected function getFabDirFromYamlPath() : string
