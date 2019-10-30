@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
 use Psr\Log\AbstractLogger;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
 class Logger extends AbstractLogger implements Prefab5\LoggerInterface
 {

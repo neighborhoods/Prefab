@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddlewareInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddlewareInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware;
 
     public function setNewRelicTransactionNameMiddleware(
         TransactionNameMiddlewareInterface $newRelicTransactionNameMiddleware
     ): self {
         if ($this->hasNewRelicTransactionNameMiddleware()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware = $newRelicTransactionNameMiddleware;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware = $newRelicTransactionNameMiddleware;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getNewRelicTransactionNameMiddleware(): TransactionNameMiddlewareInterface
     {
         if (!$this->hasNewRelicTransactionNameMiddleware()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware;
     }
 
     protected function hasNewRelicTransactionNameMiddleware(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware);
     }
 
     protected function unsetNewRelicTransactionNameMiddleware(): self
     {
         if (!$this->hasNewRelicTransactionNameMiddleware()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddleware);
 
         return $this;
     }

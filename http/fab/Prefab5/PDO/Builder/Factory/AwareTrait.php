@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\Factory;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\FactoryInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory;
 
     public function setPDOBuilderFactory(FactoryInterface $pDOBuilderFactory): self
     {
         if ($this->hasPDOBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory = $pDOBuilderFactory;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory = $pDOBuilderFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getPDOBuilderFactory(): FactoryInterface
     {
         if (!$this->hasPDOBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory;
     }
 
     protected function hasPDOBuilderFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory);
     }
 
     protected function unsetPDOBuilderFactory(): self
     {
         if (!$this->hasPDOBuilderFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPDOBuilderFactory);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPDOBuilderFactory);
 
         return $this;
     }

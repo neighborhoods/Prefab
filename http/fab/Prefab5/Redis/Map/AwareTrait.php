@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Map;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Map;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\MapInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\MapInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap;
 
     public function setRedisMap(MapInterface $redisMap): self
     {
         if ($this->hasRedisMap()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap = $redisMap;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap = $redisMap;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getRedisMap(): MapInterface
     {
         if (!$this->hasRedisMap()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap;
     }
 
     protected function hasRedisMap(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap);
     }
 
     protected function unsetRedisMap(): self
     {
         if (!$this->hasRedisMap()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisMap);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisMap);
 
         return $this;
     }
