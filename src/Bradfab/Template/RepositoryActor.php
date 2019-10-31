@@ -59,7 +59,7 @@ class RepositoryActor implements RepositoryActorInterface
                     RepositoryJsonColumns::ANNOTATION_PROCESSOR_KEY => [
                         Template::KEY_PROCESSOR_FULLY_QUALIFIED_CLASSNAME => '\\' . RepositoryJsonColumns::class,
                         Template::KEY_STATIC_CONTEXT_RECORD => [
-                            RepositoryJsonColumns::KEY_PROPERTIES => $propertyArray,
+                            RepositoryJsonColumns::STATIC_CONTEXT_RECORD_KEY_PROPERTIES => $propertyArray,
                         ],
                     ],
                     RepositoryInsertElementMethod::ANNOTATION_PROCESSOR_KEY => [

@@ -8,11 +8,17 @@ use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class Builder implements AnnotationProcessorInterface
 {
+    public const STATIC_CONTEXT_RECORD_KEY_VENDOR = 'vendor';
+    public const STATIC_CONTEXT_RECORD_KEY_PROPERTIES = 'properties';
+
+    public const ACTOR_PROPERTY_KEY_NULLABLE = 'nullable';
+    public const ACTOR_PROPERTY_KEY_DATA_TYPE = 'data_type';
+    public const ACTOR_PROPERTY_KEY_CREATED_ON_INSERT = 'created_on_insert';
+
     protected $context;
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
 
-    protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
     protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
         \$Actor->set%s(
             \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
@@ -59,7 +65,7 @@ EOF;
 
         foreach ($properties as $propertyName => $property) {
 
-            if ($this->isPropertyComplexObject($property['data_type'])) {
+            if ($this->isPropertyComplexObject($property[self::ACTOR_PROPERTY_KEY_DATA_TYPE])) {
                 $replacement .= $this->getSetterForComplexObject($property, $propertyName);
             } else {
                 $replacement .= $this->getSetterForNonComplexObject($property, $propertyName);
@@ -71,7 +77,7 @@ EOF;
 
     protected function isPropertyComplexObject(string $type) : bool
     {
-        return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
+        return strpos($type,  '\\' . $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_VENDOR]) === 0;
     }
 
     /**
@@ -105,7 +111,7 @@ EOF;
 
     protected function getSetterForComplexObject(array $property, string $propertyName) : string
     {
-        if (strpos($property['data_type'], 'MapInterface') !== false) {
+        if (strpos($property[self::ACTOR_PROPERTY_KEY_DATA_TYPE], 'MapInterface') !== false) {
             $pattern = self::COMPLEX_OBJECT_MAP_BUILDER_METHOD;
         } else {
             $pattern = self::COMPLEX_OBJECT_BUILDER_METHOD;
@@ -114,11 +120,11 @@ EOF;
         $method = sprintf(
             $pattern,
             $this->getCamelCasePropertyName($propertyName),
-            $this->getFullyQualifiedNameForType($property['data_type']),
+            $this->getFullyQualifiedNameForType($property[self::ACTOR_PROPERTY_KEY_DATA_TYPE]),
             strtoupper($propertyName)
         );
 
-        if ($property['nullable'] === true) {
+        if ($property[self::ACTOR_PROPERTY_KEY_NULLABLE] === true) {
             $method = sprintf(
                 self::NULLABLE_PROPERTY_METHOD_PATTERN,
                 strtoupper($propertyName),
@@ -131,7 +137,7 @@ EOF;
 
     protected function getSetterForNonComplexObject(array $property, string $propertyName) : string
     {
-        if ($property['data_type'] === 'float') {
+        if ($property[self::ACTOR_PROPERTY_KEY_DATA_TYPE] === 'float') {
             $typeCast = '(float)';
         } else {
             $typeCast = '';
@@ -144,7 +150,7 @@ EOF;
             strtoupper($propertyName)
         );
 
-        if ($property['nullable'] === true) {
+        if ($property[self::ACTOR_PROPERTY_KEY_NULLABLE] === true) {
             return sprintf(
                 self::NULLABLE_PROPERTY_METHOD_PATTERN,
                 strtoupper($propertyName),

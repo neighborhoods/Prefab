@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Actor\Map\Repository\RepositoryUpdateElementMethod;
 
+use Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryUpdateElementMethod;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
@@ -19,14 +20,17 @@ class Builder implements BuilderInterface
         /** @var DaoPropertyInterface $property */
         foreach ($buildConfiguration->getDaoProperties() as $property) {
             $staticContextRecord[] = [
-                'name' => $property->getName(),
-                'data_type' => $property->getDataType(),
-                'nullable' => $property->getNullable(),
-                'created_on_insert' => $property->getCreatedOnInsert()
+                RepositoryUpdateElementMethod::STATIC_CONTEXT_RECORD_KEY_NAME => $property->getName(),
+                RepositoryUpdateElementMethod::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE => $property->getDataType(),
+                RepositoryUpdateElementMethod::STATIC_CONTEXT_RECORD_KEY_NULLABLE => $property->getNullable(),
+                RepositoryUpdateElementMethod::STATIC_CONTEXT_RECORD_KEY_CREATED_ON_INSERT => $property->getCreatedOnInsert()
             ];
         }
 
-        return ['properties' => $staticContextRecord];
+        return [
+            RepositoryUpdateElementMethod::STATIC_CONTEXT_RECORD_KEY_PROPERTIES => $staticContextRecord,
+            RepositoryUpdateElementMethod::STATIC_CONTEXT_RECORD_KEY_VENDOR => $this->getBuildConfiguration()->getVendorName()
+        ];
     }
 
     protected function getBuildConfiguration() : BuildConfigurationInterface
