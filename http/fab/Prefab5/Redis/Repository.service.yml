@@ -1,8 +1,8 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\RepositoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Repository
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\RepositoryInterface:
+    class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Repository
     public: false
     shared: true
     calls:
-      - [setRedisFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface']]
-      - [setRedisMap, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\MapInterface']]
+      - [setRedisFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface']]
+      - [setRedisMap, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\MapInterface']]

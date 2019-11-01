@@ -1,7 +1,7 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\Factory
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\FactoryInterface:
+    class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\Builder\Factory
     public: false
     shared: true
     calls:
-      - [setPDOBuilder, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface']]
+      - [setPDOBuilder, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO\BuilderInterface']]

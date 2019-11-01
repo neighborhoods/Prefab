@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Act
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
+use Neighborhoods\Prefab\AnnotationProcessor;
 
 class Builder implements BuilderInterface
 {
@@ -19,12 +20,15 @@ class Builder implements BuilderInterface
         /** @var DaoPropertyInterface $property */
         foreach ($buildConfiguration->getDaoProperties() as $property) {
             $staticContextRecord[] = [
-                'name' => $property->getName(),
-                'data_type' => $property->getDataType()
+                AnnotationProcessor\Actor\RepositoryJsonColumns::ACTOR_PROPERTY_KEY_NAME => $property->getName(),
+                AnnotationProcessor\Actor\RepositoryJsonColumns::ACTOR_PROPERTY_KEY_DATA_TYPE => $property->getDataType()
             ];
         }
 
-        return ['properties' => $staticContextRecord];
+        return [
+            AnnotationProcessor\Actor\RepositoryJsonColumns::STATIC_CONTEXT_RECORD_KEY_PROPERTIES => $staticContextRecord,
+            AnnotationProcessor\Actor\RepositoryJsonColumns::STATIC_CONTEXT_RECORD_KEY_VENDOR => $this->getBuildConfiguration()->getVendorName(),
+        ];
     }
 
     protected function getBuildConfiguration() : BuildConfigurationInterface

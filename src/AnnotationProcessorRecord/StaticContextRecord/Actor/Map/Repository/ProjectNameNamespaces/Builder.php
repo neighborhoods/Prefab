@@ -15,9 +15,9 @@ class Builder implements BuilderInterface
     public function build() : array
     {
         $namespaces = [
-            'Neighborhoods\PROJECTNAME\Prefab5\Doctrine',
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteriaInterface',
-            'Neighborhoods\PROJECTNAME\Prefab5\SearchCriteria',
+            $this->getBuildConfiguration()->getVendorName() . '\PROJECTNAME\Prefab5\Doctrine',
+            $this->getBuildConfiguration()->getVendorName() . '\PROJECTNAME\Prefab5\SearchCriteriaInterface',
+            $this->getBuildConfiguration()->getVendorName() . '\PROJECTNAME\Prefab5\SearchCriteria',
         ];
 
         return [

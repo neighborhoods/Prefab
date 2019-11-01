@@ -16,4 +16,5 @@ interface GeneratorInterface
     public function setFileSystem(Filesystem $fileSystem) : GeneratorInterface;
     public function setFinder(Finder $finder) : GeneratorInterface;
     public function setHttpSourceDirectory(string $httpSourceDirectory) : GeneratorInterface;
+    public function setVendorName(string $vendorName) : GeneratorInterface;
 }

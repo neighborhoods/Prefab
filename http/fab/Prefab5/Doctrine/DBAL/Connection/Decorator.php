@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL\Connection;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\PDO;
 
 class Decorator implements DecoratorInterface
 {

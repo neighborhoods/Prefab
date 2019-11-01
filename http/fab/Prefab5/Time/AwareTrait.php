@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Time;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Time;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\TimeInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\TimeInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductTime;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime;
 
     public function setTime(TimeInterface $time): self
     {
         if ($this->hasTime()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime = $time;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime = $time;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getTime(): TimeInterface
     {
         if (!$this->hasTime()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime;
     }
 
     protected function hasTime(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime);
     }
 
     protected function unsetTime(): self
     {
         if (!$this->hasTime()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductTime is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductTime);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductTime);
 
         return $this;
     }

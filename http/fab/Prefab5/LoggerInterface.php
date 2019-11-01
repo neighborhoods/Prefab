@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
 interface LoggerInterface extends \Psr\Log\LoggerInterface
 {

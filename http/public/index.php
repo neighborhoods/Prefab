@@ -4,12 +4,12 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 $logger = (new Logger())
     ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log');

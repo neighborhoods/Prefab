@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 /**
  * @deprecated
- * @see \Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler
+ * @see \ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler
  */
 class ExceptionHandler implements ExceptionHandlerInterface
 {

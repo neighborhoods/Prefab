@@ -10,7 +10,10 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class Generator implements GeneratorInterface
 {
+    const VENDOR_NAME_PLACEHOLDER = 'ReplaceThisWithTheNameOfYourVendor';
+    const PROJECT_NAME_PLACEHOLDER = 'ReplaceThisWithTheNameOfYourProduct';
     protected $projectName;
+    protected $vendorName;
     protected $srcDirectory;
     protected $targetDirectory;
     protected $stagedDirectory;
@@ -54,7 +57,8 @@ class Generator implements GeneratorInterface
 
         foreach ($finder as $file) {
             $contents = $file->getContents();
-            $modifiedContents = str_replace('ReplaceThisWithTheNameOfYourProduct', $this->getProjectName(), $contents);
+            $modifiedContents = str_replace(self::VENDOR_NAME_PLACEHOLDER, $this->getVendorName(), $contents);
+            $modifiedContents = str_replace(self::PROJECT_NAME_PLACEHOLDER, $this->getProjectName(), $modifiedContents);
             file_put_contents($file->getRealPath(), $modifiedContents);
         }
 
@@ -178,6 +182,23 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator httpSourceDirectory is already set.');
         }
         $this->httpSourceDirectory = $httpSourceDirectory;
+        return $this;
+    }
+
+    protected function getVendorName() : string
+    {
+        if ($this->vendorName === null) {
+            throw new \LogicException('Generator vendorName has not been set.');
+        }
+        return $this->vendorName;
+    }
+
+    public function setVendorName(string $vendorName) : GeneratorInterface
+    {
+        if ($this->vendorName !== null) {
+            throw new \LogicException('Generator vendorName is already set.');
+        }
+        $this->vendorName = $vendorName;
         return $this;
     }
 }

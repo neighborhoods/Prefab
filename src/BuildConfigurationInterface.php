@@ -76,4 +76,10 @@ interface BuildConfigurationInterface
     public function setActorNamespace(string $actorNamespace) : BuildConfigurationInterface;
 
     public function hasActorNamespace() : bool;
+
+    public function getVendorName() : string;
+
+    public function setVendorName(string $vendorName) : BuildConfigurationInterface;
+
+    public function hasVendorName() : bool;
 }

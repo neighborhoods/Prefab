@@ -10,6 +10,7 @@ use Neighborhoods\Buphalo\V1\Protean\Container\Builder;
 
 class Fabricator implements FabricatorInterface
 {
+    protected $vendor_name;
     protected $project_name;
     protected $project_root;
     protected $file_system;
@@ -22,7 +23,7 @@ class Fabricator implements FabricatorInterface
         // Where the supporting actor templates are located
         putenv('Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths='. realpath(__DIR__ . '/../BuphaloTemplates/Prefab5'));
         // Namespace of the generated files
-        putenv('Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\'. $this->getProjectName() . '\\');
+        putenv('Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix='. $this->getVendorName() .'\\'. $this->getProjectName() . '\\');
         // Where the Buphalo fabrication files are located
         putenv('Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath='. realpath(__DIR__ . '/../BuphaloFabFiles'));
         // Directory to save the generated supporting actors
@@ -94,4 +95,20 @@ class Fabricator implements FabricatorInterface
         return $this;
     }
 
+    protected function getVendorName() : string
+    {
+        if ($this->vendor_name === null) {
+            throw new \LogicException('Fabricator vendor_name has not been set.');
+        }
+        return $this->vendor_name;
+    }
+
+    public function setVendorName(string $vendor_name) : FabricatorInterface
+    {
+        if ($this->vendor_name !== null) {
+            throw new \LogicException('Fabricator vendor_name is already set.');
+        }
+        $this->vendor_name = $vendor_name;
+        return $this;
+    }
 }

@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNSInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNSInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS;
 
     public function setOpcacheDNS(DNSInterface $opcacheDNS): self
     {
         if ($this->hasOpcacheDNS()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS = $opcacheDNS;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS = $opcacheDNS;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getOpcacheDNS(): DNSInterface
     {
         if (!$this->hasOpcacheDNS()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS;
     }
 
     protected function hasOpcacheDNS(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS);
     }
 
     protected function unsetOpcacheDNS(): self
     {
         if (!$this->hasOpcacheDNS()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNS);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNS);
 
         return $this;
     }

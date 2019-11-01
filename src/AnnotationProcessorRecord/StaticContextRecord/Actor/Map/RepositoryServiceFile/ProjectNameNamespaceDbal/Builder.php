@@ -14,7 +14,8 @@ class Builder implements BuilderInterface
 
     public function build() : array
     {
-        $namespace = '@Neighborhoods\PROJECTNAME\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface';
+        $namespace = '@' . $this->getBuildConfiguration()->getVendorName() .
+            '\PROJECTNAME\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface';
 
         return [
             self::CONTEXT_KEY_PROJECT_NAME => $this->getBuildConfiguration()->getProjectName(),

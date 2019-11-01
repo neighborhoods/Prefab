@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Factory;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\FactoryInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory;
 
     public function setOpcacheDNSFactory(FactoryInterface $opcacheDNSFactory): self
     {
         if ($this->hasOpcacheDNSFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory = $opcacheDNSFactory;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory = $opcacheDNSFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getOpcacheDNSFactory(): FactoryInterface
     {
         if (!$this->hasOpcacheDNSFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory;
     }
 
     protected function hasOpcacheDNSFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory);
     }
 
     protected function unsetOpcacheDNSFactory(): self
     {
         if (!$this->hasOpcacheDNSFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSFactory);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSFactory);
 
         return $this;
     }
