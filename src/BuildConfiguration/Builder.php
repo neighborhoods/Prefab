@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\BuildConfiguration;
 
-
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
@@ -15,39 +14,47 @@ class Builder implements BuilderInterface
     use DaoProperty\Builder\Factory\AwareTrait;
 
     protected $yamlFilePath;
+    protected $vendorName;
     protected $projectName;
-    protected $daoNamespace;
     protected $projectRoot;
 
     public function build() : BuildConfigurationInterface
     {
         $buildConfiguration = $this->getBuildConfigurationFactory()->create();
-        $configArray = $this->getConfigFromYaml();
+        $prefabDefinitionFileArray = $this->getConfigFromYaml();
 
-        $buildConfiguration->setTableName($configArray['dao']['table_name'])
+        if (isset($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO])) {
+            $prefabDefinitionFileArray = $prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO];
+        }
+        
+        $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
             ->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectRoot())
+            ->setVendorName($this->getVendorName())
             ->setProjectName($this->getProjectName());
 
-        if (!empty($configArray['dao']['identity_field'])) {
-            $buildConfiguration->setDaoIdentityField($configArray['dao']['identity_field']);
+        $buildConfiguration->setDaoName($this->getActorNameFromFilepath());
+        $buildConfiguration->setActorNamespace($this->buildActorNamespace());
+
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_IDENTITY_FIELD])) {
+            $buildConfiguration->setDaoIdentityField($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_IDENTITY_FIELD]);
         }
 
-        if (!empty($configArray['dao']['http_route'])) {
-            $buildConfiguration->setHttpRoute($configArray['dao']['http_route']);
-            $httpVerbs = ($configArray['dao']['http_verbs']) ?? ['GET'];
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_HTTP_ROUTE])) {
+            $buildConfiguration->setHttpRoute($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_HTTP_ROUTE]);
+            $httpVerbs = ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_HTTP_VERBS]) ?? [BuildConfigurationInterface::HTTP_VERB_GET];
             $buildConfiguration->setHttpVerbs($httpVerbs);
         }
 
-        if (!empty($configArray['dao']['supporting_actor_group'])) {
-            $buildConfiguration->setSupportingActorGroup($configArray['dao']['supporting_actor_group']);
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP])) {
+            $buildConfiguration->setSupportingActorGroup($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP]);
         } else {
             $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
         }
 
-        foreach ($configArray['dao']['properties'] as $key => $values) {
+        foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES] as $key => $values) {
             $record = $values;
-            $record['name'] = $key;
+            $record[BuildConfigurationInterface::KEY_NAME] = $key;
 
             $buildConfiguration->appendDaoProperty(
                 $this->getDaoPropertyBuilderFactory()->create()
@@ -57,6 +64,24 @@ class Builder implements BuilderInterface
         }
 
         return $buildConfiguration;
+    }
+
+    protected function buildActorNamespace() : string
+    {
+        $filepath = explode('/src/', $this->getYamlFilePath())[1];
+        $filepath = str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $filepath);
+        $filepathArray = explode('/', $filepath);
+        array_pop($filepathArray);
+        $truncatedFilepath = implode('\\', $filepathArray);
+
+        return $this->getVendorName() . '\\' . $this->getProjectName() . '\\' . $truncatedFilepath;
+    }
+
+    protected function getActorNameFromFilepath() : string
+    {
+        $filepathArray = explode('/', $this->getYamlFilePath());
+        $filename = array_pop($filepathArray);
+        return str_replace(BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION, '', $filename);
     }
 
     protected function getFabDirFromYamlPath() : string
@@ -120,4 +145,20 @@ class Builder implements BuilderInterface
         return $this;
     }
 
+    protected function getVendorName() : string
+    {
+        if ($this->vendorName === null) {
+            throw new \LogicException('Builder vendorName has not been set.');
+        }
+        return $this->vendorName;
+    }
+
+    public function setVendorName(string $vendorName) : BuilderInterface
+    {
+        if ($this->vendorName !== null) {
+            throw new \LogicException('Builder vendorName is already set.');
+        }
+        $this->vendorName = $vendorName;
+        return $this;
+    }
 }

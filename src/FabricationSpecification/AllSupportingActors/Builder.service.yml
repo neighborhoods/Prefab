@@ -1,0 +1,9 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\BuilderInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder
+    calls:
+      - [setFabricationSpecificationFactory, ['@Neighborhoods\Prefab\FabricationSpecification\FactoryInterface']]
+      - [setActorFactory, ['@Neighborhoods\Prefab\Actor\FactoryInterface']]
+      - [setActorMapFactory, ['@Neighborhoods\Prefab\Actor\Map\FactoryInterface']]
+      - [setAnnotationProcessorRecordMapFactory, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\Map\FactoryInterface']]
+      - [setAnnotationProcessorRecordBuilderFactory, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\FactoryInterface']]

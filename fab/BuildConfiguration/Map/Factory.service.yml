@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\BuildConfiguration\Map\FactoryInterface:
+    class: Neighborhoods\Prefab\BuildConfiguration\Map\Factory
+    public: false
+    shared: true
+    calls:
+      - [setBuildConfigurationMap, ['@Neighborhoods\Prefab\BuildConfiguration\MapInterface']]

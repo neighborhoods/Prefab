@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr;
 
 class Builder implements BuilderInterface
 {
@@ -50,7 +50,11 @@ class Builder implements BuilderInterface
 
     protected function cast(string $string)
     {
-        if (is_numeric($string) && (int)$string < PHP_INT_MAX) {
+        if (
+            $string[0] !== '0'
+            && is_numeric($string)
+            && (int)$string < PHP_INT_MAX
+        ) {
             if (ctype_digit($string)) {
                 return (int)$string;
             } else {

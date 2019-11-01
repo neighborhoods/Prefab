@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\ActorInterface:
+    class: Neighborhoods\Prefab\Actor
+    public: false
+    shared: false

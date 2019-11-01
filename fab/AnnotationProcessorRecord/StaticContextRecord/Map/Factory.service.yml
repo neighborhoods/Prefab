@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Map\FactoryInterface:
+    class: Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Map\Factory
+    public: false
+    shared: true
+    calls:
+      - [setAnnotationProcessorRecordStaticContextRecordMap, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\MapInterface']]

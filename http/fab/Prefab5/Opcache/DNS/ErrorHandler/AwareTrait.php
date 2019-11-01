@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandler;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandler;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandlerInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandlerInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler;
 
     public function setOpcacheDNSErrorHandler(ErrorHandlerInterface $opcacheDNSErrorHandler): self
     {
         if ($this->hasOpcacheDNSErrorHandler()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler = $opcacheDNSErrorHandler;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler = $opcacheDNSErrorHandler;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getOpcacheDNSErrorHandler(): ErrorHandlerInterface
     {
         if (!$this->hasOpcacheDNSErrorHandler()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler;
     }
 
     protected function hasOpcacheDNSErrorHandler(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler);
     }
 
     protected function unsetOpcacheDNSErrorHandler(): self
     {
         if (!$this->hasOpcacheDNSErrorHandler()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductOpcacheDNSErrorHandler);
 
         return $this;
     }

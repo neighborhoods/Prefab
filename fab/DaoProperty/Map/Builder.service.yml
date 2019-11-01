@@ -1,0 +1,8 @@
+services:
+  Neighborhoods\Prefab\DaoProperty\Map\BuilderInterface:
+    class: Neighborhoods\Prefab\DaoProperty\Map\Builder
+    public: false
+    shared: false
+    calls:
+      - [setDaoPropertyMapFactory, ['@Neighborhoods\Prefab\DaoProperty\Map\FactoryInterface']]
+      - [setDaoPropertyBuilderFactory, ['@Neighborhoods\Prefab\DaoProperty\Builder\FactoryInterface']]

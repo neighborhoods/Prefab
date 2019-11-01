@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\Actor\FactoryInterface:
+    class: Neighborhoods\Prefab\Actor\Factory
+    public: false
+    shared: true
+    calls:
+      - [setActor, ['@Neighborhoods\Prefab\ActorInterface']]

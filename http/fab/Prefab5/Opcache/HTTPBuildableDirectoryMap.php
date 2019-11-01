@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
 use Symfony\Component\Yaml\Yaml;
 
 class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
@@ -55,7 +55,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         return $this;
     }
 
-    public function getBuildableDirectoryMap() : array
+    public function getBuildableDirectoryMap() : ?array
     {
 
         if ($this->directoryMap !== null) {
@@ -67,8 +67,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         // This code is set after the file is not found the first time to prevent
         // disk access on every subsequent call
         if ($directoryMap === self::CODE_FILE_NOT_FOUND) {
-            throw (new BuildableDirectoryFileNotFound\Exception())
-                ->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+            return null;
         }
 
         if ($directoryMap !== false) {
@@ -80,8 +79,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
         if (!file_exists($filepath)) {
             $this->set(self::CODE_FILE_NOT_FOUND);
-            throw (new BuildableDirectoryFileNotFound\Exception())
-                ->setCode(BuildableDirectoryFileNotFound\Exception::CODE_FILE_NOT_FOUND);
+            return null;
         }
 
         $directoryMap = Yaml::parseFile($filepath);

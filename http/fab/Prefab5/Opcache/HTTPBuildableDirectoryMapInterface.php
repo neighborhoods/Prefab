@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
 interface HTTPBuildableDirectoryMapInterface
 {
@@ -11,6 +11,6 @@ interface HTTPBuildableDirectoryMapInterface
 
     public function flush() : HTTPBuildableDirectoryMapInterface;
 
-    public function getBuildableDirectoryMap() : array;
+    public function getBuildableDirectoryMap() : ?array;
 
 }

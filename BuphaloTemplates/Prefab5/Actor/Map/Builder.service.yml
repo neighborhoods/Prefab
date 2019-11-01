@@ -1,0 +1,8 @@
+services:
+  Neighborhoods\BuphaloTemplateTree\Actor\Map\BuilderInterface:
+    class: Neighborhoods\BuphaloTemplateTree\Actor\Map\Builder
+    public: false
+    shared: false
+    calls:
+      - [setActorMapFactory, ['@Neighborhoods\BuphaloTemplateTree\Actor\Map\FactoryInterface']]
+      - [setActorBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\Actor\Builder\FactoryInterface']]
