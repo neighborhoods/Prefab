@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\Factory;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\FactoryInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\Map\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory;
 
     public function setSearchCriteriaSortOrderMapFactory(FactoryInterface $searchCriteriaSortOrderMapFactory): self
     {
         if ($this->hasSearchCriteriaSortOrderMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory = $searchCriteriaSortOrderMapFactory;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory = $searchCriteriaSortOrderMapFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaSortOrderMapFactory(): FactoryInterface
     {
         if (!$this->hasSearchCriteriaSortOrderMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory;
     }
 
     protected function hasSearchCriteriaSortOrderMapFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory);
     }
 
     protected function unsetSearchCriteriaSortOrderMapFactory(): self
     {
         if (!$this->hasSearchCriteriaSortOrderMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaSortOrderMapFactory);
 
         return $this;
     }

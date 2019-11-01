@@ -17,21 +17,17 @@ class Generator implements GeneratorInterface
     protected $httpSrcDir;
     protected $projectRoot;
     protected $srcLocation;
+    protected $vendorName;
     protected $projectName;
     protected $fabricator;
-
-    protected function configure()
-    {
-        $this->setHttpSrcDir(__DIR__ . '/../http');
-        $this->setSrcLocation($this->getProjectRoot() . 'src/');
-
-        return $this;
-    }
+    protected $composerNamespace;
 
     public function generate()
     {
-        $this->configure();
-        $this->setProjectName($this->getProjectNameFromComposer());
+        $this->setHttpSrcDir(__DIR__ . '/../http');
+        $this->setSrcLocation($this->getProjectRoot() . 'src/');
+        $this->setProjectName($this->getProjectNameFromComposerFile());
+        $this->setVendorName($this->getVendorNameFromComposerFile());
 
         echo PHP_EOL . ">> Copying HTTP machinery...";
         $this->generateHttpSkeleton();
@@ -65,7 +61,8 @@ class Generator implements GeneratorInterface
     protected function generateHttpSkeleton() : GeneratorInterface
     {
         $generator = $this->getHttpSkeletonGeneratorFactory()->create();
-        $generator->setProjectName($this->getProjectName())
+        $generator->setVendorName($this->getVendorName())
+            ->setProjectName($this->getProjectName())
             ->setSrcDirectory($this->getSrcLocation())
             ->setHttpSourceDirectory($this->getHttpSrcDir())
             ->setTargetDirectory($this->getProjectRoot())
@@ -94,6 +91,7 @@ class Generator implements GeneratorInterface
         foreach ($daos as $dao) {
             $configuration = $this->getBuildConfigurationBuilderFactory()->create()
                 ->setYamlFilePath($dao->getRealPath())
+                ->setVendorName($this->getVendorName())
                 ->setProjectName($this->getProjectName())
                 ->setProjectRoot($this->getProjectRoot())
                 ->build();
@@ -106,6 +104,7 @@ class Generator implements GeneratorInterface
         }
 
         $this->getFabricator()
+            ->setVendorName($this->getVendorName())
             ->setProjectName($this->getProjectName())
             ->setProjectRoot($this->getProjectRoot())
             ->fabricateSupportingActors();
@@ -151,19 +150,52 @@ class Generator implements GeneratorInterface
         return $routes;
     }
 
-    protected function getProjectNameFromComposer() : string
+    protected function getVendorNameFromComposerFile() : string
     {
-        $composerFilePath = $this->getProjectRoot() . '/composer.json';
+        $namespaceArray = explode('\\', $this->getComposerNamespace());
+        return $namespaceArray[0];
+    }
 
-        if (!file_exists($composerFilePath)) {
-            throw new \RuntimeException('Could not access composer file for project.');
+    protected function getProjectNameFromComposerFile() : string
+    {
+        $namespaceArray = explode('\\', $this->getComposerNamespace());
+        if (!isset($namespaceArray[1])) {
+            throw new \RuntimeException('Unable to get project name from composer file');
         }
 
-        $composerContents = json_decode(file_get_contents($composerFilePath), true);
-        $fullNamespace = key($composerContents['autoload']['psr-4']);
-        $projectName = trim(str_replace('Neighborhoods', '', $fullNamespace), '\\');
+        return $namespaceArray[1];
+    }
 
-        return $projectName;
+    protected function getComposerNamespace() : string
+    {
+        if ($this->composerNamespace === null) {
+            $composerFilePath = $this->getProjectRoot() . '/composer.json';
+            if (!file_exists($composerFilePath)) {
+                throw new \RuntimeException('Could not access composer file for project.');
+            }
+
+            $composerContents = json_decode(file_get_contents($composerFilePath), true);
+            $this->composerNamespace = key($composerContents['autoload']['psr-4']);
+        }
+
+        return $this->composerNamespace;
+    }
+
+    protected function getVendorName() : string
+    {
+        if ($this->vendorName === null) {
+            throw new \LogicException('Generator vendorName has not been set.');
+        }
+        return $this->vendorName;
+    }
+
+    protected function setVendorName(string $vendorName) : GeneratorInterface
+    {
+        if ($this->vendorName !== null) {
+            throw new \LogicException('Generator vendorName is already set.');
+        }
+        $this->vendorName = $vendorName;
+        return $this;
     }
 
     protected function getProjectName() : string

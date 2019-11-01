@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic;
 
     public function setNewRelic(NewRelicInterface $newRelic): self
     {
         if ($this->hasNewRelic()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic = $newRelic;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic = $newRelic;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getNewRelic(): NewRelicInterface
     {
         if (!$this->hasNewRelic()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic;
     }
 
     protected function hasNewRelic(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic);
     }
 
     protected function unsetNewRelic(): self
     {
         if (!$this->hasNewRelic()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelic);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelic);
 
         return $this;
     }

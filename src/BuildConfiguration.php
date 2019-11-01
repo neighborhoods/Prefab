@@ -10,6 +10,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     private $daoName;
     private $daoProperties;
     private $rootSaveLocation;
+    private $vendorName;
     private $projectName;
     private $httpRoute;
     private $httpVerbs;
@@ -262,5 +263,27 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasActorNamespace() : bool
     {
         return $this->actorNamespace !== null;
+    }
+
+    public function getVendorName() : string
+    {
+        if ($this->vendorName === null) {
+            throw new \LogicException('BuildConfiguration vendorName has not been set.');
+        }
+        return $this->vendorName;
+    }
+
+    public function setVendorName(string $vendorName) : BuildConfigurationInterface
+    {
+        if ($this->vendorName !== null) {
+            throw new \LogicException('BuildConfiguration vendorName is already set.');
+        }
+        $this->vendorName = $vendorName;
+        return $this;
+    }
+
+    public function hasVendorName() : bool
+    {
+        return $this->vendorName !== null;
     }
 }

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 
 interface VisitorInterface extends SearchCriteria\VisitorInterface
 {

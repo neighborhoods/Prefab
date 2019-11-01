@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Visitor;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Visitor;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\VisitorInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\VisitorInterface;
 
 /** @codeCoverageIgnore */
 class Map extends \ArrayIterator implements MapInterface

@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\BuilderInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder;
 
     public function setProteanContainerBuilder(BuilderInterface $proteanContainerBuilder): self
     {
         if ($this->hasProteanContainerBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder = $proteanContainerBuilder;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder = $proteanContainerBuilder;
 
         return $this;
     }
@@ -22,23 +22,23 @@ trait AwareTrait
     protected function getProteanContainerBuilder(): BuilderInterface
     {
         if (!$this->hasProteanContainerBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder;
     }
 
     protected function hasProteanContainerBuilder(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder);
     }
 
     protected function unsetProteanContainerBuilder(): self
     {
         if (!$this->hasProteanContainerBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilder);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilder);
 
         return $this;
     }

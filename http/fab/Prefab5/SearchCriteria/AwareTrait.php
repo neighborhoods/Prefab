@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria;
 
     public function setSearchCriteria(SearchCriteriaInterface $searchCriteria): self
     {
         if ($this->hasSearchCriteria()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria = $searchCriteria;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria = $searchCriteria;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteria(): SearchCriteriaInterface
     {
         if (!$this->hasSearchCriteria()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria;
     }
 
     protected function hasSearchCriteria(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria);
     }
 
     protected function unsetSearchCriteria(): self
     {
         if (!$this->hasSearchCriteria()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteria);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteria);
 
         return $this;
     }

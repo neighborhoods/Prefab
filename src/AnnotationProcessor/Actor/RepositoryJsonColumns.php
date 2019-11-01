@@ -10,9 +10,12 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
 {
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-JsonColumns';
 
-    public const KEY_PROPERTIES = 'properties';
+    public const STATIC_CONTEXT_RECORD_KEY_PROPERTIES = 'properties';
+    public const STATIC_CONTEXT_RECORD_KEY_VENDOR = 'vendor';
 
-    protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
+    public const ACTOR_PROPERTY_KEY_DATA_TYPE = 'data_type';
+    public const ACTOR_PROPERTY_KEY_NAME = 'name';
+
     protected const JSON_COLUMN_ARRAY_ITEM_PATTERN = "\t\tActorInterface::PROP_%s,\n";
 
     protected $context;
@@ -38,9 +41,9 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
     {
         $replacement = '';
 
-        foreach ($this->getAnnotationProcessorContext()->getStaticContextRecord()[self::KEY_PROPERTIES] as $property) {
-            if ($this->isPropertyJsonField($property['data_type'])) {
-                $replacement .= sprintf(self::JSON_COLUMN_ARRAY_ITEM_PATTERN, strtoupper($property['name']));
+        foreach ($this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_PROPERTIES] as $property) {
+            if ($this->isPropertyJsonField($property[self::ACTOR_PROPERTY_KEY_DATA_TYPE])) {
+                $replacement .= sprintf(self::JSON_COLUMN_ARRAY_ITEM_PATTERN, strtoupper($property[self::ACTOR_PROPERTY_KEY_NAME]));
             }
         }
 
@@ -49,6 +52,7 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
 
     protected function isPropertyJsonField(string $type) : bool
     {
-        return ($type === 'array') || (strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0);
+        return ($type === 'array')
+            || strpos($type, '\\' . $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_VENDOR]) === 0;
     }
 }

@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\Decorator;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\Decorator;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\DecoratorInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\Expressive\Application\DecoratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator;
 
     public function setZendExpressiveApplicationDecorator(DecoratorInterface $zendExpressiveApplicationDecorator): self
     {
         if ($this->hasZendExpressiveApplicationDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator = $zendExpressiveApplicationDecorator;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator = $zendExpressiveApplicationDecorator;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getZendExpressiveApplicationDecorator(): DecoratorInterface
     {
         if (!$this->hasZendExpressiveApplicationDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator;
     }
 
     protected function hasZendExpressiveApplicationDecorator(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator);
     }
 
     protected function unsetZendExpressiveApplicationDecorator(): self
     {
         if (!$this->hasZendExpressiveApplicationDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendExpressiveApplicationDecorator);
 
         return $this;
     }

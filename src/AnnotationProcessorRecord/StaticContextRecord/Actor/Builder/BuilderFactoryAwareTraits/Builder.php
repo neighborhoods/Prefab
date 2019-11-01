@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Act
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
+use Neighborhoods\Prefab\AnnotationProcessor;
 
 class Builder implements BuilderInterface
 {
@@ -19,13 +20,14 @@ class Builder implements BuilderInterface
         /** @var DaoPropertyInterface $daoProperty */
         foreach ($this->getBuildConfiguration()->getDaoProperties() as $daoProperty) {
             $propertyArray[$daoProperty->getName()] = [
-                'nullable' => $daoProperty->getNullable(),
-                'data_type' => $daoProperty->getDataType(),
-                'created_on_insert' => $daoProperty->getCreatedOnInsert(),
+                AnnotationProcessor\Actor\BuilderFactoryTrait::ACTOR_PROPERTY_KEY_NULLABLE => $daoProperty->getNullable(),
+                AnnotationProcessor\Actor\BuilderFactoryTrait::ACTOR_PROPERTY_KEY_DATA_TYPE => $daoProperty->getDataType(),
+                AnnotationProcessor\Actor\BuilderFactoryTrait::ACTOR_PROPERTY_KEY_CREATED_ON_INSERT => $daoProperty->getCreatedOnInsert(),
             ];
         }
 
-        $staticContextRecord['properties'] = $propertyArray;
+        $staticContextRecord[AnnotationProcessor\Actor\BuilderFactoryTrait::STATIC_CONTEXT_RECORD_KEY_PROPERTIES] = $propertyArray;
+        $staticContextRecord[AnnotationProcessor\Actor\BuilderFactoryTrait::STATIC_CONTEXT_RECORD_KEY_VENDOR] = $this->getBuildConfiguration()->getVendorName();
 
         return $staticContextRecord;
     }

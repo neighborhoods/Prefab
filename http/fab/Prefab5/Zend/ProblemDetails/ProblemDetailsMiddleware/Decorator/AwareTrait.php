@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\ProblemDetails\ProblemDetailsMiddleware\Decorator;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\ProblemDetails\ProblemDetailsMiddleware\Decorator;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\ProblemDetails\ProblemDetailsMiddleware\DecoratorInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Zend\ProblemDetails\ProblemDetailsMiddleware\DecoratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator;
 
     public function setZendProblemDetailsProblemDetailsMiddlewareDecorator(
         DecoratorInterface $zendProblemDetailsProblemDetailsMiddlewareDecorator
     ): self {
         if ($this->hasZendProblemDetailsProblemDetailsMiddlewareDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator = $zendProblemDetailsProblemDetailsMiddlewareDecorator;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator = $zendProblemDetailsProblemDetailsMiddlewareDecorator;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getZendProblemDetailsProblemDetailsMiddlewareDecorator(): DecoratorInterface
     {
         if (!$this->hasZendProblemDetailsProblemDetailsMiddlewareDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator;
     }
 
     protected function hasZendProblemDetailsProblemDetailsMiddlewareDecorator(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator);
     }
 
     protected function unsetZendProblemDetailsProblemDetailsMiddlewareDecorator(): self
     {
         if (!$this->hasZendProblemDetailsProblemDetailsMiddlewareDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductZendProblemDetailsProblemDetailsMiddlewareDecorator);
 
         return $this;
     }

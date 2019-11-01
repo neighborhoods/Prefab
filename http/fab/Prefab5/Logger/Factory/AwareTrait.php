@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\Factory;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\FactoryInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory;
 
     public function setPrefab5LoggerFactory(FactoryInterface $prefab5LoggerFactory) : self
     {
         if ($this->hasPrefab5LoggerFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory = $prefab5LoggerFactory;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory = $prefab5LoggerFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getPrefab5LoggerFactory() : FactoryInterface
     {
         if (!$this->hasPrefab5LoggerFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory;
     }
 
     protected function hasPrefab5LoggerFactory() : bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory);
     }
 
     protected function unsetPrefab5LoggerFactory() : self
     {
         if (!$this->hasPrefab5LoggerFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductPrefab5LoggerFactory);
 
         return $this;
     }
