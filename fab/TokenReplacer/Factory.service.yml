@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\TokenReplacer\FactoryInterface:
+    class: Neighborhoods\Prefab\TokenReplacer\Factory
+    public: false
+    shared: true
+    calls:
+      - [setTokenReplacer, ['@Neighborhoods\Prefab\TokenReplacerInterface']]

@@ -8,3 +8,4 @@ services:
     - [setFabricator, ['@Neighborhoods\Prefab\FabricatorInterface']]
     - [setFabricationSpecificationBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Builder\FactoryInterface']]
     - [setFabricationSpecificationWriterFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Writer\FactoryInterface']]
+    - [setTokenReplacerFactory, ['@Neighborhoods\Prefab\TokenReplacer\FactoryInterface']]
