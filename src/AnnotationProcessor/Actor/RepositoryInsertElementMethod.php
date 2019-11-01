@@ -12,7 +12,13 @@ class RepositoryInsertElementMethod implements AnnotationProcessorInterface
 
     public const KEY_PROPERTIES = 'properties';
 
-    protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
+    public const STATIC_CONTEXT_RECORD_KEY_VENDOR = 'vendor';
+
+    public const STATIC_CONTEXT_RECORD_KEY_PROPERTIES = 'properties';
+    public const STATIC_CONTEXT_RECORD_KEY_DATA_TYPE = 'data_type';
+    public const STATIC_CONTEXT_RECORD_KEY_NULLABLE = 'nullable';
+    public const STATIC_CONTEXT_RECORD_KEY_CREATED_ON_INSERT = 'created_on_insert';
+    public const STATIC_CONTEXT_RECORD_KEY_NAME = 'name';
 
     protected const CREATE_NAMED_PARAMETER_SIMPLE_PROPERTY_PATTERN = <<< EOF
      \$values[ActorInterface::PROP_%s] = 
@@ -57,19 +63,19 @@ EOF;
         $replacement = '';
 
         foreach ($properties as $property) {
-            if ($property['created_on_insert'] === false) {
-                $propertyName = $property['name'];
+            if ($property[self::STATIC_CONTEXT_RECORD_KEY_CREATED_ON_INSERT] === false) {
+                $propertyName = $property[self::STATIC_CONTEXT_RECORD_KEY_NAME];
                 $camelCasePropertyName = $this->getCamelCasePropertyName($propertyName);
 
                 $method = sprintf(
-                    $this->isPropertyComplexObject($property['data_type']) ? 
+                    $this->isPropertyComplexObject($property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE]) ?
                         self::CREATE_NAMED_PARAMETER_COMPLEX_PROPERTY_PATTERN : 
                         self::CREATE_NAMED_PARAMETER_SIMPLE_PROPERTY_PATTERN,
                     strtoupper($propertyName),
                     $camelCasePropertyName
                 );
 
-                if ($property['nullable'] === true) {
+                if ($property[self::STATIC_CONTEXT_RECORD_KEY_NULLABLE] === true) {
                     $method = sprintf(
                         self::NULLABLE_PROPERTY_CONDITION_PATTERN,
                         $camelCasePropertyName,
@@ -96,6 +102,6 @@ EOF;
 
     protected function isPropertyComplexObject(string $type) : bool
     {
-        return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
+        return strpos($type,  '\\' . $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_VENDOR]) === 0;
     }
 }
