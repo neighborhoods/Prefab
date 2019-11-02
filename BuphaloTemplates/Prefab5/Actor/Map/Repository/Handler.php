@@ -6,15 +6,14 @@ namespace Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
 use Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository;
 use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
 use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\HTTP\SearchCriteriaBuilderException;
+use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5;
 
 class Handler implements HandlerInterface
 {
 
     use Repository\AwareTrait;
-    /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-ProjectName-Http\Message
-     */
-    /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-ProjectName-SearchCriteria
-     */
+    use Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;
+    use Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
 
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
