@@ -1,8 +1,0 @@
-services:
-  Neighborhoods\Bradfab\Template\Actor\Repository\HandlerInterface:
-    class: Neighborhoods\Bradfab\Template\Actor\Repository\Handler
-    public: false
-    shared: false
-    calls:
-      - [setActorMapRepository, ['@Neighborhoods\Bradfab\Template\Actor\RepositoryInterface']]
-      - [setSearchCriteriaServerRequestBuilderFactory, ['/** @neighborhoods-bradfab:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor */']]

@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Repository;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Repository;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\RepositoryInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\RepositoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository;
 
     public function setRedisRepository(RepositoryInterface $redisRepository): self
     {
         if ($this->hasRedisRepository()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository = $redisRepository;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository = $redisRepository;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getRedisRepository(): RepositoryInterface
     {
         if (!$this->hasRedisRepository()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository;
     }
 
     protected function hasRedisRepository(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository);
     }
 
     protected function unsetRedisRepository(): self
     {
         if (!$this->hasRedisRepository()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductRedisRepository);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductRedisRepository);
 
         return $this;
     }

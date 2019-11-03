@@ -1,7 +1,8 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest\BuilderInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest\Builder
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest\BuilderInterface:
+    class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ServerRequest\Builder
     calls:
-    - [setSearchCriteriaFilterFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\FactoryInterface']]
-    - [setSearchCriteriaSortOrderFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\FactoryInterface']]
-    - [setSearchCriteriaFactory, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FactoryInterface']]
+    - [setSearchCriteriaFilterFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\FactoryInterface']]
+    - [setSearchCriteriaSortOrderFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\FactoryInterface']]
+    - [setSearchCriteriaFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FactoryInterface']]
+    - [setSearchCriteriaBuilderFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Builder\FactoryInterface']]

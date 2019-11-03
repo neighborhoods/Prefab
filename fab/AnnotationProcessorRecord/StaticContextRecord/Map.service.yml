@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\MapInterface:
+    class: Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Map
+    public: false
+    shared: false

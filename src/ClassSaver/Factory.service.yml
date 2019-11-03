@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\ClassSaver\FactoryInterface:
-    class: Neighborhoods\Prefab\ClassSaver\Factory
-    calls:
-    - [setClassSaver, ['@Neighborhoods\Prefab\ClassSaverInterface']]

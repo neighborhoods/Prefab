@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Exception;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Exception;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 class DNS implements DNSInterface
 {
@@ -21,7 +21,7 @@ class DNS implements DNSInterface
         $temporaryFileName = sprintf('%s/%s%s.tmp', $this->getCacheDirectoryPath(), $key, uniqid('', true));
         try {
             $temporaryFileContents = sprintf('<?php $value = %s;', var_export($value, true));
-            if (file_put_contents($temporaryFileName, $temporaryFileContents) === false) {
+            if (file_put_contents($temporaryFileName, $temporaryFileContents, LOCK_EX) === false) {
                 throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
             } else {
                 if (rename($temporaryFileName, $this->getCacheFilePath()) === false) {

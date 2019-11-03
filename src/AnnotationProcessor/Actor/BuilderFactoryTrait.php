@@ -3,22 +3,22 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
-use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
-use Neighborhoods\Bradfab\AnnotationProcessorInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class BuilderFactoryTrait implements AnnotationProcessorInterface
 {
+    const STATIC_CONTEXT_RECORD_KEY_DATA_TYPE = 'data_type';
     protected $context;
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-AwareTraits';
 
-    protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
+    public const STATIC_CONTEXT_RECORD_KEY_VENDOR = 'vendor';
 
-    protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
-    \$Actor->set%s(
-            \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
-    );
-EOF;
+    public const STATIC_CONTEXT_RECORD_KEY_PROPERTIES = 'properties';
+    public const ACTOR_PROPERTY_KEY_NULLABLE = 'nullable';
+    public const ACTOR_PROPERTY_KEY_DATA_TYPE = 'data_type';
+    public const ACTOR_PROPERTY_KEY_CREATED_ON_INSERT = 'created_on_insert';
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -39,17 +39,19 @@ EOF;
 
     public function getReplacement() : string
     {
-        $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()['properties'];
+        $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_PROPERTIES];
 
         $replacement = '';
 
         $builtTraits = [];
         foreach ($properties as $propertyName => $property) {
-
-            if ($this->isPropertyComplexObject($property['data_type']) && ! in_array($property['data_type'], $builtTraits)) {
-                $dataType = str_replace('Interface', '', $property['data_type']);
+            if (
+                $this->isPropertyComplexObject($property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE])
+                && !in_array($property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE], $builtTraits)
+            ) {
+                $dataType = str_replace('Interface', '', $property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE]);
                 $replacement .= "\tuse " . $dataType . '\\Builder\\Factory\\AwareTrait;' . PHP_EOL;
-                $builtTraits[] = $property['data_type'];
+                $builtTraits[] = $property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE];
             }
         }
 
@@ -58,6 +60,6 @@ EOF;
 
     protected function isPropertyComplexObject(string $type) : bool
     {
-        return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
+        return strpos($type,  '\\' . $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_VENDOR]) === 0;
     }
 }

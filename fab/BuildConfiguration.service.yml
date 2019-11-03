@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\BuildConfigurationInterface:
+    class: Neighborhoods\Prefab\BuildConfiguration
+    public: false
+    shared: false

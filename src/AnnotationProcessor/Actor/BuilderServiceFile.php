@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessor\Actor;
 
-use Neighborhoods\Bradfab\AnnotationProcessor\ContextInterface;
-use Neighborhoods\Bradfab\AnnotationProcessorInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
+use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class BuilderServiceFile implements AnnotationProcessorInterface
 {
@@ -12,10 +12,14 @@ class BuilderServiceFile implements AnnotationProcessorInterface
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderServiceFile';
 
-    protected const NEIGHBORHOODS_NAMESPACE = '\\Neighborhoods\\';
+    public const STATIC_CONTEXT_RECORD_KEY_VENDOR = 'vendor';
+    public const STATIC_CONTEXT_RECORD_KEY_PROPERTIES = 'properties';
+
+    public const ACTOR_PROPERTY_KEY_DATA_TYPE = 'data_type';
+
     protected const BUILDER_FACTORY_SET_METHOD_PATTERN =
-"      - [set%sBuilderFactory, ['@%s\Builder\FactoryInterface']]
-";
+"      - [set%sBuilderFactory, ['@%s\Builder\FactoryInterface']]\n";
+
     public function getAnnotationProcessorContext() : ContextInterface
     {
         if ($this->context === null) {
@@ -35,17 +39,17 @@ class BuilderServiceFile implements AnnotationProcessorInterface
 
     public function getReplacement() : string
     {
-        $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()['properties'];
+        $properties = $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_PROPERTIES];
 
         $replacement = '';
         $builtDataTypes = [];
         foreach ($properties as $propertyName => $property) {
-            $propertyType = $property['data_type'];
+            $propertyType = $property[self::ACTOR_PROPERTY_KEY_DATA_TYPE];
             if ($this->isPropertyComplexObject($propertyType) && !in_array($propertyType, $builtDataTypes)) {
                 $builtDataTypes[] = $propertyType;
                 $fullyQualifiedName = $this->getFullyQualifiedNameForType($propertyType);
 
-                $dataType = ltrim($property['data_type'], '\\');
+                $dataType = ltrim($property[self::ACTOR_PROPERTY_KEY_DATA_TYPE], '\\');
                 $dataType = str_replace('Interface', '', $dataType);
 
                 $replacement .= sprintf(
@@ -61,7 +65,7 @@ class BuilderServiceFile implements AnnotationProcessorInterface
 
     protected function isPropertyComplexObject(string $type) : bool
     {
-        return strpos($type, self::NEIGHBORHOODS_NAMESPACE) === 0;
+        return strpos($type,  '\\' . $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::STATIC_CONTEXT_RECORD_KEY_VENDOR]) === 0;
     }
 
     /**

@@ -1,5 +1,5 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\FactoryInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\Factory
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\FactoryInterface:
+    class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger\Factory
     calls:
-      - [setPrefab5Logger, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\LoggerInterface']]
+      - [setPrefab5Logger, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\LoggerInterface']]

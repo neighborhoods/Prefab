@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\Writer\FactoryInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Writer\Factory
+    public: false
+    shared: true
+    calls:
+      - [setFabricationSpecificationWriter, ['@Neighborhoods\Prefab\FabricationSpecification\WriterInterface']]

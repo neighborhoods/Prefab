@@ -5,9 +5,21 @@ namespace Neighborhoods\Prefab;
 
 interface BuildConfigurationInterface
 {
+    public const PREFAB_DEFINITION_FILE_EXTENSION = '.prefab.definition.yml';
+
     public const SUPPORTING_ACTOR_GROUP_COMPLETE = 'complete';
     public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
     public const SUPPORTING_ACTOR_GROUP_MINIMAL = 'minimal';
+
+    public const KEY_DAO = 'dao';
+    public const KEY_TABLE_NAME = 'table_name';
+    public const KEY_NAME = 'name';
+    public const KEY_IDENTITY_FIELD = 'identity_field';
+    public const KEY_HTTP_ROUTE = 'http_route';
+    public const KEY_HTTP_VERBS = 'http_verbs';
+    public const HTTP_VERB_GET = 'GET';
+    public const KEY_SUPPORTING_ACTOR_GROUP = 'supporting_actor_group';
+    public const KEY_PROPERTIES = 'properties';
 
     public function getTableName() : string;
 
@@ -21,7 +33,7 @@ interface BuildConfigurationInterface
 
     public function getDaoProperties() : array;
 
-    public function appendDaoProperty(DaoPropertyInterface $propertyName) : BuildConfigurationInterface;
+    public function appendDaoProperty(DaoPropertyInterface $daoProperty) : BuildConfigurationInterface;
 
     public function getRootSaveLocation() : string;
 
@@ -52,4 +64,22 @@ interface BuildConfigurationInterface
     public function getSupportingActorGroup() : string;
 
     public function hasSupportingActorGroup() : bool;
+
+    public function getDaoName() : string;
+
+    public function setDaoName(string $daoName) : BuildConfigurationInterface;
+
+    public function hasDaoName() : bool;
+
+    public function getActorNamespace() : string;
+
+    public function setActorNamespace(string $actorNamespace) : BuildConfigurationInterface;
+
+    public function hasActorNamespace() : bool;
+
+    public function getVendorName() : string;
+
+    public function setVendorName(string $vendorName) : BuildConfigurationInterface;
+
+    public function hasVendorName() : bool;
 }

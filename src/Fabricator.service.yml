@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Prefab\FabricatorInterface:
+    class: Neighborhoods\Prefab\Fabricator
+    calls:
+      - [setFileSystem, ['@Symfony\Component\Filesystem\FilesystemInterface']]

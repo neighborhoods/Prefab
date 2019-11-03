@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\BuilderInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\BuilderInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder;
 
     public function setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder(
         BuilderInterface $searchCriteriaDoctrineDBALQueryQueryBuilderBuilder
     ): self {
         if ($this->hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder = $searchCriteriaDoctrineDBALQueryQueryBuilderBuilder;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder = $searchCriteriaDoctrineDBALQueryQueryBuilderBuilder;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder(): BuilderInterface
     {
         if (!$this->hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder;
     }
 
     protected function hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder);
     }
 
     protected function unsetSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder(): self
     {
         if (!$this->hasSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaDoctrineDBALQueryQueryBuilderBuilder);
 
         return $this;
     }

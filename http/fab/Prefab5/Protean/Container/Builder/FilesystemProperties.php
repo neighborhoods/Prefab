@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 
 class FilesystemProperties implements FilesystemPropertiesInterface
 {

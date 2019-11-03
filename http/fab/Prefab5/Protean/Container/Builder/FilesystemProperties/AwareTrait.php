@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemPropertiesInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemPropertiesInterface;
 
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties;
 
     public function setProteanContainerBuilderFilesystemProperties(FilesystemPropertiesInterface $proteanContainerBuilderFilesystemProperties): self
     {
         if ($this->hasProteanContainerBuilderFilesystemProperties()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties = $proteanContainerBuilderFilesystemProperties;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties = $proteanContainerBuilderFilesystemProperties;
 
         return $this;
     }
@@ -22,23 +22,23 @@ trait AwareTrait
     protected function getProteanContainerBuilderFilesystemProperties(): FilesystemPropertiesInterface
     {
         if (!$this->hasProteanContainerBuilderFilesystemProperties()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties;
     }
 
     protected function hasProteanContainerBuilderFilesystemProperties(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties);
     }
 
     protected function unsetProteanContainerBuilderFilesystemProperties(): self
     {
         if (!$this->hasProteanContainerBuilderFilesystemProperties()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties);
 
         return $this;
     }

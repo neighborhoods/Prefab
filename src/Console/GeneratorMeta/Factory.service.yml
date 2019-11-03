@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\Console\GeneratorMeta\FactoryInterface:
-    class: Neighborhoods\Prefab\Console\GeneratorMeta\Factory
-    calls:
-    - [setConsoleGeneratorMeta, ['@Neighborhoods\Prefab\Console\GeneratorMetaInterface']]

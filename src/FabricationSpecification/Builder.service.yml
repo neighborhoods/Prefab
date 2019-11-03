@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\BuilderInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Builder
+    calls:
+      - [setFabricationSpecificationAllSupportingActorsBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder\FactoryInterface']]
+      - [setFabricationSpecificationCollectionBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\FactoryInterface']]
+      - [setFabricationSpecificationMinimalBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\FactoryInterface']]

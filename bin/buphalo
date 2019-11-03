@@ -1,0 +1,17 @@
+echo "🐃 Cleaning fab/ directory"
+rm -rf fab/
+mkdir fab/
+
+echo "🐃 Fabricating fabrication files in src/"
+
+Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath=$PWD/src \
+Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirectoryPath=$PWD/buphalo \
+Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=$PWD/BuphaloTemplates/Prefab5 \
+Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\Prefab\\ \
+vendor/bin/buphalo
+
+echo "🐃 Moving fabricated files to fab/"
+cp -R buphalo/* fab/
+
+echo "🐃 Cleaning Buphalo directory"
+rm -rf buphalo

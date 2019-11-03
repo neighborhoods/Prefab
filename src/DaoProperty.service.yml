@@ -1,3 +1,0 @@
-services:
-  Neighborhoods\Prefab\DaoPropertyInterface:
-    class: Neighborhoods\Prefab\DaoProperty

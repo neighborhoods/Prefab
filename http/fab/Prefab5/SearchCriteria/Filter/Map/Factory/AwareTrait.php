@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\Map\Factory;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\Map\Factory;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\Map\FactoryInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\Map\FactoryInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory;
 
     public function setSearchCriteriaFilterMapFactory(FactoryInterface $searchCriteriaFilterMapFactory): self
     {
         if ($this->hasSearchCriteriaFilterMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory = $searchCriteriaFilterMapFactory;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory = $searchCriteriaFilterMapFactory;
 
         return $this;
     }
@@ -23,23 +23,23 @@ trait AwareTrait
     protected function getSearchCriteriaFilterMapFactory(): FactoryInterface
     {
         if (!$this->hasSearchCriteriaFilterMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory;
     }
 
     protected function hasSearchCriteriaFilterMapFactory(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory);
     }
 
     protected function unsetSearchCriteriaFilterMapFactory(): self
     {
         if (!$this->hasSearchCriteriaFilterMapFactory()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaFilterMapFactory);
 
         return $this;
     }

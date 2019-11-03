@@ -1,7 +1,7 @@
 services:
-  Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNSInterface:
-    class: Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNSInterface:
+    class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS
     calls:
-    - [setNewRelic, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface']]
-    - [setOpcacheDNSErrorHandler, ['@Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandlerInterface']]
+    - [setNewRelic, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelicInterface']]
+    - [setOpcacheDNSErrorHandler, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\ErrorHandlerInterface']]
     shared: false

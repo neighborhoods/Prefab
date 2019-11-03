@@ -42,6 +42,7 @@ class Builder implements BuilderInterface
                 (new Finder())->name('*.service.yml')->files()
                     ->in($discoverableDirectories)
                     ->exclude('Template/Prefab5/')
+                    ->exclude('BuphaloTemplates/')
             );
             $containerBuilderFacade->assembleYaml();
             $containerBuilderFacade->build();

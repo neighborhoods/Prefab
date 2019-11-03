@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr\Http\Message\ServerRequest;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr\Http\Message\ServerRequest;
 
 use Psr\Http\Message\ServerRequestInterface;
 

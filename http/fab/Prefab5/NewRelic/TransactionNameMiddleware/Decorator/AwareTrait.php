@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\Decorator;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\Decorator;
 
-use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\DecoratorInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware\DecoratorInterface;
 
 /** @codeCoverageIgnore */
 trait AwareTrait
 {
-    protected $NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator;
 
     public function setNewRelicTransactionNameMiddlewareDecorator(
         DecoratorInterface $newRelicTransactionNameMiddlewareDecorator
     ): self {
         if ($this->hasNewRelicTransactionNameMiddlewareDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator is already set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator is already set.');
         }
-        $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator = $newRelicTransactionNameMiddlewareDecorator;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator = $newRelicTransactionNameMiddlewareDecorator;
 
         return $this;
     }
@@ -24,23 +24,23 @@ trait AwareTrait
     protected function getNewRelicTransactionNameMiddlewareDecorator(): DecoratorInterface
     {
         if (!$this->hasNewRelicTransactionNameMiddlewareDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator is not set.');
         }
 
-        return $this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator;
     }
 
     protected function hasNewRelicTransactionNameMiddlewareDecorator(): bool
     {
-        return isset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator);
     }
 
     protected function unsetNewRelicTransactionNameMiddlewareDecorator(): self
     {
         if (!$this->hasNewRelicTransactionNameMiddlewareDecorator()) {
-            throw new \LogicException('NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator is not set.');
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator is not set.');
         }
-        unset($this->NeighborhoodsReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductNewRelicTransactionNameMiddlewareDecorator);
 
         return $this;
     }
