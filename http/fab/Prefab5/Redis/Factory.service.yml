@@ -9,6 +9,6 @@ services:
     public: false
     shared: true
     calls:
-      - [addOption, [!php/const \Redis::OPT_READ_TIMEOUT, '-1']]
+      - [addOption, [!php/const \ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface::REDIS_OPT_READ_TIMEOUT, '-1']]
       - [setHost, ['%ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_host%']]
       - [setPort, ['%ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_port%']]
