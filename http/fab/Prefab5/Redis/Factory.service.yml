@@ -1,6 +1,8 @@
 parameters:
-  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_port: '%env(REDIS_PORT)%'
-  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_host: '%env(REDIS_HOST)%'
+  redis_port_default_value: null
+  redis_host_default_value: null
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_port: '%env(default:redis_port_default_value:REDIS_PORT)%'
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface.redis_host: '%env(default:redis_host_default_value:REDIS_HOST)%'
 services:
   ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\FactoryInterface:
     class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Redis\Factory
