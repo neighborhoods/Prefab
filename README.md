@@ -7,7 +7,7 @@ A code generation tool. Takes the busywork out of building strongly-typed, patte
 
 #### PSR-4 Namespace Definition
 
-Prefab assumes users have defined a `psr-4` namespace under the `autoload` key in their `composer.json` file.  Namespaces must be defined as `{VENDOR}\{PRODUCT_NAME}`. See the [composer docs](https://getcomposer.org/doc/04-schema.md#psr-4) for more information. Prefab will write generated files under the `fab/` directory in your project root. You should configure your autoloader to first look in `src/`, then in `fab/`. This will allow you to override generated files by placing updated copies of classes in the equivalent `src/` location.
+Prefab assumes users have defined a `psr-4` namespace under the `autoload` key in their `composer.json` file.  Namespaces MUST be defined as `{VENDOR}\{PRODUCT_NAME}`. See the [composer docs](https://getcomposer.org/doc/04-schema.md#psr-4) for more information. Prefab will write generated files under the `fab/` directory in your project root. You should configure your autoloader to first look in `src/`, then in `fab/`. This will allow you to override generated files by placing updated copies of classes in the equivalent `src/` location.
 
 Example:
 ```
@@ -59,7 +59,7 @@ Working examples of Prefab can be found in the [PrefabFitness repository](https:
 
 The purpose of this document is to define the components needed to generate an HTTP endpoint for an actor from a `.prefab.definition.yml` file
 
-The file must be named {ACTORNAME}.prefab.definition.yml and saved under `src/`. They should be stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
+The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`. They should be stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
 - `table_name`
     - Name of the database table containing the data that populates the actor
 - `supporting_actor_group`
@@ -214,7 +214,7 @@ Prefab supports generating different subsets of supporting actors to support var
 
 As Symfony containers get bigger, the response times for HTTP requests increase.  To prevent slow response times, Prefab supports user-defined subset container building. Prefab users can define what should be included in the Symfony container for each route, so only the necessary actors are initialized.  This buildable directory file is optional and Prefab will build the entirety of `src/` and `fab/` by default if the file is not found. If the file is present, then all routes MUST have a corresponding key with directories to be built.
 
-- Note: On the first request, Prefab will write this file to disk as a PHP array in the directory `data/cache/Opcache/HTTPBuildableDirectoryMap`. When making changes to the Buildable Directory File, the cached file must be deleted in order for changes to be reflected in the code.  It is also highly recommended to ensure [Opcache](https://www.php.net/manual/en/book.opcache.php) is enabled in production to prevent a read from disk on every HTTP request. 
+- Note: On the first request, Prefab will write this file to disk as a PHP array in the directory `data/cache/Opcache/HTTPBuildableDirectoryMap`. When making changes to the Buildable Directory File, the cached file MUST be deleted in order for changes to be reflected in the code.  It is also highly recommended to ensure [Opcache](https://www.php.net/manual/en/book.opcache.php) is enabled in production to prevent a read from disk on every HTTP request. 
 
 The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. If a key with the first two parts of the URI is not found, Prefab will then check for a key with just the first part of the URI.
 - Examples
