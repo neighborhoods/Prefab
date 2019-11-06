@@ -37,11 +37,11 @@ Prefab expects the following environment variables to be defined.
 
 #### Project Structure 
 
-Prefab requires that all Prefab definition files be under a versioned directory under `src/`. For example, `src/V1/Actor.prefab.definition.yml` is valid while `src/Actor.prefab.definition.yml` is not.
+Prefab requires that all Prefab definition files be in a versioned directory under `src/`. For example, `src/V1/Actor.prefab.definition.yml` is valid while `src/Actor.prefab.definition.yml` is not.
 
 #### Materialized Views
 
-Prefab puts an extremely high focus on response times.  One of the ways Prefab ensures fast response times is by ensuring that all HTTP requests result in a single database query on an index, made possible through the use of [materialized views](https://en.wikipedia.org/wiki/Materialized_view). Prefab uses [search criteria](#search-criteria) to interact with its database, which doesn't support table joins.  That means all data for a given request MUST live in the same table. 
+Prefab puts an extremely high focus on performance.  One of the ways Prefab achieves fast response times is by ensuring that all HTTP requests result in a single database query on an index, made possible through the use of [materialized views](https://en.wikipedia.org/wiki/Materialized_view). Prefab uses [search criteria](#search-criteria) to interact with its database, which doesn't support table joins.  That means all data for a given request MUST live in the same table. 
 
 Note: Since search criteria allows you to select which data you would like to return, a single materialized view with a superset of all data returned by your HTTP endpoints can be used.
 
