@@ -1,14 +1,15 @@
 <?php
-
+declare(strict_types=1);
 namespace Neighborhoods\Prefab\DaoProperty\Map;
 
 use Neighborhoods\Prefab\DaoProperty\MapInterface;
+use Neighborhoods\Prefab\DaoProperty;
 
 class Builder implements BuilderInterface
 {
 
-    use \Neighborhoods\BuphaloDaoProperty\Map\BuilderTree\Map\Factory\AwareTrait;
-    use \Neighborhoods\BuphaloDaoProperty\Map\BuilderTree\Builder\Factory\AwareTrait;
+    use DaoProperty\Map\Factory\AwareTrait;
+    use DaoProperty\Builder\Factory\AwareTrait;
 
     /**
      * @var array

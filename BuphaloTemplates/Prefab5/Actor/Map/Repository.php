@@ -11,13 +11,13 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Neighborhoods\BuphaloTemplateTree\Actor;
 use Neighborhoods\BuphaloTemplateTree\Actor\Map;
 use Neighborhoods\BuphaloTemplateTree\Actor\MapInterface;
-/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-ProjectName
- */
+use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5;
+
 class Repository implements RepositoryInterface
 {
     use Actor\Map\Builder\Factory\AwareTrait;
-    use Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
-    use SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
+    use Prefab5\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
+    use Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 
     protected $connection;
 
@@ -31,7 +31,7 @@ class Repository implements RepositoryInterface
         return $this->getActorMapBuilderFactory()->create();
     }
 
-    public function get(SearchCriteriaInterface $searchCriteria) : MapInterface
+    public function get(Prefab5\SearchCriteriaInterface $searchCriteria) : MapInterface
     {
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);

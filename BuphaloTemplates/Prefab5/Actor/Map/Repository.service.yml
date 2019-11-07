@@ -4,8 +4,6 @@ services:
     public: false
     shared: true
     calls:
-      - [setDoctrineDBALConnectionDecoratorRepository, ['/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor-Doctrine
-      */']]
+      - [setDoctrineDBALConnectionDecoratorRepository, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
       - [setActorMapBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\Actor\Map\Builder\FactoryInterface']]
-      - [setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory, ['/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor-SearchCriteria
-      */']]
+      - [setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface']]

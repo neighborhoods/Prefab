@@ -30,14 +30,14 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          }
          
          $this->processorFullyQualifiedClassname = $processorFullyQualifiedClassname;
-         
          return $this;
      }
-
-     public function hasProcessorFullyQualifiedClassname() : bool
+     
+     public function hasProcessorFullyQualifiedClassname(): bool
      {
-         return $this->processorFullyQualifiedClassname !== null;
+        return $this->processorFullyQualifiedClassname !== null;
      }
+     
 
      public function getStaticContextRecord(): array
      {
@@ -55,14 +55,14 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          }
          
          $this->staticContextRecord = $staticContextRecord;
-         
          return $this;
      }
-
-     public function hasStaticContextRecord() : bool
+     
+     public function hasStaticContextRecord(): bool
      {
-         return $this->staticContextRecord !== null;
+        return $this->staticContextRecord !== null;
      }
+     
 
      public function getAnnotationProcessorKey(): string
      {
@@ -80,12 +80,17 @@ class AnnotationProcessorRecord implements AnnotationProcessorRecordInterface
          }
          
          $this->annotationProcessorKey = $annotationProcessorKey;
-         
          return $this;
      }
-
-     public function hasAnnotationProcessorKey() : bool
+     
+     public function hasAnnotationProcessorKey(): bool
      {
-         return $this->annotationProcessorKey !== null;
+        return $this->annotationProcessorKey !== null;
      }
+     
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }
