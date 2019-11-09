@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\Prefab\SupportingActorGroup\CollectionInterface:
-    class: Neighborhoods\Prefab\SupportingActorGroup\Collection
-    calls:
-      - [setTemplateFactory, ['@Neighborhoods\Prefab\Bradfab\Template\FactoryInterface']]
