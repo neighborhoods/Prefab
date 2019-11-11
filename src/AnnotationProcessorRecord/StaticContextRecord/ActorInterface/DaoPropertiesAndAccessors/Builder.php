@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\ActorInterface\DaoPropertiesAndAccessors;
 
+use Neighborhoods\Prefab\AnnotationProcessor\DAOInterfaceProperties;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
-use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
 
 class Builder implements BuilderInterface
@@ -16,9 +16,17 @@ class Builder implements BuilderInterface
         $buildConfiguration = $this->getBuildConfiguration();
         $staticContextRecord = [];
 
-        /** @var DaoPropertyInterface $property */
-        foreach ($buildConfiguration->getDaoProperties() as $property) {
-            $staticContextRecord[] = [
+        if ($this->getBuildConfiguration()->hasConstantMap()) {
+            foreach ($this->getBuildConfiguration()->getConstantMap() as $constant) {
+                $staticContextRecord[DAOInterfaceProperties::STATIC_CONTEXT_RECORD_KEY_CONSTANTS][] = [
+                    'name' => $constant->getName(),
+                    'value' => $constant->getValue()
+                ];
+            }
+        }
+
+        foreach ($buildConfiguration->getDaoPropertyMap() as $property) {
+            $staticContextRecord[DAOInterfaceProperties::STATIC_CONTEXT_RECORD_KEY_PROPERTIES][] = [
                 'name' => $property->getName(),
                 'type' => $property->getDataType(),
                 'record_key' => $property->getRecordKey()

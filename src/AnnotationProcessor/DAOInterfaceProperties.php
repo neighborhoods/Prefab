@@ -7,6 +7,9 @@ use Neighborhoods\Buphalo\V1\AnnotationProcessorInterface;
 
 class DAOInterfaceProperties implements AnnotationProcessorInterface
 {
+    public const STATIC_CONTEXT_RECORD_KEY_PROPERTIES = 'properties';
+    public const STATIC_CONTEXT_RECORD_KEY_CONSTANTS = 'constants';
+
     /** @var ContextInterface */
     private $context;
 
@@ -35,12 +38,18 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
         $constants = [];
         $accessors = [];
 
-        foreach($context as $field) {
+        if (isset($context[self::STATIC_CONTEXT_RECORD_KEY_CONSTANTS])) {
+            foreach ($context[self::STATIC_CONTEXT_RECORD_KEY_CONSTANTS] as $constant) {
+                $constants[] = $this->buildUserDefinedConstant($constant['name'], $constant['value']);
+            }
+        }
+
+        foreach ($context[self::STATIC_CONTEXT_RECORD_KEY_PROPERTIES] as $field) {
             $name = $field['name'];
             $type = $field['type'];
             $recordKey = $field['record_key'];
 
-            $constants[] = $this->buildConstant($name, $recordKey);
+            $constants[] = $this->buildPropertyConstant($name, $recordKey);
             $accessors[] = $this->buildAccessors($name, $type);
         }
 
@@ -50,7 +59,35 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             implode($accessors, PHP_EOL . PHP_EOL);
     }
 
-    private function buildConstant(string $propertyName, string $recordKey) : string
+    private function buildUserDefinedConstant(string $name, $value) : string
+    {
+        if (is_array($value)) {
+            $valueString = $this->convertArrayToStringValue($value);
+        } else {
+            $valueString = var_export($value, true);
+        }
+
+        return "    public const $name = $valueString;";
+    }
+
+    private function convertArrayToStringValue(array $values)
+    {
+        $arrayItems = [];
+
+        foreach ($values as $key => $value) {
+            if (is_array($value)) {
+                $arrayItems[] = $this->convertArrayToStringValue($value);
+            } else if (is_numeric($key)) {
+                $arrayItems[] = var_export($value, true);
+            } else {
+                $arrayItems[] = var_export($key, true) . ' => ' . var_export($value, true);
+            }
+        }
+
+        return '[ ' . implode(', ', $arrayItems) . ']';
+    }
+
+    private function buildPropertyConstant(string $propertyName, string $recordKey) : string
     {
         $allUpperPropertyName = strtoupper($propertyName);
 

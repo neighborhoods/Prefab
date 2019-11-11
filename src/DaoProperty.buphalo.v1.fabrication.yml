@@ -61,6 +61,8 @@ actors:
     template: Actor/Builder/AwareTrait.php
   <ActorName>/Builder/Factory/AwareTrait.php:
     template: Actor/Builder/Factory/AwareTrait.php
+  <ActorName>/Map/Factory/AwareTrait.php:
+    template: Actor/Map/Factory/AwareTrait.php
   <ActorName>/Builder/Factory.service.yml:
     template: Actor/Builder/Factory.service.yml
   <ActorName>/Builder/FactoryInterface.php:

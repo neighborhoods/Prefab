@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\Prefab\SupportingActorGroup\Collection\FactoryInterface:
-    class: Neighborhoods\Prefab\SupportingActorGroup\Collection\Factory
-    public: false
-    shared: true
-    calls:
-      - [setCollection, ['@Neighborhoods\Prefab\SupportingActorGroup\CollectionInterface']]

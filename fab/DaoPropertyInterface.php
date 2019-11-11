@@ -6,9 +6,6 @@ namespace Neighborhoods\Prefab;
 interface DaoPropertyInterface extends \JsonSerializable
 {
 
-    // No table name has been define for this actor
-
-
 
     public function getName(): string;
     public function setName(string $name): DaoPropertyInterface;

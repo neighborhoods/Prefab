@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\Prefab\SupportingActorGroup\Minimal\FactoryInterface:
-    class: Neighborhoods\Prefab\SupportingActorGroup\Minimal\Factory
-    public: false
-    shared: true
-    calls:
-      - [setMinimal, ['@Neighborhoods\Prefab\SupportingActorGroup\MinimalInterface']]

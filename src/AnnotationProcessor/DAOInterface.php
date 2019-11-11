@@ -32,20 +32,16 @@ class DAOInterface implements AnnotationProcessorInterface
     {
         $context = $this->getAnnotationProcessorContext()->getStaticContextRecord();
 
-        $constants = [];
         $accessors = [];
 
-        foreach($context as $field) {
+        foreach ($context as $field) {
             $name = $field['name'];
             $type = $field['type'];
 
             $accessors[] = $this->buildAccessors($name, $type);
         }
 
-        return
-            implode($constants, PHP_EOL) .
-            PHP_EOL . PHP_EOL .
-            implode($accessors, PHP_EOL . PHP_EOL);
+        return implode($accessors, PHP_EOL . PHP_EOL);
     }
 
     private function buildAccessors(string $propertyName, string $type): string

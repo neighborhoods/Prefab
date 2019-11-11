@@ -17,8 +17,7 @@ class Builder implements BuilderInterface
         $staticContextRecord = [];
         $propertyArray = [];
 
-        /** @var DaoPropertyInterface $daoProperty */
-        foreach ($this->getBuildConfiguration()->getDaoProperties() as $daoProperty) {
+        foreach ($this->getBuildConfiguration()->getDaoPropertyMap() as $daoProperty) {
             $propertyArray[$daoProperty->getName()] = [
                 AnnotationProcessor\Actor\BuilderFactoryTrait::ACTOR_PROPERTY_KEY_NULLABLE => $daoProperty->getNullable(),
                 AnnotationProcessor\Actor\BuilderFactoryTrait::ACTOR_PROPERTY_KEY_DATA_TYPE => $daoProperty->getDataType(),

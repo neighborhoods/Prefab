@@ -17,8 +17,7 @@ class Builder implements BuilderInterface
         $buildConfiguration = $this->getBuildConfiguration();
         $staticContextRecord = [];
 
-        /** @var DaoPropertyInterface $property */
-        foreach ($buildConfiguration->getDaoProperties() as $property) {
+        foreach ($buildConfiguration->getDaoPropertyMap() as $property) {
             $staticContextRecord[] = [
                 RepositoryInsertElementMethod::STATIC_CONTEXT_RECORD_KEY_NAME => $property->getName(),
                 RepositoryInsertElementMethod::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE => $property->getDataType(),

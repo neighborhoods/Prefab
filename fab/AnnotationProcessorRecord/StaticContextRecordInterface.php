@@ -6,9 +6,6 @@ namespace Neighborhoods\Prefab\AnnotationProcessorRecord;
 interface StaticContextRecordInterface extends \JsonSerializable
 {
 
-    // No table name has been define for this actor
-
-
 
     public function getProcessorFullyQualifiedClassname(): string;
     public function setProcessorFullyQualifiedClassname(string $processorFullyQualifiedClassname): StaticContextRecordInterface;

@@ -5,18 +5,19 @@ namespace Neighborhoods\Prefab;
 
 class BuildConfiguration implements BuildConfigurationInterface
 {
-    private $tableName;
-    private $daoIdentityField;
-    private $daoName;
-    private $daoProperties;
-    private $rootSaveLocation;
-    private $vendorName;
-    private $projectName;
-    private $httpRoute;
-    private $httpVerbs;
-    private $projectDir;
-    private $supportingActorGroup;
-    private $actorNamespace;
+    protected $tableName;
+    protected $daoIdentityField;
+    protected $daoName;
+    protected $daoPropertyMap;
+    protected $rootSaveLocation;
+    protected $vendorName;
+    protected $projectName;
+    protected $httpRoute;
+    protected $httpVerbs;
+    protected $projectDir;
+    protected $supportingActorGroup;
+    protected $actorNamespace;
+    protected $constantMap;
 
      public function getTableName(): string
      {
@@ -54,26 +55,6 @@ class BuildConfiguration implements BuildConfigurationInterface
          }
          
          $this->daoIdentityField = $daoIdentityField;
-         
-         return $this;
-     }
-
-     public function getDaoProperties(): array
-     {
-         if ($this->daoProperties === null) {
-             throw new \LogicException('daoProperties has not been set');
-         }
-         
-         return $this->daoProperties;
-     }
-     
-     public function setDaoProperties(array $daoProperties): BuildConfigurationInterface
-     {
-         if ($this->daoProperties !== null) {
-             throw new \LogicException('daoProperties has already been set');
-         }
-         
-         $this->daoProperties = $daoProperties;
          
          return $this;
      }
@@ -183,12 +164,6 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this->daoIdentityField !== null;
     }
 
-    public function appendDaoProperty(DaoPropertyInterface $daoProperty) : BuildConfigurationInterface
-    {
-        $this->daoProperties[] = $daoProperty;
-        return $this;
-    }
-
     public function hasHttpRoute() : bool
     {
         return $this->httpRoute !== null;
@@ -285,5 +260,53 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasVendorName() : bool
     {
         return $this->vendorName !== null;
+    }
+
+    public function getConstantMap(): \Neighborhoods\Prefab\Constant\MapInterface
+    {
+        if ($this->constantMap === null) {
+            throw new \LogicException('constantMap has not been set');
+        }
+
+        return $this->constantMap;
+    }
+
+    public function setConstantMap(\Neighborhoods\Prefab\Constant\MapInterface $constantMap): BuildConfigurationInterface
+    {
+        if ($this->constantMap !== null) {
+            throw new \LogicException('constantMap has already been set');
+        }
+
+        $this->constantMap = $constantMap;
+        return $this;
+    }
+
+    public function hasConstantMap(): bool
+    {
+        return $this->constantMap !== null;
+    }
+
+    public function getDaoPropertyMap() : \Neighborhoods\Prefab\DaoProperty\MapInterface
+    {
+        if ($this->daoPropertyMap === null) {
+            throw new \LogicException('daoPropertyMap has not been set');
+        }
+
+        return $this->daoPropertyMap;
+    }
+
+    public function setDaoPropertyMap(DaoProperty\MapInterface $daoPropertyMap) : BuildConfigurationInterface
+    {
+        if ($this->daoPropertyMap !== null) {
+            throw new \LogicException('daoPropertyMap has already been set');
+        }
+
+        $this->daoPropertyMap = $daoPropertyMap;
+        return $this;
+    }
+
+    public function hasDaoPropertyMap() : bool
+    {
+        return $this->daoPropertyMap !== null;
     }
 }
