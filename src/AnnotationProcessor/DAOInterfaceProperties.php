@@ -76,11 +76,15 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
 
         foreach ($values as $key => $value) {
             if (is_array($value)) {
-                $arrayItems[] = $this->convertArrayToStringValue($value);
-            } else if (is_numeric($key)) {
-                $arrayItems[] = var_export($value, true);
+                $valueToAppendToArray = $this->convertArrayToStringValue($value);
             } else {
-                $arrayItems[] = var_export($key, true) . ' => ' . var_export($value, true);
+                $valueToAppendToArray = var_export($value, true);
+            }
+
+            if (is_numeric($key)) {
+                $arrayItems[] = $valueToAppendToArray;
+            } else {
+                $arrayItems[] = var_export($key, true) . ' => ' . $valueToAppendToArray;
             }
         }
 
