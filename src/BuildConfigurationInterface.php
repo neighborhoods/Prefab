@@ -20,6 +20,7 @@ interface BuildConfigurationInterface
     public const HTTP_VERB_GET = 'GET';
     public const KEY_SUPPORTING_ACTOR_GROUP = 'supporting_actor_group';
     public const KEY_PROPERTIES = 'properties';
+    public const KEY_CONSTANTS = 'constants';
 
     public function getTableName() : string;
 
@@ -31,9 +32,11 @@ interface BuildConfigurationInterface
 
     public function hasDaoIdentityField() : bool;
 
-    public function getDaoProperties() : array;
+    public function getDaoPropertyMap(): \Neighborhoods\Prefab\DaoProperty\MapInterface;
 
-    public function appendDaoProperty(DaoPropertyInterface $daoProperty) : BuildConfigurationInterface;
+    public function setDaoPropertyMap(\Neighborhoods\Prefab\DaoProperty\MapInterface $daoPropertyMap): BuildConfigurationInterface;
+
+    public function hasDaoPropertyMap() : bool;
 
     public function getRootSaveLocation() : string;
 
@@ -82,4 +85,10 @@ interface BuildConfigurationInterface
     public function setVendorName(string $vendorName) : BuildConfigurationInterface;
 
     public function hasVendorName() : bool;
+
+    public function getConstantMap(): \Neighborhoods\Prefab\Constant\MapInterface;
+
+    public function setConstantMap(\Neighborhoods\Prefab\Constant\MapInterface $constantMap): BuildConfigurationInterface;
+
+    public function hasConstantMap(): bool;
 }

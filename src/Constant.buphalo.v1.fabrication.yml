@@ -1,0 +1,54 @@
+actors:
+  <ActorName>.php:
+    template: Actor.php
+    annotation_processors:
+      DaoPropertiesAndAccessors:
+        processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAO
+        static_context_record:
+          - name: name
+            type: string
+          - name: value
+            type: string
+  <ActorName>.service.yml:
+    template: Actor.service.yml
+  <ActorName>Interface.php:
+    template: ActorInterface.php
+    annotation_processors:
+      DaoAccessors:
+        processor_fqcn: \Neighborhoods\Prefab\AnnotationProcessor\DAOInterfaceProperties
+        static_context_record:
+          properties:
+            -
+              name: name
+              type: string
+              record_key: name
+            -
+              name: value
+              type: string
+              record_key: value
+  <ActorName>/AwareTrait.php:
+    template: Actor/Awaretrait.php
+  <ActorName>/Factory.php:
+    template: Actor/Factory.php
+  <ActorName>/Factory.service.yml:
+    template: Actor/Factory.service.yml
+  <ActorName>/FactoryInterface.php:
+    template: Actor/FactoryInterface.php
+  <ActorName>/Factory/AwareTrait.php:
+    template: Actor/Factory/Awaretrait.php
+  <ActorName>/Map/AwareTrait.php:
+    template: Actor/Map/Awaretrait.php
+  <ActorName>/Map/Factory.php:
+    template: Actor/Map/Factory.php
+  <ActorName>/Map/Factory/AwareTrait.php:
+    template: Actor/Map/Factory/AwareTrait.php
+  <ActorName>/Map/Factory.service.yml:
+    template: Actor/Map/Factory.service.yml
+  <ActorName>/Map/FactoryInterface.php:
+    template: Actor/Map/FactoryInterface.php
+  <ActorName>/Map.php:
+    template: Actor/Map.php
+  <ActorName>/Map.service.yml:
+    template: Actor/Map.service.yml
+  <ActorName>/MapInterface.php:
+    template: Actor/MapInterface.php

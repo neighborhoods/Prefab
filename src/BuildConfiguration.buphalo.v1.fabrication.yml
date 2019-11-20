@@ -9,8 +9,8 @@ actors:
             type: string
           - name: daoIdentityField
             type: string
-          - name: daoProperties
-            type: array
+          - name: daoPropertyMap
+            type: \Neighborhoods\Prefab\DaoProperty\MapInterface
           - name: rootSaveLocation
             type: string
           - name: projectName
@@ -23,6 +23,8 @@ actors:
             type: string
           - name: supportingActorGroup
             type: string
+          - name: constantMap
+            type: \Neighborhoods\Prefab\Constant\MapInterface
   <ActorName>.service.yml:
     template: Actor.service.yml
   <ActorName>Interface.php:
@@ -35,8 +37,8 @@ actors:
           type: string
         - name: daoIdentityField
           type: string
-        - name: daoProperties
-          type: array
+        - name: daoPropertyMap
+          type: \Neighborhoods\Prefab\DaoProperty\MapInterface
         - name: projectName
           type: string
         - name: rootSaveLocation
@@ -53,6 +55,8 @@ actors:
           type: string
         - name: supportingActorGroup
           type: string
+        - name: constantMap
+          type: \Neighborhoods\Prefab\Constant\MapInterface
   <ActorName>/AwareTrait.php:
     template: Actor/Awaretrait.php
   <ActorName>/Factory.php:

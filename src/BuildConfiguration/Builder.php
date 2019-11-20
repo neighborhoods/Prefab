@@ -7,11 +7,15 @@ use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\BuildConfiguration;
 use Symfony\Component\Yaml\Yaml;
 use Neighborhoods\Prefab\DaoProperty;
+use Neighborhoods\Prefab\Constant;
 
 class Builder implements BuilderInterface
 {
     use BuildConfiguration\Factory\AwareTrait;
     use DaoProperty\Builder\Factory\AwareTrait;
+    use DaoProperty\Map\Factory\AwareTrait;
+    use Constant\Factory\AwareTrait;
+    use Constant\Map\Factory\AwareTrait;
 
     protected $yamlFilePath;
     protected $vendorName;
@@ -52,15 +56,30 @@ class Builder implements BuilderInterface
             $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
         }
 
+        $daoPropertyMap = $this->getDaoPropertyMapFactory()->create();
         foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES] as $key => $values) {
             $record = $values;
             $record[BuildConfigurationInterface::KEY_NAME] = $key;
 
-            $buildConfiguration->appendDaoProperty(
+            $daoPropertyMap->append(
                 $this->getDaoPropertyBuilderFactory()->create()
                     ->setRecord($record)
                     ->build()
             );
+        }
+
+        $buildConfiguration->setDaoPropertyMap($daoPropertyMap);
+
+        if (isset($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_CONSTANTS])) {
+            $constantMap = $this->getConstantMapFactory()->create();
+            foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_CONSTANTS] as $name => $value) {
+                $constant = $this->getConstantFactory()->create()
+                    ->setName($name)
+                    ->setValue($value);
+                $constantMap->append($constant);
+            }
+
+            $buildConfiguration->setConstantMap($constantMap);
         }
 
         return $buildConfiguration;

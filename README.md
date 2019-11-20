@@ -73,6 +73,9 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
 - `http_verbs`
     - HTTP methods allowed for an actor. Can include `GET`, `POST`, `PUT`, `PATCH`, and `DELETE`.
     - Note: Since mutative and destructive actions are not yet patterned for repositories, you will need to override the generated handler to call the proper repository method.
+- `constants`
+    - Additional user-defined constants to add to the actor interface.
+    - This field is optional
 - `identity_field`
     - Name of the database column that uniquely identifies a record for the actor
 - `properties`
@@ -106,6 +109,18 @@ http_verbs:
 - put
 - patch
 - delete
+constants:
+  SOME_CONSTANT: some value
+  NUMERIC_CONSTANT: 2.123
+  ARRAY_CONSTANT_WITH_KEYS:
+    some_key: some_value
+    some_nested_array:
+    - 123
+    - test
+  ARRAY_CONSTANT_WITHOUT_KEYS:
+  - 1
+  - 3
+  - TEST
 properties:
 id:
   data_type: int

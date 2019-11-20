@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\Constant\FactoryInterface:
+    class: Neighborhoods\Prefab\Constant\Factory
+    public: false
+    shared: true
+    calls:
+      - [setConstant, ['@Neighborhoods\Prefab\ConstantInterface']]
