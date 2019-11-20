@@ -23,6 +23,9 @@ class Generator implements GeneratorInterface
     protected $fabricator;
     protected $composerNamespace;
 
+    protected const GREEN_TEXT_FORMAT_PATTERN = "\e[0;32m %S \e[0m";
+    protected const YELLOW_HIGHLIGHT_FORMAT_PATTERN = "\e[0;30;43m%s\e[0m";
+
     protected const VENDOR_PLACEHOLDER = 'PREFAB_PLACEHOLDER_VENDOR';
     protected const PRODUCT_PLACEHOLDER = 'PREFAB_PLACEHOLDER_PRODUCT';
 
@@ -39,7 +42,7 @@ class Generator implements GeneratorInterface
         echo ">> Generating Prefab machinery...";
         $this->generatePrefabActors();
 
-        echo PHP_EOL . "\e[0;32mPrefab complete.\e[0m" . PHP_EOL;
+        echo PHP_EOL . sprintf(self::GREEN_TEXT_FORMAT_PATTERN, "Prefab complete.") . PHP_EOL;
 
         return $this;
     }
@@ -72,8 +75,7 @@ class Generator implements GeneratorInterface
             ->setTargetDirectory($this->getProjectRoot())
             ->generate();
 
-        echo "\e[0;32m success. \e[0m" . PHP_EOL;
-
+        echo sprintf(self::GREEN_TEXT_FORMAT_PATTERN, 'success.') . PHP_EOL;
         return $this;
     }
 
@@ -83,10 +85,12 @@ class Generator implements GeneratorInterface
         $daos = $finder->files()->name('*' . BuildConfigurationInterface::PREFAB_DEFINITION_FILE_EXTENSION)->in($this->srcLocation);
 
         if (count($daos) === 0) {
-            echo "\e[1;33m skipped. \e[0m" . PHP_EOL;
-            echo PHP_EOL . "\e[0;30;43mNo Prefab definition files found in " . $this->getSrcLocation() . "\e[0m" . PHP_EOL;
-            echo "\e[1;33mNote:\e[0m Prefab definition files cannot be saved in the root of src/." .
-                " They MUST be located in a versioned directory under src/" . PHP_EOL;
+            echo sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, 'skipped.') . PHP_EOL;
+            echo PHP_EOL . sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, "No Prefab definition files found in " . realpath($this->getSrcLocation())) . PHP_EOL;
+            echo PHP_EOL . sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, 'Note:') . ' ';
+
+            echo "Prefab definition files cannot be saved in the root of src/. " .
+               "They MUST be located in a versioned directory under src/" . PHP_EOL;
 
             return $this;
         }
