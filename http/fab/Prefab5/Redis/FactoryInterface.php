@@ -8,6 +8,8 @@ interface FactoryInterface
     public const PROP_HOST = 'host';
     public const PROP_PORT = 'port';
 
+    public const REDIS_OPT_READ_TIMEOUT = 3;
+
     public function create(): \Redis;
 
     public function setPort(int $port): FactoryInterface;

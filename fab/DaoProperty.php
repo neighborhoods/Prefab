@@ -36,9 +36,14 @@ class DaoProperty implements DaoPropertyInterface
          }
          
          $this->name = $name;
-         
          return $this;
      }
+     
+     public function hasName(): bool
+     {
+        return $this->name !== null;
+     }
+     
 
      public function getDataType(): string
      {
@@ -56,9 +61,14 @@ class DaoProperty implements DaoPropertyInterface
          }
          
          $this->dataType = $dataType;
-         
          return $this;
      }
+     
+     public function hasDataType(): bool
+     {
+        return $this->dataType !== null;
+     }
+     
 
      public function getNullable(): bool
      {
@@ -76,9 +86,14 @@ class DaoProperty implements DaoPropertyInterface
          }
          
          $this->nullable = $nullable;
-         
          return $this;
      }
+     
+     public function hasNullable(): bool
+     {
+        return $this->nullable !== null;
+     }
+     
 
      public function getRecordKey(): string
      {
@@ -96,9 +111,14 @@ class DaoProperty implements DaoPropertyInterface
          }
          
          $this->recordKey = $recordKey;
-         
          return $this;
      }
+     
+     public function hasRecordKey(): bool
+     {
+        return $this->recordKey !== null;
+     }
+     
 
      public function getCreatedOnInsert(): bool
      {
@@ -116,7 +136,17 @@ class DaoProperty implements DaoPropertyInterface
          }
          
          $this->createdOnInsert = $createdOnInsert;
-         
          return $this;
      }
+     
+     public function hasCreatedOnInsert(): bool
+     {
+        return $this->createdOnInsert !== null;
+     }
+     
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }

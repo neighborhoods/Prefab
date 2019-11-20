@@ -22,12 +22,14 @@ class Factory implements FactoryInterface
         return $redis;
     }
 
-    public function setPort(int $port): FactoryInterface
+    public function setPort(?int $port): FactoryInterface
     {
-        if ($this->port === null) {
+        if ($port !== null) {
+            if ($this->port !== null) {
+                throw new \LogicException('Port is already set.');
+            }
+
             $this->port = $port;
-        } else {
-            throw new \LogicException('Port is already set.');
         }
 
         return $this;
@@ -42,12 +44,14 @@ class Factory implements FactoryInterface
         return $this->port;
     }
 
-    public function setHost(string $host): FactoryInterface
+    public function setHost(?string $host): FactoryInterface
     {
-        if ($this->host === null) {
+        if ($host !== null) {
+            if ($this->host !== null) {
+                throw new \LogicException('Host is already set.');
+            }
+
             $this->host = $host;
-        } else {
-            throw new \LogicException('Host is already set.');
         }
 
         return $this;

@@ -3,6 +3,48 @@ A code generation tool. Takes the busywork out of building strongly-typed, patte
 
 ## Getting Started
 
+### Prerequisites
+
+#### PSR-4 Namespace Definition
+
+Prefab assumes users have defined a `psr-4` namespace under the `autoload` key in their `composer.json` file.  Namespaces MUST be defined as `{VENDOR}\{PRODUCT_NAME}`. See the [composer docs](https://getcomposer.org/doc/04-schema.md#psr-4) for more information. Prefab will write generated files under the `fab/` directory in your project root. You should configure your autoloader to first look in `src/`, then in `fab/`. This will allow you to override generated files by placing updated copies of classes in the equivalent `src/` location.
+
+Example:
+```
+"autoload": {
+    "psr-4": {
+      "Neighborhoods\\MyPrefabbedProject\\": [
+        "src",
+        "fab"
+      ]
+    }
+}
+```
+
+#### Environment Variables
+
+Prefab expects the following environment variables to be defined.
+
+| Key | Description |
+|------|----------|
+| SITE_ENVIRONMENT | The environment the application is running in. Should be one of `Local`, `Development`, or `Production` |
+| DATABASE_ADAPTER | The database driver to use. See the [Doctrine DBAL docs](https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url) for possible values |
+| DATABASE_HOST | The database host to use in the PDO connection |
+| DATABASE_USERNAME | The database username to use in the PDO connection |
+| DATABASE_PASSWORD | The database password to use in the PDO connection |
+| DATABASE_NAME | The database name to use in the PDO connection |
+| DATABASE_PORT | The database port to use in the PDO connection |
+
+#### Project Structure 
+
+Prefab requires that all Prefab definition files be in a versioned directory under `src/`. For example, `src/V1/Actor.prefab.definition.yml` is valid while `src/Actor.prefab.definition.yml` is not.
+
+#### Materialized Views
+
+Prefab puts an extremely high focus on performance.  One of the ways Prefab achieves fast response times is by ensuring that all HTTP requests result in a single database query on an index, made possible through the use of [materialized views](https://en.wikipedia.org/wiki/Materialized_view). Prefab uses [search criteria](#search-criteria) to interact with its database, which doesn't support table joins.  That means all data for a given request MUST live in the same table. 
+
+Note: Since search criteria allows you to select which data you would like to return, a single materialized view with a superset of all data returned by your HTTP endpoints can be used.
+
 ### Running Prefab
 - In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
 - Create your `Actor.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
@@ -17,7 +59,7 @@ Working examples of Prefab can be found in the [PrefabFitness repository](https:
 
 The purpose of this document is to define the components needed to generate an HTTP endpoint for an actor from a `.prefab.definition.yml` file
 
-The file must be named {ACTORNAME}.prefab.definition.yml and saved under `src/`. They should be stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
+The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`. They should be stored in the same nested directory structure as you would like the machinery to be generated under `fab/`.  
 - `table_name`
     - Name of the database table containing the data that populates the actor
 - `supporting_actor_group`
@@ -49,9 +91,6 @@ The file must be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
             - If true, the buildForInsert() method will surround this property with isset() before attempting to set the value on the actor. However, the build() method will still require this property when building a record from the database.
             - If not set, defaults to false
                 
-Prefab also enforces
-* A contract version namespace (e.g. `MV1`, `DOR1`, `RETS1`, etc.). This MUST be present under `src/`.
-* A `{VENDOR}\{PRODUCT_NAME}` PSR-4 namespace convention (e.g. `Neighborhoods\Prefab`). This MUST be defined in `composer.json`.
 
 ### Example structure of a Prefab definition file:
 
@@ -175,7 +214,7 @@ Prefab supports generating different subsets of supporting actors to support var
 
 As Symfony containers get bigger, the response times for HTTP requests increase.  To prevent slow response times, Prefab supports user-defined subset container building. Prefab users can define what should be included in the Symfony container for each route, so only the necessary actors are initialized.  This buildable directory file is optional and Prefab will build the entirety of `src/` and `fab/` by default if the file is not found. If the file is present, then all routes MUST have a corresponding key with directories to be built.
 
-- Note: On the first request, Prefab will write this file to disk as a PHP array in the directory `data/cache/Opcache/HTTPBuildableDirectoryMap`. When making changes to the Buildable Directory File, the cached file must be deleted in order for changes to be reflected in the code.  It is also highly recommended to ensure [Opcache](https://www.php.net/manual/en/book.opcache.php) is enabled in production to prevent a read from disk on every HTTP request. 
+- Note: On the first request, Prefab will write this file to disk as a PHP array in the directory `data/cache/Opcache/HTTPBuildableDirectoryMap`. When making changes to the Buildable Directory File, the cached file MUST be deleted in order for changes to be reflected in the code.  It is also highly recommended to ensure [Opcache](https://www.php.net/manual/en/book.opcache.php) is enabled in production to prevent a read from disk on every HTTP request. 
 
 The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. If a key with the first two parts of the URI is not found, Prefab will then check for a key with just the first part of the URI.
 - Examples
@@ -239,6 +278,10 @@ $primer->primeContainers();
 return;
 
 ```
+
+## Semantic Versioning
+
+Since Prefab is a code generation tool that allows users to override specific files and behaviors as needed, Prefab can't make a guarantee a minor version upgrade will work with your overriden files. Prefab *does* guarantee that all minor version upgrades of a purely Prefabbed project (no overriden files) will not have any breaking changes.  If you *do* override any files, it's important that you test your project to verify those files still work as expected with the new version of Prefab.
 
 ## Debug Mode
 Debug mode can be enabled by setting the environment variable `DEBUG_MODE=true`. Enabling debug mode will output additional details about exceptions and errors thrown during HTTP requests.  Note that this requires a valid container to be built in order to be used. If there is an error during container building (eg. A missing Symfony service file), you will not have the additional visibility provided by debug mode.

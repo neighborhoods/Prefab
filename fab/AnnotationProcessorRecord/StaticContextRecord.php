@@ -24,7 +24,17 @@ class StaticContextRecord implements StaticContextRecordInterface
          }
          
          $this->processorFullyQualifiedClassname = $processorFullyQualifiedClassname;
-         
          return $this;
      }
+     
+     public function hasProcessorFullyQualifiedClassname(): bool
+     {
+        return $this->processorFullyQualifiedClassname !== null;
+     }
+     
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }

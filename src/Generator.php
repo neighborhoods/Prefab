@@ -12,7 +12,8 @@ class Generator implements GeneratorInterface
     use HttpSkeleton\Generator\Factory\AwareTrait;
     use BuildConfiguration\Builder\Factory\AwareTrait;
     use FabricationSpecification\Builder\Factory\AwareTrait;
-    use \Neighborhoods\Prefab\FabricationSpecification\Writer\Factory\AwareTrait;
+    use FabricationSpecification\Writer\Factory\AwareTrait;
+    use TokenReplacer\Factory\AwareTrait;
 
     protected $httpSrcDir;
     protected $projectRoot;
@@ -24,6 +25,9 @@ class Generator implements GeneratorInterface
 
     protected const GREEN_TEXT_FORMAT_PATTERN = "\e[0;32m %S \e[0m";
     protected const YELLOW_HIGHLIGHT_FORMAT_PATTERN = "\e[0;30;43m%s\e[0m";
+
+    protected const VENDOR_PLACEHOLDER = 'PREFAB_PLACEHOLDER_VENDOR';
+    protected const PRODUCT_PLACEHOLDER = 'PREFAB_PLACEHOLDER_PRODUCT';
 
     public function generate()
     {
@@ -112,6 +116,12 @@ class Generator implements GeneratorInterface
             ->setProjectName($this->getProjectName())
             ->setProjectRoot($this->getProjectRoot())
             ->fabricateSupportingActors();
+
+        $this->getTokenReplacerFactory()->create()
+            ->setReplacementDirectory($this->getProjectRoot() . '/fab')
+            ->addNewTokenToReplace(self::PRODUCT_PLACEHOLDER, $this->getProjectName())
+            ->addNewTokenToReplace(self::VENDOR_PLACEHOLDER, $this->getVendorName())
+            ->replaceTokens();
 
         echo "\e[0;32m success. \e[0m" . PHP_EOL;
 
