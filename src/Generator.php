@@ -29,6 +29,26 @@ class Generator implements GeneratorInterface
     protected const VENDOR_PLACEHOLDER = 'PREFAB_PLACEHOLDER_VENDOR';
     protected const PRODUCT_PLACEHOLDER = 'PREFAB_PLACEHOLDER_PRODUCT';
 
+    public const DEPRECATION_KEY_TOP_LEVEL_DAO = 'top_level_dao';
+    public const DEPRECATION_KEY_PHP_TYPE = 'php_type';
+    public const DEPRECATION_KEY_DATABASE_COLUMN_NAME = 'database_column_name';
+
+    protected const TOP_LEVEL_KEY_DEPRECATION_MESSAGE =
+        'Warning: Using the top level dao key in your Prefab definition files is deprecated and will be removed in a future version. ' .
+        'Remove the dao key and use its children as top level keys';
+
+    protected const PHP_TYPE_DEPRECATION_MESSAGE =
+        'Warning: Using the php_type key is deprecated and will be removed in a future version. Use data_type instead.';
+
+    protected const DATABASE_COLUMN_NAME_DEPRECATION_MESSAGE =
+        'Warning: Using the database_column_name key is deprecated and will be removed in a future version. Use record_key instead.';
+
+    protected const DEPRECATION_MESSAGES = [
+        self::DEPRECATION_KEY_TOP_LEVEL_DAO => self::TOP_LEVEL_KEY_DEPRECATION_MESSAGE,
+        self::DEPRECATION_KEY_PHP_TYPE => self::PHP_TYPE_DEPRECATION_MESSAGE,
+        self::DEPRECATION_KEY_DATABASE_COLUMN_NAME => self::DATABASE_COLUMN_NAME_DEPRECATION_MESSAGE,
+    ];
+
     public function generate()
     {
         $this->setHttpSrcDir(__DIR__ . '/../http');
@@ -36,10 +56,10 @@ class Generator implements GeneratorInterface
         $this->setProjectName($this->getProjectNameFromComposerFile());
         $this->setVendorName($this->getVendorNameFromComposerFile());
 
-        echo PHP_EOL . ">> Copying HTTP machinery...";
+        echo PHP_EOL . ">> Copying HTTP machinery..." . PHP_EOL;
         $this->generateHttpSkeleton();
 
-        echo ">> Generating Prefab machinery...";
+        echo ">> Generating Prefab machinery..." . PHP_EOL;
         $this->generatePrefabActors();
 
         echo PHP_EOL . sprintf(self::GREEN_TEXT_FORMAT_PATTERN, "Prefab complete.") . PHP_EOL;
@@ -95,17 +115,31 @@ class Generator implements GeneratorInterface
             return $this;
         }
 
+        $deprecatedKeyUsages = [];
+
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-            $configuration = $this->getBuildConfigurationBuilderFactory()->create()
+            $configurationBuilder = $this->getBuildConfigurationBuilderFactory()->create()
                 ->setYamlFilePath($dao->getRealPath())
                 ->setVendorName($this->getVendorName())
                 ->setProjectName($this->getProjectName())
-                ->setProjectRoot($this->getProjectRoot())
-                ->build();
+                ->setProjectRoot($this->getProjectRoot());
+            $configuration = $configurationBuilder->build();
 
             if ($configuration->hasHttpVerbs()) {
                 $this->addHandlerToRouteFile($configuration);
+            }
+
+            if ($configurationBuilder->isUsingDeprecatedDatabaseColumnNameKey()) {
+                $deprecatedKeyUsages[self::DEPRECATION_KEY_DATABASE_COLUMN_NAME][] = $dao->getRealPath();
+            }
+
+            if ($configurationBuilder->isUsingDeprecatedPhpTypeKey()) {
+                $deprecatedKeyUsages[self::DEPRECATION_KEY_PHP_TYPE][] = $dao->getRealPath();
+            }
+
+            if ($configurationBuilder->isUsingDeprecatedTopLevelDaoKey()) {
+                $deprecatedKeyUsages[self::DEPRECATION_KEY_TOP_LEVEL_DAO][] = $dao->getRealPath();
             }
 
             $this->writeFabricationSpecificationToDisk($configuration, $dao);
@@ -123,7 +157,23 @@ class Generator implements GeneratorInterface
             ->addNewTokenToReplace(self::VENDOR_PLACEHOLDER, $this->getVendorName())
             ->replaceTokens();
 
+        $this->outputDeprecationWarnings($deprecatedKeyUsages);
+
         echo "\e[0;32m success. \e[0m" . PHP_EOL;
+
+        return $this;
+    }
+
+    protected function outputDeprecationWarnings(array $deprecatedUsages) : GeneratorInterface
+    {
+        foreach ($deprecatedUsages as $key => $filePaths) {
+            echo sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, self::DEPRECATION_MESSAGES[$key]) . PHP_EOL;
+            echo 'Usages found in the following files: ' . PHP_EOL;
+
+            foreach ($filePaths as $filePath) {
+                echo "\t" . $filePath . PHP_EOL;
+            }
+        }
 
         return $this;
     }
