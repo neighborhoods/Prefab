@@ -22,8 +22,9 @@ class Generator implements GeneratorInterface
     protected $projectName;
     protected $fabricator;
     protected $composerNamespace;
+    protected $deprecatedKeyUsages;
 
-    protected const GREEN_TEXT_FORMAT_PATTERN = "\e[0;32m %S \e[0m";
+    protected const GREEN_TEXT_FORMAT_PATTERN = "\e[0;32m %s \e[0m";
     protected const YELLOW_HIGHLIGHT_FORMAT_PATTERN = "\e[0;30;43m%s\e[0m";
 
     protected const VENDOR_PLACEHOLDER = 'PREFAB_PLACEHOLDER_VENDOR';
@@ -56,11 +57,13 @@ class Generator implements GeneratorInterface
         $this->setProjectName($this->getProjectNameFromComposerFile());
         $this->setVendorName($this->getVendorNameFromComposerFile());
 
-        echo PHP_EOL . ">> Copying HTTP machinery..." . PHP_EOL;
+        echo PHP_EOL . ">> Copying HTTP machinery...";
         $this->generateHttpSkeleton();
 
-        echo ">> Generating Prefab machinery..." . PHP_EOL;
+        echo ">> Generating Prefab machinery...";
         $this->generatePrefabActors();
+
+        $this->outputDeprecationWarnings($this->getDeprecatedKeyUsages());
 
         echo PHP_EOL . sprintf(self::GREEN_TEXT_FORMAT_PATTERN, "Prefab complete.") . PHP_EOL;
 
@@ -80,7 +83,7 @@ class Generator implements GeneratorInterface
 
     protected function getFabricationSpecificationForBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : FabricationSpecificationInterface
     {
-         return $this->getFabricationSpecificationBuilderFactory()->create()
+        return $this->getFabricationSpecificationBuilderFactory()->create()
             ->setBuildConfiguration($buildConfiguration)
             ->build();
     }
@@ -110,7 +113,7 @@ class Generator implements GeneratorInterface
             echo PHP_EOL . sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, 'Note:') . ' ';
 
             echo "Prefab definition files cannot be saved in the root of src/. " .
-               "They MUST be located in a versioned directory under src/" . PHP_EOL;
+                "They MUST be located in a versioned directory under src/" . PHP_EOL;
 
             return $this;
         }
@@ -157,9 +160,9 @@ class Generator implements GeneratorInterface
             ->addNewTokenToReplace(self::VENDOR_PLACEHOLDER, $this->getVendorName())
             ->replaceTokens();
 
-        $this->outputDeprecationWarnings($deprecatedKeyUsages);
+        $this->setDeprecatedKeyUsages($deprecatedKeyUsages);
 
-        echo "\e[0;32m success. \e[0m" . PHP_EOL;
+        echo sprintf(self::GREEN_TEXT_FORMAT_PATTERN, 'success.') . PHP_EOL;
 
         return $this;
     }
@@ -167,7 +170,7 @@ class Generator implements GeneratorInterface
     protected function outputDeprecationWarnings(array $deprecatedUsages) : GeneratorInterface
     {
         foreach ($deprecatedUsages as $key => $filePaths) {
-            echo sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, self::DEPRECATION_MESSAGES[$key]) . PHP_EOL;
+            echo PHP_EOL . sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, self::DEPRECATION_MESSAGES[$key]) . PHP_EOL;
             echo 'Usages found in the following files: ' . PHP_EOL;
 
             foreach ($filePaths as $filePath) {
@@ -353,6 +356,23 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator fabricator is already set.');
         }
         $this->fabricator = $fabricator;
+        return $this;
+    }
+
+    public function getDeprecatedKeyUsages()
+    {
+        if ($this->deprecatedKeyUsages === null) {
+            throw new \LogicException('Generator deprecatedKeyUsages has not been set.');
+        }
+        return $this->deprecatedKeyUsages;
+    }
+
+    public function setDeprecatedKeyUsages($deprecatedKeyUsages): GeneratorInterface
+    {
+        if ($this->deprecatedKeyUsages !== null) {
+            throw new \LogicException('Generator deprecatedKeyUsages is already set.');
+        }
+        $this->deprecatedKeyUsages = $deprecatedKeyUsages;
         return $this;
     }
 
