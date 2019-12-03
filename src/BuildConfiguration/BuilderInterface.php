@@ -13,4 +13,7 @@ interface BuilderInterface
     public function setProjectName(string $projectName) : BuilderInterface;
     public function setProjectRoot(string $projectRoot) : BuilderInterface;
     public function setVendorName(string $vendorName) : BuilderInterface;
+    public function isUsingDeprecatedTopLevelDaoKey() : bool;
+    public function isUsingDeprecatedDatabaseColumnNameKey() : bool;
+    public function isUsingDeprecatedPhpTypeKey() : bool;
 }

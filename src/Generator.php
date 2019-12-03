@@ -22,12 +22,33 @@ class Generator implements GeneratorInterface
     protected $projectName;
     protected $fabricator;
     protected $composerNamespace;
+    protected $deprecatedKeyUsages;
 
-    protected const GREEN_TEXT_FORMAT_PATTERN = "\e[0;32m %S \e[0m";
+    protected const GREEN_TEXT_FORMAT_PATTERN = "\e[0;32m %s \e[0m";
     protected const YELLOW_HIGHLIGHT_FORMAT_PATTERN = "\e[0;30;43m%s\e[0m";
 
     protected const VENDOR_PLACEHOLDER = 'PREFAB_PLACEHOLDER_VENDOR';
     protected const PRODUCT_PLACEHOLDER = 'PREFAB_PLACEHOLDER_PRODUCT';
+
+    public const DEPRECATION_KEY_TOP_LEVEL_DAO = 'top_level_dao';
+    public const DEPRECATION_KEY_PHP_TYPE = 'php_type';
+    public const DEPRECATION_KEY_DATABASE_COLUMN_NAME = 'database_column_name';
+
+    protected const TOP_LEVEL_KEY_DEPRECATION_MESSAGE =
+        'Warning: Using the top level dao key in your Prefab definition files is deprecated and will be removed in a future version. ' .
+        'Remove the dao key and use its children as top level keys';
+
+    protected const PHP_TYPE_DEPRECATION_MESSAGE =
+        'Warning: Using the php_type key is deprecated and will be removed in a future version. Use data_type instead.';
+
+    protected const DATABASE_COLUMN_NAME_DEPRECATION_MESSAGE =
+        'Warning: Using the database_column_name key is deprecated and will be removed in a future version. Use record_key instead.';
+
+    protected const DEPRECATION_MESSAGES = [
+        self::DEPRECATION_KEY_TOP_LEVEL_DAO => self::TOP_LEVEL_KEY_DEPRECATION_MESSAGE,
+        self::DEPRECATION_KEY_PHP_TYPE => self::PHP_TYPE_DEPRECATION_MESSAGE,
+        self::DEPRECATION_KEY_DATABASE_COLUMN_NAME => self::DATABASE_COLUMN_NAME_DEPRECATION_MESSAGE,
+    ];
 
     public function generate()
     {
@@ -41,6 +62,8 @@ class Generator implements GeneratorInterface
 
         echo ">> Generating Prefab machinery...";
         $this->generatePrefabActors();
+
+        $this->outputDeprecationWarnings($this->getDeprecatedKeyUsages());
 
         echo PHP_EOL . sprintf(self::GREEN_TEXT_FORMAT_PATTERN, "Prefab complete.") . PHP_EOL;
 
@@ -60,7 +83,7 @@ class Generator implements GeneratorInterface
 
     protected function getFabricationSpecificationForBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : FabricationSpecificationInterface
     {
-         return $this->getFabricationSpecificationBuilderFactory()->create()
+        return $this->getFabricationSpecificationBuilderFactory()->create()
             ->setBuildConfiguration($buildConfiguration)
             ->build();
     }
@@ -90,22 +113,36 @@ class Generator implements GeneratorInterface
             echo PHP_EOL . sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, 'Note:') . ' ';
 
             echo "Prefab definition files cannot be saved in the root of src/. " .
-               "They MUST be located in a versioned directory under src/" . PHP_EOL;
+                "They MUST be located in a versioned directory under src/" . PHP_EOL;
 
             return $this;
         }
 
+        $deprecatedKeyUsages = [];
+
         /** @var SplFileInfo $dao */
         foreach ($daos as $dao) {
-            $configuration = $this->getBuildConfigurationBuilderFactory()->create()
+            $configurationBuilder = $this->getBuildConfigurationBuilderFactory()->create()
                 ->setYamlFilePath($dao->getRealPath())
                 ->setVendorName($this->getVendorName())
                 ->setProjectName($this->getProjectName())
-                ->setProjectRoot($this->getProjectRoot())
-                ->build();
+                ->setProjectRoot($this->getProjectRoot());
+            $configuration = $configurationBuilder->build();
 
             if ($configuration->hasHttpVerbs()) {
                 $this->addHandlerToRouteFile($configuration);
+            }
+
+            if ($configurationBuilder->isUsingDeprecatedDatabaseColumnNameKey()) {
+                $deprecatedKeyUsages[self::DEPRECATION_KEY_DATABASE_COLUMN_NAME][] = $dao->getRealPath();
+            }
+
+            if ($configurationBuilder->isUsingDeprecatedPhpTypeKey()) {
+                $deprecatedKeyUsages[self::DEPRECATION_KEY_PHP_TYPE][] = $dao->getRealPath();
+            }
+
+            if ($configurationBuilder->isUsingDeprecatedTopLevelDaoKey()) {
+                $deprecatedKeyUsages[self::DEPRECATION_KEY_TOP_LEVEL_DAO][] = $dao->getRealPath();
             }
 
             $this->writeFabricationSpecificationToDisk($configuration, $dao);
@@ -123,7 +160,23 @@ class Generator implements GeneratorInterface
             ->addNewTokenToReplace(self::VENDOR_PLACEHOLDER, $this->getVendorName())
             ->replaceTokens();
 
-        echo "\e[0;32m success. \e[0m" . PHP_EOL;
+        $this->setDeprecatedKeyUsages($deprecatedKeyUsages);
+
+        echo sprintf(self::GREEN_TEXT_FORMAT_PATTERN, 'success.') . PHP_EOL;
+
+        return $this;
+    }
+
+    protected function outputDeprecationWarnings(array $deprecatedUsages) : GeneratorInterface
+    {
+        foreach ($deprecatedUsages as $key => $filePaths) {
+            echo PHP_EOL . sprintf(self::YELLOW_HIGHLIGHT_FORMAT_PATTERN, self::DEPRECATION_MESSAGES[$key]) . PHP_EOL;
+            echo 'Usages found in the following files: ' . PHP_EOL;
+
+            foreach ($filePaths as $filePath) {
+                echo "\t" . $filePath . PHP_EOL;
+            }
+        }
 
         return $this;
     }
@@ -303,6 +356,23 @@ class Generator implements GeneratorInterface
             throw new \LogicException('Generator fabricator is already set.');
         }
         $this->fabricator = $fabricator;
+        return $this;
+    }
+
+    public function getDeprecatedKeyUsages()
+    {
+        if ($this->deprecatedKeyUsages === null) {
+            throw new \LogicException('Generator deprecatedKeyUsages has not been set.');
+        }
+        return $this->deprecatedKeyUsages;
+    }
+
+    public function setDeprecatedKeyUsages($deprecatedKeyUsages): GeneratorInterface
+    {
+        if ($this->deprecatedKeyUsages !== null) {
+            throw new \LogicException('Generator deprecatedKeyUsages is already set.');
+        }
+        $this->deprecatedKeyUsages = $deprecatedKeyUsages;
         return $this;
     }
 
