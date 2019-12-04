@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface;
 
 trait AwareTrait
 {
-    protected $Actors;
+    protected $AnnotationProcessorRecords;
 
-    public function setActorMap(MapInterface $Actors): self
+    public function setAnnotationProcessorRecordMap(MapInterface $AnnotationProcessorRecords): self
     {
         if ($this->hasActorMap()) {
             throw new \LogicException('Actors is already set.');
         }
-        $this->Actors = $Actors;
+        $this->AnnotationProcessorRecords = $AnnotationProcessorRecords;
 
         return $this;
     }
 
-    protected function getActorMap(): MapInterface
+    protected function getAnnotationProcessorRecordMap(): MapInterface
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
-        return $this->Actors;
+        return $this->AnnotationProcessorRecords;
     }
 
     protected function hasActorMap(): bool
     {
-        return isset($this->Actors);
+        return isset($this->AnnotationProcessorRecords);
     }
 
-    protected function unsetActorMap(): self
+    protected function unsetAnnotationProcessorRecordMap(): self
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
-        unset($this->Actors);
+        unset($this->AnnotationProcessorRecords);
 
         return $this;
     }

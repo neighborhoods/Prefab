@@ -18,9 +18,9 @@ class Builder implements BuilderInterface
 
     public function build() : MapInterface
     {
-        $map = $this->getActorMapFactory()->create();
+        $map = $this->getDaoPropertyMapFactory()->create();
         foreach ($this->getRecords() as $record) {
-            $builder = $this->getActorBuilderFactory()->create();
+            $builder = $this->getDaoPropertyBuilderFactory()->create();
             $item = $builder->setRecord($record)->build();
             
             $map[] = $item;
@@ -31,9 +31,9 @@ class Builder implements BuilderInterface
 
     public function buildForInsert() : MapInterface
     {
-        $map = $this->getActorMapFactory()->create();
+        $map = $this->getDaoPropertyMapFactory()->create();
         foreach ($this->getRecords() as $index => $record) {
-            $builder = $this->getActorBuilderFactory()->create();
+            $builder = $this->getDaoPropertyBuilderFactory()->create();
             $item = $builder->setRecord($record)->buildForInsert();
             $itemIndex = 
             $index;

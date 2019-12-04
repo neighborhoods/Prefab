@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\Map\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $ActorMapFactory;
+    protected $AnnotationProcessorRecordMapFactory;
 
-    public function setActorMapFactory(FactoryInterface $ActorMapFactory): self
+    public function setAnnotationProcessorRecordMapFactory(FactoryInterface $AnnotationProcessorRecordMapFactory): self
     {
         if ($this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is already set.');
         }
-        $this->ActorMapFactory = $ActorMapFactory;
+        $this->AnnotationProcessorRecordMapFactory = $AnnotationProcessorRecordMapFactory;
 
         return $this;
     }
 
-    protected function getActorMapFactory(): FactoryInterface
+    protected function getAnnotationProcessorRecordMapFactory(): FactoryInterface
     {
         if (!$this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
 
-        return $this->ActorMapFactory;
+        return $this->AnnotationProcessorRecordMapFactory;
     }
 
     protected function hasActorMapFactory(): bool
     {
-        return isset($this->ActorMapFactory);
+        return isset($this->AnnotationProcessorRecordMapFactory);
     }
 
-    protected function unsetActorMapFactory(): self
+    protected function unsetAnnotationProcessorRecordMapFactory(): self
     {
         if (!$this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
-        unset($this->ActorMapFactory);
+        unset($this->AnnotationProcessorRecordMapFactory);
 
         return $this;
     }

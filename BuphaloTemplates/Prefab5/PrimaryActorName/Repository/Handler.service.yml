@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorMapRepository, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\RepositoryInterface']]
+      - [setPrimaryActorNameMapRepository, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\RepositoryInterface']]
       - [setSearchCriteriaServerRequestBuilderFactory, ['/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\NamespaceAnnotationProcessor */']]

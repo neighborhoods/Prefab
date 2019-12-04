@@ -14,26 +14,26 @@ class Builder implements BuilderInterface
 
     public function build(): PrimaryActorNameInterface
     {
-        $Actor = $this->getActorFactory()->create();
+        $PrimaryActorName = $this->getPrimaryActorNameFactory()->create();
 
         $record = $this->getRecord();
 
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build
  */
 
-        return $Actor;
+        return $PrimaryActorName;
     }
 
     public function buildForInsert(): PrimaryActorNameInterface
     {
-        $Actor = $this->getActorFactory()->create();
+        $PrimaryActorName = $this->getPrimaryActorNameFactory()->create();
 
         $record = $this->getRecord();
 
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-buildForInsert
  */
 
-        return $Actor;
+        return $PrimaryActorName;
     }
 
     protected function getRecord(): array

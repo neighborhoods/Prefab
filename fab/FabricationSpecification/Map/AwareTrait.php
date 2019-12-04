@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\MapInterface;
 
 trait AwareTrait
 {
-    protected $Actors;
+    protected $FabricationSpecifications;
 
-    public function setActorMap(MapInterface $Actors): self
+    public function setFabricationSpecificationMap(MapInterface $FabricationSpecifications): self
     {
         if ($this->hasActorMap()) {
             throw new \LogicException('Actors is already set.');
         }
-        $this->Actors = $Actors;
+        $this->FabricationSpecifications = $FabricationSpecifications;
 
         return $this;
     }
 
-    protected function getActorMap(): MapInterface
+    protected function getFabricationSpecificationMap(): MapInterface
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
-        return $this->Actors;
+        return $this->FabricationSpecifications;
     }
 
     protected function hasActorMap(): bool
     {
-        return isset($this->Actors);
+        return isset($this->FabricationSpecifications);
     }
 
-    protected function unsetActorMap(): self
+    protected function unsetFabricationSpecificationMap(): self
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
-        unset($this->Actors);
+        unset($this->FabricationSpecifications);
 
         return $this;
     }

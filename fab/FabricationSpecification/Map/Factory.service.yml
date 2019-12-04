@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setActorMap, ['@Neighborhoods\Prefab\FabricationSpecification\MapInterface']]
+      - [setFabricationSpecificationMap, ['@Neighborhoods\Prefab\FabricationSpecification\MapInterface']]

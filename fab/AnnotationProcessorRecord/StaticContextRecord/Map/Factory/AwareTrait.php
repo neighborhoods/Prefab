@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Map\Facto
 
 trait AwareTrait
 {
-    protected $ActorMapFactory;
+    protected $AnnotationProcessorRecordStaticContextRecordMapFactory;
 
-    public function setActorMapFactory(FactoryInterface $ActorMapFactory): self
+    public function setAnnotationProcessorRecordStaticContextRecordMapFactory(FactoryInterface $StaticContextRecordMapFactory): self
     {
         if ($this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is already set.');
         }
-        $this->ActorMapFactory = $ActorMapFactory;
+        $this->AnnotationProcessorRecordStaticContextRecordMapFactory = $StaticContextRecordMapFactory;
 
         return $this;
     }
 
-    protected function getActorMapFactory(): FactoryInterface
+    protected function getAnnotationProcessorRecordStaticContextRecordMapFactory(): FactoryInterface
     {
         if (!$this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
 
-        return $this->ActorMapFactory;
+        return $this->AnnotationProcessorRecordStaticContextRecordMapFactory;
     }
 
     protected function hasActorMapFactory(): bool
     {
-        return isset($this->ActorMapFactory);
+        return isset($this->AnnotationProcessorRecordStaticContextRecordMapFactory);
     }
 
-    protected function unsetActorMapFactory(): self
+    protected function unsetAnnotationProcessorRecordStaticContextRecordMapFactory(): self
     {
         if (!$this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
-        unset($this->ActorMapFactory);
+        unset($this->AnnotationProcessorRecordStaticContextRecordMapFactory);
 
         return $this;
     }

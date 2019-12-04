@@ -7,16 +7,16 @@ use Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param PrimaryActorNameInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0);
+    /** @param PrimaryActorNameInterface ...$PrimaryActorNames */
+    public function __construct(array $PrimaryActorNames = [], int $flags = 0);
 
     public function offsetGet($index): PrimaryActorNameInterface;
 
-    /** @param PrimaryActorNameInterface $Actor */
-    public function offsetSet($index, $Actor);
+    /** @param PrimaryActorNameInterface $PrimaryActorName */
+    public function offsetSet($index, $PrimaryActorName);
 
-    /** @param PrimaryActorNameInterface $Actor */
-    public function append($Actor);
+    /** @param PrimaryActorNameInterface $PrimaryActorName */
+    public function append($PrimaryActorName);
 
     public function current(): PrimaryActorNameInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param PrimaryActorNameInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface;
+    /** @param PrimaryActorNameInterface ...$PrimaryActorNames */
+    public function hydrate(array $PrimaryActorNames): MapInterface;
 }

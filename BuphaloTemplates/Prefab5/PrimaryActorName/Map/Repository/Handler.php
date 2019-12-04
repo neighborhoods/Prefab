@@ -33,7 +33,7 @@ class Handler implements HandlerInterface
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
-            return $this->getActorMapRepository()->get($searchCriteria);
+            return $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
         } catch (\LogicException $exception) {
             throw new SearchCriteriaBuilderException($exception->getMessage());
         }

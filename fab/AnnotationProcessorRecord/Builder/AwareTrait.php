@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $ActorBuilder;
+    protected $AnnotationProcessorRecordBuilder;
 
-    public function setActorBuilder(BuilderInterface $ActorBuilder): self
+    public function setAnnotationProcessorRecordBuilder(BuilderInterface $AnnotationProcessorRecordBuilder): self
     {
         if ($this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->ActorBuilder = $ActorBuilder;
+        $this->AnnotationProcessorRecordBuilder = $AnnotationProcessorRecordBuilder;
 
         return $this;
     }
 
-    protected function getActorBuilder(): BuilderInterface
+    protected function getAnnotationProcessorRecordBuilder(): BuilderInterface
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->ActorBuilder;
+        return $this->AnnotationProcessorRecordBuilder;
     }
 
     protected function hasActorBuilder(): bool
     {
-        return isset($this->ActorBuilder);
+        return isset($this->AnnotationProcessorRecordBuilder);
     }
 
-    protected function unsetActorBuilder(): self
+    protected function unsetAnnotationProcessorRecordBuilder(): self
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->ActorBuilder);
+        unset($this->AnnotationProcessorRecordBuilder);
 
         return $this;
     }

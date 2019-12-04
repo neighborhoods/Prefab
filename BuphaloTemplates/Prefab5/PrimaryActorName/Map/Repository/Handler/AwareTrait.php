@@ -8,38 +8,38 @@ namespace Neighborhoods\BuphaloTemplateTree\Template\Actor\Map\Repository\Handle
 trait AwareTrait
 {
 
-    protected $ActorMapRepositoryHandler = null;
+    protected $PrimaryActorNameMapRepositoryHandler = null;
 
-    public function setActorMapRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface $ActorMapRepositoryHandler) : self
+    public function setPrimaryActorNameMapRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface $PrimaryActorNameMapRepositoryHandler) : self
     {
         if ($this->hasActorMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is already set.');
         }
-        $this->ActorMapRepositoryHandler = $ActorMapRepositoryHandler;
+        $this->PrimaryActorNameMapRepositoryHandler = $PrimaryActorNameMapRepositoryHandler;
 
         return $this;
     }
 
-    protected function getActorMapRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface
+    protected function getPrimaryActorNameMapRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface
     {
         if (!$this->hasActorMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is not set.');
         }
 
-        return $this->ActorMapRepositoryHandler;
+        return $this->PrimaryActorNameMapRepositoryHandler;
     }
 
     protected function hasActorMapRepositoryHandler() : bool
     {
-        return isset($this->ActorMapRepositoryHandler);
+        return isset($this->PrimaryActorNameMapRepositoryHandler);
     }
 
-    protected function unsetActorMapRepositoryHandler() : self
+    protected function unsetPrimaryActorNameMapRepositoryHandler() : self
     {
         if (!$this->hasActorMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is not set.');
         }
-        unset($this->ActorMapRepositoryHandler);
+        unset($this->PrimaryActorNameMapRepositoryHandler);
 
         return $this;
     }

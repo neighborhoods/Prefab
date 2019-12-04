@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\FactoryInte
 
 trait AwareTrait
 {
-    protected $ActorBuilderFactory;
+    protected $FabricationSpecificationCollectionBuilderFactory;
 
-    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
+    public function setFabricationSpecificationCollectionBuilderFactory(FactoryInterface $CollectionBuilderFactory): self
     {
         if ($this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->ActorBuilderFactory = $ActorBuilderFactory;
+        $this->FabricationSpecificationCollectionBuilderFactory = $CollectionBuilderFactory;
 
         return $this;
     }
 
-    protected function getActorBuilderFactory(): FactoryInterface
+    protected function getFabricationSpecificationCollectionBuilderFactory(): FactoryInterface
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->ActorBuilderFactory;
+        return $this->FabricationSpecificationCollectionBuilderFactory;
     }
 
     protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->ActorBuilderFactory);
+        return isset($this->FabricationSpecificationCollectionBuilderFactory);
     }
 
-    protected function unsetActorBuilderFactory(): self
+    protected function unsetFabricationSpecificationCollectionBuilderFactory(): self
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->ActorBuilderFactory);
+        unset($this->FabricationSpecificationCollectionBuilderFactory);
 
         return $this;
     }

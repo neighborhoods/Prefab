@@ -11,6 +11,6 @@ class Factory implements FactoryInterface
 
     public function create(): MapInterface
     {
-        return $this->getActorMap()->getArrayCopy();
+        return $this->getAnnotationProcessorRecordMap()->getArrayCopy();
     }
 }

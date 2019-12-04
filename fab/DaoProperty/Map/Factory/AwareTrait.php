@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoProperty\Map\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $ActorMapFactory;
+    protected $DaoPropertyMapFactory;
 
-    public function setActorMapFactory(FactoryInterface $ActorMapFactory): self
+    public function setDaoPropertyMapFactory(FactoryInterface $DaoPropertyMapFactory): self
     {
         if ($this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is already set.');
         }
-        $this->ActorMapFactory = $ActorMapFactory;
+        $this->DaoPropertyMapFactory = $DaoPropertyMapFactory;
 
         return $this;
     }
 
-    protected function getActorMapFactory(): FactoryInterface
+    protected function getDaoPropertyMapFactory(): FactoryInterface
     {
         if (!$this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
 
-        return $this->ActorMapFactory;
+        return $this->DaoPropertyMapFactory;
     }
 
     protected function hasActorMapFactory(): bool
     {
-        return isset($this->ActorMapFactory);
+        return isset($this->DaoPropertyMapFactory);
     }
 
-    protected function unsetActorMapFactory(): self
+    protected function unsetDaoPropertyMapFactory(): self
     {
         if (!$this->hasActorMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
-        unset($this->ActorMapFactory);
+        unset($this->DaoPropertyMapFactory);
 
         return $this;
     }

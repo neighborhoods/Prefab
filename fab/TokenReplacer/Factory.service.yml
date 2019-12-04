@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setActor, ['@Neighborhoods\Prefab\TokenReplacerInterface']]
+      - [setTokenReplacer, ['@Neighborhoods\Prefab\TokenReplacerInterface']]

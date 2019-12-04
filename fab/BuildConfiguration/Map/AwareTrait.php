@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\BuildConfiguration\MapInterface;
 
 trait AwareTrait
 {
-    protected $Actors;
+    protected $BuildConfigurations;
 
-    public function setActorMap(MapInterface $Actors): self
+    public function setBuildConfigurationMap(MapInterface $BuildConfigurations): self
     {
         if ($this->hasActorMap()) {
             throw new \LogicException('Actors is already set.');
         }
-        $this->Actors = $Actors;
+        $this->BuildConfigurations = $BuildConfigurations;
 
         return $this;
     }
 
-    protected function getActorMap(): MapInterface
+    protected function getBuildConfigurationMap(): MapInterface
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
-        return $this->Actors;
+        return $this->BuildConfigurations;
     }
 
     protected function hasActorMap(): bool
     {
-        return isset($this->Actors);
+        return isset($this->BuildConfigurations);
     }
 
-    protected function unsetActorMap(): self
+    protected function unsetBuildConfigurationMap(): self
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
-        unset($this->Actors);
+        unset($this->BuildConfigurations);
 
         return $this;
     }

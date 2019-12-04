@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\MapInterf
 
 trait AwareTrait
 {
-    protected $Actors;
+    protected $AnnotationProcessorRecordStaticContextRecords;
 
-    public function setActorMap(MapInterface $Actors): self
+    public function setAnnotationProcessorRecordStaticContextRecordMap(MapInterface $StaticContextRecords): self
     {
         if ($this->hasActorMap()) {
             throw new \LogicException('Actors is already set.');
         }
-        $this->Actors = $Actors;
+        $this->AnnotationProcessorRecordStaticContextRecords = $StaticContextRecords;
 
         return $this;
     }
 
-    protected function getActorMap(): MapInterface
+    protected function getAnnotationProcessorRecordStaticContextRecordMap(): MapInterface
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
-        return $this->Actors;
+        return $this->AnnotationProcessorRecordStaticContextRecords;
     }
 
     protected function hasActorMap(): bool
     {
-        return isset($this->Actors);
+        return isset($this->AnnotationProcessorRecordStaticContextRecords);
     }
 
-    protected function unsetActorMap(): self
+    protected function unsetAnnotationProcessorRecordStaticContextRecordMap(): self
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
-        unset($this->Actors);
+        unset($this->AnnotationProcessorRecordStaticContextRecords);
 
         return $this;
     }

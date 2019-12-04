@@ -7,38 +7,38 @@ use Neighborhoods\BuphaloTemplateTree\PrimaryActorName\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $ActorBuilder;
+    protected $PrimaryActorNameBuilder;
 
-    public function setActorBuilder(BuilderInterface $ActorBuilder): self
+    public function setPrimaryActorNameBuilder(BuilderInterface $PrimaryActorNameBuilder): self
     {
         if ($this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->ActorBuilder = $ActorBuilder;
+        $this->PrimaryActorNameBuilder = $PrimaryActorNameBuilder;
 
         return $this;
     }
 
-    protected function getActorBuilder(): BuilderInterface
+    protected function getPrimaryActorNameBuilder(): BuilderInterface
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->ActorBuilder;
+        return $this->PrimaryActorNameBuilder;
     }
 
     protected function hasActorBuilder(): bool
     {
-        return isset($this->ActorBuilder);
+        return isset($this->PrimaryActorNameBuilder);
     }
 
-    protected function unsetActorBuilder(): self
+    protected function unsetPrimaryActorNameBuilder(): self
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->ActorBuilder);
+        unset($this->PrimaryActorNameBuilder);
 
         return $this;
     }

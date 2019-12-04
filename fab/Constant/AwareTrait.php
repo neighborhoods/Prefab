@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\ConstantInterface;
 
 trait AwareTrait
 {
-    protected $Actor;
+    protected $Constant;
 
-    public function setActor(ConstantInterface $Actor): self
+    public function setConstant(ConstantInterface $Constant): self
     {
         if ($this->hasActor()) {
             throw new \LogicException('Actor is already set.');
         }
-        $this->Actor = $Actor;
+        $this->Constant = $Constant;
 
         return $this;
     }
 
-    protected function getActor(): ConstantInterface
+    protected function getConstant(): ConstantInterface
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
 
-        return $this->Actor;
+        return $this->Constant;
     }
 
     protected function hasActor(): bool
     {
-        return isset($this->Actor);
+        return isset($this->Constant);
     }
 
-    protected function unsetActor(): self
+    protected function unsetConstant(): self
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
-        unset($this->Actor);
+        unset($this->Constant);
 
         return $this;
     }

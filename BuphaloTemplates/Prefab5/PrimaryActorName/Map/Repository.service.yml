@@ -5,5 +5,5 @@ services:
     shared: true
     calls:
       - [setDoctrineDBALConnectionDecoratorRepository, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
-      - [setActorMapBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Builder\FactoryInterface']]
+      - [setPrimaryActorNameMapBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Builder\FactoryInterface']]
       - [setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface']]

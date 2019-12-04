@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorFactory, ['@Neighborhoods\Prefab\DaoProperty\FactoryInterface']]
+      - [setDaoPropertyFactory, ['@Neighborhoods\Prefab\DaoProperty\FactoryInterface']]
 

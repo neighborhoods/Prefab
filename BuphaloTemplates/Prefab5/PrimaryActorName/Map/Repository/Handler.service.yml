@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorMapRepository, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\RepositoryInterface']]
+      - [setPrimaryActorNameMapRepository, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\RepositoryInterface']]
       - [setSearchCriteriaServerRequestBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface']]

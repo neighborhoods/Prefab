@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\WriterInterface;
 
 trait AwareTrait
 {
-    protected $Actor;
+    protected $FabricationSpecificationWriter;
 
-    public function setActor(WriterInterface $Actor): self
+    public function setFabricationSpecificationWriter(WriterInterface $Writer): self
     {
         if ($this->hasActor()) {
             throw new \LogicException('Actor is already set.');
         }
-        $this->Actor = $Actor;
+        $this->FabricationSpecificationWriter = $Writer;
 
         return $this;
     }
 
-    protected function getActor(): WriterInterface
+    protected function getFabricationSpecificationWriter(): WriterInterface
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
 
-        return $this->Actor;
+        return $this->FabricationSpecificationWriter;
     }
 
     protected function hasActor(): bool
     {
-        return isset($this->Actor);
+        return isset($this->FabricationSpecificationWriter);
     }
 
-    protected function unsetActor(): self
+    protected function unsetFabricationSpecificationWriter(): self
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
-        unset($this->Actor);
+        unset($this->FabricationSpecificationWriter);
 
         return $this;
     }

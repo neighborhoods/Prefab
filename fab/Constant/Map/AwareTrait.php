@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\Constant\MapInterface;
 
 trait AwareTrait
 {
-    protected $Actors;
+    protected $Constants;
 
-    public function setActorMap(MapInterface $Actors): self
+    public function setConstantMap(MapInterface $Constants): self
     {
         if ($this->hasActorMap()) {
             throw new \LogicException('Actors is already set.');
         }
-        $this->Actors = $Actors;
+        $this->Constants = $Constants;
 
         return $this;
     }
 
-    protected function getActorMap(): MapInterface
+    protected function getConstantMap(): MapInterface
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
-        return $this->Actors;
+        return $this->Constants;
     }
 
     protected function hasActorMap(): bool
     {
-        return isset($this->Actors);
+        return isset($this->Constants);
     }
 
-    protected function unsetActorMap(): self
+    protected function unsetConstantMap(): self
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
-        unset($this->Actors);
+        unset($this->Constants);
 
         return $this;
     }

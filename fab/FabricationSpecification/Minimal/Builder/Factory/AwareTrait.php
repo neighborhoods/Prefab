@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\FactoryInterfa
 
 trait AwareTrait
 {
-    protected $ActorBuilderFactory;
+    protected $FabricationSpecificationMinimalBuilderFactory;
 
-    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
+    public function setFabricationSpecificationMinimalBuilderFactory(FactoryInterface $MinimalBuilderFactory): self
     {
         if ($this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->ActorBuilderFactory = $ActorBuilderFactory;
+        $this->FabricationSpecificationMinimalBuilderFactory = $MinimalBuilderFactory;
 
         return $this;
     }
 
-    protected function getActorBuilderFactory(): FactoryInterface
+    protected function getFabricationSpecificationMinimalBuilderFactory(): FactoryInterface
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->ActorBuilderFactory;
+        return $this->FabricationSpecificationMinimalBuilderFactory;
     }
 
     protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->ActorBuilderFactory);
+        return isset($this->FabricationSpecificationMinimalBuilderFactory);
     }
 
-    protected function unsetActorBuilderFactory(): self
+    protected function unsetFabricationSpecificationMinimalBuilderFactory(): self
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->ActorBuilderFactory);
+        unset($this->FabricationSpecificationMinimalBuilderFactory);
 
         return $this;
     }

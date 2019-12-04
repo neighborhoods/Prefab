@@ -7,16 +7,16 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param AnnotationProcessorRecordInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0);
+    /** @param AnnotationProcessorRecordInterface ...$AnnotationProcessorRecords */
+    public function __construct(array $AnnotationProcessorRecords = [], int $flags = 0);
 
     public function offsetGet($index): AnnotationProcessorRecordInterface;
 
-    /** @param AnnotationProcessorRecordInterface $Actor */
-    public function offsetSet($index, $Actor);
+    /** @param AnnotationProcessorRecordInterface $AnnotationProcessorRecord */
+    public function offsetSet($index, $AnnotationProcessorRecord);
 
-    /** @param AnnotationProcessorRecordInterface $Actor */
-    public function append($Actor);
+    /** @param AnnotationProcessorRecordInterface $AnnotationProcessorRecord */
+    public function append($AnnotationProcessorRecord);
 
     public function current(): AnnotationProcessorRecordInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param AnnotationProcessorRecordInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface;
+    /** @param AnnotationProcessorRecordInterface ...$AnnotationProcessorRecords */
+    public function hydrate(array $AnnotationProcessorRecords): MapInterface;
 }

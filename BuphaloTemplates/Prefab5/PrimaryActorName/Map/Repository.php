@@ -28,7 +28,7 @@ class Repository implements RepositoryInterface
 
     public function createBuilder() : Map\BuilderInterface
     {
-        return $this->getActorMapBuilderFactory()->create();
+        return $this->getPrimaryActorNameMapBuilderFactory()->create();
     }
 
     public function get(Prefab5\SearchCriteriaInterface $searchCriteria) : MapInterface
@@ -72,7 +72,7 @@ class Repository implements RepositoryInterface
     }
 
     protected function insertElement(QueryBuilder $queryBuilder,
-                                     PrimaryActorNameInterface $Actor) : PrimaryActorNameInterface
+                                     PrimaryActorNameInterface $PrimaryActorName) : PrimaryActorNameInterface
     {
         $values = [];
 
@@ -88,7 +88,7 @@ class Repository implements RepositoryInterface
             throw new \LogicException('Actor inserted with non-numeric ID: ' . $lastInsertId);
         }
 
-        return $Actor;
+        return $PrimaryActorName;
     }
 
     public function update(MapInterface $map) : RepositoryInterface
@@ -109,7 +109,7 @@ class Repository implements RepositoryInterface
     }
 
     protected function updateElement(QueryBuilder $queryBuilder,
-                                     PrimaryActorNameInterface $Actor) : PrimaryActorNameInterface
+                                     PrimaryActorNameInterface $PrimaryActorName) : PrimaryActorNameInterface
     {
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Repository-updateElement
  */
@@ -122,7 +122,7 @@ class Repository implements RepositoryInterface
             ));
         $queryBuilder->execute();
 
-        return $Actor;
+        return $PrimaryActorName;
     }
 
     protected function getConnection() : Connection

@@ -18,9 +18,9 @@ class Builder implements BuilderInterface
 
     public function build() : MapInterface
     {
-        $map = $this->getActorMapFactory()->create();
+        $map = $this->getPrimaryActorNameMapFactory()->create();
         foreach ($this->getRecords() as $record) {
-            $builder = $this->getActorBuilderFactory()->create();
+            $builder = $this->getPrimaryActorNameBuilderFactory()->create();
             $item = $builder->setRecord($record)->build();
             /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field
             $map[]
@@ -32,9 +32,9 @@ class Builder implements BuilderInterface
 
     public function buildForInsert() : MapInterface
     {
-        $map = $this->getActorMapFactory()->create();
+        $map = $this->getPrimaryActorNameMapFactory()->create();
         foreach ($this->getRecords() as $index => $record) {
-            $builder = $this->getActorBuilderFactory()->create();
+            $builder = $this->getPrimaryActorNameBuilderFactory()->create();
             $item = $builder->setRecord($record)->buildForInsert();
             $itemIndex = /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder-identity-field-ternary
             $index

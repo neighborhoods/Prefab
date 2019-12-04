@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setActorMap, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\MapInterface']]
+      - [setPrimaryActorNameMap, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\MapInterface']]

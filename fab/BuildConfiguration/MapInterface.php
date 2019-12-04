@@ -7,16 +7,16 @@ use Neighborhoods\Prefab\BuildConfigurationInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param BuildConfigurationInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0);
+    /** @param BuildConfigurationInterface ...$BuildConfigurations */
+    public function __construct(array $BuildConfigurations = [], int $flags = 0);
 
     public function offsetGet($index): BuildConfigurationInterface;
 
-    /** @param BuildConfigurationInterface $Actor */
-    public function offsetSet($index, $Actor);
+    /** @param BuildConfigurationInterface $BuildConfiguration */
+    public function offsetSet($index, $BuildConfiguration);
 
-    /** @param BuildConfigurationInterface $Actor */
-    public function append($Actor);
+    /** @param BuildConfigurationInterface $BuildConfiguration */
+    public function append($BuildConfiguration);
 
     public function current(): BuildConfigurationInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param BuildConfigurationInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface;
+    /** @param BuildConfigurationInterface ...$BuildConfigurations */
+    public function hydrate(array $BuildConfigurations): MapInterface;
 }

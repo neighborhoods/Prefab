@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\FactoryIn
 
 trait AwareTrait
 {
-    protected $ActorFactory;
+    protected $AnnotationProcessorRecordStaticContextRecordFactory;
 
-    public function setActorFactory(FactoryInterface $ActorFactory): self
+    public function setAnnotationProcessorRecordStaticContextRecordFactory(FactoryInterface $StaticContextRecordFactory): self
     {
         if ($this->hasActorFactory()) {
             throw new \LogicException('ActorFactory is already set.');
         }
-        $this->ActorFactory = $ActorFactory;
+        $this->AnnotationProcessorRecordStaticContextRecordFactory = $StaticContextRecordFactory;
 
         return $this;
     }
 
-    protected function getActorFactory(): FactoryInterface
+    protected function getAnnotationProcessorRecordStaticContextRecordFactory(): FactoryInterface
     {
         if (!$this->hasActorFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->ActorFactory;
+        return $this->AnnotationProcessorRecordStaticContextRecordFactory;
     }
 
     protected function hasActorFactory(): bool
     {
-        return isset($this->ActorFactory);
+        return isset($this->AnnotationProcessorRecordStaticContextRecordFactory);
     }
 
-    protected function unsetActorFactory(): self
+    protected function unsetAnnotationProcessorRecordStaticContextRecordFactory(): self
     {
         if (!$this->hasActorFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->ActorFactory);
+        unset($this->AnnotationProcessorRecordStaticContextRecordFactory);
 
         return $this;
     }

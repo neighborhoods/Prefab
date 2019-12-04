@@ -7,18 +7,18 @@ use Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param PrimaryActorNameInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0)
+    /** @param PrimaryActorNameInterface ...$PrimaryActorNames */
+    public function __construct(array $PrimaryActorNames = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($Actors)) {
-            $this->assertValidArrayType(...array_values($Actors));
+        if (!empty($PrimaryActorNames)) {
+            $this->assertValidArrayType(...array_values($PrimaryActorNames));
         }
 
-        parent::__construct($Actors, $flags);
+        parent::__construct($PrimaryActorNames, $flags);
     }
 
     public function offsetGet($index): PrimaryActorNameInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param PrimaryActorNameInterface $Actor */
-    public function offsetSet($index, $Actor)
+    /** @param PrimaryActorNameInterface $PrimaryActorName */
+    public function offsetSet($index, $PrimaryActorName)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
+        parent::offsetSet($index, $this->assertValidArrayItemType($PrimaryActorName));
     }
 
-    /** @param PrimaryActorNameInterface $Actor */
-    public function append($Actor)
+    /** @param PrimaryActorNameInterface $PrimaryActorName */
+    public function append($PrimaryActorName)
     {
-        $this->assertValidArrayItemType($Actor);
-        parent::append($Actor);
+        $this->assertValidArrayItemType($PrimaryActorName);
+        parent::append($PrimaryActorName);
     }
 
     public function current(): PrimaryActorNameInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(PrimaryActorNameInterface $Actor)
+    protected function assertValidArrayItemType(PrimaryActorNameInterface $PrimaryActorName)
     {
-        return $Actor;
+        return $PrimaryActorName;
     }
 
-    protected function assertValidArrayType(PrimaryActorNameInterface ...$Actors): MapInterface
+    protected function assertValidArrayType(PrimaryActorNameInterface ...$PrimaryActorNames): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param PrimaryActorNameInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface
+    /** @param PrimaryActorNameInterface ...$PrimaryActorNames */
+    public function hydrate(array $PrimaryActorNames): MapInterface
     {
-        $this->__construct($Actors);
+        $this->__construct($PrimaryActorNames);
 
         return $this;
     }

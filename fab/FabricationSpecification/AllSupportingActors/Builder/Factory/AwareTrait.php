@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder\Fa
 
 trait AwareTrait
 {
-    protected $ActorBuilderFactory;
+    protected $FabricationSpecificationAllSupportingActorsBuilderFactory;
 
-    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
+    public function setFabricationSpecificationAllSupportingActorsBuilderFactory(FactoryInterface $AllSupportingActorsBuilderFactory): self
     {
         if ($this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->ActorBuilderFactory = $ActorBuilderFactory;
+        $this->FabricationSpecificationAllSupportingActorsBuilderFactory = $AllSupportingActorsBuilderFactory;
 
         return $this;
     }
 
-    protected function getActorBuilderFactory(): FactoryInterface
+    protected function getFabricationSpecificationAllSupportingActorsBuilderFactory(): FactoryInterface
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->ActorBuilderFactory;
+        return $this->FabricationSpecificationAllSupportingActorsBuilderFactory;
     }
 
     protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->ActorBuilderFactory);
+        return isset($this->FabricationSpecificationAllSupportingActorsBuilderFactory);
     }
 
-    protected function unsetActorBuilderFactory(): self
+    protected function unsetFabricationSpecificationAllSupportingActorsBuilderFactory(): self
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->ActorBuilderFactory);
+        unset($this->FabricationSpecificationAllSupportingActorsBuilderFactory);
 
         return $this;
     }

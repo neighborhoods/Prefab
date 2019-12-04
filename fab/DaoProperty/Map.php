@@ -7,18 +7,18 @@ use Neighborhoods\Prefab\DaoPropertyInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param DaoPropertyInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0)
+    /** @param DaoPropertyInterface ...$DaoPropertys */
+    public function __construct(array $DaoPropertys = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($Actors)) {
-            $this->assertValidArrayType(...array_values($Actors));
+        if (!empty($DaoPropertys)) {
+            $this->assertValidArrayType(...array_values($DaoPropertys));
         }
 
-        parent::__construct($Actors, $flags);
+        parent::__construct($DaoPropertys, $flags);
     }
 
     public function offsetGet($index): DaoPropertyInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param DaoPropertyInterface $Actor */
-    public function offsetSet($index, $Actor)
+    /** @param DaoPropertyInterface $DaoProperty */
+    public function offsetSet($index, $DaoProperty)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
+        parent::offsetSet($index, $this->assertValidArrayItemType($DaoProperty));
     }
 
-    /** @param DaoPropertyInterface $Actor */
-    public function append($Actor)
+    /** @param DaoPropertyInterface $DaoProperty */
+    public function append($DaoProperty)
     {
-        $this->assertValidArrayItemType($Actor);
-        parent::append($Actor);
+        $this->assertValidArrayItemType($DaoProperty);
+        parent::append($DaoProperty);
     }
 
     public function current(): DaoPropertyInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(DaoPropertyInterface $Actor)
+    protected function assertValidArrayItemType(DaoPropertyInterface $DaoProperty)
     {
-        return $Actor;
+        return $DaoProperty;
     }
 
-    protected function assertValidArrayType(DaoPropertyInterface ...$Actors): MapInterface
+    protected function assertValidArrayType(DaoPropertyInterface ...$DaoPropertys): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param DaoPropertyInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface
+    /** @param DaoPropertyInterface ...$DaoPropertys */
+    public function hydrate(array $DaoPropertys): MapInterface
     {
-        $this->__construct($Actors);
+        $this->__construct($DaoPropertys);
 
         return $this;
     }

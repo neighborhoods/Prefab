@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorMapFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\FactoryInterface']]
-      - [setActorBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder\FactoryInterface']]
+      - [setPrimaryActorNameMapFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\FactoryInterface']]
+      - [setPrimaryActorNameBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder\FactoryInterface']]

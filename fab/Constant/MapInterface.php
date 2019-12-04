@@ -7,16 +7,16 @@ use Neighborhoods\Prefab\ConstantInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param ConstantInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0);
+    /** @param ConstantInterface ...$Constants */
+    public function __construct(array $Constants = [], int $flags = 0);
 
     public function offsetGet($index): ConstantInterface;
 
-    /** @param ConstantInterface $Actor */
-    public function offsetSet($index, $Actor);
+    /** @param ConstantInterface $Constant */
+    public function offsetSet($index, $Constant);
 
-    /** @param ConstantInterface $Actor */
-    public function append($Actor);
+    /** @param ConstantInterface $Constant */
+    public function append($Constant);
 
     public function current(): ConstantInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param ConstantInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface;
+    /** @param ConstantInterface ...$Constants */
+    public function hydrate(array $Constants): MapInterface;
 }

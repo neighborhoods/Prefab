@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecificationInterface;
 
 trait AwareTrait
 {
-    protected $Actor;
+    protected $FabricationSpecification;
 
-    public function setActor(FabricationSpecificationInterface $Actor): self
+    public function setFabricationSpecification(FabricationSpecificationInterface $FabricationSpecification): self
     {
         if ($this->hasActor()) {
             throw new \LogicException('Actor is already set.');
         }
-        $this->Actor = $Actor;
+        $this->FabricationSpecification = $FabricationSpecification;
 
         return $this;
     }
 
-    protected function getActor(): FabricationSpecificationInterface
+    protected function getFabricationSpecification(): FabricationSpecificationInterface
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
 
-        return $this->Actor;
+        return $this->FabricationSpecification;
     }
 
     protected function hasActor(): bool
     {
-        return isset($this->Actor);
+        return isset($this->FabricationSpecification);
     }
 
-    protected function unsetActor(): self
+    protected function unsetFabricationSpecification(): self
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
-        unset($this->Actor);
+        unset($this->FabricationSpecification);
 
         return $this;
     }

@@ -7,38 +7,38 @@ use Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $ActorBuilderFactory;
+    protected $PrimaryActorNameBuilderFactory;
 
-    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
+    public function setPrimaryActorNameBuilderFactory(FactoryInterface $PrimaryActorNameBuilderFactory): self
     {
         if ($this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->ActorBuilderFactory = $ActorBuilderFactory;
+        $this->PrimaryActorNameBuilderFactory = $PrimaryActorNameBuilderFactory;
 
         return $this;
     }
 
-    protected function getActorBuilderFactory(): FactoryInterface
+    protected function getPrimaryActorNameBuilderFactory(): FactoryInterface
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->ActorBuilderFactory;
+        return $this->PrimaryActorNameBuilderFactory;
     }
 
     protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->ActorBuilderFactory);
+        return isset($this->PrimaryActorNameBuilderFactory);
     }
 
-    protected function unsetActorBuilderFactory(): self
+    protected function unsetPrimaryActorNameBuilderFactory(): self
     {
         if (!$this->hasActorBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->ActorBuilderFactory);
+        unset($this->PrimaryActorNameBuilderFactory);
 
         return $this;
     }

@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setActor, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface']]
+      - [setAnnotationProcessorRecordStaticContextRecord, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface']]

@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setActor, ['@Neighborhoods\Prefab\ConstantInterface']]
+      - [setConstant, ['@Neighborhoods\Prefab\ConstantInterface']]

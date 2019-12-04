@@ -7,18 +7,18 @@ use Neighborhoods\Prefab\BuildConfigurationInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param BuildConfigurationInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0)
+    /** @param BuildConfigurationInterface ...$BuildConfigurations */
+    public function __construct(array $BuildConfigurations = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($Actors)) {
-            $this->assertValidArrayType(...array_values($Actors));
+        if (!empty($BuildConfigurations)) {
+            $this->assertValidArrayType(...array_values($BuildConfigurations));
         }
 
-        parent::__construct($Actors, $flags);
+        parent::__construct($BuildConfigurations, $flags);
     }
 
     public function offsetGet($index): BuildConfigurationInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param BuildConfigurationInterface $Actor */
-    public function offsetSet($index, $Actor)
+    /** @param BuildConfigurationInterface $BuildConfiguration */
+    public function offsetSet($index, $BuildConfiguration)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
+        parent::offsetSet($index, $this->assertValidArrayItemType($BuildConfiguration));
     }
 
-    /** @param BuildConfigurationInterface $Actor */
-    public function append($Actor)
+    /** @param BuildConfigurationInterface $BuildConfiguration */
+    public function append($BuildConfiguration)
     {
-        $this->assertValidArrayItemType($Actor);
-        parent::append($Actor);
+        $this->assertValidArrayItemType($BuildConfiguration);
+        parent::append($BuildConfiguration);
     }
 
     public function current(): BuildConfigurationInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(BuildConfigurationInterface $Actor)
+    protected function assertValidArrayItemType(BuildConfigurationInterface $BuildConfiguration)
     {
-        return $Actor;
+        return $BuildConfiguration;
     }
 
-    protected function assertValidArrayType(BuildConfigurationInterface ...$Actors): MapInterface
+    protected function assertValidArrayType(BuildConfigurationInterface ...$BuildConfigurations): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param BuildConfigurationInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface
+    /** @param BuildConfigurationInterface ...$BuildConfigurations */
+    public function hydrate(array $BuildConfigurations): MapInterface
     {
-        $this->__construct($Actors);
+        $this->__construct($BuildConfigurations);
 
         return $this;
     }

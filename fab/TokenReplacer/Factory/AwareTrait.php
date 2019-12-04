@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\TokenReplacer\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $ActorFactory;
+    protected $TokenReplacerFactory;
 
-    public function setActorFactory(FactoryInterface $ActorFactory): self
+    public function setTokenReplacerFactory(FactoryInterface $TokenReplacerFactory): self
     {
         if ($this->hasActorFactory()) {
             throw new \LogicException('ActorFactory is already set.');
         }
-        $this->ActorFactory = $ActorFactory;
+        $this->TokenReplacerFactory = $TokenReplacerFactory;
 
         return $this;
     }
 
-    protected function getActorFactory(): FactoryInterface
+    protected function getTokenReplacerFactory(): FactoryInterface
     {
         if (!$this->hasActorFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->ActorFactory;
+        return $this->TokenReplacerFactory;
     }
 
     protected function hasActorFactory(): bool
     {
-        return isset($this->ActorFactory);
+        return isset($this->TokenReplacerFactory);
     }
 
-    protected function unsetActorFactory(): self
+    protected function unsetTokenReplacerFactory(): self
     {
         if (!$this->hasActorFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->ActorFactory);
+        unset($this->TokenReplacerFactory);
 
         return $this;
     }

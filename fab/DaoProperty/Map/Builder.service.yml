@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorMapFactory, ['@Neighborhoods\Prefab\DaoProperty\Map\FactoryInterface']]
-      - [setActorBuilderFactory, ['@Neighborhoods\Prefab\DaoProperty\Builder\FactoryInterface']]
+      - [setDaoPropertyMapFactory, ['@Neighborhoods\Prefab\DaoProperty\Map\FactoryInterface']]
+      - [setDaoPropertyBuilderFactory, ['@Neighborhoods\Prefab\DaoProperty\Builder\FactoryInterface']]

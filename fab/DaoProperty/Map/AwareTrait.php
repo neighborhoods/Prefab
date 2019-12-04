@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoProperty\MapInterface;
 
 trait AwareTrait
 {
-    protected $Actors;
+    protected $DaoPropertys;
 
-    public function setActorMap(MapInterface $Actors): self
+    public function setDaoPropertyMap(MapInterface $DaoPropertys): self
     {
         if ($this->hasActorMap()) {
             throw new \LogicException('Actors is already set.');
         }
-        $this->Actors = $Actors;
+        $this->DaoPropertys = $DaoPropertys;
 
         return $this;
     }
 
-    protected function getActorMap(): MapInterface
+    protected function getDaoPropertyMap(): MapInterface
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
-        return $this->Actors;
+        return $this->DaoPropertys;
     }
 
     protected function hasActorMap(): bool
     {
-        return isset($this->Actors);
+        return isset($this->DaoPropertys);
     }
 
-    protected function unsetActorMap(): self
+    protected function unsetDaoPropertyMap(): self
     {
         if (!$this->hasActorMap()) {
             throw new \LogicException('Actors is not set.');
         }
-        unset($this->Actors);
+        unset($this->DaoPropertys);
 
         return $this;
     }

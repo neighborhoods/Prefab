@@ -4,5 +4,5 @@ services:
     public: false
     shared: false
     calls:
-      - [setActorFactory, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\FactoryInterface']]
+      - [setAnnotationProcessorRecordFactory, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\FactoryInterface']]
 

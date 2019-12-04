@@ -7,16 +7,16 @@ use Neighborhoods\Prefab\DaoPropertyInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param DaoPropertyInterface ...$Actors */
-    public function __construct(array $Actors = [], int $flags = 0);
+    /** @param DaoPropertyInterface ...$DaoPropertys */
+    public function __construct(array $DaoPropertys = [], int $flags = 0);
 
     public function offsetGet($index): DaoPropertyInterface;
 
-    /** @param DaoPropertyInterface $Actor */
-    public function offsetSet($index, $Actor);
+    /** @param DaoPropertyInterface $DaoProperty */
+    public function offsetSet($index, $DaoProperty);
 
-    /** @param DaoPropertyInterface $Actor */
-    public function append($Actor);
+    /** @param DaoPropertyInterface $DaoProperty */
+    public function append($DaoProperty);
 
     public function current(): DaoPropertyInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param DaoPropertyInterface ...$Actors */
-    public function hydrate(array $Actors): MapInterface;
+    /** @param DaoPropertyInterface ...$DaoPropertys */
+    public function hydrate(array $DaoPropertys): MapInterface;
 }

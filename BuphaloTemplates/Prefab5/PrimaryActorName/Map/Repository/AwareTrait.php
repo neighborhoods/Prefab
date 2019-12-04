@@ -7,38 +7,38 @@ use Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\RepositoryInterface;
 
 trait AwareTrait
 {
-    protected $ActorMapRepository;
+    protected $PrimaryActorNameMapRepository;
 
-    public function setActorMapRepository(RepositoryInterface $ActorMapRepository): self
+    public function setPrimaryActorNameMapRepository(RepositoryInterface $PrimaryActorNameMapRepository): self
     {
         if ($this->hasActorMapRepository()) {
             throw new \LogicException('ActorMapRepository is already set.');
         }
-        $this->ActorMapRepository = $ActorMapRepository;
+        $this->PrimaryActorNameMapRepository = $PrimaryActorNameMapRepository;
 
         return $this;
     }
 
-    protected function getActorMapRepository(): RepositoryInterface
+    protected function getPrimaryActorNameMapRepository(): RepositoryInterface
     {
         if (!$this->hasActorMapRepository()) {
             throw new \LogicException('ActorMapRepository is not set.');
         }
 
-        return $this->ActorMapRepository;
+        return $this->PrimaryActorNameMapRepository;
     }
 
     protected function hasActorMapRepository(): bool
     {
-        return isset($this->ActorMapRepository);
+        return isset($this->PrimaryActorNameMapRepository);
     }
 
-    protected function unsetActorMapRepository(): self
+    protected function unsetPrimaryActorNameMapRepository(): self
     {
         if (!$this->hasActorMapRepository()) {
             throw new \LogicException('ActorMapRepository is not set.');
         }
-        unset($this->ActorMapRepository);
+        unset($this->PrimaryActorNameMapRepository);
 
         return $this;
     }

@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Collection\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $ActorBuilder;
+    protected $FabricationSpecificationCollectionBuilder;
 
-    public function setActorBuilder(BuilderInterface $ActorBuilder): self
+    public function setFabricationSpecificationCollectionBuilder(BuilderInterface $CollectionBuilder): self
     {
         if ($this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->ActorBuilder = $ActorBuilder;
+        $this->FabricationSpecificationCollectionBuilder = $CollectionBuilder;
 
         return $this;
     }
 
-    protected function getActorBuilder(): BuilderInterface
+    protected function getFabricationSpecificationCollectionBuilder(): BuilderInterface
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->ActorBuilder;
+        return $this->FabricationSpecificationCollectionBuilder;
     }
 
     protected function hasActorBuilder(): bool
     {
-        return isset($this->ActorBuilder);
+        return isset($this->FabricationSpecificationCollectionBuilder);
     }
 
-    protected function unsetActorBuilder(): self
+    protected function unsetFabricationSpecificationCollectionBuilder(): self
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->ActorBuilder);
+        unset($this->FabricationSpecificationCollectionBuilder);
 
         return $this;
     }

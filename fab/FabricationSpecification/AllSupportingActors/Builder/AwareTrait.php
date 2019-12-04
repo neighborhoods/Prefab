@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\BuilderInt
 
 trait AwareTrait
 {
-    protected $ActorBuilder;
+    protected $FabricationSpecificationAllSupportingActorsBuilder;
 
-    public function setActorBuilder(BuilderInterface $ActorBuilder): self
+    public function setFabricationSpecificationAllSupportingActorsBuilder(BuilderInterface $AllSupportingActorsBuilder): self
     {
         if ($this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->ActorBuilder = $ActorBuilder;
+        $this->FabricationSpecificationAllSupportingActorsBuilder = $AllSupportingActorsBuilder;
 
         return $this;
     }
 
-    protected function getActorBuilder(): BuilderInterface
+    protected function getFabricationSpecificationAllSupportingActorsBuilder(): BuilderInterface
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->ActorBuilder;
+        return $this->FabricationSpecificationAllSupportingActorsBuilder;
     }
 
     protected function hasActorBuilder(): bool
     {
-        return isset($this->ActorBuilder);
+        return isset($this->FabricationSpecificationAllSupportingActorsBuilder);
     }
 
-    protected function unsetActorBuilder(): self
+    protected function unsetFabricationSpecificationAllSupportingActorsBuilder(): self
     {
         if (!$this->hasActorBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->ActorBuilder);
+        unset($this->FabricationSpecificationAllSupportingActorsBuilder);
 
         return $this;
     }

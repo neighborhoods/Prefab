@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface;
 
 trait AwareTrait
 {
-    protected $Actor;
+    protected $AnnotationProcessorRecordStaticContextRecord;
 
-    public function setActor(StaticContextRecordInterface $Actor): self
+    public function setAnnotationProcessorRecordStaticContextRecord(StaticContextRecordInterface $StaticContextRecord): self
     {
         if ($this->hasActor()) {
             throw new \LogicException('Actor is already set.');
         }
-        $this->Actor = $Actor;
+        $this->AnnotationProcessorRecordStaticContextRecord = $StaticContextRecord;
 
         return $this;
     }
 
-    protected function getActor(): StaticContextRecordInterface
+    protected function getAnnotationProcessorRecordStaticContextRecord(): StaticContextRecordInterface
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
 
-        return $this->Actor;
+        return $this->AnnotationProcessorRecordStaticContextRecord;
     }
 
     protected function hasActor(): bool
     {
-        return isset($this->Actor);
+        return isset($this->AnnotationProcessorRecordStaticContextRecord);
     }
 
-    protected function unsetActor(): self
+    protected function unsetAnnotationProcessorRecordStaticContextRecord(): self
     {
         if (!$this->hasActor()) {
             throw new \LogicException('Actor is not set.');
         }
-        unset($this->Actor);
+        unset($this->AnnotationProcessorRecordStaticContextRecord);
 
         return $this;
     }
