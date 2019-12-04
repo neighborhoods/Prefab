@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setDaoPropertyMapFactory(FactoryInterface $DaoPropertyMapFactory): self
     {
-        if ($this->hasActorMapFactory()) {
+        if ($this->hasDaoPropertyMapFactory()) {
             throw new \LogicException('ActorMapFactory is already set.');
         }
         $this->DaoPropertyMapFactory = $DaoPropertyMapFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getDaoPropertyMapFactory(): FactoryInterface
     {
-        if (!$this->hasActorMapFactory()) {
+        if (!$this->hasDaoPropertyMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
 
         return $this->DaoPropertyMapFactory;
     }
 
-    protected function hasActorMapFactory(): bool
+    protected function hasDaoPropertyMapFactory(): bool
     {
         return isset($this->DaoPropertyMapFactory);
     }
 
     protected function unsetDaoPropertyMapFactory(): self
     {
-        if (!$this->hasActorMapFactory()) {
+        if (!$this->hasDaoPropertyMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
         unset($this->DaoPropertyMapFactory);

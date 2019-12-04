@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setAnnotationProcessorRecordStaticContextRecordFactory(FactoryInterface $StaticContextRecordFactory): self
     {
-        if ($this->hasActorFactory()) {
+        if ($this->hasAnnotationProcessorRecordStaticContextRecordFactory()) {
             throw new \LogicException('ActorFactory is already set.');
         }
         $this->AnnotationProcessorRecordStaticContextRecordFactory = $StaticContextRecordFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getAnnotationProcessorRecordStaticContextRecordFactory(): FactoryInterface
     {
-        if (!$this->hasActorFactory()) {
+        if (!$this->hasAnnotationProcessorRecordStaticContextRecordFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
 
         return $this->AnnotationProcessorRecordStaticContextRecordFactory;
     }
 
-    protected function hasActorFactory(): bool
+    protected function hasAnnotationProcessorRecordStaticContextRecordFactory(): bool
     {
         return isset($this->AnnotationProcessorRecordStaticContextRecordFactory);
     }
 
     protected function unsetAnnotationProcessorRecordStaticContextRecordFactory(): self
     {
-        if (!$this->hasActorFactory()) {
+        if (!$this->hasAnnotationProcessorRecordStaticContextRecordFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
         unset($this->AnnotationProcessorRecordStaticContextRecordFactory);

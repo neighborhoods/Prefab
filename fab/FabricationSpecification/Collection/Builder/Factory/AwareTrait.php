@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setFabricationSpecificationCollectionBuilderFactory(FactoryInterface $CollectionBuilderFactory): self
     {
-        if ($this->hasActorBuilderFactory()) {
+        if ($this->hasFabricationSpecificationCollectionBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
         $this->FabricationSpecificationCollectionBuilderFactory = $CollectionBuilderFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getFabricationSpecificationCollectionBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasActorBuilderFactory()) {
+        if (!$this->hasFabricationSpecificationCollectionBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
         return $this->FabricationSpecificationCollectionBuilderFactory;
     }
 
-    protected function hasActorBuilderFactory(): bool
+    protected function hasFabricationSpecificationCollectionBuilderFactory(): bool
     {
         return isset($this->FabricationSpecificationCollectionBuilderFactory);
     }
 
     protected function unsetFabricationSpecificationCollectionBuilderFactory(): self
     {
-        if (!$this->hasActorBuilderFactory()) {
+        if (!$this->hasFabricationSpecificationCollectionBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
         unset($this->FabricationSpecificationCollectionBuilderFactory);

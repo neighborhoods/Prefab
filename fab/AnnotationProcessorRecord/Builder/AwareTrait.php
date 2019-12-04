@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setAnnotationProcessorRecordBuilder(BuilderInterface $AnnotationProcessorRecordBuilder): self
     {
-        if ($this->hasActorBuilder()) {
+        if ($this->hasAnnotationProcessorRecordBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
         $this->AnnotationProcessorRecordBuilder = $AnnotationProcessorRecordBuilder;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getAnnotationProcessorRecordBuilder(): BuilderInterface
     {
-        if (!$this->hasActorBuilder()) {
+        if (!$this->hasAnnotationProcessorRecordBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
         return $this->AnnotationProcessorRecordBuilder;
     }
 
-    protected function hasActorBuilder(): bool
+    protected function hasAnnotationProcessorRecordBuilder(): bool
     {
         return isset($this->AnnotationProcessorRecordBuilder);
     }
 
     protected function unsetAnnotationProcessorRecordBuilder(): self
     {
-        if (!$this->hasActorBuilder()) {
+        if (!$this->hasAnnotationProcessorRecordBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
         unset($this->AnnotationProcessorRecordBuilder);

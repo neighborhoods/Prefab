@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setDaoPropertyMapBuilder(BuilderInterface $DaoPropertyMapBuilder): self
     {
-        if ($this->hasActorMapBuilder()) {
+        if ($this->hasDaoPropertyMapBuilder()) {
             throw new \LogicException('ActorMapBuilder is already set.');
         }
         $this->DaoPropertyMapBuilder = $DaoPropertyMapBuilder;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getDaoPropertyMapBuilder(): BuilderInterface
     {
-        if (!$this->hasActorMapBuilder()) {
+        if (!$this->hasDaoPropertyMapBuilder()) {
             throw new \LogicException('ActorMapBuilder is not set.');
         }
 
         return $this->DaoPropertyMapBuilder;
     }
 
-    protected function hasActorMapBuilder(): bool
+    protected function hasDaoPropertyMapBuilder(): bool
     {
         return isset($this->DaoPropertyMapBuilder);
     }
 
     protected function unsetDaoPropertyMapBuilder(): self
     {
-        if (!$this->hasActorMapBuilder()) {
+        if (!$this->hasDaoPropertyMapBuilder()) {
             throw new \LogicException('ActorMapBuilder is not set.');
         }
         unset($this->DaoPropertyMapBuilder);

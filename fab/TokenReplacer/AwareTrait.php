@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setTokenReplacer(TokenReplacerInterface $TokenReplacer): self
     {
-        if ($this->hasActor()) {
+        if ($this->hasTokenReplacer()) {
             throw new \LogicException('Actor is already set.');
         }
         $this->TokenReplacer = $TokenReplacer;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getTokenReplacer(): TokenReplacerInterface
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasTokenReplacer()) {
             throw new \LogicException('Actor is not set.');
         }
 
         return $this->TokenReplacer;
     }
 
-    protected function hasActor(): bool
+    protected function hasTokenReplacer(): bool
     {
         return isset($this->TokenReplacer);
     }
 
     protected function unsetTokenReplacer(): self
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasTokenReplacer()) {
             throw new \LogicException('Actor is not set.');
         }
         unset($this->TokenReplacer);

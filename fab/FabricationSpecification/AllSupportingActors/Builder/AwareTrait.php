@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setFabricationSpecificationAllSupportingActorsBuilder(BuilderInterface $AllSupportingActorsBuilder): self
     {
-        if ($this->hasActorBuilder()) {
+        if ($this->hasFabricationSpecificationAllSupportingActorsBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
         $this->FabricationSpecificationAllSupportingActorsBuilder = $AllSupportingActorsBuilder;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getFabricationSpecificationAllSupportingActorsBuilder(): BuilderInterface
     {
-        if (!$this->hasActorBuilder()) {
+        if (!$this->hasFabricationSpecificationAllSupportingActorsBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
         return $this->FabricationSpecificationAllSupportingActorsBuilder;
     }
 
-    protected function hasActorBuilder(): bool
+    protected function hasFabricationSpecificationAllSupportingActorsBuilder(): bool
     {
         return isset($this->FabricationSpecificationAllSupportingActorsBuilder);
     }
 
     protected function unsetFabricationSpecificationAllSupportingActorsBuilder(): self
     {
-        if (!$this->hasActorBuilder()) {
+        if (!$this->hasFabricationSpecificationAllSupportingActorsBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
         unset($this->FabricationSpecificationAllSupportingActorsBuilder);

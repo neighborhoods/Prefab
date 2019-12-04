@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setConstant(ConstantInterface $Constant): self
     {
-        if ($this->hasActor()) {
+        if ($this->hasConstant()) {
             throw new \LogicException('Actor is already set.');
         }
         $this->Constant = $Constant;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getConstant(): ConstantInterface
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasConstant()) {
             throw new \LogicException('Actor is not set.');
         }
 
         return $this->Constant;
     }
 
-    protected function hasActor(): bool
+    protected function hasConstant(): bool
     {
         return isset($this->Constant);
     }
 
     protected function unsetConstant(): self
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasConstant()) {
             throw new \LogicException('Actor is not set.');
         }
         unset($this->Constant);

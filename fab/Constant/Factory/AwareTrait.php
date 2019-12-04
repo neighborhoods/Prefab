@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setConstantFactory(FactoryInterface $ConstantFactory): self
     {
-        if ($this->hasActorFactory()) {
+        if ($this->hasConstantFactory()) {
             throw new \LogicException('ActorFactory is already set.');
         }
         $this->ConstantFactory = $ConstantFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getConstantFactory(): FactoryInterface
     {
-        if (!$this->hasActorFactory()) {
+        if (!$this->hasConstantFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
 
         return $this->ConstantFactory;
     }
 
-    protected function hasActorFactory(): bool
+    protected function hasConstantFactory(): bool
     {
         return isset($this->ConstantFactory);
     }
 
     protected function unsetConstantFactory(): self
     {
-        if (!$this->hasActorFactory()) {
+        if (!$this->hasConstantFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
         unset($this->ConstantFactory);

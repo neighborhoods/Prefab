@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setAnnotationProcessorRecordStaticContextRecord(StaticContextRecordInterface $StaticContextRecord): self
     {
-        if ($this->hasActor()) {
+        if ($this->hasAnnotationProcessorRecordStaticContextRecord()) {
             throw new \LogicException('Actor is already set.');
         }
         $this->AnnotationProcessorRecordStaticContextRecord = $StaticContextRecord;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getAnnotationProcessorRecordStaticContextRecord(): StaticContextRecordInterface
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasAnnotationProcessorRecordStaticContextRecord()) {
             throw new \LogicException('Actor is not set.');
         }
 
         return $this->AnnotationProcessorRecordStaticContextRecord;
     }
 
-    protected function hasActor(): bool
+    protected function hasAnnotationProcessorRecordStaticContextRecord(): bool
     {
         return isset($this->AnnotationProcessorRecordStaticContextRecord);
     }
 
     protected function unsetAnnotationProcessorRecordStaticContextRecord(): self
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasAnnotationProcessorRecordStaticContextRecord()) {
             throw new \LogicException('Actor is not set.');
         }
         unset($this->AnnotationProcessorRecordStaticContextRecord);

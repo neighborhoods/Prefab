@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setAnnotationProcessorRecordMapFactory(FactoryInterface $AnnotationProcessorRecordMapFactory): self
     {
-        if ($this->hasActorMapFactory()) {
+        if ($this->hasAnnotationProcessorRecordMapFactory()) {
             throw new \LogicException('ActorMapFactory is already set.');
         }
         $this->AnnotationProcessorRecordMapFactory = $AnnotationProcessorRecordMapFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getAnnotationProcessorRecordMapFactory(): FactoryInterface
     {
-        if (!$this->hasActorMapFactory()) {
+        if (!$this->hasAnnotationProcessorRecordMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
 
         return $this->AnnotationProcessorRecordMapFactory;
     }
 
-    protected function hasActorMapFactory(): bool
+    protected function hasAnnotationProcessorRecordMapFactory(): bool
     {
         return isset($this->AnnotationProcessorRecordMapFactory);
     }
 
     protected function unsetAnnotationProcessorRecordMapFactory(): self
     {
-        if (!$this->hasActorMapFactory()) {
+        if (!$this->hasAnnotationProcessorRecordMapFactory()) {
             throw new \LogicException('ActorMapFactory is not set.');
         }
         unset($this->AnnotationProcessorRecordMapFactory);

@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setFabricationSpecificationMinimalFactory(FactoryInterface $MinimalFactory): self
     {
-        if ($this->hasActorFactory()) {
+        if ($this->hasFabricationSpecificationMinimalFactory()) {
             throw new \LogicException('ActorFactory is already set.');
         }
         $this->FabricationSpecificationMinimalFactory = $MinimalFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getFabricationSpecificationMinimalFactory(): FactoryInterface
     {
-        if (!$this->hasActorFactory()) {
+        if (!$this->hasFabricationSpecificationMinimalFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
 
         return $this->FabricationSpecificationMinimalFactory;
     }
 
-    protected function hasActorFactory(): bool
+    protected function hasFabricationSpecificationMinimalFactory(): bool
     {
         return isset($this->FabricationSpecificationMinimalFactory);
     }
 
     protected function unsetFabricationSpecificationMinimalFactory(): self
     {
-        if (!$this->hasActorFactory()) {
+        if (!$this->hasFabricationSpecificationMinimalFactory()) {
             throw new \LogicException('ActorFactory is not set.');
         }
         unset($this->FabricationSpecificationMinimalFactory);

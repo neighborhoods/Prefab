@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setBuildConfigurationMap(MapInterface $BuildConfigurations): self
     {
-        if ($this->hasActorMap()) {
+        if ($this->hasBuildConfigurationMap()) {
             throw new \LogicException('Actors is already set.');
         }
         $this->BuildConfigurations = $BuildConfigurations;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getBuildConfigurationMap(): MapInterface
     {
-        if (!$this->hasActorMap()) {
+        if (!$this->hasBuildConfigurationMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
         return $this->BuildConfigurations;
     }
 
-    protected function hasActorMap(): bool
+    protected function hasBuildConfigurationMap(): bool
     {
         return isset($this->BuildConfigurations);
     }
 
     protected function unsetBuildConfigurationMap(): self
     {
-        if (!$this->hasActorMap()) {
+        if (!$this->hasBuildConfigurationMap()) {
             throw new \LogicException('Actors is not set.');
         }
         unset($this->BuildConfigurations);

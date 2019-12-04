@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setAnnotationProcessorRecordBuilderFactory(FactoryInterface $AnnotationProcessorRecordBuilderFactory): self
     {
-        if ($this->hasActorBuilderFactory()) {
+        if ($this->hasAnnotationProcessorRecordBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
         $this->AnnotationProcessorRecordBuilderFactory = $AnnotationProcessorRecordBuilderFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getAnnotationProcessorRecordBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasActorBuilderFactory()) {
+        if (!$this->hasAnnotationProcessorRecordBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
         return $this->AnnotationProcessorRecordBuilderFactory;
     }
 
-    protected function hasActorBuilderFactory(): bool
+    protected function hasAnnotationProcessorRecordBuilderFactory(): bool
     {
         return isset($this->AnnotationProcessorRecordBuilderFactory);
     }
 
     protected function unsetAnnotationProcessorRecordBuilderFactory(): self
     {
-        if (!$this->hasActorBuilderFactory()) {
+        if (!$this->hasAnnotationProcessorRecordBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
         unset($this->AnnotationProcessorRecordBuilderFactory);

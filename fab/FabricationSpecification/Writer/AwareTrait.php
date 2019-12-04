@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setFabricationSpecificationWriter(WriterInterface $Writer): self
     {
-        if ($this->hasActor()) {
+        if ($this->hasFabricationSpecificationWriter()) {
             throw new \LogicException('Actor is already set.');
         }
         $this->FabricationSpecificationWriter = $Writer;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getFabricationSpecificationWriter(): WriterInterface
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasFabricationSpecificationWriter()) {
             throw new \LogicException('Actor is not set.');
         }
 
         return $this->FabricationSpecificationWriter;
     }
 
-    protected function hasActor(): bool
+    protected function hasFabricationSpecificationWriter(): bool
     {
         return isset($this->FabricationSpecificationWriter);
     }
 
     protected function unsetFabricationSpecificationWriter(): self
     {
-        if (!$this->hasActor()) {
+        if (!$this->hasFabricationSpecificationWriter()) {
             throw new \LogicException('Actor is not set.');
         }
         unset($this->FabricationSpecificationWriter);
