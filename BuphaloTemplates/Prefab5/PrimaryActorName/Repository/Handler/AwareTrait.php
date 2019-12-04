@@ -12,7 +12,7 @@ trait AwareTrait
 
     public function setPrimaryActorNameMapRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\Template\Actor\Map\Repository\HandlerInterface $PrimaryActorNameMapRepositoryHandler) : self
     {
-        if ($this->hasActorMapRepositoryHandler()) {
+        if ($this->hasPrimaryActorNameMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is already set.');
         }
         $this->PrimaryActorNameMapRepositoryHandler = $PrimaryActorNameMapRepositoryHandler;
@@ -22,21 +22,21 @@ trait AwareTrait
 
     protected function getPrimaryActorNameMapRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\Template\MV1\Address\Map\Repository\HandlerInterface
     {
-        if (!$this->hasActorMapRepositoryHandler()) {
+        if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is not set.');
         }
 
         return $this->PrimaryActorNameMapRepositoryHandler;
     }
 
-    protected function hasActorMapRepositoryHandler() : bool
+    protected function hasPrimaryActorNameMapRepositoryHandler() : bool
     {
         return isset($this->PrimaryActorNameMapRepositoryHandler);
     }
 
     protected function unsetPrimaryActorNameMapRepositoryHandler() : self
     {
-        if (!$this->hasActorMapRepositoryHandler()) {
+        if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
             throw new \LogicException('ActorMapRepositoryHandler is not set.');
         }
         unset($this->PrimaryActorNameMapRepositoryHandler);

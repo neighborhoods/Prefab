@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setPrimaryActorNameBuilder(BuilderInterface $PrimaryActorNameBuilder): self
     {
-        if ($this->hasActorBuilder()) {
+        if ($this->hasPrimaryActorNameBuilder()) {
             throw new \LogicException('ActorBuilder is already set.');
         }
         $this->PrimaryActorNameBuilder = $PrimaryActorNameBuilder;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getPrimaryActorNameBuilder(): BuilderInterface
     {
-        if (!$this->hasActorBuilder()) {
+        if (!$this->hasPrimaryActorNameBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
 
         return $this->PrimaryActorNameBuilder;
     }
 
-    protected function hasActorBuilder(): bool
+    protected function hasPrimaryActorNameBuilder(): bool
     {
         return isset($this->PrimaryActorNameBuilder);
     }
 
     protected function unsetPrimaryActorNameBuilder(): self
     {
-        if (!$this->hasActorBuilder()) {
+        if (!$this->hasPrimaryActorNameBuilder()) {
             throw new \LogicException('ActorBuilder is not set.');
         }
         unset($this->PrimaryActorNameBuilder);

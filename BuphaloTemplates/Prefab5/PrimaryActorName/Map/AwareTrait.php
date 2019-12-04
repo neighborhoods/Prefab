@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setPrimaryActorNameMap(MapInterface $PrimaryActorNames): self
     {
-        if ($this->hasActorMap()) {
+        if ($this->hasPrimaryActorNameMap()) {
             throw new \LogicException('Actors is already set.');
         }
         $this->PrimaryActorNames = $PrimaryActorNames;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getPrimaryActorNameMap(): MapInterface
     {
-        if (!$this->hasActorMap()) {
+        if (!$this->hasPrimaryActorNameMap()) {
             throw new \LogicException('Actors is not set.');
         }
 
         return $this->PrimaryActorNames;
     }
 
-    protected function hasActorMap(): bool
+    protected function hasPrimaryActorNameMap(): bool
     {
         return isset($this->PrimaryActorNames);
     }
 
     protected function unsetPrimaryActorNameMap(): self
     {
-        if (!$this->hasActorMap()) {
+        if (!$this->hasPrimaryActorNameMap()) {
             throw new \LogicException('Actors is not set.');
         }
         unset($this->PrimaryActorNames);

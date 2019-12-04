@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setPrimaryActorNameMapRepository(RepositoryInterface $PrimaryActorNameMapRepository): self
     {
-        if ($this->hasActorMapRepository()) {
+        if ($this->hasPrimaryActorNameMapRepository()) {
             throw new \LogicException('ActorMapRepository is already set.');
         }
         $this->PrimaryActorNameMapRepository = $PrimaryActorNameMapRepository;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getPrimaryActorNameMapRepository(): RepositoryInterface
     {
-        if (!$this->hasActorMapRepository()) {
+        if (!$this->hasPrimaryActorNameMapRepository()) {
             throw new \LogicException('ActorMapRepository is not set.');
         }
 
         return $this->PrimaryActorNameMapRepository;
     }
 
-    protected function hasActorMapRepository(): bool
+    protected function hasPrimaryActorNameMapRepository(): bool
     {
         return isset($this->PrimaryActorNameMapRepository);
     }
 
     protected function unsetPrimaryActorNameMapRepository(): self
     {
-        if (!$this->hasActorMapRepository()) {
+        if (!$this->hasPrimaryActorNameMapRepository()) {
             throw new \LogicException('ActorMapRepository is not set.');
         }
         unset($this->PrimaryActorNameMapRepository);

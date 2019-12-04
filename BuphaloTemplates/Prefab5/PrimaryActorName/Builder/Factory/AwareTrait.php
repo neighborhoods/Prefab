@@ -11,7 +11,7 @@ trait AwareTrait
 
     public function setPrimaryActorNameBuilderFactory(FactoryInterface $PrimaryActorNameBuilderFactory): self
     {
-        if ($this->hasActorBuilderFactory()) {
+        if ($this->hasPrimaryActorNameBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is already set.');
         }
         $this->PrimaryActorNameBuilderFactory = $PrimaryActorNameBuilderFactory;
@@ -21,21 +21,21 @@ trait AwareTrait
 
     protected function getPrimaryActorNameBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasActorBuilderFactory()) {
+        if (!$this->hasPrimaryActorNameBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
         return $this->PrimaryActorNameBuilderFactory;
     }
 
-    protected function hasActorBuilderFactory(): bool
+    protected function hasPrimaryActorNameBuilderFactory(): bool
     {
         return isset($this->PrimaryActorNameBuilderFactory);
     }
 
     protected function unsetPrimaryActorNameBuilderFactory(): self
     {
-        if (!$this->hasActorBuilderFactory()) {
+        if (!$this->hasPrimaryActorNameBuilderFactory()) {
             throw new \LogicException('ActorBuilderFactory is not set.');
         }
         unset($this->PrimaryActorNameBuilderFactory);
