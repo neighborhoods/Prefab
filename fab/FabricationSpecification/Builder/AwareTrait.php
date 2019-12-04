@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationBuilder;
+    protected $ActorBuilder;
 
-    public function setFabricationSpecificationBuilder(BuilderInterface $FabricationSpecificationBuilder): self
+    public function setActorBuilder(BuilderInterface $ActorBuilder): self
     {
-        if ($this->hasFabricationSpecificationBuilder()) {
-            throw new \LogicException('FabricationSpecificationBuilder is already set.');
+        if ($this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->FabricationSpecificationBuilder = $FabricationSpecificationBuilder;
+        $this->ActorBuilder = $ActorBuilder;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationBuilder(): BuilderInterface
+    protected function getActorBuilder(): BuilderInterface
     {
-        if (!$this->hasFabricationSpecificationBuilder()) {
-            throw new \LogicException('FabricationSpecificationBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->FabricationSpecificationBuilder;
+        return $this->ActorBuilder;
     }
 
-    protected function hasFabricationSpecificationBuilder(): bool
+    protected function hasActorBuilder(): bool
     {
-        return isset($this->FabricationSpecificationBuilder);
+        return isset($this->ActorBuilder);
     }
 
-    protected function unsetFabricationSpecificationBuilder(): self
+    protected function unsetActorBuilder(): self
     {
-        if (!$this->hasFabricationSpecificationBuilder()) {
-            throw new \LogicException('FabricationSpecificationBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->FabricationSpecificationBuilder);
+        unset($this->ActorBuilder);
 
         return $this;
     }

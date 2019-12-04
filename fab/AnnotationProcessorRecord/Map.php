@@ -7,18 +7,18 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param AnnotationProcessorRecordInterface ...$AnnotationProcessorRecords */
-    public function __construct(array $AnnotationProcessorRecords = [], int $flags = 0)
+    /** @param AnnotationProcessorRecordInterface ...$Actors */
+    public function __construct(array $Actors = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($AnnotationProcessorRecords)) {
-            $this->assertValidArrayType(...array_values($AnnotationProcessorRecords));
+        if (!empty($Actors)) {
+            $this->assertValidArrayType(...array_values($Actors));
         }
 
-        parent::__construct($AnnotationProcessorRecords, $flags);
+        parent::__construct($Actors, $flags);
     }
 
     public function offsetGet($index): AnnotationProcessorRecordInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param AnnotationProcessorRecordInterface $AnnotationProcessorRecord */
-    public function offsetSet($index, $AnnotationProcessorRecord)
+    /** @param AnnotationProcessorRecordInterface $Actor */
+    public function offsetSet($index, $Actor)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($AnnotationProcessorRecord));
+        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
     }
 
-    /** @param AnnotationProcessorRecordInterface $AnnotationProcessorRecord */
-    public function append($AnnotationProcessorRecord)
+    /** @param AnnotationProcessorRecordInterface $Actor */
+    public function append($Actor)
     {
-        $this->assertValidArrayItemType($AnnotationProcessorRecord);
-        parent::append($AnnotationProcessorRecord);
+        $this->assertValidArrayItemType($Actor);
+        parent::append($Actor);
     }
 
     public function current(): AnnotationProcessorRecordInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(AnnotationProcessorRecordInterface $AnnotationProcessorRecord)
+    protected function assertValidArrayItemType(AnnotationProcessorRecordInterface $Actor)
     {
-        return $AnnotationProcessorRecord;
+        return $Actor;
     }
 
-    protected function assertValidArrayType(AnnotationProcessorRecordInterface ...$AnnotationProcessorRecords): MapInterface
+    protected function assertValidArrayType(AnnotationProcessorRecordInterface ...$Actors): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param AnnotationProcessorRecordInterface ...$AnnotationProcessorRecords */
-    public function hydrate(array $AnnotationProcessorRecords): MapInterface
+    /** @param AnnotationProcessorRecordInterface ...$Actors */
+    public function hydrate(array $Actors): MapInterface
     {
-        $this->__construct($AnnotationProcessorRecords);
+        $this->__construct($Actors);
 
         return $this;
     }

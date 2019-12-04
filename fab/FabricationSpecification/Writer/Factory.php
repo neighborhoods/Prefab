@@ -10,6 +10,6 @@ class Factory implements FactoryInterface
     use AwareTrait;
     public function create(): WriterInterface
     {
-        return clone $this->getFabricationSpecificationWriter();
+        return clone $this->getActor();
     }
 }

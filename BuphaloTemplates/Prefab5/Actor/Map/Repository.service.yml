@@ -1,9 +1,0 @@
-services:
-  Neighborhoods\BuphaloTemplateTree\Actor\Map\RepositoryInterface:
-    class: Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository
-    public: false
-    shared: true
-    calls:
-      - [setDoctrineDBALConnectionDecoratorRepository, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
-      - [setActorMapBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\Actor\Map\Builder\FactoryInterface']]
-      - [setSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\FactoryInterface']]

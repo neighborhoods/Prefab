@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\BuilderInt
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationAllSupportingActorsBuilder;
+    protected $ActorBuilder;
 
-    public function setFabricationSpecificationAllSupportingActorsBuilder(BuilderInterface $AllSupportingActorsBuilder): self
+    public function setActorBuilder(BuilderInterface $ActorBuilder): self
     {
-        if ($this->hasFabricationSpecificationAllSupportingActorsBuilder()) {
-            throw new \LogicException('FabricationSpecificationAllSupportingActorsBuilder is already set.');
+        if ($this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->FabricationSpecificationAllSupportingActorsBuilder = $AllSupportingActorsBuilder;
+        $this->ActorBuilder = $ActorBuilder;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationAllSupportingActorsBuilder(): BuilderInterface
+    protected function getActorBuilder(): BuilderInterface
     {
-        if (!$this->hasFabricationSpecificationAllSupportingActorsBuilder()) {
-            throw new \LogicException('FabricationSpecificationAllSupportingActorsBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->FabricationSpecificationAllSupportingActorsBuilder;
+        return $this->ActorBuilder;
     }
 
-    protected function hasFabricationSpecificationAllSupportingActorsBuilder(): bool
+    protected function hasActorBuilder(): bool
     {
-        return isset($this->FabricationSpecificationAllSupportingActorsBuilder);
+        return isset($this->ActorBuilder);
     }
 
-    protected function unsetFabricationSpecificationAllSupportingActorsBuilder(): self
+    protected function unsetActorBuilder(): self
     {
-        if (!$this->hasFabricationSpecificationAllSupportingActorsBuilder()) {
-            throw new \LogicException('FabricationSpecificationAllSupportingActorsBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->FabricationSpecificationAllSupportingActorsBuilder);
+        unset($this->ActorBuilder);
 
         return $this;
     }

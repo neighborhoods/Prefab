@@ -7,18 +7,18 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param StaticContextRecordInterface ...$StaticContextRecords */
-    public function __construct(array $StaticContextRecords = [], int $flags = 0)
+    /** @param StaticContextRecordInterface ...$Actors */
+    public function __construct(array $Actors = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($StaticContextRecords)) {
-            $this->assertValidArrayType(...array_values($StaticContextRecords));
+        if (!empty($Actors)) {
+            $this->assertValidArrayType(...array_values($Actors));
         }
 
-        parent::__construct($StaticContextRecords, $flags);
+        parent::__construct($Actors, $flags);
     }
 
     public function offsetGet($index): StaticContextRecordInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param StaticContextRecordInterface $StaticContextRecord */
-    public function offsetSet($index, $StaticContextRecord)
+    /** @param StaticContextRecordInterface $Actor */
+    public function offsetSet($index, $Actor)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($StaticContextRecord));
+        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
     }
 
-    /** @param StaticContextRecordInterface $StaticContextRecord */
-    public function append($StaticContextRecord)
+    /** @param StaticContextRecordInterface $Actor */
+    public function append($Actor)
     {
-        $this->assertValidArrayItemType($StaticContextRecord);
-        parent::append($StaticContextRecord);
+        $this->assertValidArrayItemType($Actor);
+        parent::append($Actor);
     }
 
     public function current(): StaticContextRecordInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(StaticContextRecordInterface $StaticContextRecord)
+    protected function assertValidArrayItemType(StaticContextRecordInterface $Actor)
     {
-        return $StaticContextRecord;
+        return $Actor;
     }
 
-    protected function assertValidArrayType(StaticContextRecordInterface ...$StaticContextRecords): MapInterface
+    protected function assertValidArrayType(StaticContextRecordInterface ...$Actors): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param StaticContextRecordInterface ...$StaticContextRecords */
-    public function hydrate(array $StaticContextRecords): MapInterface
+    /** @param StaticContextRecordInterface ...$Actors */
+    public function hydrate(array $Actors): MapInterface
     {
-        $this->__construct($StaticContextRecords);
+        $this->__construct($Actors);
 
         return $this;
     }

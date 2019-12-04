@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\FactoryInterfa
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationMinimalBuilderFactory;
+    protected $ActorBuilderFactory;
 
-    public function setFabricationSpecificationMinimalBuilderFactory(FactoryInterface $MinimalBuilderFactory): self
+    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
     {
-        if ($this->hasFabricationSpecificationMinimalBuilderFactory()) {
-            throw new \LogicException('FabricationSpecificationMinimalBuilderFactory is already set.');
+        if ($this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->FabricationSpecificationMinimalBuilderFactory = $MinimalBuilderFactory;
+        $this->ActorBuilderFactory = $ActorBuilderFactory;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationMinimalBuilderFactory(): FactoryInterface
+    protected function getActorBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasFabricationSpecificationMinimalBuilderFactory()) {
-            throw new \LogicException('FabricationSpecificationMinimalBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->FabricationSpecificationMinimalBuilderFactory;
+        return $this->ActorBuilderFactory;
     }
 
-    protected function hasFabricationSpecificationMinimalBuilderFactory(): bool
+    protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->FabricationSpecificationMinimalBuilderFactory);
+        return isset($this->ActorBuilderFactory);
     }
 
-    protected function unsetFabricationSpecificationMinimalBuilderFactory(): self
+    protected function unsetActorBuilderFactory(): self
     {
-        if (!$this->hasFabricationSpecificationMinimalBuilderFactory()) {
-            throw new \LogicException('FabricationSpecificationMinimalBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->FabricationSpecificationMinimalBuilderFactory);
+        unset($this->ActorBuilderFactory);
 
         return $this;
     }

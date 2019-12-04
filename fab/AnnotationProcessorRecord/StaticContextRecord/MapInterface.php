@@ -7,16 +7,16 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param StaticContextRecordInterface ...$StaticContextRecords */
-    public function __construct(array $StaticContextRecords = [], int $flags = 0);
+    /** @param StaticContextRecordInterface ...$Actors */
+    public function __construct(array $Actors = [], int $flags = 0);
 
     public function offsetGet($index): StaticContextRecordInterface;
 
-    /** @param StaticContextRecordInterface $StaticContextRecord */
-    public function offsetSet($index, $StaticContextRecord);
+    /** @param StaticContextRecordInterface $Actor */
+    public function offsetSet($index, $Actor);
 
-    /** @param StaticContextRecordInterface $StaticContextRecord */
-    public function append($StaticContextRecord);
+    /** @param StaticContextRecordInterface $Actor */
+    public function append($Actor);
 
     public function current(): StaticContextRecordInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param StaticContextRecordInterface ...$StaticContextRecords */
-    public function hydrate(array $StaticContextRecords): MapInterface;
+    /** @param StaticContextRecordInterface ...$Actors */
+    public function hydrate(array $Actors): MapInterface;
 }

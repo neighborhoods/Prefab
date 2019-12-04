@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setDaoProperty, ['@Neighborhoods\Prefab\DaoPropertyInterface']]
+      - [setActor, ['@Neighborhoods\Prefab\DaoPropertyInterface']]

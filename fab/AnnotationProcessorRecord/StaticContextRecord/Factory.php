@@ -10,6 +10,6 @@ class Factory implements FactoryInterface
     use AwareTrait;
     public function create(): StaticContextRecordInterface
     {
-        return clone $this->getAnnotationProcessorRecordStaticContextRecord();
+        return clone $this->getActor();
     }
 }

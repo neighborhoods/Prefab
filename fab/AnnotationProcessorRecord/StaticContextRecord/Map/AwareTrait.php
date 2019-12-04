@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\MapInterf
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordStaticContextRecords;
+    protected $Actors;
 
-    public function setAnnotationProcessorRecordStaticContextRecordMap(MapInterface $StaticContextRecords): self
+    public function setActorMap(MapInterface $Actors): self
     {
-        if ($this->hasAnnotationProcessorRecordStaticContextRecordMap()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecords is already set.');
+        if ($this->hasActorMap()) {
+            throw new \LogicException('Actors is already set.');
         }
-        $this->AnnotationProcessorRecordStaticContextRecords = $StaticContextRecords;
+        $this->Actors = $Actors;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordStaticContextRecordMap(): MapInterface
+    protected function getActorMap(): MapInterface
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecordMap()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecords is not set.');
+        if (!$this->hasActorMap()) {
+            throw new \LogicException('Actors is not set.');
         }
 
-        return $this->AnnotationProcessorRecordStaticContextRecords;
+        return $this->Actors;
     }
 
-    protected function hasAnnotationProcessorRecordStaticContextRecordMap(): bool
+    protected function hasActorMap(): bool
     {
-        return isset($this->AnnotationProcessorRecordStaticContextRecords);
+        return isset($this->Actors);
     }
 
-    protected function unsetAnnotationProcessorRecordStaticContextRecordMap(): self
+    protected function unsetActorMap(): self
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecordMap()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecords is not set.');
+        if (!$this->hasActorMap()) {
+            throw new \LogicException('Actors is not set.');
         }
-        unset($this->AnnotationProcessorRecordStaticContextRecords);
+        unset($this->Actors);
 
         return $this;
     }

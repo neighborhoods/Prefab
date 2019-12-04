@@ -8,8 +8,8 @@ use Neighborhoods\Prefab\DaoProperty;
 class Builder implements BuilderInterface
 {
 
-    use DaoProperty\Map\Factory\AwareTrait;
-    use DaoProperty\Builder\Factory\AwareTrait;
+    use Actor\Map\Factory\AwareTrait;
+    use Actor\Builder\Factory\AwareTrait;
 
     /**
      * @var array
@@ -18,9 +18,9 @@ class Builder implements BuilderInterface
 
     public function build() : MapInterface
     {
-        $map = $this->getDaoPropertyMapFactory()->create();
+        $map = $this->getActorMapFactory()->create();
         foreach ($this->getRecords() as $record) {
-            $builder = $this->getDaoPropertyBuilderFactory()->create();
+            $builder = $this->getActorBuilderFactory()->create();
             $item = $builder->setRecord($record)->build();
             
             $map[] = $item;
@@ -31,9 +31,9 @@ class Builder implements BuilderInterface
 
     public function buildForInsert() : MapInterface
     {
-        $map = $this->getDaoPropertyMapFactory()->create();
+        $map = $this->getActorMapFactory()->create();
         foreach ($this->getRecords() as $index => $record) {
-            $builder = $this->getDaoPropertyBuilderFactory()->create();
+            $builder = $this->getActorBuilderFactory()->create();
             $item = $builder->setRecord($record)->buildForInsert();
             $itemIndex = 
             $index;

@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Map\Facto
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordStaticContextRecordMapFactory;
+    protected $ActorMapFactory;
 
-    public function setAnnotationProcessorRecordStaticContextRecordMapFactory(FactoryInterface $StaticContextRecordMapFactory): self
+    public function setActorMapFactory(FactoryInterface $ActorMapFactory): self
     {
-        if ($this->hasAnnotationProcessorRecordStaticContextRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMapFactory is already set.');
+        if ($this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is already set.');
         }
-        $this->AnnotationProcessorRecordStaticContextRecordMapFactory = $StaticContextRecordMapFactory;
+        $this->ActorMapFactory = $ActorMapFactory;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordStaticContextRecordMapFactory(): FactoryInterface
+    protected function getActorMapFactory(): FactoryInterface
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMapFactory is not set.');
+        if (!$this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is not set.');
         }
 
-        return $this->AnnotationProcessorRecordStaticContextRecordMapFactory;
+        return $this->ActorMapFactory;
     }
 
-    protected function hasAnnotationProcessorRecordStaticContextRecordMapFactory(): bool
+    protected function hasActorMapFactory(): bool
     {
-        return isset($this->AnnotationProcessorRecordStaticContextRecordMapFactory);
+        return isset($this->ActorMapFactory);
     }
 
-    protected function unsetAnnotationProcessorRecordStaticContextRecordMapFactory(): self
+    protected function unsetActorMapFactory(): self
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMapFactory is not set.');
+        if (!$this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is not set.');
         }
-        unset($this->AnnotationProcessorRecordStaticContextRecordMapFactory);
+        unset($this->ActorMapFactory);
 
         return $this;
     }

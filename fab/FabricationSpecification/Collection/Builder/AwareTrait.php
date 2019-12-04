@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Collection\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationCollectionBuilder;
+    protected $ActorBuilder;
 
-    public function setFabricationSpecificationCollectionBuilder(BuilderInterface $CollectionBuilder): self
+    public function setActorBuilder(BuilderInterface $ActorBuilder): self
     {
-        if ($this->hasFabricationSpecificationCollectionBuilder()) {
-            throw new \LogicException('FabricationSpecificationCollectionBuilder is already set.');
+        if ($this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->FabricationSpecificationCollectionBuilder = $CollectionBuilder;
+        $this->ActorBuilder = $ActorBuilder;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationCollectionBuilder(): BuilderInterface
+    protected function getActorBuilder(): BuilderInterface
     {
-        if (!$this->hasFabricationSpecificationCollectionBuilder()) {
-            throw new \LogicException('FabricationSpecificationCollectionBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->FabricationSpecificationCollectionBuilder;
+        return $this->ActorBuilder;
     }
 
-    protected function hasFabricationSpecificationCollectionBuilder(): bool
+    protected function hasActorBuilder(): bool
     {
-        return isset($this->FabricationSpecificationCollectionBuilder);
+        return isset($this->ActorBuilder);
     }
 
-    protected function unsetFabricationSpecificationCollectionBuilder(): self
+    protected function unsetActorBuilder(): self
     {
-        if (!$this->hasFabricationSpecificationCollectionBuilder()) {
-            throw new \LogicException('FabricationSpecificationCollectionBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->FabricationSpecificationCollectionBuilder);
+        unset($this->ActorBuilder);
 
         return $this;
     }

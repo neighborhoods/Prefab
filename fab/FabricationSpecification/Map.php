@@ -7,18 +7,18 @@ use Neighborhoods\Prefab\FabricationSpecificationInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param FabricationSpecificationInterface ...$FabricationSpecifications */
-    public function __construct(array $FabricationSpecifications = [], int $flags = 0)
+    /** @param FabricationSpecificationInterface ...$Actors */
+    public function __construct(array $Actors = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($FabricationSpecifications)) {
-            $this->assertValidArrayType(...array_values($FabricationSpecifications));
+        if (!empty($Actors)) {
+            $this->assertValidArrayType(...array_values($Actors));
         }
 
-        parent::__construct($FabricationSpecifications, $flags);
+        parent::__construct($Actors, $flags);
     }
 
     public function offsetGet($index): FabricationSpecificationInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param FabricationSpecificationInterface $FabricationSpecification */
-    public function offsetSet($index, $FabricationSpecification)
+    /** @param FabricationSpecificationInterface $Actor */
+    public function offsetSet($index, $Actor)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($FabricationSpecification));
+        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
     }
 
-    /** @param FabricationSpecificationInterface $FabricationSpecification */
-    public function append($FabricationSpecification)
+    /** @param FabricationSpecificationInterface $Actor */
+    public function append($Actor)
     {
-        $this->assertValidArrayItemType($FabricationSpecification);
-        parent::append($FabricationSpecification);
+        $this->assertValidArrayItemType($Actor);
+        parent::append($Actor);
     }
 
     public function current(): FabricationSpecificationInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(FabricationSpecificationInterface $FabricationSpecification)
+    protected function assertValidArrayItemType(FabricationSpecificationInterface $Actor)
     {
-        return $FabricationSpecification;
+        return $Actor;
     }
 
-    protected function assertValidArrayType(FabricationSpecificationInterface ...$FabricationSpecifications): MapInterface
+    protected function assertValidArrayType(FabricationSpecificationInterface ...$Actors): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param FabricationSpecificationInterface ...$FabricationSpecifications */
-    public function hydrate(array $FabricationSpecifications): MapInterface
+    /** @param FabricationSpecificationInterface ...$Actors */
+    public function hydrate(array $Actors): MapInterface
     {
-        $this->__construct($FabricationSpecifications);
+        $this->__construct($Actors);
 
         return $this;
     }

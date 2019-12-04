@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Minimal\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationMinimalBuilder;
+    protected $ActorBuilder;
 
-    public function setFabricationSpecificationMinimalBuilder(BuilderInterface $MinimalBuilder): self
+    public function setActorBuilder(BuilderInterface $ActorBuilder): self
     {
-        if ($this->hasFabricationSpecificationMinimalBuilder()) {
-            throw new \LogicException('FabricationSpecificationMinimalBuilder is already set.');
+        if ($this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->FabricationSpecificationMinimalBuilder = $MinimalBuilder;
+        $this->ActorBuilder = $ActorBuilder;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationMinimalBuilder(): BuilderInterface
+    protected function getActorBuilder(): BuilderInterface
     {
-        if (!$this->hasFabricationSpecificationMinimalBuilder()) {
-            throw new \LogicException('FabricationSpecificationMinimalBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->FabricationSpecificationMinimalBuilder;
+        return $this->ActorBuilder;
     }
 
-    protected function hasFabricationSpecificationMinimalBuilder(): bool
+    protected function hasActorBuilder(): bool
     {
-        return isset($this->FabricationSpecificationMinimalBuilder);
+        return isset($this->ActorBuilder);
     }
 
-    protected function unsetFabricationSpecificationMinimalBuilder(): self
+    protected function unsetActorBuilder(): self
     {
-        if (!$this->hasFabricationSpecificationMinimalBuilder()) {
-            throw new \LogicException('FabricationSpecificationMinimalBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->FabricationSpecificationMinimalBuilder);
+        unset($this->ActorBuilder);
 
         return $this;
     }

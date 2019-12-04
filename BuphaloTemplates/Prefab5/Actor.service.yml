@@ -1,5 +1,0 @@
-services:
-  Neighborhoods\BuphaloTemplateTree\ActorInterface:
-    class: Neighborhoods\BuphaloTemplateTree\Actor
-    public: false
-    shared: false

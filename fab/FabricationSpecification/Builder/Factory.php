@@ -11,6 +11,6 @@ class Factory implements FactoryInterface
 
     public function create(): BuilderInterface
     {
-        return clone $this->getFabricationSpecificationBuilder();
+        return clone $this->getActorBuilder();
     }
 }

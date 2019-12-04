@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecord;
+    protected $Actor;
 
-    public function setAnnotationProcessorRecord(AnnotationProcessorRecordInterface $AnnotationProcessorRecord): self
+    public function setActor(AnnotationProcessorRecordInterface $Actor): self
     {
-        if ($this->hasAnnotationProcessorRecord()) {
-            throw new \LogicException('AnnotationProcessorRecord is already set.');
+        if ($this->hasActor()) {
+            throw new \LogicException('Actor is already set.');
         }
-        $this->AnnotationProcessorRecord = $AnnotationProcessorRecord;
+        $this->Actor = $Actor;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecord(): AnnotationProcessorRecordInterface
+    protected function getActor(): AnnotationProcessorRecordInterface
     {
-        if (!$this->hasAnnotationProcessorRecord()) {
-            throw new \LogicException('AnnotationProcessorRecord is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
 
-        return $this->AnnotationProcessorRecord;
+        return $this->Actor;
     }
 
-    protected function hasAnnotationProcessorRecord(): bool
+    protected function hasActor(): bool
     {
-        return isset($this->AnnotationProcessorRecord);
+        return isset($this->Actor);
     }
 
-    protected function unsetAnnotationProcessorRecord(): self
+    protected function unsetActor(): self
     {
-        if (!$this->hasAnnotationProcessorRecord()) {
-            throw new \LogicException('AnnotationProcessorRecord is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
-        unset($this->AnnotationProcessorRecord);
+        unset($this->Actor);
 
         return $this;
     }

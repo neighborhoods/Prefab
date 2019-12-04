@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordBuilder;
+    protected $ActorBuilder;
 
-    public function setAnnotationProcessorRecordBuilder(BuilderInterface $AnnotationProcessorRecordBuilder): self
+    public function setActorBuilder(BuilderInterface $ActorBuilder): self
     {
-        if ($this->hasAnnotationProcessorRecordBuilder()) {
-            throw new \LogicException('AnnotationProcessorRecordBuilder is already set.');
+        if ($this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->AnnotationProcessorRecordBuilder = $AnnotationProcessorRecordBuilder;
+        $this->ActorBuilder = $ActorBuilder;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordBuilder(): BuilderInterface
+    protected function getActorBuilder(): BuilderInterface
     {
-        if (!$this->hasAnnotationProcessorRecordBuilder()) {
-            throw new \LogicException('AnnotationProcessorRecordBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->AnnotationProcessorRecordBuilder;
+        return $this->ActorBuilder;
     }
 
-    protected function hasAnnotationProcessorRecordBuilder(): bool
+    protected function hasActorBuilder(): bool
     {
-        return isset($this->AnnotationProcessorRecordBuilder);
+        return isset($this->ActorBuilder);
     }
 
-    protected function unsetAnnotationProcessorRecordBuilder(): self
+    protected function unsetActorBuilder(): self
     {
-        if (!$this->hasAnnotationProcessorRecordBuilder()) {
-            throw new \LogicException('AnnotationProcessorRecordBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->AnnotationProcessorRecordBuilder);
+        unset($this->ActorBuilder);
 
         return $this;
     }

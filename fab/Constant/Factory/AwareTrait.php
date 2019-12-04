@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\Constant\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $ConstantFactory;
+    protected $ActorFactory;
 
-    public function setConstantFactory(FactoryInterface $ConstantFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasConstantFactory()) {
-            throw new \LogicException('ConstantFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->ConstantFactory = $ConstantFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getConstantFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasConstantFactory()) {
-            throw new \LogicException('ConstantFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->ConstantFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasConstantFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->ConstantFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetConstantFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasConstantFactory()) {
-            throw new \LogicException('ConstantFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->ConstantFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Builder\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationBuilderFactory;
+    protected $ActorBuilderFactory;
 
-    public function setFabricationSpecificationBuilderFactory(FactoryInterface $FabricationSpecificationBuilderFactory): self
+    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
     {
-        if ($this->hasFabricationSpecificationBuilderFactory()) {
-            throw new \LogicException('FabricationSpecificationBuilderFactory is already set.');
+        if ($this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->FabricationSpecificationBuilderFactory = $FabricationSpecificationBuilderFactory;
+        $this->ActorBuilderFactory = $ActorBuilderFactory;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationBuilderFactory(): FactoryInterface
+    protected function getActorBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasFabricationSpecificationBuilderFactory()) {
-            throw new \LogicException('FabricationSpecificationBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->FabricationSpecificationBuilderFactory;
+        return $this->ActorBuilderFactory;
     }
 
-    protected function hasFabricationSpecificationBuilderFactory(): bool
+    protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->FabricationSpecificationBuilderFactory);
+        return isset($this->ActorBuilderFactory);
     }
 
-    protected function unsetFabricationSpecificationBuilderFactory(): self
+    protected function unsetActorBuilderFactory(): self
     {
-        if (!$this->hasFabricationSpecificationBuilderFactory()) {
-            throw new \LogicException('FabricationSpecificationBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->FabricationSpecificationBuilderFactory);
+        unset($this->ActorBuilderFactory);
 
         return $this;
     }

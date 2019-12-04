@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationFactory;
+    protected $ActorFactory;
 
-    public function setFabricationSpecificationFactory(FactoryInterface $FabricationSpecificationFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasFabricationSpecificationFactory()) {
-            throw new \LogicException('FabricationSpecificationFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->FabricationSpecificationFactory = $FabricationSpecificationFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasFabricationSpecificationFactory()) {
-            throw new \LogicException('FabricationSpecificationFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->FabricationSpecificationFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasFabricationSpecificationFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->FabricationSpecificationFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetFabricationSpecificationFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasFabricationSpecificationFactory()) {
-            throw new \LogicException('FabricationSpecificationFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->FabricationSpecificationFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

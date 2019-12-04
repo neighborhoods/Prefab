@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\MapInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecifications;
+    protected $Actors;
 
-    public function setFabricationSpecificationMap(MapInterface $FabricationSpecifications): self
+    public function setActorMap(MapInterface $Actors): self
     {
-        if ($this->hasFabricationSpecificationMap()) {
-            throw new \LogicException('FabricationSpecifications is already set.');
+        if ($this->hasActorMap()) {
+            throw new \LogicException('Actors is already set.');
         }
-        $this->FabricationSpecifications = $FabricationSpecifications;
+        $this->Actors = $Actors;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationMap(): MapInterface
+    protected function getActorMap(): MapInterface
     {
-        if (!$this->hasFabricationSpecificationMap()) {
-            throw new \LogicException('FabricationSpecifications is not set.');
+        if (!$this->hasActorMap()) {
+            throw new \LogicException('Actors is not set.');
         }
 
-        return $this->FabricationSpecifications;
+        return $this->Actors;
     }
 
-    protected function hasFabricationSpecificationMap(): bool
+    protected function hasActorMap(): bool
     {
-        return isset($this->FabricationSpecifications);
+        return isset($this->Actors);
     }
 
-    protected function unsetFabricationSpecificationMap(): self
+    protected function unsetActorMap(): self
     {
-        if (!$this->hasFabricationSpecificationMap()) {
-            throw new \LogicException('FabricationSpecifications is not set.');
+        if (!$this->hasActorMap()) {
+            throw new \LogicException('Actors is not set.');
         }
-        unset($this->FabricationSpecifications);
+        unset($this->Actors);
 
         return $this;
     }

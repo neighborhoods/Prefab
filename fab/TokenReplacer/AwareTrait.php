@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\TokenReplacerInterface;
 
 trait AwareTrait
 {
-    protected $TokenReplacer;
+    protected $Actor;
 
-    public function setTokenReplacer(TokenReplacerInterface $TokenReplacer): self
+    public function setActor(TokenReplacerInterface $Actor): self
     {
-        if ($this->hasTokenReplacer()) {
-            throw new \LogicException('TokenReplacer is already set.');
+        if ($this->hasActor()) {
+            throw new \LogicException('Actor is already set.');
         }
-        $this->TokenReplacer = $TokenReplacer;
+        $this->Actor = $Actor;
 
         return $this;
     }
 
-    protected function getTokenReplacer(): TokenReplacerInterface
+    protected function getActor(): TokenReplacerInterface
     {
-        if (!$this->hasTokenReplacer()) {
-            throw new \LogicException('TokenReplacer is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
 
-        return $this->TokenReplacer;
+        return $this->Actor;
     }
 
-    protected function hasTokenReplacer(): bool
+    protected function hasActor(): bool
     {
-        return isset($this->TokenReplacer);
+        return isset($this->Actor);
     }
 
-    protected function unsetTokenReplacer(): self
+    protected function unsetActor(): self
     {
-        if (!$this->hasTokenReplacer()) {
-            throw new \LogicException('TokenReplacer is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
-        unset($this->TokenReplacer);
+        unset($this->Actor);
 
         return $this;
     }

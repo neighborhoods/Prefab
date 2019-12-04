@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\Builder\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordBuilderFactory;
+    protected $ActorBuilderFactory;
 
-    public function setAnnotationProcessorRecordBuilderFactory(FactoryInterface $AnnotationProcessorRecordBuilderFactory): self
+    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
     {
-        if ($this->hasAnnotationProcessorRecordBuilderFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordBuilderFactory is already set.');
+        if ($this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->AnnotationProcessorRecordBuilderFactory = $AnnotationProcessorRecordBuilderFactory;
+        $this->ActorBuilderFactory = $ActorBuilderFactory;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordBuilderFactory(): FactoryInterface
+    protected function getActorBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasAnnotationProcessorRecordBuilderFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->AnnotationProcessorRecordBuilderFactory;
+        return $this->ActorBuilderFactory;
     }
 
-    protected function hasAnnotationProcessorRecordBuilderFactory(): bool
+    protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->AnnotationProcessorRecordBuilderFactory);
+        return isset($this->ActorBuilderFactory);
     }
 
-    protected function unsetAnnotationProcessorRecordBuilderFactory(): self
+    protected function unsetActorBuilderFactory(): self
     {
-        if (!$this->hasAnnotationProcessorRecordBuilderFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->AnnotationProcessorRecordBuilderFactory);
+        unset($this->ActorBuilderFactory);
 
         return $this;
     }

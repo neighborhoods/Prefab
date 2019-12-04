@@ -10,6 +10,6 @@ class Factory implements FactoryInterface
     use AwareTrait;
     public function create(): DaoPropertyInterface
     {
-        return clone $this->getDaoProperty();
+        return clone $this->getActor();
     }
 }

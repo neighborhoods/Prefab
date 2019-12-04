@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setAnnotationProcessorRecordMap, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface']]
+      - [setActorMap, ['@Neighborhoods\Prefab\AnnotationProcessorRecord\MapInterface']]

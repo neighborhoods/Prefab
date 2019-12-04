@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoProperty\Builder\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $DaoPropertyBuilderFactory;
+    protected $ActorBuilderFactory;
 
-    public function setDaoPropertyBuilderFactory(FactoryInterface $DaoPropertyBuilderFactory): self
+    public function setActorBuilderFactory(FactoryInterface $ActorBuilderFactory): self
     {
-        if ($this->hasDaoPropertyBuilderFactory()) {
-            throw new \LogicException('DaoPropertyBuilderFactory is already set.');
+        if ($this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is already set.');
         }
-        $this->DaoPropertyBuilderFactory = $DaoPropertyBuilderFactory;
+        $this->ActorBuilderFactory = $ActorBuilderFactory;
 
         return $this;
     }
 
-    protected function getDaoPropertyBuilderFactory(): FactoryInterface
+    protected function getActorBuilderFactory(): FactoryInterface
     {
-        if (!$this->hasDaoPropertyBuilderFactory()) {
-            throw new \LogicException('DaoPropertyBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
 
-        return $this->DaoPropertyBuilderFactory;
+        return $this->ActorBuilderFactory;
     }
 
-    protected function hasDaoPropertyBuilderFactory(): bool
+    protected function hasActorBuilderFactory(): bool
     {
-        return isset($this->DaoPropertyBuilderFactory);
+        return isset($this->ActorBuilderFactory);
     }
 
-    protected function unsetDaoPropertyBuilderFactory(): self
+    protected function unsetActorBuilderFactory(): self
     {
-        if (!$this->hasDaoPropertyBuilderFactory()) {
-            throw new \LogicException('DaoPropertyBuilderFactory is not set.');
+        if (!$this->hasActorBuilderFactory()) {
+            throw new \LogicException('ActorBuilderFactory is not set.');
         }
-        unset($this->DaoPropertyBuilderFactory);
+        unset($this->ActorBuilderFactory);
 
         return $this;
     }

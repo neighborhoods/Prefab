@@ -7,18 +7,18 @@ use Neighborhoods\Prefab\ConstantInterface;
 
 class Map extends \ArrayIterator implements MapInterface
 {
-    /** @param ConstantInterface ...$Constants */
-    public function __construct(array $Constants = [], int $flags = 0)
+    /** @param ConstantInterface ...$Actors */
+    public function __construct(array $Actors = [], int $flags = 0)
     {
         if ($this->count() !== 0) {
             throw new \LogicException('Map is not empty.');
         }
 
-        if (!empty($Constants)) {
-            $this->assertValidArrayType(...array_values($Constants));
+        if (!empty($Actors)) {
+            $this->assertValidArrayType(...array_values($Actors));
         }
 
-        parent::__construct($Constants, $flags);
+        parent::__construct($Actors, $flags);
     }
 
     public function offsetGet($index): ConstantInterface
@@ -26,17 +26,17 @@ class Map extends \ArrayIterator implements MapInterface
         return $this->assertValidArrayItemType(parent::offsetGet($index));
     }
 
-    /** @param ConstantInterface $Constant */
-    public function offsetSet($index, $Constant)
+    /** @param ConstantInterface $Actor */
+    public function offsetSet($index, $Actor)
     {
-        parent::offsetSet($index, $this->assertValidArrayItemType($Constant));
+        parent::offsetSet($index, $this->assertValidArrayItemType($Actor));
     }
 
-    /** @param ConstantInterface $Constant */
-    public function append($Constant)
+    /** @param ConstantInterface $Actor */
+    public function append($Actor)
     {
-        $this->assertValidArrayItemType($Constant);
-        parent::append($Constant);
+        $this->assertValidArrayItemType($Actor);
+        parent::append($Actor);
     }
 
     public function current(): ConstantInterface
@@ -44,12 +44,12 @@ class Map extends \ArrayIterator implements MapInterface
         return parent::current();
     }
 
-    protected function assertValidArrayItemType(ConstantInterface $Constant)
+    protected function assertValidArrayItemType(ConstantInterface $Actor)
     {
-        return $Constant;
+        return $Actor;
     }
 
-    protected function assertValidArrayType(ConstantInterface ...$Constants): MapInterface
+    protected function assertValidArrayType(ConstantInterface ...$Actors): MapInterface
     {
         return $this;
     }
@@ -64,10 +64,10 @@ class Map extends \ArrayIterator implements MapInterface
         return (array)$this;
     }
 
-    /** @param ConstantInterface ...$Constants */
-    public function hydrate(array $Constants): MapInterface
+    /** @param ConstantInterface ...$Actors */
+    public function hydrate(array $Actors): MapInterface
     {
-        $this->__construct($Constants);
+        $this->__construct($Actors);
 
         return $this;
     }

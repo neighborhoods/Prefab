@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoProperty\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $DaoPropertyFactory;
+    protected $ActorFactory;
 
-    public function setDaoPropertyFactory(FactoryInterface $DaoPropertyFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasDaoPropertyFactory()) {
-            throw new \LogicException('DaoPropertyFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->DaoPropertyFactory = $DaoPropertyFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getDaoPropertyFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasDaoPropertyFactory()) {
-            throw new \LogicException('DaoPropertyFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->DaoPropertyFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasDaoPropertyFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->DaoPropertyFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetDaoPropertyFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasDaoPropertyFactory()) {
-            throw new \LogicException('DaoPropertyFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->DaoPropertyFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

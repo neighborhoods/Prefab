@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\Map\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordMapFactory;
+    protected $ActorMapFactory;
 
-    public function setAnnotationProcessorRecordMapFactory(FactoryInterface $AnnotationProcessorRecordMapFactory): self
+    public function setActorMapFactory(FactoryInterface $ActorMapFactory): self
     {
-        if ($this->hasAnnotationProcessorRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordMapFactory is already set.');
+        if ($this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is already set.');
         }
-        $this->AnnotationProcessorRecordMapFactory = $AnnotationProcessorRecordMapFactory;
+        $this->ActorMapFactory = $ActorMapFactory;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordMapFactory(): FactoryInterface
+    protected function getActorMapFactory(): FactoryInterface
     {
-        if (!$this->hasAnnotationProcessorRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordMapFactory is not set.');
+        if (!$this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is not set.');
         }
 
-        return $this->AnnotationProcessorRecordMapFactory;
+        return $this->ActorMapFactory;
     }
 
-    protected function hasAnnotationProcessorRecordMapFactory(): bool
+    protected function hasActorMapFactory(): bool
     {
-        return isset($this->AnnotationProcessorRecordMapFactory);
+        return isset($this->ActorMapFactory);
     }
 
-    protected function unsetAnnotationProcessorRecordMapFactory(): self
+    protected function unsetActorMapFactory(): self
     {
-        if (!$this->hasAnnotationProcessorRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordMapFactory is not set.');
+        if (!$this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is not set.');
         }
-        unset($this->AnnotationProcessorRecordMapFactory);
+        unset($this->ActorMapFactory);
 
         return $this;
     }

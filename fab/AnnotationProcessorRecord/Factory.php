@@ -10,6 +10,6 @@ class Factory implements FactoryInterface
     use AwareTrait;
     public function create(): AnnotationProcessorRecordInterface
     {
-        return clone $this->getAnnotationProcessorRecord();
+        return clone $this->getActor();
     }
 }

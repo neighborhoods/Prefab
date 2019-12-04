@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordFactory;
+    protected $ActorFactory;
 
-    public function setAnnotationProcessorRecordFactory(FactoryInterface $AnnotationProcessorRecordFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasAnnotationProcessorRecordFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->AnnotationProcessorRecordFactory = $AnnotationProcessorRecordFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasAnnotationProcessorRecordFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->AnnotationProcessorRecordFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasAnnotationProcessorRecordFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->AnnotationProcessorRecordFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetAnnotationProcessorRecordFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasAnnotationProcessorRecordFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->AnnotationProcessorRecordFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

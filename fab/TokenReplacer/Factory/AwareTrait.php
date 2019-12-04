@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\TokenReplacer\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $TokenReplacerFactory;
+    protected $ActorFactory;
 
-    public function setTokenReplacerFactory(FactoryInterface $TokenReplacerFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasTokenReplacerFactory()) {
-            throw new \LogicException('TokenReplacerFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->TokenReplacerFactory = $TokenReplacerFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getTokenReplacerFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasTokenReplacerFactory()) {
-            throw new \LogicException('TokenReplacerFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->TokenReplacerFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasTokenReplacerFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->TokenReplacerFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetTokenReplacerFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasTokenReplacerFactory()) {
-            throw new \LogicException('TokenReplacerFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->TokenReplacerFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

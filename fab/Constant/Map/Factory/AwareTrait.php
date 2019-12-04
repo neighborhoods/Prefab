@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\Constant\Map\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $ConstantMapFactory;
+    protected $ActorMapFactory;
 
-    public function setConstantMapFactory(FactoryInterface $ConstantMapFactory): self
+    public function setActorMapFactory(FactoryInterface $ActorMapFactory): self
     {
-        if ($this->hasConstantMapFactory()) {
-            throw new \LogicException('ConstantMapFactory is already set.');
+        if ($this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is already set.');
         }
-        $this->ConstantMapFactory = $ConstantMapFactory;
+        $this->ActorMapFactory = $ActorMapFactory;
 
         return $this;
     }
 
-    protected function getConstantMapFactory(): FactoryInterface
+    protected function getActorMapFactory(): FactoryInterface
     {
-        if (!$this->hasConstantMapFactory()) {
-            throw new \LogicException('ConstantMapFactory is not set.');
+        if (!$this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is not set.');
         }
 
-        return $this->ConstantMapFactory;
+        return $this->ActorMapFactory;
     }
 
-    protected function hasConstantMapFactory(): bool
+    protected function hasActorMapFactory(): bool
     {
-        return isset($this->ConstantMapFactory);
+        return isset($this->ActorMapFactory);
     }
 
-    protected function unsetConstantMapFactory(): self
+    protected function unsetActorMapFactory(): self
     {
-        if (!$this->hasConstantMapFactory()) {
-            throw new \LogicException('ConstantMapFactory is not set.');
+        if (!$this->hasActorMapFactory()) {
+            throw new \LogicException('ActorMapFactory is not set.');
         }
-        unset($this->ConstantMapFactory);
+        unset($this->ActorMapFactory);
 
         return $this;
     }

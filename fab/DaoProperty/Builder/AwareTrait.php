@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoProperty\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $DaoPropertyBuilder;
+    protected $ActorBuilder;
 
-    public function setDaoPropertyBuilder(BuilderInterface $DaoPropertyBuilder): self
+    public function setActorBuilder(BuilderInterface $ActorBuilder): self
     {
-        if ($this->hasDaoPropertyBuilder()) {
-            throw new \LogicException('DaoPropertyBuilder is already set.');
+        if ($this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is already set.');
         }
-        $this->DaoPropertyBuilder = $DaoPropertyBuilder;
+        $this->ActorBuilder = $ActorBuilder;
 
         return $this;
     }
 
-    protected function getDaoPropertyBuilder(): BuilderInterface
+    protected function getActorBuilder(): BuilderInterface
     {
-        if (!$this->hasDaoPropertyBuilder()) {
-            throw new \LogicException('DaoPropertyBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
 
-        return $this->DaoPropertyBuilder;
+        return $this->ActorBuilder;
     }
 
-    protected function hasDaoPropertyBuilder(): bool
+    protected function hasActorBuilder(): bool
     {
-        return isset($this->DaoPropertyBuilder);
+        return isset($this->ActorBuilder);
     }
 
-    protected function unsetDaoPropertyBuilder(): self
+    protected function unsetActorBuilder(): self
     {
-        if (!$this->hasDaoPropertyBuilder()) {
-            throw new \LogicException('DaoPropertyBuilder is not set.');
+        if (!$this->hasActorBuilder()) {
+            throw new \LogicException('ActorBuilder is not set.');
         }
-        unset($this->DaoPropertyBuilder);
+        unset($this->ActorBuilder);
 
         return $this;
     }

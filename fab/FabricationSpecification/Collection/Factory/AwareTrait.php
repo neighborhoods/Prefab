@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Collection\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationCollectionFactory;
+    protected $ActorFactory;
 
-    public function setFabricationSpecificationCollectionFactory(FactoryInterface $CollectionFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasFabricationSpecificationCollectionFactory()) {
-            throw new \LogicException('FabricationSpecificationCollectionFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->FabricationSpecificationCollectionFactory = $CollectionFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationCollectionFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasFabricationSpecificationCollectionFactory()) {
-            throw new \LogicException('FabricationSpecificationCollectionFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->FabricationSpecificationCollectionFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasFabricationSpecificationCollectionFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->FabricationSpecificationCollectionFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetFabricationSpecificationCollectionFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasFabricationSpecificationCollectionFactory()) {
-            throw new \LogicException('FabricationSpecificationCollectionFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->FabricationSpecificationCollectionFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

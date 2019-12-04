@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setFabricationSpecificationBuilder, ['@Neighborhoods\Prefab\FabricationSpecification\BuilderInterface']]
+      - [setActorBuilder, ['@Neighborhoods\Prefab\FabricationSpecification\BuilderInterface']]

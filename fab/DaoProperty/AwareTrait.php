@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoPropertyInterface;
 
 trait AwareTrait
 {
-    protected $DaoProperty;
+    protected $Actor;
 
-    public function setDaoProperty(DaoPropertyInterface $DaoProperty): self
+    public function setActor(DaoPropertyInterface $Actor): self
     {
-        if ($this->hasDaoProperty()) {
-            throw new \LogicException('DaoProperty is already set.');
+        if ($this->hasActor()) {
+            throw new \LogicException('Actor is already set.');
         }
-        $this->DaoProperty = $DaoProperty;
+        $this->Actor = $Actor;
 
         return $this;
     }
 
-    protected function getDaoProperty(): DaoPropertyInterface
+    protected function getActor(): DaoPropertyInterface
     {
-        if (!$this->hasDaoProperty()) {
-            throw new \LogicException('DaoProperty is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
 
-        return $this->DaoProperty;
+        return $this->Actor;
     }
 
-    protected function hasDaoProperty(): bool
+    protected function hasActor(): bool
     {
-        return isset($this->DaoProperty);
+        return isset($this->Actor);
     }
 
-    protected function unsetDaoProperty(): self
+    protected function unsetActor(): self
     {
-        if (!$this->hasDaoProperty()) {
-            throw new \LogicException('DaoProperty is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
-        unset($this->DaoProperty);
+        unset($this->Actor);
 
         return $this;
     }

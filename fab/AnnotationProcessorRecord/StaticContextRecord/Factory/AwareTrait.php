@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\FactoryIn
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordStaticContextRecordFactory;
+    protected $ActorFactory;
 
-    public function setAnnotationProcessorRecordStaticContextRecordFactory(FactoryInterface $StaticContextRecordFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasAnnotationProcessorRecordStaticContextRecordFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->AnnotationProcessorRecordStaticContextRecordFactory = $StaticContextRecordFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordStaticContextRecordFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecordFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->AnnotationProcessorRecordStaticContextRecordFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasAnnotationProcessorRecordStaticContextRecordFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->AnnotationProcessorRecordStaticContextRecordFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetAnnotationProcessorRecordStaticContextRecordFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecordFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->AnnotationProcessorRecordStaticContextRecordFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

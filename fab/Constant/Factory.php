@@ -10,6 +10,6 @@ class Factory implements FactoryInterface
     use AwareTrait;
     public function create(): ConstantInterface
     {
-        return clone $this->getConstant();
+        return clone $this->getActor();
     }
 }

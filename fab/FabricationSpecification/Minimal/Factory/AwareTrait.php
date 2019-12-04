@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Minimal\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationMinimalFactory;
+    protected $ActorFactory;
 
-    public function setFabricationSpecificationMinimalFactory(FactoryInterface $MinimalFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasFabricationSpecificationMinimalFactory()) {
-            throw new \LogicException('FabricationSpecificationMinimalFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->FabricationSpecificationMinimalFactory = $MinimalFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationMinimalFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasFabricationSpecificationMinimalFactory()) {
-            throw new \LogicException('FabricationSpecificationMinimalFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->FabricationSpecificationMinimalFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasFabricationSpecificationMinimalFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->FabricationSpecificationMinimalFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetFabricationSpecificationMinimalFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasFabricationSpecificationMinimalFactory()) {
-            throw new \LogicException('FabricationSpecificationMinimalFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->FabricationSpecificationMinimalFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

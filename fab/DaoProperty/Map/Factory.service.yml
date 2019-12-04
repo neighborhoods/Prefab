@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setDaoPropertyMap, ['@Neighborhoods\Prefab\DaoProperty\MapInterface']]
+      - [setActorMap, ['@Neighborhoods\Prefab\DaoProperty\MapInterface']]

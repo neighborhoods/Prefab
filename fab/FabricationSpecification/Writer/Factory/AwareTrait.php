@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\Writer\FactoryInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationWriterFactory;
+    protected $ActorFactory;
 
-    public function setFabricationSpecificationWriterFactory(FactoryInterface $WriterFactory): self
+    public function setActorFactory(FactoryInterface $ActorFactory): self
     {
-        if ($this->hasFabricationSpecificationWriterFactory()) {
-            throw new \LogicException('FabricationSpecificationWriterFactory is already set.');
+        if ($this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is already set.');
         }
-        $this->FabricationSpecificationWriterFactory = $WriterFactory;
+        $this->ActorFactory = $ActorFactory;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationWriterFactory(): FactoryInterface
+    protected function getActorFactory(): FactoryInterface
     {
-        if (!$this->hasFabricationSpecificationWriterFactory()) {
-            throw new \LogicException('FabricationSpecificationWriterFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
 
-        return $this->FabricationSpecificationWriterFactory;
+        return $this->ActorFactory;
     }
 
-    protected function hasFabricationSpecificationWriterFactory(): bool
+    protected function hasActorFactory(): bool
     {
-        return isset($this->FabricationSpecificationWriterFactory);
+        return isset($this->ActorFactory);
     }
 
-    protected function unsetFabricationSpecificationWriterFactory(): self
+    protected function unsetActorFactory(): self
     {
-        if (!$this->hasFabricationSpecificationWriterFactory()) {
-            throw new \LogicException('FabricationSpecificationWriterFactory is not set.');
+        if (!$this->hasActorFactory()) {
+            throw new \LogicException('ActorFactory is not set.');
         }
-        unset($this->FabricationSpecificationWriterFactory);
+        unset($this->ActorFactory);
 
         return $this;
     }

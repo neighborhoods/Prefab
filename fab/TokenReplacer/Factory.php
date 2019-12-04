@@ -10,6 +10,6 @@ class Factory implements FactoryInterface
     use AwareTrait;
     public function create(): TokenReplacerInterface
     {
-        return clone $this->getTokenReplacer();
+        return clone $this->getActor();
     }
 }

@@ -7,6 +7,8 @@ interface StaticContextRecordInterface extends \JsonSerializable
 {
 
 
+
+
     public function getProcessorFullyQualifiedClassname(): string;
     public function setProcessorFullyQualifiedClassname(string $processorFullyQualifiedClassname): StaticContextRecordInterface;
     public function hasProcessorFullyQualifiedClassname(): bool;

@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecordInterface;
 
 trait AwareTrait
 {
-    protected $AnnotationProcessorRecordStaticContextRecord;
+    protected $Actor;
 
-    public function setAnnotationProcessorRecordStaticContextRecord(StaticContextRecordInterface $StaticContextRecord): self
+    public function setActor(StaticContextRecordInterface $Actor): self
     {
-        if ($this->hasAnnotationProcessorRecordStaticContextRecord()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecord is already set.');
+        if ($this->hasActor()) {
+            throw new \LogicException('Actor is already set.');
         }
-        $this->AnnotationProcessorRecordStaticContextRecord = $StaticContextRecord;
+        $this->Actor = $Actor;
 
         return $this;
     }
 
-    protected function getAnnotationProcessorRecordStaticContextRecord(): StaticContextRecordInterface
+    protected function getActor(): StaticContextRecordInterface
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecord()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecord is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
 
-        return $this->AnnotationProcessorRecordStaticContextRecord;
+        return $this->Actor;
     }
 
-    protected function hasAnnotationProcessorRecordStaticContextRecord(): bool
+    protected function hasActor(): bool
     {
-        return isset($this->AnnotationProcessorRecordStaticContextRecord);
+        return isset($this->Actor);
     }
 
-    protected function unsetAnnotationProcessorRecordStaticContextRecord(): self
+    protected function unsetActor(): self
     {
-        if (!$this->hasAnnotationProcessorRecordStaticContextRecord()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecord is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
-        unset($this->AnnotationProcessorRecordStaticContextRecord);
+        unset($this->Actor);
 
         return $this;
     }

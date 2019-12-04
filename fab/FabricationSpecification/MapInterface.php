@@ -7,16 +7,16 @@ use Neighborhoods\Prefab\FabricationSpecificationInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
 {
-    /** @param FabricationSpecificationInterface ...$FabricationSpecifications */
-    public function __construct(array $FabricationSpecifications = [], int $flags = 0);
+    /** @param FabricationSpecificationInterface ...$Actors */
+    public function __construct(array $Actors = [], int $flags = 0);
 
     public function offsetGet($index): FabricationSpecificationInterface;
 
-    /** @param FabricationSpecificationInterface $FabricationSpecification */
-    public function offsetSet($index, $FabricationSpecification);
+    /** @param FabricationSpecificationInterface $Actor */
+    public function offsetSet($index, $Actor);
 
-    /** @param FabricationSpecificationInterface $FabricationSpecification */
-    public function append($FabricationSpecification);
+    /** @param FabricationSpecificationInterface $Actor */
+    public function append($Actor);
 
     public function current(): FabricationSpecificationInterface;
 
@@ -24,6 +24,6 @@ interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \
 
     public function toArray(): array;
 
-    /** @param FabricationSpecificationInterface ...$FabricationSpecifications */
-    public function hydrate(array $FabricationSpecifications): MapInterface;
+    /** @param FabricationSpecificationInterface ...$Actors */
+    public function hydrate(array $Actors): MapInterface;
 }

@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\FabricationSpecification\WriterInterface;
 
 trait AwareTrait
 {
-    protected $FabricationSpecificationWriter;
+    protected $Actor;
 
-    public function setFabricationSpecificationWriter(WriterInterface $Writer): self
+    public function setActor(WriterInterface $Actor): self
     {
-        if ($this->hasFabricationSpecificationWriter()) {
-            throw new \LogicException('FabricationSpecificationWriter is already set.');
+        if ($this->hasActor()) {
+            throw new \LogicException('Actor is already set.');
         }
-        $this->FabricationSpecificationWriter = $Writer;
+        $this->Actor = $Actor;
 
         return $this;
     }
 
-    protected function getFabricationSpecificationWriter(): WriterInterface
+    protected function getActor(): WriterInterface
     {
-        if (!$this->hasFabricationSpecificationWriter()) {
-            throw new \LogicException('FabricationSpecificationWriter is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
 
-        return $this->FabricationSpecificationWriter;
+        return $this->Actor;
     }
 
-    protected function hasFabricationSpecificationWriter(): bool
+    protected function hasActor(): bool
     {
-        return isset($this->FabricationSpecificationWriter);
+        return isset($this->Actor);
     }
 
-    protected function unsetFabricationSpecificationWriter(): self
+    protected function unsetActor(): self
     {
-        if (!$this->hasFabricationSpecificationWriter()) {
-            throw new \LogicException('FabricationSpecificationWriter is not set.');
+        if (!$this->hasActor()) {
+            throw new \LogicException('Actor is not set.');
         }
-        unset($this->FabricationSpecificationWriter);
+        unset($this->Actor);
 
         return $this;
     }

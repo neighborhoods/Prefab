@@ -7,38 +7,38 @@ use Neighborhoods\Prefab\DaoProperty\Map\BuilderInterface;
 
 trait AwareTrait
 {
-    protected $DaoPropertyMapBuilder;
+    protected $ActorMapBuilder;
 
-    public function setDaoPropertyMapBuilder(BuilderInterface $DaoPropertyMapBuilder): self
+    public function setActorMapBuilder(BuilderInterface $ActorMapBuilder): self
     {
-        if ($this->hasDaoPropertyMapBuilder()) {
-            throw new \LogicException('DaoPropertyMapBuilder is already set.');
+        if ($this->hasActorMapBuilder()) {
+            throw new \LogicException('ActorMapBuilder is already set.');
         }
-        $this->DaoPropertyMapBuilder = $DaoPropertyMapBuilder;
+        $this->ActorMapBuilder = $ActorMapBuilder;
 
         return $this;
     }
 
-    protected function getDaoPropertyMapBuilder(): BuilderInterface
+    protected function getActorMapBuilder(): BuilderInterface
     {
-        if (!$this->hasDaoPropertyMapBuilder()) {
-            throw new \LogicException('DaoPropertyMapBuilder is not set.');
+        if (!$this->hasActorMapBuilder()) {
+            throw new \LogicException('ActorMapBuilder is not set.');
         }
 
-        return $this->DaoPropertyMapBuilder;
+        return $this->ActorMapBuilder;
     }
 
-    protected function hasDaoPropertyMapBuilder(): bool
+    protected function hasActorMapBuilder(): bool
     {
-        return isset($this->DaoPropertyMapBuilder);
+        return isset($this->ActorMapBuilder);
     }
 
-    protected function unsetDaoPropertyMapBuilder(): self
+    protected function unsetActorMapBuilder(): self
     {
-        if (!$this->hasDaoPropertyMapBuilder()) {
-            throw new \LogicException('DaoPropertyMapBuilder is not set.');
+        if (!$this->hasActorMapBuilder()) {
+            throw new \LogicException('ActorMapBuilder is not set.');
         }
-        unset($this->DaoPropertyMapBuilder);
+        unset($this->ActorMapBuilder);
 
         return $this;
     }
