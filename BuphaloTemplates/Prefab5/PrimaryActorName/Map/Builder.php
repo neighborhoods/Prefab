@@ -8,8 +8,8 @@ use Neighborhoods\BuphaloTemplateTree\PrimaryActorName;
 class Builder implements BuilderInterface
 {
 
-    use Actor\Map\Factory\AwareTrait;
-    use Actor\Builder\Factory\AwareTrait;
+    use PrimaryActorName\Map\Factory\AwareTrait;
+    use PrimaryActorName\Builder\Factory\AwareTrait;
 
     /**
      * @var array

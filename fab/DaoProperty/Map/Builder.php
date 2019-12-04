@@ -8,8 +8,8 @@ use Neighborhoods\Prefab\DaoProperty;
 class Builder implements BuilderInterface
 {
 
-    use Actor\Map\Factory\AwareTrait;
-    use Actor\Builder\Factory\AwareTrait;
+    use DaoProperty\Map\Factory\AwareTrait;
+    use DaoProperty\Builder\Factory\AwareTrait;
 
     /**
      * @var array

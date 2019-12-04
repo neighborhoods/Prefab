@@ -15,7 +15,7 @@ use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5;
 
 class Repository implements RepositoryInterface
 {
-    use Actor\Map\Builder\Factory\AwareTrait;
+    use PrimaryActorName\Map\Builder\Factory\AwareTrait;
     use Prefab5\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
     use Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
 
