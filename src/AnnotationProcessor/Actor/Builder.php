@@ -21,20 +21,20 @@ class Builder implements AnnotationProcessorInterface
 
     protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
         \$PrimaryActorName->set%s(
-            \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
+            \$this->get%sBuilderFactory()->create()->setRecord(\$record[PrimaryActorNameInterface::PROP_%s])->build()
         );
 EOF;
 
     protected const COMPLEX_OBJECT_MAP_BUILDER_METHOD = <<< EOF
         \$PrimaryActorName->set%s(
-            \$this->get%sBuilderFactory()->create()->setRecords(\$record[ActorInterface::PROP_%s])->build()
+            \$this->get%sBuilderFactory()->create()->setRecords(\$record[PrimaryActorNameInterface::PROP_%s])->build()
         );
 EOF;
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
-"\t\t\$PrimaryActorName->set%s(%s\$record[ActorInterface::PROP_%s]);";
+"\t\t\$PrimaryActorName->set%s(%s\$record[PrimaryActorNameInterface::PROP_%s]);";
 
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
-        if (isset(\$record[ActorInterface::PROP_%s])) {
+        if (isset(\$record[PrimaryActorNameInterface::PROP_%s])) {
             %s
         }
 
