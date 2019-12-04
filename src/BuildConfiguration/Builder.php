@@ -22,6 +22,10 @@ class Builder implements BuilderInterface
     protected $projectName;
     protected $projectRoot;
 
+    protected $isUsingDeprecatedTopLevelDaoKey = false;
+    protected $isUsingDeprecatedDatabaseColumnNameKey = false;
+    protected $isUsingDeprecatedPhpTypeKey = false;
+
     public function build() : BuildConfigurationInterface
     {
         $buildConfiguration = $this->getBuildConfigurationFactory()->create();
@@ -29,6 +33,7 @@ class Builder implements BuilderInterface
 
         if (isset($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO])) {
             $prefabDefinitionFileArray = $prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO];
+            $this->setIsUsingDeprecatedTopLevelDaoKey(true);
         }
         
         $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
@@ -60,6 +65,14 @@ class Builder implements BuilderInterface
         foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES] as $key => $values) {
             $record = $values;
             $record[BuildConfigurationInterface::KEY_NAME] = $key;
+
+            if (isset($values['php_type'])) {
+                $this->setIsUsingDeprecatedPhpTypeKey(true);
+            }
+
+            if (isset($values['database_column_name'])) {
+                $this->setIsUsingDeprecatedDatabaseColumnNameKey(true);
+            }
 
             $daoPropertyMap->append(
                 $this->getDaoPropertyBuilderFactory()->create()
@@ -180,4 +193,47 @@ class Builder implements BuilderInterface
         $this->vendorName = $vendorName;
         return $this;
     }
+
+    public function isUsingDeprecatedTopLevelDaoKey() : bool
+    {
+        if ($this->isUsingDeprecatedTopLevelDaoKey === null) {
+            throw new \LogicException('Builder isUsingDeprecatedTopLevelDaoKey has not been set.');
+        }
+        return $this->isUsingDeprecatedTopLevelDaoKey;
+    }
+
+    protected function setIsUsingDeprecatedTopLevelDaoKey(bool $isUsingDeprecatedTopLevelDaoKey) : BuilderInterface
+    {
+        $this->isUsingDeprecatedTopLevelDaoKey = $isUsingDeprecatedTopLevelDaoKey;
+        return $this;
+    }
+
+    public function isUsingDeprecatedDatabaseColumnNameKey() : bool
+    {
+        if ($this->isUsingDeprecatedDatabaseColumnNameKey === null) {
+            throw new \LogicException('Builder isUsingDeprecatedDatabaseColumnNameKey has not been set.');
+        }
+        return $this->isUsingDeprecatedDatabaseColumnNameKey;
+    }
+
+    protected function setIsUsingDeprecatedDatabaseColumnNameKey(bool $isUsingDeprecatedDatabaseColumnNameKey) : BuilderInterface
+    {
+        $this->isUsingDeprecatedDatabaseColumnNameKey = $isUsingDeprecatedDatabaseColumnNameKey;
+        return $this;
+    }
+
+    public function isUsingDeprecatedPhpTypeKey() : bool
+    {
+        if ($this->isUsingDeprecatedPhpTypeKey === null) {
+            throw new \LogicException('Builder isUsingDeprecatedPhpTypeKey has not been set.');
+        }
+        return $this->isUsingDeprecatedPhpTypeKey;
+    }
+
+    protected function setIsUsingDeprecatedPhpTypeKey(bool $isUsingDeprecatedPhpTypeKey) : BuilderInterface
+    {
+        $this->isUsingDeprecatedPhpTypeKey = $isUsingDeprecatedPhpTypeKey;
+        return $this;
+    }
+
 }
