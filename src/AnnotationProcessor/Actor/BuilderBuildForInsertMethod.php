@@ -149,7 +149,7 @@ EOF;
             strtoupper($propertyName)
         );
 
-        if ($property[self::ACTOR_PROPERTY_KEY_NULLABLE] === true || self::ACTOR_PROPERTY_KEY_CREATED_ON_INSERT === true) {
+        if ($property[self::ACTOR_PROPERTY_KEY_NULLABLE] === true || $property[self::ACTOR_PROPERTY_KEY_CREATED_ON_INSERT] === true) {
             return sprintf(
                 self::NULLABLE_PROPERTY_METHOD_PATTERN,
                 strtoupper($propertyName),
