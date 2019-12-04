@@ -22,17 +22,17 @@ class RepositoryUpdateElementMethod implements AnnotationProcessorInterface
 
     protected const CREATE_NAMED_PARAMETER_SIMPLE_PROPERTY_PATTERN = <<< EOF
      \$queryBuilder->set(ActorInterface::PROP_%s, 
-            \$queryBuilder->createNamedParameter(\$Actor->get%s()));
+            \$queryBuilder->createNamedParameter(\$PrimaryActorName->get%s()));
 EOF;
 
     protected const CREATE_NAMED_PARAMETER_COMPLEX_PROPERTY_PATTERN = <<< EOF
      \$queryBuilder->set(ActorInterface::PROP_%s, 
-            \$queryBuilder->createNamedParameter(json_encode(\$Actor->get%s())));
+            \$queryBuilder->createNamedParameter(json_encode(\$PrimaryActorName->get%s())));
 EOF;
 
     protected const NULLABLE_PROPERTY_CONDITION_PATTERN = <<< EOF
      
-        if (\$Actor->has%s()) {
+        if (\$PrimaryActorName->has%s()) {
             %s
         }
 EOF;

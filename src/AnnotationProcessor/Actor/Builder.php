@@ -20,18 +20,18 @@ class Builder implements AnnotationProcessorInterface
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Builder-build';
 
     protected const COMPLEX_OBJECT_BUILDER_METHOD = <<< EOF
-        \$Actor->set%s(
+        \$PrimaryActorName->set%s(
             \$this->get%sBuilderFactory()->create()->setRecord(\$record[ActorInterface::PROP_%s])->build()
         );
 EOF;
 
     protected const COMPLEX_OBJECT_MAP_BUILDER_METHOD = <<< EOF
-        \$Actor->set%s(
+        \$PrimaryActorName->set%s(
             \$this->get%sBuilderFactory()->create()->setRecords(\$record[ActorInterface::PROP_%s])->build()
         );
 EOF;
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
-"\t\t\$Actor->set%s(%s\$record[ActorInterface::PROP_%s]);";
+"\t\t\$PrimaryActorName->set%s(%s\$record[ActorInterface::PROP_%s]);";
 
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
         if (isset(\$record[ActorInterface::PROP_%s])) {
