@@ -7,8 +7,8 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 interface Builder
 {
-    public const ACTOR_KEY = '<ActorName>/Map/Builder.php';
-    public const TEMPLATE_PATH = 'Actor/Map/Builder.php';
+    public const ACTOR_KEY = '<PrimaryActorName>/Map/Builder.php';
+    public const TEMPLATE_PATH = 'PrimaryActorName/Map/Builder.php';
     public const ANNOTATION_PROCESSORS = [
         [
             AnnotationProcessorRecordInterface::KEY_ANNOTATION_PROCESSOR_KEY => \Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Builder::ANNOTATION_PROCESSOR_KEY,

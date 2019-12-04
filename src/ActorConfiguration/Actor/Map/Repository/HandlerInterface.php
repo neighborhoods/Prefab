@@ -7,8 +7,8 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 interface HandlerInterface
 {
-    public const ACTOR_KEY = '<ActorName>/Map/Repository/HandlerInterface.php';
-    public const TEMPLATE_PATH = 'Actor/Map/Repository/HandlerInterface.php';
+    public const ACTOR_KEY = '<PrimaryActorName>/Map/Repository/HandlerInterface.php';
+    public const TEMPLATE_PATH = 'PrimaryActorName/Map/Repository/HandlerInterface.php';
     public const KEY_HANDLER_INTERFACE_CONSTANTS = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\HandlerInterface-CONSTANTS';
     public const ANNOTATION_PROCESSORS = [
         [

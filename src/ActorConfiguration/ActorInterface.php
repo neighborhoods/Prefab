@@ -7,8 +7,8 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 interface ActorInterface
 {
-    public const ACTOR_KEY = '<ActorName>Interface.php';
-    public const TEMPLATE_PATH = 'ActorInterface.php';
+    public const ACTOR_KEY = '<PrimaryActorName>Interface.php';
+    public const TEMPLATE_PATH = 'PrimaryActorNameInterface.php';
     public const ANNOTATION_PROCESSOR_KEY_DAO_PROPERTIES = 'DaoAccessors';
     public const ANNOTATION_PROCESSOR_KEY_TABLE_NAME = 'TableName';
 
