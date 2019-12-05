@@ -37,7 +37,7 @@ trait AwareTrait
     protected function unsetPrimaryActorNameMapRepositoryHandler() : self
     {
         if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('ActorMapRepositoryHandler is not set.');
+            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is not set.');
         }
         unset($this->PrimaryActorNameMapRepositoryHandler);
 
