@@ -23,7 +23,7 @@ trait AwareTrait
     protected function getPrimaryActorNameMapRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\Template\MV1\Address\Map\Repository\HandlerInterface
     {
         if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('ActorMapRepositoryHandler is not set.');
+            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is not set.');
         }
 
         return $this->PrimaryActorNameMapRepositoryHandler;
