@@ -12,7 +12,7 @@ trait AwareTrait
     public function setPrimaryActorNameBuilderFactory(FactoryInterface $PrimaryActorNameBuilderFactory): self
     {
         if ($this->hasPrimaryActorNameBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is already set.');
+            throw new \LogicException('PrimaryActorNameBuilderFactory is already set.');
         }
         $this->PrimaryActorNameBuilderFactory = $PrimaryActorNameBuilderFactory;
 
