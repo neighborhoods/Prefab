@@ -12,7 +12,7 @@ trait AwareTrait
     public function setPrimaryActorNameMapRepository(RepositoryInterface $PrimaryActorNameMapRepository): self
     {
         if ($this->hasPrimaryActorNameMapRepository()) {
-            throw new \LogicException('ActorMapRepository is already set.');
+            throw new \LogicException('PrimaryActorNameMapRepository is already set.');
         }
         $this->PrimaryActorNameMapRepository = $PrimaryActorNameMapRepository;
 

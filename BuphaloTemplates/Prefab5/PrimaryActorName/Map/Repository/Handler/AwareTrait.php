@@ -13,7 +13,7 @@ trait AwareTrait
     public function setPrimaryActorNameMapRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface $PrimaryActorNameMapRepositoryHandler) : self
     {
         if ($this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('ActorMapRepositoryHandler is already set.');
+            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is already set.');
         }
         $this->PrimaryActorNameMapRepositoryHandler = $PrimaryActorNameMapRepositoryHandler;
 
@@ -23,7 +23,7 @@ trait AwareTrait
     protected function getPrimaryActorNameMapRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface
     {
         if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('ActorMapRepositoryHandler is not set.');
+            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is not set.');
         }
 
         return $this->PrimaryActorNameMapRepositoryHandler;
@@ -37,7 +37,7 @@ trait AwareTrait
     protected function unsetPrimaryActorNameMapRepositoryHandler() : self
     {
         if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('ActorMapRepositoryHandler is not set.');
+            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is not set.');
         }
         unset($this->PrimaryActorNameMapRepositoryHandler);
 
@@ -46,4 +46,3 @@ trait AwareTrait
 
 
 }
-
