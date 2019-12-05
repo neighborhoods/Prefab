@@ -12,7 +12,7 @@ trait AwareTrait
     public function setPrimaryActorNameBuilder(BuilderInterface $PrimaryActorNameBuilder): self
     {
         if ($this->hasPrimaryActorNameBuilder()) {
-            throw new \LogicException('ActorBuilder is already set.');
+            throw new \LogicException('PrimaryActorNameBuilder is already set.');
         }
         $this->PrimaryActorNameBuilder = $PrimaryActorNameBuilder;
 
