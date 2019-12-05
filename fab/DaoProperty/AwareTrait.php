@@ -12,7 +12,7 @@ trait AwareTrait
     public function setDaoProperty(DaoPropertyInterface $DaoProperty): self
     {
         if ($this->hasDaoProperty()) {
-            throw new \LogicException('DaoProperty is already set.');
+            throw new \LogicException('Actor is already set.');
         }
         $this->DaoProperty = $DaoProperty;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getDaoProperty(): DaoPropertyInterface
     {
         if (!$this->hasDaoProperty()) {
-            throw new \LogicException('DaoProperty is not set.');
+            throw new \LogicException('Actor is not set.');
         }
 
         return $this->DaoProperty;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetDaoProperty(): self
     {
         if (!$this->hasDaoProperty()) {
-            throw new \LogicException('DaoProperty is not set.');
+            throw new \LogicException('Actor is not set.');
         }
         unset($this->DaoProperty);
 

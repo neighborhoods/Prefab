@@ -12,7 +12,7 @@ trait AwareTrait
     public function setConstantMap(MapInterface $Constants): self
     {
         if ($this->hasConstantMap()) {
-            throw new \LogicException('Constants is already set.');
+            throw new \LogicException('Actors is already set.');
         }
         $this->Constants = $Constants;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getConstantMap(): MapInterface
     {
         if (!$this->hasConstantMap()) {
-            throw new \LogicException('Constants is not set.');
+            throw new \LogicException('Actors is not set.');
         }
 
         return $this->Constants;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetConstantMap(): self
     {
         if (!$this->hasConstantMap()) {
-            throw new \LogicException('Constants is not set.');
+            throw new \LogicException('Actors is not set.');
         }
         unset($this->Constants);
 

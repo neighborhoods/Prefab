@@ -12,7 +12,7 @@ trait AwareTrait
     public function setAnnotationProcessorRecordStaticContextRecordMapFactory(FactoryInterface $StaticContextRecordMapFactory): self
     {
         if ($this->hasAnnotationProcessorRecordStaticContextRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMapFactory is already set.');
+            throw new \LogicException('ActorMapFactory is already set.');
         }
         $this->AnnotationProcessorRecordStaticContextRecordMapFactory = $StaticContextRecordMapFactory;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getAnnotationProcessorRecordStaticContextRecordMapFactory(): FactoryInterface
     {
         if (!$this->hasAnnotationProcessorRecordStaticContextRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMapFactory is not set.');
+            throw new \LogicException('ActorMapFactory is not set.');
         }
 
         return $this->AnnotationProcessorRecordStaticContextRecordMapFactory;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetAnnotationProcessorRecordStaticContextRecordMapFactory(): self
     {
         if (!$this->hasAnnotationProcessorRecordStaticContextRecordMapFactory()) {
-            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMapFactory is not set.');
+            throw new \LogicException('ActorMapFactory is not set.');
         }
         unset($this->AnnotationProcessorRecordStaticContextRecordMapFactory);
 

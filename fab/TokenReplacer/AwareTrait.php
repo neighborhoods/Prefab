@@ -12,7 +12,7 @@ trait AwareTrait
     public function setTokenReplacer(TokenReplacerInterface $TokenReplacer): self
     {
         if ($this->hasTokenReplacer()) {
-            throw new \LogicException('TokenReplacer is already set.');
+            throw new \LogicException('Actor is already set.');
         }
         $this->TokenReplacer = $TokenReplacer;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getTokenReplacer(): TokenReplacerInterface
     {
         if (!$this->hasTokenReplacer()) {
-            throw new \LogicException('TokenReplacer is not set.');
+            throw new \LogicException('Actor is not set.');
         }
 
         return $this->TokenReplacer;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetTokenReplacer(): self
     {
         if (!$this->hasTokenReplacer()) {
-            throw new \LogicException('TokenReplacer is not set.');
+            throw new \LogicException('Actor is not set.');
         }
         unset($this->TokenReplacer);
 

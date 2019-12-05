@@ -1,21 +1,21 @@
 actors:
-  <ActorName>/AwareTrait.php:
-    template: Actor/Awaretrait.php
-  <ActorName>/Factory.php:
-    template: Actor/Factory.php
-  <ActorName>/Factory.service.yml:
-    template: Actor/Factory.service.yml
-  <ActorName>/FactoryInterface.php:
-    template: Actor/FactoryInterface.php
-  <ActorName>/Factory/AwareTrait.php:
-    template: Actor/Factory/Awaretrait.php
-  <ActorName>/Builder/Factory.service.yml:
-    template: Actor/Builder/Factory.service.yml
-  <ActorName>/Builder/Factory.php:
-    template: Actor/Builder/Factory.php
-  <ActorName>/Builder/Factory/AwareTrait.php:
-    template: Actor/Builder/Factory/AwareTrait.php
-  <ActorName>/Builder/AwareTrait.php:
-    template: Actor/Builder/AwareTrait.php
-  <ActorName>/Builder/FactoryInterface.php:
-    template: Actor/Builder/FactoryInterface.php
+  <PrimaryActorName>/AwareTrait.php:
+    template: PrimaryActorName/Awaretrait.php
+  <PrimaryActorName>/Factory.php:
+    template: PrimaryActorName/Factory.php
+  <PrimaryActorName>/Factory.service.yml:
+    template: PrimaryActorName/Factory.service.yml
+  <PrimaryActorName>/FactoryInterface.php:
+    template: PrimaryActorName/FactoryInterface.php
+  <PrimaryActorName>/Factory/AwareTrait.php:
+    template: PrimaryActorName/Factory/Awaretrait.php
+  <PrimaryActorName>/Builder/Factory.service.yml:
+    template: PrimaryActorName/Builder/Factory.service.yml
+  <PrimaryActorName>/Builder/Factory.php:
+    template: PrimaryActorName/Builder/Factory.php
+  <PrimaryActorName>/Builder/Factory/AwareTrait.php:
+    template: PrimaryActorName/Builder/Factory/AwareTrait.php
+  <PrimaryActorName>/Builder/AwareTrait.php:
+    template: PrimaryActorName/Builder/AwareTrait.php
+  <PrimaryActorName>/Builder/FactoryInterface.php:
+    template: PrimaryActorName/Builder/FactoryInterface.php

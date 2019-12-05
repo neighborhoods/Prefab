@@ -12,7 +12,7 @@ trait AwareTrait
     public function setDaoPropertyMap(MapInterface $DaoPropertys): self
     {
         if ($this->hasDaoPropertyMap()) {
-            throw new \LogicException('DaoPropertys is already set.');
+            throw new \LogicException('Actors is already set.');
         }
         $this->DaoPropertys = $DaoPropertys;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getDaoPropertyMap(): MapInterface
     {
         if (!$this->hasDaoPropertyMap()) {
-            throw new \LogicException('DaoPropertys is not set.');
+            throw new \LogicException('Actors is not set.');
         }
 
         return $this->DaoPropertys;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetDaoPropertyMap(): self
     {
         if (!$this->hasDaoPropertyMap()) {
-            throw new \LogicException('DaoPropertys is not set.');
+            throw new \LogicException('Actors is not set.');
         }
         unset($this->DaoPropertys);
 

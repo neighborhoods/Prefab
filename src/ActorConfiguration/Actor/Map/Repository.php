@@ -7,8 +7,8 @@ use Neighborhoods\Prefab\AnnotationProcessorRecordInterface;
 
 interface Repository
 {
-    public const ACTOR_KEY = '<ActorName>/Map/Repository.php';
-    public const TEMPLATE_PATH = 'Actor/Map/Repository.php';
+    public const ACTOR_KEY = '<PrimaryActorName>/Map/Repository.php';
+    public const TEMPLATE_PATH = 'PrimaryActorName/Map/Repository.php';
     public const ANNOTATION_PROCESSORS = [
         [
             AnnotationProcessorRecordInterface::KEY_ANNOTATION_PROCESSOR_KEY => \Neighborhoods\Prefab\AnnotationProcessor\Actor\RepositoryJsonColumns::ANNOTATION_PROCESSOR_KEY,

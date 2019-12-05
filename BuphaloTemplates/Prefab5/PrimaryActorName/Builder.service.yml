@@ -1,0 +1,9 @@
+services:
+  Neighborhoods\BuphaloTemplateTree\PrimaryActorName\BuilderInterface:
+    class: Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder
+    public: false
+    shared: false
+    calls:
+      - [setPrimaryActorNameFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\FactoryInterface']]
+/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\BuilderServiceFile
+*/

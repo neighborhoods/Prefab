@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\BuphaloTemplateTree\PrimaryActorName\FactoryInterface:
+    class: Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Factory
+    public: false
+    shared: true
+    calls:
+      - [setPrimaryActorName, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface']]

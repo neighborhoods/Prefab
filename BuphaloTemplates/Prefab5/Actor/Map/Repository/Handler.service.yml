@@ -1,8 +1,0 @@
-services:
-  Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository\HandlerInterface:
-    class: Neighborhoods\BuphaloTemplateTree\Actor\Map\Repository\Handler
-    public: false
-    shared: false
-    calls:
-      - [setActorMapRepository, ['@Neighborhoods\BuphaloTemplateTree\Actor\Map\RepositoryInterface']]
-      - [setSearchCriteriaServerRequestBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface']]

@@ -12,7 +12,7 @@ trait AwareTrait
     public function setTokenReplacerFactory(FactoryInterface $TokenReplacerFactory): self
     {
         if ($this->hasTokenReplacerFactory()) {
-            throw new \LogicException('TokenReplacerFactory is already set.');
+            throw new \LogicException('ActorFactory is already set.');
         }
         $this->TokenReplacerFactory = $TokenReplacerFactory;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getTokenReplacerFactory(): FactoryInterface
     {
         if (!$this->hasTokenReplacerFactory()) {
-            throw new \LogicException('TokenReplacerFactory is not set.');
+            throw new \LogicException('ActorFactory is not set.');
         }
 
         return $this->TokenReplacerFactory;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetTokenReplacerFactory(): self
     {
         if (!$this->hasTokenReplacerFactory()) {
-            throw new \LogicException('TokenReplacerFactory is not set.');
+            throw new \LogicException('ActorFactory is not set.');
         }
         unset($this->TokenReplacerFactory);
 

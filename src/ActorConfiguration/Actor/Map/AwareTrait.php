@@ -5,7 +5,7 @@ namespace Neighborhoods\Prefab\ActorConfiguration\Actor\Map;
 
 interface AwareTrait
 {
-    public const ACTOR_KEY = '<ActorName>/Map/AwareTrait.php';
-    public const TEMPLATE_PATH = 'Actor/Map/AwareTrait.php';
+    public const ACTOR_KEY = '<PrimaryActorName>/Map/AwareTrait.php';
+    public const TEMPLATE_PATH = 'PrimaryActorName/Map/AwareTrait.php';
     public const ANNOTATION_PROCESSORS = [];
 }

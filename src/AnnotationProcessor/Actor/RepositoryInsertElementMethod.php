@@ -21,18 +21,18 @@ class RepositoryInsertElementMethod implements AnnotationProcessorInterface
     public const STATIC_CONTEXT_RECORD_KEY_NAME = 'name';
 
     protected const CREATE_NAMED_PARAMETER_SIMPLE_PROPERTY_PATTERN = <<< EOF
-     \$values[ActorInterface::PROP_%s] = 
-            \$queryBuilder->createNamedParameter(\$Actor->get%s());
+     \$values[PrimaryActorNameInterface::PROP_%s] = 
+            \$queryBuilder->createNamedParameter(\$PrimaryActorName->get%s());
 EOF;
 
     protected const CREATE_NAMED_PARAMETER_COMPLEX_PROPERTY_PATTERN = <<< EOF
-     \$values[ActorInterface::PROP_%s] = 
-            \$queryBuilder->createNamedParameter(json_encode(\$Actor->get%s()));
+     \$values[PrimaryActorNameInterface::PROP_%s] = 
+            \$queryBuilder->createNamedParameter(json_encode(\$PrimaryActorName->get%s()));
 EOF;
 
     protected const NULLABLE_PROPERTY_CONDITION_PATTERN = <<< EOF
      
-        if (\$Actor->has%s()) {
+        if (\$PrimaryActorName->has%s()) {
             %s
         }
 EOF;
