@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getPrimaryActorNameMapRepository(): RepositoryInterface
     {
         if (!$this->hasPrimaryActorNameMapRepository()) {
-            throw new \LogicException('ActorMapRepository is not set.');
+            throw new \LogicException('PrimaryActorNameMapRepository is not set.');
         }
 
         return $this->PrimaryActorNameMapRepository;
