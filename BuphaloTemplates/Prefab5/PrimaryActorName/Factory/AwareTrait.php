@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetPrimaryActorNameFactory(): self
     {
         if (!$this->hasPrimaryActorNameFactory()) {
-            throw new \LogicException('ActorFactory is not set.');
+            throw new \LogicException('PrimaryActorNameFactory is not set.');
         }
         unset($this->PrimaryActorNameFactory);
 

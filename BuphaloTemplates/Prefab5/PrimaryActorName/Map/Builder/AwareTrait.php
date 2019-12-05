@@ -12,7 +12,7 @@ trait AwareTrait
     public function setPrimaryActorNameMapBuilder(BuilderInterface $PrimaryActorNameMapBuilder): self
     {
         if ($this->hasPrimaryActorNameMapBuilder()) {
-            throw new \LogicException('ActorMapBuilder is already set.');
+            throw new \LogicException('PrimaryActorNameMapBuilder is already set.');
         }
         $this->PrimaryActorNameMapBuilder = $PrimaryActorNameMapBuilder;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getPrimaryActorNameMapBuilder(): BuilderInterface
     {
         if (!$this->hasPrimaryActorNameMapBuilder()) {
-            throw new \LogicException('ActorMapBuilder is not set.');
+            throw new \LogicException('PrimaryActorNameMapBuilder is not set.');
         }
 
         return $this->PrimaryActorNameMapBuilder;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetPrimaryActorNameMapBuilder(): self
     {
         if (!$this->hasPrimaryActorNameMapBuilder()) {
-            throw new \LogicException('ActorMapBuilder is not set.');
+            throw new \LogicException('PrimaryActorNameMapBuilder is not set.');
         }
         unset($this->PrimaryActorNameMapBuilder);
 
