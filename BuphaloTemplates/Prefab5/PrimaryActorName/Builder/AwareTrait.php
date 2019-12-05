@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getPrimaryActorNameBuilder(): BuilderInterface
     {
         if (!$this->hasPrimaryActorNameBuilder()) {
-            throw new \LogicException('ActorBuilder is not set.');
+            throw new \LogicException('PrimaryActorNameBuilder is not set.');
         }
 
         return $this->PrimaryActorNameBuilder;
