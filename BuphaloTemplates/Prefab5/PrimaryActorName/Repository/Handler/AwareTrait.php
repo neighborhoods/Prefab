@@ -13,7 +13,7 @@ trait AwareTrait
     public function setPrimaryActorNameMapRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\Template\Actor\Map\Repository\HandlerInterface $PrimaryActorNameMapRepositoryHandler) : self
     {
         if ($this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('ActorMapRepositoryHandler is already set.');
+            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is already set.');
         }
         $this->PrimaryActorNameMapRepositoryHandler = $PrimaryActorNameMapRepositoryHandler;
 
@@ -46,4 +46,3 @@ trait AwareTrait
 
 
 }
-
