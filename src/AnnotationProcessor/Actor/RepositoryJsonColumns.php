@@ -16,7 +16,7 @@ class RepositoryJsonColumns implements AnnotationProcessorInterface
     public const ACTOR_PROPERTY_KEY_DATA_TYPE = 'data_type';
     public const ACTOR_PROPERTY_KEY_NAME = 'name';
 
-    protected const JSON_COLUMN_ARRAY_ITEM_PATTERN = "\t\tActorInterface::PROP_%s,\n";
+    protected const JSON_COLUMN_ARRAY_ITEM_PATTERN = "\t\tPrimaryActorNameInterface::PROP_%s,\n";
 
     protected $context;
 

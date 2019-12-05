@@ -13,7 +13,7 @@ class RepositoryUpdateElementIdentityField implements AnnotationProcessorInterfa
     public const KEY_IDENTITY_FIELD = 'identity_field';
 
     protected const WHERE_CLAUSE_IDENTITY_FIELD_PATTERN = <<< EOF
-        ActorInterface::PROP_%s, \$PrimaryActorName->get%s()
+        PrimaryActorNameInterface::PROP_%s, \$PrimaryActorName->get%s()
 EOF;
 
     protected $context;
