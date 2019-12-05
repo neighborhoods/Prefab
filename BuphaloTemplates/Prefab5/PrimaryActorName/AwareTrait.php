@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetPrimaryActorName(): self
     {
         if (!$this->hasPrimaryActorName()) {
-            throw new \LogicException('Actor is not set.');
+            throw new \LogicException('PrimaryActorName is not set.');
         }
         unset($this->PrimaryActorName);
 
