@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getPrimaryActorNameBuilderFactory(): FactoryInterface
     {
         if (!$this->hasPrimaryActorNameBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is not set.');
+            throw new \LogicException('PrimaryActorNameBuilderFactory is not set.');
         }
 
         return $this->PrimaryActorNameBuilderFactory;
