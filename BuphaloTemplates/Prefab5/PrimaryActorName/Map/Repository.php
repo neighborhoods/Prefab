@@ -85,7 +85,7 @@ class Repository implements RepositoryInterface
         $queryBuilder->execute();
         $lastInsertId = $queryBuilder->getConnection()->lastInsertId();
         if (!is_numeric($lastInsertId)) {
-            throw new \LogicException('Actor inserted with non-numeric ID: ' . $lastInsertId);
+            throw new \LogicException('PrimaryActorName inserted with non-numeric ID: ' . $lastInsertId);
         }
 
         return $PrimaryActorName;
