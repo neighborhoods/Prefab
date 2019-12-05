@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetPrimaryActorNameBuilderFactory(): self
     {
         if (!$this->hasPrimaryActorNameBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is not set.');
+            throw new \LogicException('PrimaryActorNameBuilderFactory is not set.');
         }
         unset($this->PrimaryActorNameBuilderFactory);
 
