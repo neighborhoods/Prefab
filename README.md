@@ -1,7 +1,41 @@
 # Prefab
 A code generation tool. Takes the busywork out of building strongly-typed, patterned HTTP applications.
 
+## Table of Contents
+
+- [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Running Prefab](#running-prefab)
+    - [Prefab Fitness](#prefab-fitness)
+    - [Prerequisites](#prerequisites)
+- [Prefab Definition File Specification](#prefab-definition-file-specification)
+    - [Example Prefab Definition File](#example-prefab-definition-file)
+- [Search Criteria](#search-criteria)
+    - [Filters](#filters)
+    - [Sort Order](#sort-order)
+    - [Pagination](#pagination)
+- [Supporting Actor Groups](#supporting-actor-groups)
+- [Subset Container Buildable Directories](#subset-container-buildable-directories)
+- [Semantic Versioning](#semantic-versioning)
+- [Debug Mode](#debug-mode)
+
 ## Getting Started
+
+### Installation
+
+Prefab can be installed using Composer:
+
+`composer require neighborhoods/prefab`
+
+### Running Prefab
+- In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
+- Create your `Actor.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
+- From the root of your project run `./vendor/bin/prefab`
+    - This will add all of the supporting files needed to create a working API endpoint
+
+### Prefab Fitness
+
+To see working examples on how you can use Prefab, check out the [Prefab Fitness](https://github.com/neighborhoods/PrefabFitness) repository for examples with fully self-contained environments that you can run locally. 
 
 ### Prerequisites
 
@@ -45,16 +79,6 @@ Prefab puts an extremely high focus on performance.  One of the ways Prefab achi
 
 Note: Since search criteria allows you to select which data you would like to return, a single materialized view with a superset of all data returned by your HTTP endpoints can be used.
 
-### Running Prefab
-- In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
-- Create your `Actor.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
-- From the root of your project run `./vendor/bin/prefab`
-    - This will add all of the supporting files needed to create a working API endpoint
-
-### Prefab Use Cases
-
-Working examples of Prefab can be found in the [PrefabFitness repository](https://github.com/neighborhoods/PrefabFitness). 
-
 ## Prefab Definition File Specification
 
 The purpose of this document is to define the components needed to generate an HTTP endpoint for an actor from a `.prefab.definition.yml` file
@@ -95,7 +119,7 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
             - If not set, defaults to false
                 
 
-### Example structure of a Prefab definition file:
+### Example Prefab Definition File:
 
 Filename: `User.prefab.definition.yml`
 ```yaml
@@ -300,8 +324,3 @@ Since Prefab is a code generation tool that allows users to override specific fi
 
 ## Debug Mode
 Debug mode can be enabled by setting the environment variable `DEBUG_MODE=true`. Enabling debug mode will output additional details about exceptions and errors thrown during HTTP requests.  Note that this requires a valid container to be built in order to be used. If there is an error during container building (eg. A missing Symfony service file), you will not have the additional visibility provided by debug mode.
-
-## Fitness
-In order to capture the use cases for this product and to ensure this product is fit to handle each use case, every codebase that is designed to be composed into another codebase to perform useful work MUST have an accompanying `Fitness` repository.
-
-The `Fitness` repository for `Prefab` is located at [`PrefabFitness`](https://github.com/neighborhoods/PrefabFitness).
