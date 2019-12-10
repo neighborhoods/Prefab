@@ -29,7 +29,7 @@ Prefab can be installed using Composer:
 
 ### Running Prefab
 - In your composer file, ensure you have your project name defined. Use the `composer-example.json` file, found in the root of Prefab, as a template
-- Create your `Actor.prefab.definition.yml` file as outlined [below](#Prefab Definition File Specification).
+- Create your `Actor.prefab.definition.yml` file as outlined [below](#prefab-definition-file-specification).
 - From the root of your project run `./vendor/bin/prefab`
     - This will add all of the supporting files needed to create a working API endpoint
 
