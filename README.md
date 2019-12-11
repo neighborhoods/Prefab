@@ -146,28 +146,28 @@ constants:
   - 3
   - TEST
 properties:
-id:
-  data_type: int
-  record_key: id
-  nullable: false
-  created_on_insert: true
-email:
-  data_type: string
-  record_key: email
-  nullable: true
-first_name:
-  data_type: string
-  record_key: first_name
-  nullable: false
-last_name:
-  data_type: string
-  record_key: last_name
-  nullable: false
-created_at:
-  data_type: string
-  record_key: created_at
-  nullable: false
-  created_on_insert: true
+  id:
+    data_type: int
+    record_key: id
+    nullable: false
+    created_on_insert: true
+  email:
+    data_type: string
+    record_key: email
+    nullable: true
+  first_name:
+    data_type: string
+    record_key: first_name
+    nullable: false
+  last_name:
+    data_type: string
+    record_key: last_name
+    nullable: false
+  created_at:
+    data_type: string
+    record_key: created_at
+    nullable: false
+    created_on_insert: true
 ```
 ## Search Criteria
 
