@@ -128,7 +128,7 @@ class Repository implements RepositoryInterface
     protected function getConnection() : Connection
     {
         if ($this->connection === null) {
-            $this->connection = $this->getDoctrineDBALConnectionDecoratorRepository()->get(Doctrine\DBAL\Connection\DecoratorInterface::ID_CORE)
+            $this->connection = $this->getDoctrineDBALConnectionDecoratorRepository()->get(Prefab5\Doctrine\DBAL\Connection\DecoratorInterface::ID_CORE)
                 ->getDoctrineConnection();
         }
 
