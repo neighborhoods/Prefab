@@ -28,6 +28,14 @@ class Builder implements BuilderInterface
         ActorConfiguration\Actor\FactoryInterface::class,
         ActorConfiguration\Actor\FactoryServiceFile::class,
         ActorConfiguration\Actor\Factory\AwareTrait::class,
+        ActorConfiguration\Actor\Builder::class,
+        ActorConfiguration\Actor\BuilderInterface::class,
+        ActorConfiguration\Actor\BuilderServiceFile::class,
+        ActorConfiguration\Actor\Builder\AwareTrait::class,
+        ActorConfiguration\Actor\Builder\Factory::class,
+        ActorConfiguration\Actor\Builder\FactoryInterface::class,
+        ActorConfiguration\Actor\Builder\FactoryServiceFile::class,
+        ActorConfiguration\Actor\Builder\Factory\AwareTrait::class,
     ];
 
     public function build() : FabricationSpecificationInterface
