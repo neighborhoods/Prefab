@@ -22,7 +22,7 @@ class Builder implements BuilderInterface
     protected $actorCollection = [
         ActorConfiguration\Actor::class,
         ActorConfiguration\ActorInterface::class,
-        ActorConfiguration\ActorServiceFile::class,
+        ActorConfiguration\Actor\ActorServiceFile::class,
         ActorConfiguration\Actor\AwareTrait::class,
         ActorConfiguration\Actor\Factory::class,
         ActorConfiguration\Actor\FactoryInterface::class,
