@@ -5,5 +5,5 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 
 interface ExceptionHandlerInterface
 {
-    public function __invoke(\Throwable $throwable): ExceptionHandlerInterface;
+    public function __invoke(\Throwable $throwable): void;
 }
