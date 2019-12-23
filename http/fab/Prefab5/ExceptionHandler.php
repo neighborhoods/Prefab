@@ -24,6 +24,6 @@ class ExceptionHandler implements ExceptionHandlerInterface
                 ->critical($throwable->__toString() . PHP_EOL);
         }
 
-        return $this;
+        exit(255);
     }
 }
