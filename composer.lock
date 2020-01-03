@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "2cb4b8ee17d740bfbfb9fa3a206470c3",
-    "content-hash": "b1daa0e6445cc7afe81794ee958c94f0",
+    "content-hash": "c4424d0ed3b4219e660aafbdec847d01",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -37,7 +36,7 @@
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
             "abandoned": "psr/container",
-            "time": "2017-02-14 19:40:03"
+            "time": "2017-02-14T19:40:03+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -119,7 +118,7 @@
                 "redis",
                 "xcache"
             ],
-            "time": "2019-11-29 15:36:20"
+            "time": "2019-11-29T15:36:20+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -211,7 +210,7 @@
                 "sqlserver",
                 "sqlsrv"
             ],
-            "time": "2019-11-03 16:50:43"
+            "time": "2019-11-03T16:50:43+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -287,7 +286,7 @@
                 "event system",
                 "events"
             ],
-            "time": "2019-11-10 09:48:07"
+            "time": "2019-11-10T09:48:07+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -337,7 +336,7 @@
                 "request",
                 "response"
             ],
-            "time": "2018-11-19 16:19:58"
+            "time": "2018-11-19T16:19:58+00:00"
         },
         {
             "name": "jsoumelidis/zend-sf-di-config",
@@ -381,14 +380,14 @@
                 "symfony di",
                 "zf"
             ],
-            "time": "2018-04-11 15:48:02"
+            "time": "2018-04-11T15:48:02+00:00"
         },
         {
             "name": "neighborhoods/buphalo",
             "version": "1.0.0-RC7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/neighborhoods/Buphalo.git",
+                "url": "git@github.com:neighborhoods/Buphalo.git",
                 "reference": "69ce8ad633a749f43e618e612c6b1702df690485"
             },
             "dist": {
@@ -439,7 +438,7 @@
                 "Buphalo",
                 "Code Generation"
             ],
-            "time": "2019-11-19 22:52:14"
+            "time": "2019-11-19T22:52:14+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -485,7 +484,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2018-02-13 20:26:39"
+            "time": "2018-02-13T20:26:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -531,7 +530,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/container",
@@ -580,7 +579,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14 16:28:37"
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/http-message",
@@ -630,7 +629,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/http-server-handler",
@@ -683,7 +682,7 @@
                 "response",
                 "server"
             ],
-            "time": "2018-10-30 16:46:14"
+            "time": "2018-10-30T16:46:14+00:00"
         },
         {
             "name": "psr/http-server-middleware",
@@ -736,7 +735,7 @@
                 "request",
                 "response"
             ],
-            "time": "2018-10-30 17:12:04"
+            "time": "2018-10-30T17:12:04+00:00"
         },
         {
             "name": "psr/log",
@@ -783,7 +782,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2019-11-01 11:05:21"
+            "time": "2019-11-01T11:05:21+00:00"
         },
         {
             "name": "spatie/array-to-xml",
@@ -833,7 +832,7 @@
                 "convert",
                 "xml"
             ],
-            "time": "2019-08-21 06:32:31"
+            "time": "2019-08-21T06:32:31+00:00"
         },
         {
             "name": "symfony/cache",
@@ -912,7 +911,7 @@
                 "caching",
                 "psr6"
             ],
-            "time": "2019-12-12 13:03:32"
+            "time": "2019-12-12T13:03:32+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -970,7 +969,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2019-11-18 17:27:11"
+            "time": "2019-11-18T17:27:11+00:00"
         },
         {
             "name": "symfony/config",
@@ -1034,7 +1033,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-18 12:00:29"
+            "time": "2019-12-18T12:00:29+00:00"
         },
         {
             "name": "symfony/console",
@@ -1110,7 +1109,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-17 10:32:23"
+            "time": "2019-12-17T10:32:23+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -1183,7 +1182,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-19 16:00:02"
+            "time": "2019-12-19T16:00:02+00:00"
         },
         {
             "name": "symfony/expression-language",
@@ -1234,7 +1233,7 @@
             ],
             "description": "Symfony ExpressionLanguage Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-10 10:33:21"
+            "time": "2019-12-10T10:33:21+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -1284,7 +1283,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-26 23:16:41"
+            "time": "2019-11-26T23:16:41+00:00"
         },
         {
             "name": "symfony/finder",
@@ -1333,7 +1332,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-17 21:56:56"
+            "time": "2019-11-17T21:56:56+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1391,7 +1390,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-11-27 13:56:44"
+            "time": "2019-11-27T13:56:44+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1450,7 +1449,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-11-27 14:18:11"
+            "time": "2019-11-27T14:18:11+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
@@ -1508,7 +1507,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-11-27 16:25:15"
+            "time": "2019-11-27T16:25:15+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -1566,7 +1565,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2019-11-18 17:27:11"
+            "time": "2019-11-18T17:27:11+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -1626,7 +1625,7 @@
                 "instantiate",
                 "serialize"
             ],
-            "time": "2019-12-01 08:48:26"
+            "time": "2019-12-01T08:48:26+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -1685,7 +1684,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-10 10:33:21"
+            "time": "2019-12-10T10:33:21+00:00"
         },
         {
             "name": "willdurand/negotiation",
@@ -1737,7 +1736,7 @@
                 "header",
                 "negotiation"
             ],
-            "time": "2017-05-14 17:21:12"
+            "time": "2017-05-14T17:21:12+00:00"
         },
         {
             "name": "zendframework/zend-code",
@@ -1794,7 +1793,8 @@
                 "code",
                 "zf"
             ],
-            "time": "2019-12-10 19:21:15"
+            "abandoned": "laminas/laminas-code",
+            "time": "2019-12-10T19:21:15+00:00"
         },
         {
             "name": "zendframework/zend-component-installer",
@@ -1846,20 +1846,21 @@
                 "plugin",
                 "zf"
             ],
-            "time": "2019-09-04 19:10:43"
+            "abandoned": "laminas/laminas-component-installer",
+            "time": "2019-09-04T19:10:43+00:00"
         },
         {
             "name": "zendframework/zend-config-aggregator",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-config-aggregator.git",
-                "reference": "2a08547b64119a73b6700bde3301d978258dfcb5"
+                "reference": "8f8568e8a618684c3bd778df75f5bc757b76decd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-config-aggregator/zipball/2a08547b64119a73b6700bde3301d978258dfcb5",
-                "reference": "2a08547b64119a73b6700bde3301d978258dfcb5",
+                "url": "https://api.github.com/repos/zendframework/zend-config-aggregator/zipball/8f8568e8a618684c3bd778df75f5bc757b76decd",
+                "reference": "8f8568e8a618684c3bd778df75f5bc757b76decd",
                 "shasum": ""
             },
             "require": {
@@ -1868,7 +1869,6 @@
             },
             "require-dev": {
                 "malukenho/docheader": "^0.1.5",
-                "mikey179/vfsstream": "^1.6",
                 "phpunit/phpunit": "^5.7.21 || ^6.3",
                 "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-config": "^2.6 || ^3.0",
@@ -1882,8 +1882,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev",
-                    "dev-develop": "1.2.x-dev"
+                    "dev-master": "1.2.x-dev",
+                    "dev-develop": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1901,7 +1901,8 @@
                 "config-aggregator",
                 "zf"
             ],
-            "time": "2018-04-04 20:37:31"
+            "abandoned": "laminas/laminas-config-aggregator",
+            "time": "2019-12-27T22:57:49+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -1963,7 +1964,8 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2019-08-06 17:53:53"
+            "abandoned": "laminas/laminas-diactoros",
+            "time": "2019-08-06T17:53:53+00:00"
         },
         {
             "name": "zendframework/zend-escaper",
@@ -2008,7 +2010,8 @@
                 "escaper",
                 "zf"
             ],
-            "time": "2019-09-05 20:03:20"
+            "abandoned": "laminas/laminas-escaper",
+            "time": "2019-09-05T20:03:20+00:00"
         },
         {
             "name": "zendframework/zend-eventmanager",
@@ -2062,7 +2065,8 @@
                 "events",
                 "zf2"
             ],
-            "time": "2018-04-25 15:33:34"
+            "abandoned": "laminas/laminas-eventmanager",
+            "time": "2018-04-25T15:33:34+00:00"
         },
         {
             "name": "zendframework/zend-expressive",
@@ -2154,7 +2158,8 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-11-08 15:30:09"
+            "abandoned": "mezzio/mezzio",
+            "time": "2018-11-08T15:30:09+00:00"
         },
         {
             "name": "zendframework/zend-expressive-fastroute",
@@ -2221,7 +2226,8 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-06-20 13:58:31"
+            "abandoned": "mezzio/mezzio-fastroute",
+            "time": "2019-06-20T13:58:31+00:00"
         },
         {
             "name": "zendframework/zend-expressive-helpers",
@@ -2281,7 +2287,8 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-03-12 20:43:27"
+            "abandoned": "mezzio/mezzio-helpers",
+            "time": "2019-03-12T20:43:27+00:00"
         },
         {
             "name": "zendframework/zend-expressive-router",
@@ -2344,7 +2351,8 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-10-16 20:06:55"
+            "abandoned": "mezzio/mezzio-router",
+            "time": "2019-10-16T20:06:55+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
@@ -2397,20 +2405,21 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-06-20 14:05:59"
+            "abandoned": "mezzio/mezzio-template",
+            "time": "2019-06-20T14:05:59+00:00"
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.11.1",
+            "version": "2.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "76000da8490b8685d63ff6f6ff8eefa459f6e9e7"
+                "reference": "e15e0ce45a2a4f642cd0b7b4f4d4d0366b729a1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/76000da8490b8685d63ff6f6ff8eefa459f6e9e7",
-                "reference": "76000da8490b8685d63ff6f6ff8eefa459f6e9e7",
+                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/e15e0ce45a2a4f642cd0b7b4f4d4d0366b729a1a",
+                "reference": "e15e0ce45a2a4f642cd0b7b4f4d4d0366b729a1a",
                 "shasum": ""
             },
             "require": {
@@ -2452,7 +2461,8 @@
                 "zend",
                 "zf"
             ],
-            "time": "2019-12-04 23:02:34"
+            "abandoned": "laminas/laminas-http",
+            "time": "2019-12-30T20:47:33+00:00"
         },
         {
             "name": "zendframework/zend-httphandlerrunner",
@@ -2507,7 +2517,8 @@
                 "psr-7",
                 "zf"
             ],
-            "time": "2019-02-19 18:20:34"
+            "abandoned": "laminas/laminas-httphandlerrunner",
+            "time": "2019-02-19T18:20:34+00:00"
         },
         {
             "name": "zendframework/zend-loader",
@@ -2552,20 +2563,21 @@
                 "loader",
                 "zf"
             ],
-            "time": "2019-09-04 19:38:14"
+            "abandoned": "laminas/laminas-loader",
+            "time": "2019-09-04T19:38:14+00:00"
         },
         {
             "name": "zendframework/zend-problem-details",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-problem-details.git",
-                "reference": "ce64d5440e307aaa617a0315514175426239527a"
+                "reference": "c6a6ce5914fe1a17a657d425e015979f934f484b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-problem-details/zipball/ce64d5440e307aaa617a0315514175426239527a",
-                "reference": "ce64d5440e307aaa617a0315514175426239527a",
+                "url": "https://api.github.com/repos/zendframework/zend-problem-details/zipball/c6a6ce5914fe1a17a657d425e015979f934f484b",
+                "reference": "c6a6ce5914fe1a17a657d425e015979f934f484b",
                 "shasum": ""
             },
             "require": {
@@ -2588,8 +2600,8 @@
                     "config-provider": "Zend\\ProblemDetails\\ConfigProvider"
                 },
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -2609,7 +2621,8 @@
                 "rest",
                 "zf"
             ],
-            "time": "2019-01-09 14:13:40"
+            "abandoned": "mezzio/mezzio-problem-details",
+            "time": "2019-12-30T20:17:53+00:00"
         },
         {
             "name": "zendframework/zend-stdlib",
@@ -2655,7 +2668,8 @@
                 "stdlib",
                 "zf"
             ],
-            "time": "2018-08-28 21:34:05"
+            "abandoned": "laminas/laminas-stdlib",
+            "time": "2018-08-28T21:34:05+00:00"
         },
         {
             "name": "zendframework/zend-stratigility",
@@ -2721,7 +2735,8 @@
                 "psr-7",
                 "zf"
             ],
-            "time": "2019-06-12 15:22:39"
+            "abandoned": "laminas/laminas-stratigility",
+            "time": "2019-06-12T15:22:39+00:00"
         },
         {
             "name": "zendframework/zend-uri",
@@ -2768,29 +2783,32 @@
                 "uri",
                 "zf"
             ],
-            "time": "2019-10-07 13:35:33"
+            "abandoned": "laminas/laminas-uri",
+            "time": "2019-10-07T13:35:33+00:00"
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.12.2",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "fd24920c2afcf2a70d11f67c3457f8f509453a62"
+                "reference": "b54acef1f407741c5347f2a97f899ab21f2229ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/fd24920c2afcf2a70d11f67c3457f8f509453a62",
-                "reference": "fd24920c2afcf2a70d11f67c3457f8f509453a62",
+                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/b54acef1f407741c5347f2a97f899ab21f2229ef",
+                "reference": "b54acef1f407741c5347f2a97f899ab21f2229ef",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "zendframework/zend-stdlib": "^3.2.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0.8 || ^5.7.15",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0",
                 "zendframework/zend-cache": "^2.6.1",
                 "zendframework/zend-coding-standard": "~1.0.0",
@@ -2818,8 +2836,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.12.x-dev",
-                    "dev-develop": "2.13.x-dev"
+                    "dev-master": "2.13.x-dev",
+                    "dev-develop": "2.14.x-dev"
                 },
                 "zf": {
                     "component": "Zend\\Validator",
@@ -2841,7 +2859,8 @@
                 "validator",
                 "zf"
             ],
-            "time": "2019-10-29 08:33:25"
+            "abandoned": "laminas/laminas-validator",
+            "time": "2019-12-28T04:07:18+00:00"
         }
     ],
     "packages-dev": [
@@ -2899,7 +2918,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-10-21 16:45:58"
+            "time": "2019-10-21T16:45:58+00:00"
         },
         {
             "name": "mikey179/vfsstream",
@@ -2945,7 +2964,7 @@
             ],
             "description": "Virtual file system to mock the real file system in unit tests.",
             "homepage": "http://vfs.bovigo.org/",
-            "time": "2019-10-30 15:31:00"
+            "time": "2019-10-30T15:31:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2993,7 +3012,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2019-12-15 19:12:40"
+            "time": "2019-12-15T19:12:40+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3048,7 +3067,7 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2018-07-08 19:23:20"
+            "time": "2018-07-08T19:23:20+00:00"
         },
         {
             "name": "phar-io/version",
@@ -3095,7 +3114,7 @@
                 }
             ],
             "description": "Library for handling version information and constraints",
-            "time": "2018-07-08 19:19:57"
+            "time": "2018-07-08T19:19:57+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3147,20 +3166,20 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2018-08-07 13:53:10"
+            "time": "2018-08-07T13:53:10+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.3.2",
+            "version": "4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "b83ff7cfcfee7827e1e78b637a5904fe6a96698e"
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/b83ff7cfcfee7827e1e78b637a5904fe6a96698e",
-                "reference": "b83ff7cfcfee7827e1e78b637a5904fe6a96698e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/da3fd972d6bafd628114f7e7e036f45944b62e9c",
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c",
                 "shasum": ""
             },
             "require": {
@@ -3172,6 +3191,7 @@
             "require-dev": {
                 "doctrine/instantiator": "^1.0.5",
                 "mockery/mockery": "^1.0",
+                "phpdocumentor/type-resolver": "0.4.*",
                 "phpunit/phpunit": "^6.4"
             },
             "type": "library",
@@ -3198,7 +3218,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2019-09-12 14:27:41"
+            "time": "2019-12-28T18:55:12+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3245,20 +3265,20 @@
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-            "time": "2019-08-22 18:11:29"
+            "time": "2019-08-22T18:11:29+00:00"
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.10.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
+                "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
+                "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
                 "shasum": ""
             },
             "require": {
@@ -3308,7 +3328,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-12-17 16:54:23"
+            "time": "2019-12-22T21:05:45+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3371,7 +3391,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-31 16:06:48"
+            "time": "2018-10-31T16:06:48+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3421,7 +3441,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-09-13 20:33:42"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3462,7 +3482,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -3511,7 +3531,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2019-06-07 04:22:29"
+            "time": "2019-06-07T04:22:29+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -3560,7 +3580,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2019-09-17 06:23:10"
+            "time": "2019-09-17T06:23:10+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -3644,7 +3664,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-06 05:14:37"
+            "time": "2019-12-06T05:14:37+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3689,7 +3709,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 06:30:41"
+            "time": "2017-03-04T06:30:41+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -3753,7 +3773,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-07-12 15:12:46"
+            "time": "2018-07-12T15:12:46+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -3809,7 +3829,7 @@
                 "unidiff",
                 "unified diff"
             ],
-            "time": "2019-02-04 06:01:07"
+            "time": "2019-02-04T06:01:07+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -3862,7 +3882,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2019-11-20 08:46:58"
+            "time": "2019-11-20T08:46:58+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -3929,7 +3949,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2019-09-14 09:02:43"
+            "time": "2019-09-14T09:02:43+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -3980,7 +4000,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-04-27 15:39:26"
+            "time": "2017-04-27T15:39:26+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -4027,7 +4047,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-08-03 12:35:26"
+            "time": "2017-08-03T12:35:26+00:00"
         },
         {
             "name": "sebastian/object-reflector",
@@ -4072,7 +4092,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-03-29 09:07:27"
+            "time": "2017-03-29T09:07:27+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -4125,7 +4145,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-03 06:23:57"
+            "time": "2017-03-03T06:23:57+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -4167,7 +4187,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2018-10-04 04:07:39"
+            "time": "2018-10-04T04:07:39+00:00"
         },
         {
             "name": "sebastian/version",
@@ -4210,7 +4230,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -4250,7 +4270,7 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
-            "time": "2019-06-13 22:48:21"
+            "time": "2019-06-13T22:48:21+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4298,7 +4318,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2019-11-24 13:36:37"
+            "time": "2019-11-24T13:36:37+00:00"
         }
     ],
     "aliases": [],
