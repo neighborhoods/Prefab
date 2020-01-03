@@ -7,7 +7,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
 {
     use Logger\AwareTrait;
 
-    public function __invoke(\Throwable $throwable) : ExceptionHandlerInterface
+    public function __invoke(\Throwable $throwable) : void
     {
         $newRelic = new NewRelic();
 
@@ -24,6 +24,6 @@ class ExceptionHandler implements ExceptionHandlerInterface
                 ->critical($throwable->__toString() . PHP_EOL);
         }
 
-        return $this;
+        exit(255);
     }
 }
