@@ -54,9 +54,9 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
         }
 
         return
-            implode($constants, PHP_EOL) .
+            implode(PHP_EOL, $constants) .
             PHP_EOL . PHP_EOL .
-            implode($accessors, PHP_EOL . PHP_EOL);
+            implode(PHP_EOL . PHP_EOL, $accessors);
     }
 
     private function buildUserDefinedConstant(string $name, $value) : string
