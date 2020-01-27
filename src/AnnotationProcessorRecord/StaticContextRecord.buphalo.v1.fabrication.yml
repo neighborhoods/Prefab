@@ -20,7 +20,7 @@ actors:
           - name: staticContextRecord
             type: array
   <PrimaryActorName>/AwareTrait.php:
-    template: PrimaryActorName/Awaretrait.php
+    template: PrimaryActorName/AwareTrait.php
   <PrimaryActorName>/Factory.php:
     template: PrimaryActorName/Factory.php
   <PrimaryActorName>/Factory.service.yml:
@@ -28,7 +28,7 @@ actors:
   <PrimaryActorName>/FactoryInterface.php:
     template: PrimaryActorName/FactoryInterface.php
   <PrimaryActorName>/Factory/AwareTrait.php:
-    template: PrimaryActorName/Factory/Awaretrait.php
+    template: PrimaryActorName/Factory/AwareTrait.php
   <PrimaryActorName>/Map/Factory.php:
     template: PrimaryActorName/Map/Factory.php
   <PrimaryActorName>/Map/Factory.service.yml:
