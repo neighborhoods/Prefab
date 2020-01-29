@@ -43,7 +43,7 @@ class DAO implements AnnotationProcessorInterface
             $accessors[] = $this->buildAccessors($name, $type);
         }
 
-        return implode($properties, PHP_EOL . PHP_EOL) . PHP_EOL . PHP_EOL . implode($accessors, PHP_EOL . PHP_EOL);
+        return implode(PHP_EOL . PHP_EOL, $properties) . PHP_EOL . PHP_EOL . implode(PHP_EOL . PHP_EOL, $accessors);
     }
 
     private function buildProperty(string $name, string $type): string
