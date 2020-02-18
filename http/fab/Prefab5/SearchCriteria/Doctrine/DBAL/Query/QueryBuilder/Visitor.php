@@ -174,6 +174,10 @@ class Visitor implements VisitorInterface
 
     public function setCurrentPage(int $currentPage): SearchCriteria\VisitorInterface
     {
+        if ($this->getQueryBuilder()->getMaxResults() === null) {
+            throw new \LogicException('You must call setPageSize before you call setCurrentPage.');
+        }
+
         $this->getQueryBuilder()->setFirstResult($this->getQueryBuilder()->getMaxResults() * $currentPage);
 
         return $this;
