@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\BuilderInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FilterInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter;
@@ -31,9 +32,27 @@ class SearchCriteria implements SearchCriteriaInterface
     /** @var int */
     protected $currentPage;
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
-        return get_object_vars($this);
+        $json = [];
+
+        if (null !== $this->filters) {
+            $json[BuilderInterface::FILTERS] = $this->getFilters();
+        }
+
+        if (null !== $this->sortOrders) {
+            $json[BuilderInterface::SORT_ORDER] = $this->getSortOrders();
+        }
+
+        if (null !== $this->pageSize) {
+            $json[BuilderInterface::PAGE_SIZE] = $this->pageSize;
+        }
+
+        if (null !== $this->currentPage) {
+            $json[BuilderInterface::CURRENT_PAGE] = $this->currentPage;
+        }
+
+        return array_filter($json);
     }
 
     public function addFilter(FilterInterface $filter): SearchCriteriaInterface
