@@ -41,7 +41,9 @@ class Repository implements RepositoryInterface
 
         foreach ($records as $key => $record) {
             foreach (self::JSON_COLUMNS as $jsonColumn) {
-                $records[$key][$jsonColumn] = json_decode($records[$key][$jsonColumn], true);
+                if (isset($records[$key][$jsonColumn]) && $records[$key][$jsonColumn] !== null) {
+                    $records[$key][$jsonColumn] = json_decode($records[$key][$jsonColumn], true);
+                }
             }
         }
 
