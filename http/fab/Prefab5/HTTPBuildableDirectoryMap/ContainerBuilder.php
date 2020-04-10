@@ -5,7 +5,6 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP;
 
 class ContainerBuilder implements ContainerBuilderInterface
 {
@@ -21,7 +20,7 @@ class ContainerBuilder implements ContainerBuilderInterface
     public function getContainerBuilder() : Protean\Container\BuilderInterface
     {
         $this->getProteanContainerBuilder()->setContainerName(
-            'HTTP_' . str_replace('/', '_', $this->getDirectoryGroup())
+            'HTTP_' . str_replace(['/', '-'], '_', $this->getDirectoryGroup())
         );
 
         $directoryGroupRoot = explode('/', $this->getDirectoryGroup())[0];
