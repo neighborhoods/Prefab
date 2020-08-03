@@ -41,7 +41,6 @@ def generate(out, tableName, fields) {
     }
   }
 
-  out.println "last_checked_prefab_version: null"
   out.println "table_name: $tableName"
   out.println "supporting_actor_group: complete"
   out.println "identity_field: $primary"
