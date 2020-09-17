@@ -23,7 +23,7 @@ class Handler implements HandlerInterface
         return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
-    protected function get() : Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface
+    protected function get() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
