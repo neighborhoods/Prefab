@@ -31,6 +31,10 @@ class Builder implements BuilderInterface
                 return $this->getFabricationSpecificationMinimalBuilderFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->build();
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_HANDLER:
+                return $this->getFabricationSpecificationMinimalBuilderFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->build();
             default:
                 throw new \RuntimeException('Invalid supporting actor group ' . $buildConfiguration->getSupportingActorGroup());
         }

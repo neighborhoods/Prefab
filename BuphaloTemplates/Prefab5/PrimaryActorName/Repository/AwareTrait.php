@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository;
+namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Repository;
 
 use Neighborhoods\BuphaloTemplateTree\PrimaryActorName\RepositoryInterface;
 
@@ -9,36 +9,36 @@ trait AwareTrait
 {
     protected $PrimaryActorNameMapRepository;
 
-    public function setPrimaryActorNameMapRepository(RepositoryInterface $PrimaryActorNameMapRepository): self
+    public function setPrimaryActorNameRepository(RepositoryInterface $PrimaryActorNameRepository): self
     {
-        if ($this->hasPrimaryActorNameMapRepository()) {
-            throw new \LogicException('PrimaryActorNameMapRepository is already set.');
+        if ($this->hasPrimaryActorNameRepository()) {
+            throw new \LogicException('PrimaryActorNameRepository is already set.');
         }
-        $this->PrimaryActorNameMapRepository = $PrimaryActorNameMapRepository;
+        $this->PrimaryActorNameRepository = $PrimaryActorNameRepository;
 
         return $this;
     }
 
-    protected function getPrimaryActorNameMapRepository(): RepositoryInterface
+    protected function getPrimaryActorNameRepository(): RepositoryInterface
     {
-        if (!$this->hasPrimaryActorNameMapRepository()) {
+        if (!$this->hasPrimaryActorNameRepository()) {
             throw new \LogicException('PrimaryActorNameMapRepository is not set.');
         }
 
         return $this->PrimaryActorNameMapRepository;
     }
 
-    protected function hasPrimaryActorNameMapRepository(): bool
+    protected function hasPrimaryActorNameRepository(): bool
     {
         return isset($this->PrimaryActorNameMapRepository);
     }
 
-    protected function unsetPrimaryActorNameMapRepository(): self
+    protected function unsetPrimaryActorNameRepository(): self
     {
-        if (!$this->hasPrimaryActorNameMapRepository()) {
-            throw new \LogicException('PrimaryActorNameMapRepository is not set.');
+        if (!$this->hasPrimaryActorNameRepository()) {
+            throw new \LogicException('PrimaryActorNameRepository is not set.');
         }
-        unset($this->PrimaryActorNameMapRepository);
+        unset($this->PrimaryActorNameRepository);
 
         return $this;
     }
