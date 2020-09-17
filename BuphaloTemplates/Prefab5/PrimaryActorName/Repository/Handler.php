@@ -2,6 +2,7 @@
 
 namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Repository;
 
+use Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface;
 use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\HTTP\SearchCriteriaBuilderException;
 use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5;
 
@@ -23,7 +24,7 @@ class Handler implements HandlerInterface
         return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
-    protected function get() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface
+    protected function get() : PrimaryActorNameInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
