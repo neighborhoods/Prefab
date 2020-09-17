@@ -213,7 +213,7 @@ class Generator implements GeneratorInterface
                 "    - [" . $verb .
                 ", [!php/const \\" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() .
                 "\\$repositoryName\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
-                "'@?" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() . "\Map\Repository\HandlerInterface'," .
+                "'@?" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() . "\\$repositoryName\HandlerInterface'," .
                 "!php/const \\" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() .
                 "\\$repositoryName\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
             $routes[] = $line;
