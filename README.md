@@ -249,6 +249,7 @@ Prefab supports generating different subsets of supporting actors to support var
         - Builder
         - Aware Traits
 - `handler` - Generates only Handler instance. This can be used in addition to Buphalo generated Actors to provide HTTP functionality.
+    See [docs/RpositoryHandlerOnly.md]
     - Included supporting actors
         - Handler
         
