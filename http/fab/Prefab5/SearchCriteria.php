@@ -10,6 +10,7 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrderInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\VisitorInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\ValidatorVisitor;
 
 class SearchCriteria implements SearchCriteriaInterface
 {
@@ -17,6 +18,7 @@ class SearchCriteria implements SearchCriteriaInterface
     use SortOrder\Map\Factory\AwareTrait;
     use Visitor\Map\Factory\AwareTrait;
     use QueryBuilder\Visitor\Factory\AwareTrait;
+    use ValidatorVisitor\Factory\AwareTrait;
 
     private const QUERY_STRING_PARAM_SEPARATOR = '&';
 
@@ -82,12 +84,18 @@ class SearchCriteria implements SearchCriteriaInterface
         return $this->sortOrders !== null;
     }
 
+    /** @todo eventually probably make this have a builder that takes factories */
     protected function getVisitors() : Visitor\MapInterface
     {
         if ($this->visitors === null) {
             $this->visitors = $this->getSearchCriteriaVisitorMapFactory()->create();
-            $doctrineQueryBuilderVisitor = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory()->create();
+
+            $doctrineQueryBuilderVisitor = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory()
+                ->create();
             $this->addVisitor($doctrineQueryBuilderVisitor);
+
+            $validatorVisitor = $this->getValidatorVisitorFactory()->create();
+            $this->addVisitor($validatorVisitor);
         }
         return $this->visitors;
     }
