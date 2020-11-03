@@ -7,6 +7,7 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FilterInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrderInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ValidatorInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\VisitorInterface;
 
 interface SearchCriteriaInterface extends \JsonSerializable
@@ -38,6 +39,8 @@ interface SearchCriteriaInterface extends \JsonSerializable
     public function addVisitor(VisitorInterface $visitor): SearchCriteriaInterface;
 
     public function getVisitor(string $identity): VisitorInterface;
+
+    public function getValidator(): ValidatorInterface;
 
     public function toQueryString(): string;
 }

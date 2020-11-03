@@ -6,11 +6,12 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FilterInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ValidatorInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Visitor;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrderInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\VisitorInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\ValidatorVisitor;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Validator;
 
 class SearchCriteria implements SearchCriteriaInterface
 {
@@ -18,7 +19,7 @@ class SearchCriteria implements SearchCriteriaInterface
     use SortOrder\Map\Factory\AwareTrait;
     use Visitor\Map\Factory\AwareTrait;
     use QueryBuilder\Visitor\Factory\AwareTrait;
-    use ValidatorVisitor\Factory\AwareTrait;
+    use Validator\Factory\AwareTrait;
 
     private const QUERY_STRING_PARAM_SEPARATOR = '&';
 
@@ -26,12 +27,14 @@ class SearchCriteria implements SearchCriteriaInterface
     protected $filters;
     /** @var SortOrder\MapInterface */
     protected $sortOrders;
-    /** @var Visitor\MapInterface */
-    protected $visitors;
     /** @var int */
     protected $pageSize;
     /** @var int */
     protected $currentPage;
+    /** @var Visitor\MapInterface */
+    protected $visitors;
+    /** @var ValidatorInterface */
+    private $validator;
 
     public function jsonSerialize()
     {
@@ -89,13 +92,9 @@ class SearchCriteria implements SearchCriteriaInterface
     {
         if ($this->visitors === null) {
             $this->visitors = $this->getSearchCriteriaVisitorMapFactory()->create();
-
             $doctrineQueryBuilderVisitor = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory()
                 ->create();
             $this->addVisitor($doctrineQueryBuilderVisitor);
-
-            $validatorVisitor = $this->getValidatorVisitorFactory()->create();
-            $this->addVisitor($validatorVisitor);
         }
         return $this->visitors;
     }
@@ -114,6 +113,14 @@ class SearchCriteria implements SearchCriteriaInterface
         }
 
         return $this->getVisitors()[$identity];
+    }
+
+    public function getValidator(): ValidatorInterface
+    {
+        if ($this->validator === null) {
+            $this->validator = $this->getValidatorFactory()->create();
+        }
+        return $this->validator;
     }
 
     public function getPageSize(): int

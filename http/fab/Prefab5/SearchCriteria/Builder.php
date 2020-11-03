@@ -6,7 +6,7 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\ValidatorVisitorInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\ValidatorInterface;
 
 class Builder implements BuilderInterface
 {
@@ -170,9 +170,7 @@ class Builder implements BuilderInterface
 
     private function validateSearchCriteria(SearchCriteriaInterface $searchCriteria): BuilderInterface
     {
-        /** @todo  */
-        /** @var ValidatorVisitorInterface $validatorVisitor */
-        $validatorVisitor = $searchCriteria->getVisitor(ValidatorVisitorInterface::class);
-        $validatorVisitor->validate($searchCriteria);
+        $validator = $searchCriteria->getValidator();
+        $validator->validate($searchCriteria);
     }
 }
