@@ -6,6 +6,7 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\ValidatorVisitorInterface;
 
 class Builder implements BuilderInterface
 {
@@ -24,6 +25,8 @@ class Builder implements BuilderInterface
         $this->hydrateSortOrder($searchCriteria);
         $this->hydratePageSize($searchCriteria);
         $this->hydrateCurrentPage($searchCriteria);
+        $this->validateSearchCriteria($searchCriteria);
+        /** @todo this doesn't need to be a visitor, it can be just the validator called here, and have decorator */
 
         return $searchCriteria;
     }
@@ -163,5 +166,13 @@ class Builder implements BuilderInterface
         }
 
         return $this;
+    }
+
+    private function validateSearchCriteria(SearchCriteriaInterface $searchCriteria): BuilderInterface
+    {
+        /** @todo  */
+        /** @var ValidatorVisitorInterface $validatorVisitor */
+        $validatorVisitor = $searchCriteria->getVisitor(ValidatorVisitorInterface::class);
+        $validatorVisitor->validate($searchCriteria);
     }
 }

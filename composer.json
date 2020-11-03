@@ -38,7 +38,8 @@
     "laminas/laminas-http": "^2.8",
     "mezzio/mezzio-problem-details": "^1.0",
     "laminas/laminas-stdlib": "^3.1",
-    "neighborhoods/buphalo": "^1.0"
+    "neighborhoods/buphalo": "^1.0",
+    "neighborhoods/exception-component": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4",

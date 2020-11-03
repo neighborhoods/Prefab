@@ -22,7 +22,7 @@ class HTTP implements HTTPInterface
             $containerBuilder = $this->getContainerBuilder();
             $application = $containerBuilder->build()->get(Application::class);
             $application->run();
-        } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
+        } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {   // @todo jiving with new validation exception?
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
             (new NewRelic())->noticeThrowable($exception);
         } catch (\Throwable $throwable) {
