@@ -7,5 +7,5 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 
 interface DecoratorInterface extends ValidatorInterface
 {
-    public function setValidator(ValidatorInterface $validator) : ValidatorInterface;
+    public function setValidator(ValidatorInterface $validator);
 }
