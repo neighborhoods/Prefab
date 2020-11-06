@@ -26,7 +26,6 @@ class Builder implements BuilderInterface
         $this->hydratePageSize($searchCriteria);
         $this->hydrateCurrentPage($searchCriteria);
         $this->validateSearchCriteria($searchCriteria);
-        /** @todo this doesn't need to be a visitor, it can be just the validator called here, and have decorator */
 
         return $searchCriteria;
     }
