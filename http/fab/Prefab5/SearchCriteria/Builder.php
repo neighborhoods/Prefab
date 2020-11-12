@@ -6,16 +6,15 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteriaInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Psr;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\ValidatorInterface;
 
 class Builder implements BuilderInterface
 {
     use SearchCriteria\Filter\Factory\AwareTrait;
     use SearchCriteria\SortOrder\Factory\AwareTrait;
     use SearchCriteria\Factory\AwareTrait;
+    use SearchCriteria\Validator\Builder\Factory\AwareTrait;
     use Psr\Http\Message\ServerRequest\AwareTrait;
 
-    protected $searchCriteriaQuery;
     protected $record;
 
     public function build(): SearchCriteriaInterface
@@ -169,7 +168,12 @@ class Builder implements BuilderInterface
 
     private function validateSearchCriteria(SearchCriteriaInterface $searchCriteria): BuilderInterface
     {
-        $validator = $searchCriteria->getValidator();
-        $validator->validate($searchCriteria);
+        if ($this->hasValidatorBuilderFactory()) {
+            $validator = $this->getValidatorBuilderFactory()->create()->build();
+//            $validator = $searchCriteria->getValidator();
+            $validator->validate($searchCriteria);
+        }
+
+        return $this;
     }
 }
