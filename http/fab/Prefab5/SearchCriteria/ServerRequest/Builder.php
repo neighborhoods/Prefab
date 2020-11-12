@@ -12,6 +12,7 @@ class Builder implements BuilderInterface
     use SearchCriteria\Filter\Factory\AwareTrait;
     use SearchCriteria\SortOrder\Factory\AwareTrait;
     use SearchCriteria\Factory\AwareTrait;
+    use SearchCriteria\Validator\Builder\Factory\AwareTrait;
     use Psr\Http\Message\ServerRequest\AwareTrait;
     use SearchCriteria\Builder\Factory\AwareTrait;
 
@@ -19,9 +20,12 @@ class Builder implements BuilderInterface
 
     public function build(): SearchCriteriaInterface
     {
-        return $this->getSearchCriteriaBuilderFactory()->create()
-            ->setRecord($this->getSearchCriteriaQuery())
-            ->build();
+        $searchCriteriaBuilder = $this->getSearchCriteriaBuilderFactory()->create();
+        $searchCriteriaBuilder->setRecord($this->getSearchCriteriaQuery());
+        if ($this->hasValidatorBuilderFactory()) {
+            $searchCriteriaBuilder->setValidatorBuilderFactory($this->getValidatorBuilderFactory());
+        }
+        return $searchCriteriaBuilder->build();
     }
 
     protected function getSearchCriteriaQuery(): array
