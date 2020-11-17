@@ -101,7 +101,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
 
     protected function getCacheFilePath()
     {
-        return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), HTTPBuildableDirectoryMap::class);
+        return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), str_replace('\\', '', HTTPBuildableDirectoryMap::class));
     }
 
     protected function saveValueToTempFile(string $value) : void
