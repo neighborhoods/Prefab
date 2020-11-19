@@ -2,12 +2,13 @@
 
 namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Repository;
 
-use \PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5;
+use Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface;
+use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\HTTP\SearchCriteriaBuilderException;
+use PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5;
 
 class Handler implements HandlerInterface
 {
-
-    use \Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\AwareTrait;
+    use AwareTrait;
     use Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;
     use Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
 
@@ -23,13 +24,16 @@ class Handler implements HandlerInterface
         return new \Zend\Diactoros\Response\JsonResponse($this->$method());
     }
 
-    protected function get() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorName\MapInterface
+    protected function get() : PrimaryActorNameInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
-        $searchCriteria = $searchCriteriaBuilder->build();
-
-        return $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
+        try {
+            $searchCriteria = $searchCriteriaBuilder->build();
+            return $this->getPrimaryActorNameRepository()->get($searchCriteria);
+        } catch (\LogicException $exception) {
+            throw new SearchCriteriaBuilderException($exception->getMessage());
+        }
     }
 
     protected function post()
@@ -57,4 +61,3 @@ class Handler implements HandlerInterface
         return $this->getPsrHttpMessageServerRequest()->getAttribute(\Zend\Expressive\Router\RouteResult::class);
     }
 }
-

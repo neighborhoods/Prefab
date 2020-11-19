@@ -1,48 +1,45 @@
 <?php
 
-namespace Neighborhoods\BuphaloTemplateTree\Template\Actor\Map\Repository\Handler;
+namespace Neighborhoods\BuphaloTemplateTree\Template\Actor\Repository\Handler;
 
 /**
  * @codeCoverageIgnore
  */
 trait AwareTrait
 {
+    protected $PrimaryActorNameRepositoryHandler = null;
 
-    protected $PrimaryActorNameMapRepositoryHandler = null;
-
-    public function setPrimaryActorNameMapRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\Template\Actor\Map\Repository\HandlerInterface $PrimaryActorNameMapRepositoryHandler) : self
+    public function setPrimaryActorNameRepositoryHandler(\Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Repository\HandlerInterface $PrimaryActorNameRepositoryHandler) : self
     {
-        if ($this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is already set.');
+        if ($this->hasPrimaryActorNameRepositoryHandler()) {
+            throw new \LogicException('PrimaryActorNameRepositoryHandler is already set.');
         }
-        $this->PrimaryActorNameMapRepositoryHandler = $PrimaryActorNameMapRepositoryHandler;
+        $this->PrimaryActorNameRepositoryHandler = $PrimaryActorNameRepositoryHandler;
 
         return $this;
     }
 
-    protected function getPrimaryActorNameMapRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\Template\MV1\Address\Map\Repository\HandlerInterface
+    protected function getPrimaryActorNameRepositoryHandler() : \Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Repository\HandlerInterface
     {
-        if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
+        if (!$this->hasPrimaryActorNameRepositoryHandler()) {
             throw new \LogicException('PrimaryActorNameMapRepositoryHandler is not set.');
         }
 
-        return $this->PrimaryActorNameMapRepositoryHandler;
+        return $this->PrimaryActorNameRepositoryHandler;
     }
 
-    protected function hasPrimaryActorNameMapRepositoryHandler() : bool
+    protected function hasPrimaryActorNameRepositoryHandler() : bool
     {
-        return isset($this->PrimaryActorNameMapRepositoryHandler);
+        return isset($this->PrimaryActorNameRepositoryHandler);
     }
 
-    protected function unsetPrimaryActorNameMapRepositoryHandler() : self
+    protected function unsetPrimaryActorNameRepositoryHandler() : self
     {
-        if (!$this->hasPrimaryActorNameMapRepositoryHandler()) {
-            throw new \LogicException('PrimaryActorNameMapRepositoryHandler is not set.');
+        if (!$this->hasPrimaryActorNameRepositoryHandler()) {
+            throw new \LogicException('PrimaryActorNameRepositoryHandler is not set.');
         }
-        unset($this->PrimaryActorNameMapRepositoryHandler);
+        unset($this->PrimaryActorNameRepositoryHandler);
 
         return $this;
     }
-
-
 }

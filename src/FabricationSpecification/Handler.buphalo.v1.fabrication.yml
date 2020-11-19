@@ -1,0 +1,21 @@
+actors:
+  <PrimaryActorName>/AwareTrait.php:
+    template: PrimaryActorName/AwareTrait.php
+  <PrimaryActorName>/Factory.php:
+    template: PrimaryActorName/Factory.php
+  <PrimaryActorName>/Factory.service.yml:
+    template: PrimaryActorName/Factory.service.yml
+  <PrimaryActorName>/FactoryInterface.php:
+    template: PrimaryActorName/FactoryInterface.php
+  <PrimaryActorName>/Factory/AwareTrait.php:
+    template: PrimaryActorName/Factory/AwareTrait.php
+  <PrimaryActorName>/Builder/Factory.service.yml:
+    template: PrimaryActorName/Builder/Factory.service.yml
+  <PrimaryActorName>/Builder/Factory.php:
+    template: PrimaryActorName/Builder/Factory.php
+  <PrimaryActorName>/Builder/Factory/AwareTrait.php:
+    template: PrimaryActorName/Builder/Factory/AwareTrait.php
+  <PrimaryActorName>/Builder/AwareTrait.php:
+    template: PrimaryActorName/Builder/AwareTrait.php
+  <PrimaryActorName>/Builder/FactoryInterface.php:
+    template: PrimaryActorName/Builder/FactoryInterface.php

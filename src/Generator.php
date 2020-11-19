@@ -205,13 +205,17 @@ class Generator implements GeneratorInterface
 
         foreach ($buildConfiguration->getHttpVerbs() as $httpVerb) {
             $verb = strtolower($httpVerb);
+            $repositoryName = 'Repository';
+            if ($buildConfiguration->getSupportingActorGroup() !== 'handler') {
+                $repositoryName = 'Map\\Repository';
+            }
             $line =
                 "    - [" . $verb .
                 ", [!php/const \\" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() .
-                "\Map\Repository\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
-                "'@?" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() . "\Map\Repository\HandlerInterface'," .
+                "\\$repositoryName\HandlerInterface::ROUTE_PATH_" . strtoupper($fullDaoName) . "S," .
+                "'@?" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() . "\\$repositoryName\HandlerInterface'," .
                 "!php/const \\" . $buildConfiguration->getActorNamespace() . '\\' . $buildConfiguration->getDaoName() .
-                "\Map\Repository\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
+                "\\$repositoryName\HandlerInterface::ROUTE_NAME_" . strtoupper($fullDaoName) . "S]]\n";
             $routes[] = $line;
         }
         return $routes;

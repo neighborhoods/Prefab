@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\Handler\FactoryInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Handler\Factory
+    public: false
+    shared: true
+    calls:
+      - [setFabricationSpecificationHandler, ['@Neighborhoods\Prefab\FabricationSpecification\HandlerInterface']]
