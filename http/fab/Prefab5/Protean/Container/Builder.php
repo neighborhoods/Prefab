@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container;
 
+use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectories;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectoriesInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemPropertiesInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
@@ -35,14 +35,14 @@ class Builder implements BuilderInterface
     protected $discoverable_directories;
     protected $shouldRegisterAllServicesAsPublic;
 
-    public function build() : ContainerInterface
+    public function build(): ContainerInterface
     {
         $container = $this->getContainer();
 
         return $container;
     }
 
-    protected function getContainer() : ContainerInterface
+    protected function getContainer(): ContainerInterface
     {
         if ($this->container === null) {
             $containerCacheFilePath = $this->getFilesystemProperties()->getSymfonyContainerFilePath();
@@ -69,13 +69,43 @@ class Builder implements BuilderInterface
         return $this->container;
     }
 
+    public function getFilesystemProperties(): FilesystemPropertiesInterface
+    {
+        if ($this->filesystem_properties === null) {
+            $this->filesystem_properties = new FilesystemProperties();
+            $this->filesystem_properties->setProteanContainerBuilder($this);
+        }
+
+        return $this->filesystem_properties;
+    }
+
+    public function getContainerName(): string
+    {
+        if ($this->container_name === null) {
+            throw new \LogicException('Builder container_name has not been set.');
+        }
+
+        return $this->container_name;
+    }
+
+    public function setContainerName(string $containerName): BuilderInterface
+    {
+        if ($this->container_name !== null) {
+            throw new \LogicException('Builder container_name is already set.');
+        }
+
+        $this->container_name = $containerName;
+
+        return $this;
+    }
+
     protected function deleteCachedContainer(string $containerCacheFilePath)
     {
         unlink($containerCacheFilePath);
         opcache_invalidate($containerCacheFilePath);
     }
 
-    protected function buildContainerBuilder() : ContainerBuilder
+    protected function buildContainerBuilder(): ContainerBuilder
     {
         if ($this->getCanBuildZendExpressive()) {
             $this->buildZendExpressive();
@@ -84,14 +114,25 @@ class Builder implements BuilderInterface
             $this->cacheSymfonyContainerBuilder();
         } catch (\Throwable $throwable) {
             (new NewRelic())->noticeThrowable($throwable);
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->setError($throwable);
+            }
         }
-        
+
         $containerBuilder = $this->getSymfonyContainerBuilder();
         return $containerBuilder;
     }
 
+    protected function getCanBuildZendExpressive(): bool
+    {
+        return $this->can_build_zend_expressive === true;
+    }
+
     /** @deprecated */
-    public function setCanBuildZendExpressive(bool $can_build_zend_expressive) : BuilderInterface
+    public function setCanBuildZendExpressive(bool $can_build_zend_expressive): BuilderInterface
     {
         if ($this->can_build_zend_expressive !== null) {
             throw new \LogicException('Builder can_build_zend_expressive is already set.');
@@ -102,30 +143,42 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function getCanBuildZendExpressive() : bool
+    public function buildZendExpressive(): BuilderInterface
     {
-        return $this->can_build_zend_expressive === true;
+        $currentWorkingDirectory = getcwd();
+        chdir($this->getFilesystemProperties()->getRootDirectoryPath());
+        /** @noinspection PhpIncludeInspection */
+        $zendContainerBuilder = require $this->getFilesystemProperties()->getZendConfigContainerFilePath();
+        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
+        /** @noinspection PhpIncludeInspection */
+        (require $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
+        file_put_contents(
+            $this->getFilesystemProperties()->getExpressiveDIYAMLFilePath(),
+            (new YamlDumper($zendContainerBuilder))->dump()
+        );
+        chdir($currentWorkingDirectory);
+        $this->getDiscoverableDirectories()->appendPath($this->getZendCacheDirectoryPath());
+
+        return $this;
     }
 
-    protected function getSymfonyContainerBuilder() : ContainerBuilder
+    public function getDiscoverableDirectories(): DiscoverableDirectoriesInterface
     {
-        if ($this->symfony_container_builder === null) {
-            $containerBuilder = new ContainerBuilder();
-            $discoverableDirectoryFullPaths = $this->getDiscoverableDirectories()->getFullPaths();
-            $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
-            $containerBuilderFacade->addFinder(
-                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
-            );
-            $containerBuilderFacade->assembleYaml();
-            $this->updateServiceDefinitions($containerBuilder);
-            $containerBuilderFacade->build();
-            $this->symfony_container_builder = $containerBuilder;
+        if ($this->discoverable_directories === null) {
+            $discoverableDirectories = new DiscoverableDirectories();
+            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($this->getFilesystemProperties());
+            $this->discoverable_directories = $discoverableDirectories;
         }
 
-        return $this->symfony_container_builder;
+        return $this->discoverable_directories;
     }
 
-    protected function cacheSymfonyContainerBuilder() : BuilderInterface
+    protected function getZendCacheDirectoryPath(): string
+    {
+        return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
+    }
+
+    protected function cacheSymfonyContainerBuilder(): BuilderInterface
     {
         $containerBuilder = $this->getSymfonyContainerBuilder();
         $containerClass = (new PhpDumper($containerBuilder))->dump(['class' => $this->getContainerName()]);
@@ -140,6 +193,19 @@ class Builder implements BuilderInterface
                     'class' => $containerClass
                 ]
             );
+
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->log(
+                    [
+                        'message' => self::TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED,
+                        'filepath' => $temporaryFilePath,
+                        'class' => $containerClass
+                    ]);
+            }
+
         }
 
         $writtenBytes = file_put_contents(
@@ -159,6 +225,19 @@ class Builder implements BuilderInterface
                 ]
             );
 
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->log(
+                    [
+                        'message' => self::INCORRECT_WRITE_LENGTH_EVENT_KEY,
+                        'bytes_written_to_disk' => $writtenBytes,
+                        'class_size' => strlen($containerClass),
+                        'class' => $containerClass
+                    ]);
+            }
+
             $this->deleteCachedContainer($temporaryFilePath);
 
         } else if (strlen($containerClass) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
@@ -171,51 +250,44 @@ class Builder implements BuilderInterface
                     'class' => $containerClass
                 ]
             );
+
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->log(
+                    [
+                        'message' => self::SUSPICOUS_CLASS_LENGTH_EVENT_KEY,
+                        'bytes_written_to_disk' => $writtenBytes,
+                        'class_size' => strlen($containerClass),
+                        'class' => $containerClass
+                    ]);
+            }
         }
 
         rename($temporaryFilePath, $this->getFilesystemProperties()->getSymfonyContainerFilePath());
         return $this;
     }
 
-    public function buildZendExpressive() : BuilderInterface
+    protected function getSymfonyContainerBuilder(): ContainerBuilder
     {
-        $currentWorkingDirectory = getcwd();
-        chdir($this->getFilesystemProperties()->getRootDirectoryPath());
-        /** @noinspection PhpIncludeInspection */
-        $zendContainerBuilder = require $this->getFilesystemProperties()->getZendConfigContainerFilePath();
-        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
-        /** @noinspection PhpIncludeInspection */
-        (require $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
-        file_put_contents(
-            $this->getFilesystemProperties()->getExpressiveDIYAMLFilePath(),
-            (new YamlDumper($zendContainerBuilder))->dump()
-        );
-        chdir($currentWorkingDirectory);
-        $this->getDiscoverableDirectories()->appendPath($this->getZendCacheDirectoryPath());
-
-        return $this;
-    }
-
-    public function registerServiceAsPublic(string $serviceId) : BuilderInterface
-    {
-        if (isset($this->service_ids_registered_for_public_access[$serviceId])) {
-            throw new \LogicException(
-                sprintf('Service ID[%s] is already registered for public access.', $serviceId)
+        if ($this->symfony_container_builder === null) {
+            $containerBuilder = new ContainerBuilder();
+            $discoverableDirectoryFullPaths = $this->getDiscoverableDirectories()->getFullPaths();
+            $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
+            $containerBuilderFacade->addFinder(
+                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
             );
+            $containerBuilderFacade->assembleYaml();
+            $this->updateServiceDefinitions($containerBuilder);
+            $containerBuilderFacade->build();
+            $this->symfony_container_builder = $containerBuilder;
         }
-        $this->service_ids_registered_for_public_access[$serviceId] = $serviceId;
 
-        return $this;
+        return $this->symfony_container_builder;
     }
 
-    protected function getServiceIdsRegisteredForPublicAccess() : array
-    {
-        return $this->service_ids_registered_for_public_access;
-    }
-
-    protected function updateServiceDefinitions(
-        ContainerBuilder $containerBuilder
-    ) : BuilderInterface
+    protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
     {
         if ($this->getShouldRegisterAllServicesAsPublic()) {
             $this->registerAllDefinitionsAsPublic($containerBuilder);
@@ -227,56 +299,17 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function registerAllDefinitionsAsPublic(
-        ContainerBuilder $containerBuilder
-    ) : void
+    public function getShouldRegisterAllServicesAsPublic(): bool
     {
-        foreach ($containerBuilder->getDefinitions() as $definition) {
-            $definition->setPublic(true);
-        }
-    }
-
-    protected function registerAllAliasesAsPublic(
-        ContainerBuilder $containerBuilder
-    ) : void
-    {
-        foreach ($containerBuilder->getAliases() as $alias) {
-            $alias->setPublic(true);
-        }
-    }
-
-    protected function registerUserSpecifiedDefinitionsAsPublic(
-        ContainerBuilder $containerBuilder
-    ) : void
-    {
-        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
-            $containerBuilder->getDefinition($serviceId)->setPublic(true);
-        }
-    }
-
-    public function getContainerName() : string
-    {
-        if ($this->container_name === null) {
-            throw new \LogicException('Builder container_name has not been set.');
+        if (null === $this->shouldRegisterAllServicesAsPublic) {
+            $this->shouldRegisterAllServicesAsPublic =
+                static::SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT;
         }
 
-        return $this->container_name;
+        return $this->shouldRegisterAllServicesAsPublic;
     }
 
-    public function setContainerName(string $containerName) : BuilderInterface
-    {
-        if ($this->container_name !== null) {
-            throw new \LogicException('Builder container_name is already set.');
-        }
-
-        $this->container_name = $containerName;
-
-        return $this;
-    }
-
-    public function setShouldRegisterAllServicesAsPublic(
-        bool $shouldRegisterAllServicesAsPublic
-    ) : BuilderInterface
+    public function setShouldRegisterAllServicesAsPublic(bool $shouldRegisterAllServicesAsPublic): BuilderInterface
     {
         if (null !== $this->shouldRegisterAllServicesAsPublic) {
             throw new \LogicException('Builder shouldRegisterAllServicesAsPublic is already set.');
@@ -287,39 +320,41 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    public function getShouldRegisterAllServicesAsPublic() : bool
+    protected function registerAllDefinitionsAsPublic(ContainerBuilder $containerBuilder): void
     {
-        if (null === $this->shouldRegisterAllServicesAsPublic) {
-            $this->shouldRegisterAllServicesAsPublic =
-                static::SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT;
+        foreach ($containerBuilder->getDefinitions() as $definition) {
+            $definition->setPublic(true);
         }
-
-        return $this->shouldRegisterAllServicesAsPublic;
     }
 
-    public function getFilesystemProperties() : FilesystemPropertiesInterface
+    protected function registerAllAliasesAsPublic(ContainerBuilder $containerBuilder): void
     {
-        if ($this->filesystem_properties === null) {
-            $this->filesystem_properties = new FilesystemProperties();
-            $this->filesystem_properties->setProteanContainerBuilder($this);
+        foreach ($containerBuilder->getAliases() as $alias) {
+            $alias->setPublic(true);
         }
-
-        return $this->filesystem_properties;
     }
 
-    public function getDiscoverableDirectories() : DiscoverableDirectoriesInterface
+    protected function registerUserSpecifiedDefinitionsAsPublic(ContainerBuilder $containerBuilder): void
     {
-        if ($this->discoverable_directories === null) {
-            $discoverableDirectories = new DiscoverableDirectories();
-            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($this->getFilesystemProperties());
-            $this->discoverable_directories = $discoverableDirectories;
+        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
+            $containerBuilder->getDefinition($serviceId)->setPublic(true);
         }
-
-        return $this->discoverable_directories;
     }
 
-    protected function getZendCacheDirectoryPath() : string
+    protected function getServiceIdsRegisteredForPublicAccess(): array
     {
-        return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
+        return $this->service_ids_registered_for_public_access;
+    }
+
+    public function registerServiceAsPublic(string $serviceId): BuilderInterface
+    {
+        if (isset($this->service_ids_registered_for_public_access[$serviceId])) {
+            throw new \LogicException(
+                sprintf('Service ID[%s] is already registered for public access.', $serviceId)
+            );
+        }
+        $this->service_ids_registered_for_public_access[$serviceId] = $serviceId;
+
+        return $this;
     }
 }

@@ -15,8 +15,15 @@ class Listener implements ListenerInterface
         \Throwable $throwable,
         ServerRequestInterface $request,
         ResponseInterface $response
-    ): ListenerInterface {
+    ): ListenerInterface
+    {
         $this->getNewRelic()->noticeThrowable($throwable);
+        $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+        $tracer = $repository->get();
+        $span = $tracer->getActiveSpan();
+        if ($span !== null) {
+            $span->setError($throwable);
+        }
 
         return $this;
     }
