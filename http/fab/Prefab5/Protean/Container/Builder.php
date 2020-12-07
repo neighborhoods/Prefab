@@ -200,9 +200,10 @@ class Builder implements BuilderInterface
             if ($span !== null) {
                 $span->log(
                     [
-                        'message' => self::TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED,
-                        'filepath' => $temporaryFilePath,
-                        'class' => $containerClass
+                        'message' => sprintf('message: %s. filepath: %s. class: %s.',
+                            self::TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED,
+                            $temporaryFilePath,
+                            $containerClass)
                     ]);
             }
 
@@ -231,10 +232,11 @@ class Builder implements BuilderInterface
             if ($span !== null) {
                 $span->log(
                     [
-                        'message' => self::INCORRECT_WRITE_LENGTH_EVENT_KEY,
-                        'bytes_written_to_disk' => $writtenBytes,
-                        'class_size' => strlen($containerClass),
-                        'class' => $containerClass
+                        'message' => sprintf('message: %s. bytes_written_to_disk: %s. class_size: %s. class: %s.',
+                            self::INCORRECT_WRITE_LENGTH_EVENT_KEY,
+                            $writtenBytes,
+                            strlen($containerClass),
+                            $containerClass)
                     ]);
             }
 
@@ -257,10 +259,11 @@ class Builder implements BuilderInterface
             if ($span !== null) {
                 $span->log(
                     [
-                        'message' => self::SUSPICOUS_CLASS_LENGTH_EVENT_KEY,
-                        'bytes_written_to_disk' => $writtenBytes,
-                        'class_size' => strlen($containerClass),
-                        'class' => $containerClass
+                        'message' => sprintf('message: %s. bytes_written_to_disk: %s. class_size: %s. class: %s.',
+                            self::SUSPICOUS_CLASS_LENGTH_EVENT_KEY,
+                            $writtenBytes,
+                            strlen($containerClass),
+                            $containerClass)
                     ]);
             }
         }
