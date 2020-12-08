@@ -5,8 +5,8 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Router\RouteResult;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
+use Zend\Expressive\Router\RouteResult;
 
 class TransactionNameMiddleware implements TransactionNameMiddlewareInterface
 {
@@ -25,9 +25,21 @@ class TransactionNameMiddleware implements TransactionNameMiddlewareInterface
             $this->getNewRelic()->nameTransaction($matchedRouteName);
         } catch (\Throwable $throwable) {
             $this->getNewRelic()->noticeThrowable($throwable);
+
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->setError($throwable);
+            }
         }
 
         return $handler->handle($request);
+    }
+
+    protected function hasApplicationName(): bool
+    {
+        return $this->application_name !== null;
     }
 
     protected function getApplicationName(): string
@@ -37,11 +49,6 @@ class TransactionNameMiddleware implements TransactionNameMiddlewareInterface
         }
 
         return $this->application_name;
-    }
-
-    protected function hasApplicationName(): bool
-    {
-        return $this->application_name === null ? false : true;
     }
 
     public function setApplicationName(string $application_name): TransactionNameMiddlewareInterface

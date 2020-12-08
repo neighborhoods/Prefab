@@ -13,6 +13,13 @@ class ExceptionHandler implements ExceptionHandlerInterface
 {
     public function __invoke(\Throwable $throwable): ExceptionHandlerInterface
     {
+        $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+        $tracer = $repository->get();
+        $span = $tracer->getActiveSpan();
+        if ($span !== null) {
+            $span->setError($throwable);
+        }
+
         $newRelic = new NewRelic();
         if ($newRelic->isExtensionLoaded()) {
             $newRelic->noticeThrowable($throwable);
