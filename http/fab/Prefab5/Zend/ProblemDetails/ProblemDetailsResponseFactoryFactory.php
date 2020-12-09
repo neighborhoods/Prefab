@@ -14,7 +14,7 @@ class ProblemDetailsResponseFactoryFactory implements ProblemDetailsResponseFact
 
     public function __invoke(ContainerInterface $container) : ProblemDetailsResponseFactory
     {
-        $debug = getenv('DEBUG_MODE') === 'true' ? true : false;
+        $debug = getenv('DEBUG_MODE') === 'true';
 
         $includeThrowableDetail = $debug;
 

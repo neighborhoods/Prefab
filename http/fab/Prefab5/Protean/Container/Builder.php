@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container;
 
 use Psr\Container\ContainerInterface;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectories;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\DiscoverableDirectoriesInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\FilesystemProperties;
@@ -113,7 +112,6 @@ class Builder implements BuilderInterface
         try {
             $this->cacheSymfonyContainerBuilder();
         } catch (\Throwable $throwable) {
-            (new NewRelic())->noticeThrowable($throwable);
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();
@@ -186,14 +184,6 @@ class Builder implements BuilderInterface
         // transactionally rename it
         $temporaryFilePath = $this->getFilesystemProperties()->getSymfonyContainerFilePath() . '-temp';
         if (file_exists($temporaryFilePath)) {
-            (new NewRelic())->recordCustomEvent(
-                self::TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED,
-                [
-                    'filepath' => $temporaryFilePath,
-                    'class' => $containerClass
-                ]
-            );
-
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();
@@ -217,15 +207,6 @@ class Builder implements BuilderInterface
 
         // This signals a failure of file_put_contents to write the entirety of the file to disk
         if (strlen($containerClass) !== $writtenBytes) {
-            (new NewRelic())->recordCustomEvent(
-                self::INCORRECT_WRITE_LENGTH_EVENT_KEY,
-                [
-                    'bytes_written_to_disk' => $writtenBytes,
-                    'class_size' => strlen($containerClass),
-                    'class' => $containerClass
-                ]
-            );
-
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();
@@ -244,15 +225,6 @@ class Builder implements BuilderInterface
 
         } else if (strlen($containerClass) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
             // This signals that Symfony PHPDumper may have failed to convert the entire container class to a string when dumping
-            (new NewRelic())->recordCustomEvent(
-                self::SUSPICOUS_CLASS_LENGTH_EVENT_KEY,
-                [
-                    'bytes_written_to_disk' => $writtenBytes,
-                    'class_size' => strlen($containerClass),
-                    'class' => $containerClass
-                ]
-            );
-
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();

@@ -14,7 +14,6 @@ use Zend\Expressive\Router\Middleware\RouteMiddleware;
 use Zend\ProblemDetails\ProblemDetailsMiddleware;
 use Zend\ProblemDetails\ProblemDetailsNotFoundHandler;
 use Zend\Stratigility\Middleware\ErrorHandler;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic\TransactionNameMiddleware;
 
 return function (Definition $applicationServiceDefinition): void {
     // The error handler should be the first (most outer) middleware to catch
@@ -44,7 +43,6 @@ return function (Definition $applicationServiceDefinition): void {
     // Register the routing middleware in the middleware pipeline.
     // This middleware registers the Zend\Expressive\Router\RouteResult request attribute.
     $applicationServiceDefinition->addMethodCall('pipe', [RouteMiddleware::class]);
-    $applicationServiceDefinition->addMethodCall('pipe', [TransactionNameMiddleware::class]);
 
     // The following handle routing failures for common conditions:
     // - HEAD request but no routes answer that method
