@@ -3,14 +3,12 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Exception;
 
 class DNS implements DNSInterface
 {
     use Opcache\DNS\ErrorHandler\AwareTrait;
-    use NewRelic\AwareTrait;
 
     /** @var string */
     protected $ip;
@@ -99,8 +97,6 @@ class DNS implements DNSInterface
                 }
             }
         } catch (Exception $exception) {
-            $this->getNewRelic()->noticeThrowable($exception);
-
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();

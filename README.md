@@ -18,6 +18,7 @@ A code generation tool. Takes the busywork out of building strongly-typed, patte
 - [Subset Container Buildable Directories](#subset-container-buildable-directories)
 - [Semantic Versioning](#semantic-versioning)
 - [Debug Mode](#debug-mode)
+- [Migration guide from Prefab v6 to v7](/docs/MigrationGuide.md)
 
 ## Getting Started
 

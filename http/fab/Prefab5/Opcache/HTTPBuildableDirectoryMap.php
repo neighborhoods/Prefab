@@ -4,7 +4,6 @@
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\Exception;
 use Symfony\Component\Yaml\Yaml;
 
@@ -96,11 +95,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
                 $span->setError($exception);
             }
 
-            $newRelic = new NewRelic();
-
-            if ($newRelic->isExtensionLoaded()) {
-                $newRelic->noticeThrowable($exception);
-            } else if (getenv('SITE_ENVIRONMENT') === 'Local') {
+            if (getenv('SITE_ENVIRONMENT') === 'Local') {
                 (new Logger())
                     ->setLogFilePath(self::LOG_FILE_PATH)
                     ->notice($exception->__toString());
