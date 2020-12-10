@@ -8,7 +8,7 @@ for [DatadogComponent](https://github.com/neighborhoods/DatadogComponent).
 * Mandatory: Remove direct or indirect usages/references in your code to Prefab5/NewRelic.php class.
 * Optional: Remove all NewRelic references in Welcome baskets or in Filter paths.
 
-### Using a Proteam container builder
+### Using a Protean container builder
 
 Prefab v6
 
