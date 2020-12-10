@@ -1,14 +1,17 @@
 # Migrating From v6 to v7
 
-This new major version removed all New Relic components.
+We removed all New Relic components from Prefab v7, keeping the support
+for [DatadogComponent](https://github.com/neighborhoods/DatadogComponent).
 
-## Modifications on Protean Container
+## Breaking changes
 
-Since all New Relic components were removed, we can remove all New Relic dependencies in Welcome baskets or in Filter paths.
+* Mandatory: Remove direct or indirect usages/references in your code to Prefab5/NewRelic.php class.
+* Optional: Remove all NewRelic references in Welcome baskets or in Filter paths.
 
-### Using a Symfony DI based container
+### Using a Proteam container builder
 
 Prefab v6
+
 ``` php
 $proteanContainerBuilder = new Prefab5\Protean\Container\Builder();
 $proteanContainerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter('Prefab5/Doctrine');
@@ -20,7 +23,9 @@ $proteanContainerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter('
 
 $proteanContainer = $proteanContainerBuilder->build();
 ```
+
 Prefab v7
+
 ``` php
 $proteanContainerBuilder = new Prefab5\Protean\Container\Builder();
 $proteanContainerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter('Prefab5/Doctrine');
@@ -33,9 +38,13 @@ $proteanContainer = $proteanContainerBuilder->build();
 ```
 
 ### Using a Prefab user-defined subset of containers
-If you are using a [Prefab user-defined subset of containers](https://github.com/neighborhoods/Prefab/tree/feature/container_only#subset-container-buildable-directories) remove the welcome basket as shown below.
+
+If you are using
+a [Prefab user-defined subset of containers](https://github.com/neighborhoods/Prefab/tree/feature/container_only#subset-container-buildable-directories)
+remove the welcome basket as shown below.
 
 Prefab v6 global config *http-buildable-directories.yml* in project root
+
 ```yaml
 ComponentName/DAO:
   buildable_directories:
@@ -50,6 +59,7 @@ ComponentName/DAO:
 ```
 
 Prefab v7 global config *http-buildable-directories.yml* in project root
+
 ```yaml
 ComponentName/DAO:
   buildable_directories:
