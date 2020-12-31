@@ -10,7 +10,10 @@ class Validator implements ValidatorInterface
 {
     public function validate(SearchCriteriaInterface $searchCriteria): ValidatorInterface
     {
-        // @todo include request?
-        throw (new ValidationException())->addMessage('No validators approved this request.');
+        try {
+            throw (new ValidationException())->addMessage('No validators approved this request.');
+        } catch (ValidationException $e) { // @deprecated the try/catch will be removed in the next major version upgrade
+            // @todo dd notice error
+        }
     }
 }

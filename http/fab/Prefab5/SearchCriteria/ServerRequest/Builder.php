@@ -22,9 +22,7 @@ class Builder implements BuilderInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaBuilderFactory()->create();
         $searchCriteriaBuilder->setRecord($this->getSearchCriteriaQuery());
-        if ($this->hasValidatorBuilderFactory()) {
-            $searchCriteriaBuilder->setValidatorBuilderFactory($this->getValidatorBuilderFactory());
-        }
+        $searchCriteriaBuilder->setValidatorBuilderFactory($this->getValidatorBuilderFactory());
         return $searchCriteriaBuilder->build();
     }
 

@@ -170,7 +170,6 @@ class Builder implements BuilderInterface
     {
         if ($this->hasValidatorBuilderFactory()) {
             $validator = $this->getValidatorBuilderFactory()->create()->build();
-//            $validator = $searchCriteria->getValidator();
             $validator->validate($searchCriteria);
         }
 

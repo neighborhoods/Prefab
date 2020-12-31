@@ -14,6 +14,7 @@ class Handler implements HandlerInterface
     use Repository\AwareTrait;
     use Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;
     use Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
+    use Prefab5\SearchCriteria\Validator\Builder\Factory\AwareTrait;
 
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
@@ -31,6 +32,7 @@ class Handler implements HandlerInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
+        $searchCriteriaBuilder->setValidatorBuilderFactory($this->getValidatorBuilderFactory());
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
             return $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
