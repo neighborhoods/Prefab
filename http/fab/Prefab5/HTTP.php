@@ -8,6 +8,7 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ValidationException;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
@@ -21,7 +22,15 @@ class HTTP implements HTTPInterface
             $containerBuilder = $this->getContainerBuilder();
             $application = $containerBuilder->build()->get(Application::class);
             $application->run();
-        } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {   // @todo jiving with new validation exception?
+        } catch (ValidationException $exception) {
+            http_response_code(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->setError($exception);
+            }
+        } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
             (new NewRelic())->noticeThrowable($exception);
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
