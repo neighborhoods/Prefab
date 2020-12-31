@@ -35,9 +35,18 @@ class Builder implements BuilderInterface
             $prefabDefinitionFileArray = $prefabDefinitionFileArray[BuildConfigurationInterface::KEY_DAO];
             $this->setIsUsingDeprecatedTopLevelDaoKey(true);
         }
-        
-        $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
-            ->setRootSaveLocation($this->getFabDirFromYamlPath())
+
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP])) {
+            $buildConfiguration->setSupportingActorGroup($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP]);
+        } else {
+            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
+        }
+
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
+            || $buildConfiguration->getSupportingActorGroup() !== 'handler') {
+            $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME]);
+        }
+        $buildConfiguration->setRootSaveLocation($this->getFabDirFromYamlPath())
             ->setProjectDir($this->getProjectRoot())
             ->setVendorName($this->getVendorName())
             ->setProjectName($this->getProjectName());
@@ -55,30 +64,27 @@ class Builder implements BuilderInterface
             $buildConfiguration->setHttpVerbs($httpVerbs);
         }
 
-        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP])) {
-            $buildConfiguration->setSupportingActorGroup($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_SUPPORTING_ACTOR_GROUP]);
-        } else {
-            $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
-        }
-
         $daoPropertyMap = $this->getDaoPropertyMapFactory()->create();
-        foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES] as $key => $values) {
-            $record = $values;
-            $record[BuildConfigurationInterface::KEY_NAME] = $key;
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES])
+            || $buildConfiguration->getSupportingActorGroup() !== 'handler') {
+            foreach ($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_PROPERTIES] as $key => $values) {
+                $record = $values;
+                $record[BuildConfigurationInterface::KEY_NAME] = $key;
 
-            if (isset($values['php_type'])) {
-                $this->setIsUsingDeprecatedPhpTypeKey(true);
+                if (isset($values['php_type'])) {
+                    $this->setIsUsingDeprecatedPhpTypeKey(true);
+                }
+
+                if (isset($values['database_column_name'])) {
+                    $this->setIsUsingDeprecatedDatabaseColumnNameKey(true);
+                }
+
+                $daoPropertyMap->append(
+                    $this->getDaoPropertyBuilderFactory()->create()
+                        ->setRecord($record)
+                        ->build()
+                );
             }
-
-            if (isset($values['database_column_name'])) {
-                $this->setIsUsingDeprecatedDatabaseColumnNameKey(true);
-            }
-
-            $daoPropertyMap->append(
-                $this->getDaoPropertyBuilderFactory()->create()
-                    ->setRecord($record)
-                    ->build()
-            );
         }
 
         $buildConfiguration->setDaoPropertyMap($daoPropertyMap);

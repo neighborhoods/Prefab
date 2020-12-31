@@ -6,17 +6,16 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use Fig\Http\Message\StatusCodeInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
 
 class HTTP implements HTTPInterface
 {
     use Protean\Container\Builder\AwareTrait;
     use HTTPBuildableDirectoryMap\ContainerBuilder\AwareTrait;
 
-    public function respond() : HTTPInterface
+    public function respond(): HTTPInterface
     {
         try {
             $containerBuilder = $this->getContainerBuilder();
@@ -25,15 +24,27 @@ class HTTP implements HTTPInterface
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {   // @todo jiving with new validation exception?
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
             (new NewRelic())->noticeThrowable($exception);
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->setError($exception);
+            }
         } catch (\Throwable $throwable) {
             http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
             (new NewRelic())->noticeThrowable($throwable);
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->setError($throwable);
+            }
         }
 
         return $this;
     }
 
-    protected function getContainerBuilder() : Protean\Container\BuilderInterface
+    protected function getContainerBuilder(): Protean\Container\BuilderInterface
     {
         $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
@@ -51,7 +62,7 @@ class HTTP implements HTTPInterface
             ->getContainerBuilder();
     }
 
-    protected function getUrlRoot() : string
+    protected function getUrlRoot(): string
     {
         if (!isset($_REQUEST['_url'])) {
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);

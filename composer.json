@@ -18,7 +18,7 @@
     }
   ],
   "require": {
-    "php": "^7.0",
+    "php": "^7.3",
     "jsoumelidis/zend-sf-di-config": "^0.3",
     "doctrine/dbal": "^2.7",
     "symfony/config": "^4.4",
@@ -39,6 +39,7 @@
     "mezzio/mezzio-problem-details": "^1.0",
     "laminas/laminas-stdlib": "^3.1",
     "neighborhoods/buphalo": "^1.0",
+    "neighborhoods/datadog-component": "^1.0",
     "neighborhoods/exception-component": "^1.0"
   },
   "require-dev": {

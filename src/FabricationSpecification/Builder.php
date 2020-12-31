@@ -11,6 +11,7 @@ class Builder implements BuilderInterface
     use \Neighborhoods\Prefab\FabricationSpecification\AllSupportingActors\Builder\Factory\AwareTrait;
     use \Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\Factory\AwareTrait;
     use \Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\FabricationSpecification\Handler\Builder\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
@@ -29,6 +30,10 @@ class Builder implements BuilderInterface
                     ->build();
             case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_MINIMAL:
                 return $this->getFabricationSpecificationMinimalBuilderFactory()->create()
+                    ->setBuildConfiguration($buildConfiguration)
+                    ->build();
+            case BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_HANDLER:
+                return $this->getFabricationSpecificationHandlerBuilderFactory()->create()
                     ->setBuildConfiguration($buildConfiguration)
                     ->build();
             default:

@@ -3,47 +3,19 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\DNS\Exception;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\NewRelic;
 
 class DNS implements DNSInterface
 {
     use Opcache\DNS\ErrorHandler\AwareTrait;
     use NewRelic\AwareTrait;
+
     /** @var string */
     protected $ip;
     /** @var string */
     protected $host;
-
-    protected function set(string $key, string $value): DNSInterface
-    {
-        $temporaryFileName = sprintf('%s/%s%s.tmp', $this->getCacheDirectoryPath(), $key, uniqid('', true));
-        try {
-            $temporaryFileContents = sprintf('<?php $value = %s;', var_export($value, true));
-            if (file_put_contents($temporaryFileName, $temporaryFileContents, LOCK_EX) === false) {
-                throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
-            } else {
-                if (rename($temporaryFileName, $this->getCacheFilePath()) === false) {
-                    throw (new Exception())->setCode(Exception::CODE_RENAME_FAILED);
-                }
-            }
-        } catch (Exception $exception) {
-            $this->getNewRelic()->noticeThrowable($exception);
-        }
-
-        return $this;
-    }
-
-    protected function get()
-    {
-        set_error_handler($this->getOpcacheDNSErrorHandler());
-        /** @noinspection PhpIncludeInspection */
-        include $this->getCacheFilePath();
-        restore_error_handler();
-
-        return $value ?? false;
-    }
 
     public function flush(): DNSInterface
     {
@@ -53,23 +25,14 @@ class DNS implements DNSInterface
         return $this;
     }
 
-    public function getIp(): string
+    protected function getCacheFilePath()
     {
-        if ($this->ip === null) {
-            $ip = $this->get();
-            if ($ip === false) {
-                $this->ip = gethostbyname($this->getHost());
-                if ($this->ip !== $this->getHost()) {
-                    $this->set($this->getHost(), $this->ip);
-                } else {
-                    throw (new Exception())->setCode(Exception::CODE_GET_HOST_BY_NAME_FAILED);
-                }
-            } else {
-                $this->ip = $ip;
-            }
-        }
+        return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), $this->getHost());
+    }
 
-        return $this->ip;
+    protected function getCacheDirectoryPath(): string
+    {
+        return self::CACHE_DIRECTORY_PATH;
     }
 
     protected function getHost(): string
@@ -94,13 +57,58 @@ class DNS implements DNSInterface
         return $this;
     }
 
-    protected function getCacheDirectoryPath(): string
+    public function getIp(): string
     {
-        return self::CACHE_DIRECTORY_PATH;
+        if ($this->ip === null) {
+            $ip = $this->get();
+            if ($ip === false) {
+                $this->ip = gethostbyname($this->getHost());
+                if ($this->ip !== $this->getHost()) {
+                    $this->set($this->getHost(), $this->ip);
+                } else {
+                    throw (new Exception())->setCode(Exception::CODE_GET_HOST_BY_NAME_FAILED);
+                }
+            } else {
+                $this->ip = $ip;
+            }
+        }
+
+        return $this->ip;
     }
 
-    protected function getCacheFilePath()
+    protected function get()
     {
-        return sprintf('%s/%s.php', $this->getCacheDirectoryPath(), $this->getHost());
+        set_error_handler($this->getOpcacheDNSErrorHandler());
+        /** @noinspection PhpIncludeInspection */
+        include $this->getCacheFilePath();
+        restore_error_handler();
+
+        return $value ?? false;
+    }
+
+    protected function set(string $key, string $value): DNSInterface
+    {
+        $temporaryFileName = sprintf('%s/%s%s.tmp', $this->getCacheDirectoryPath(), $key, uniqid('', true));
+        try {
+            $temporaryFileContents = sprintf('<?php $value = %s;', var_export($value, true));
+            if (file_put_contents($temporaryFileName, $temporaryFileContents, LOCK_EX) === false) {
+                throw (new Exception())->setCode(Exception::CODE_FILE_PUT_CONTENTS_FAILED);
+            } else {
+                if (rename($temporaryFileName, $this->getCacheFilePath()) === false) {
+                    throw (new Exception())->setCode(Exception::CODE_RENAME_FAILED);
+                }
+            }
+        } catch (Exception $exception) {
+            $this->getNewRelic()->noticeThrowable($exception);
+
+            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+            $tracer = $repository->get();
+            $span = $tracer->getActiveSpan();
+            if ($span !== null) {
+                $span->setError($exception);
+            }
+        }
+
+        return $this;
     }
 }
