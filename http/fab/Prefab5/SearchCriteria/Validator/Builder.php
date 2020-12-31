@@ -26,7 +26,6 @@ final class Builder implements BuilderInterface
         return $Validator;
     }
 
-    /** @todo decoratorfactory should maybe extend the validator factory. ask brad about this later. */
     public function addFactory(DecoratorFactoryInterface $decoratorFactory): BuilderInterface
     {
         $factoryKey = str_replace('\\', '', get_class($decoratorFactory));

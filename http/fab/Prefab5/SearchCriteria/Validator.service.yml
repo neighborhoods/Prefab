@@ -3,5 +3,3 @@ services:
     class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Validator
     public: false
     shared: false
-#    calls: # @todo?
-#      - [setDiagnosedFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Diagnosed\FactoryInterface']]

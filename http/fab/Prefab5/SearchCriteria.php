@@ -87,7 +87,6 @@ class SearchCriteria implements SearchCriteriaInterface
         return $this->sortOrders !== null;
     }
 
-    /** @todo eventually probably make this have a builder that takes factories */
     protected function getVisitors() : Visitor\MapInterface
     {
         if ($this->visitors === null) {
