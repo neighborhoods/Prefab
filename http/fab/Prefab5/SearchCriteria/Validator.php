@@ -14,6 +14,7 @@ class Validator implements ValidatorInterface
             throw (new ValidationException())->addMessage('No validators approved this request.');
         } catch (ValidationException $e) { // @deprecated the try/catch will be removed in the next major version upgrade
             // @todo dd notice error
+            return $this;
         }
     }
 }
