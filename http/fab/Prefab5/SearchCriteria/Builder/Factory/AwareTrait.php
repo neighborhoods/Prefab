@@ -35,7 +35,8 @@ trait AwareTrait
         return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaBuilderFactory);
     }
 
-    protected function unsetSearchCriteriaBuilderFactory(): self
+    // @todo reset to protected if other solution used
+    public function unsetSearchCriteriaBuilderFactory(): self
     {
         if (!$this->hasSearchCriteriaBuilderFactory()) {
             throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaBuilderFactory is not set.');

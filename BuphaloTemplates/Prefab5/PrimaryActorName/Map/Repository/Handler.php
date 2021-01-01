@@ -32,7 +32,9 @@ class Handler implements HandlerInterface
     {
         $searchCriteriaBuilder = $this->getSearchCriteriaServerRequestBuilderFactory()->create();
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
-        $searchCriteriaBuilder->setValidatorBuilderFactory($this->getValidatorBuilderFactory());
+
+        // @todo remove or uncomment, depending on solution decided on
+//        $searchCriteriaBuilder->setValidatorBuilderFactory($this->getValidatorBuilderFactory());
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
             return $this->getPrimaryActorNameMapRepository()->get($searchCriteria);

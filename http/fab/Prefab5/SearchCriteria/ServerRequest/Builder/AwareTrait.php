@@ -34,7 +34,8 @@ trait AwareTrait
         return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder);
     }
 
-    protected function unsetSearchCriteriaServerRequestBuilder(): self
+    // @todo reset to protected if other solution used
+    public function unsetSearchCriteriaServerRequestBuilder(): self
     {
         if (!$this->hasSearchCriteriaServerRequestBuilder()) {
             throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductSearchCriteriaServerRequestBuilder is not set.');
