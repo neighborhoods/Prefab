@@ -29,7 +29,7 @@ These files will all be in the `PrimaryActorName` tree. The examples below are a
 
 #### Custom Decorator Interface and Service Container
 
-> `CustomDecoratorInterface.php`:
+> `CustomDecoratorInterface.php`
 >```php
 ><?php
 >declare(strict_types=1);
@@ -241,7 +241,8 @@ These files will all be in the `PrimaryActorName` tree. The examples below are a
 ## Recommendations
 
 - Create a dedicated Validator Decorator for a single logical/semantic validation need. You can and should stack multiple Validator Decorators with distinct logical/semantic validations purposes on a given Handler.
-- @todo notes about the bottom decorator in the stack.
+- Be sure to carefully consider the behavior of each decorator as it relates to the procession down the stack of decorators. A runtime analysis diagram and meeting is highly recommended. Generally, if a decorator is _certain_ that the request is valid without needing further validation down the stack, it may return immediately. Similarly, if a decorator is _certain_ that the request is not valid, it may throw an exception immediately. If the decorator is _not certain_ that other decorators down the stack may have more insight, it should call the next decorator in the stack.
+- The last custom decorator in the stack (the first one in the list of `addDecorator` calls in the `Builder.service.yml`) should _not_ call `$this->getValidator()->validate()`. The default Validator is designed to act as a failsafe to indicate that no custom decorators were implemented for a handler.
 
 
 ## Modified Classes
