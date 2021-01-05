@@ -12,7 +12,7 @@ class Validator implements ValidatorInterface
     {
         try {
             throw (new ValidationException())->addMessage('No validators approved this request.');
-        } catch (ValidationException $exception) { // @deprecated the try/catch will be removed in the next major version upgrade
+        } catch (ValidationException $exception) { // @deprecated the try/catch will be removed in a future major version upgrade
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();

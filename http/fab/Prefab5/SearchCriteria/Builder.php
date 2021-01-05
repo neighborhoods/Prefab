@@ -168,7 +168,7 @@ class Builder implements BuilderInterface
 
     private function validateSearchCriteria(SearchCriteriaInterface $searchCriteria): BuilderInterface
     {
-        if ($this->hasValidatorBuilderFactory()) {
+        if ($this->hasValidatorBuilderFactory()) { // @deprecated the if-has check will be removed in a future major version upgrade
             $validator = $this->getValidatorBuilderFactory()->create()->build();
             $validator->validate($searchCriteria);
         }
