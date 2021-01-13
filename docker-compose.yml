@@ -1,0 +1,10 @@
+version: '3'
+services:
+  prefab-test-app:
+    build: .
+    ports:
+      - "9095:9095"
+    volumes:
+      - "./tests/test-app:/var/www/html/prefab-test-app" # Root of the test app
+      - "./docker:/var/www/html/prefab-test-app/docker" # Docker utilities
+      - ".:/prefab-source" # Mounting source of this repo so we can install Prefab from the container's filesystem

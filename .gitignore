@@ -1,3 +1,8 @@
 !.gitignore
 .idea
 vendor/
+.DS_Store
+
+# Acceptance test directory
+tests/test-app/*
+!tests/test-app/.gitkeep
