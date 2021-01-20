@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "87643517c8c37a9d5a874568be8c97bc",
-    "content-hash": "ef9514021bf0f7fd695dc510dba1e59f",
+    "content-hash": "79f190f72ae464afa389885eddb1fc52",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -37,7 +36,78 @@
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
             "abandoned": "psr/container",
-            "time": "2017-02-14 19:40:03"
+            "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "datadog/dd-trace",
+            "version": "0.51.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DataDog/dd-trace-php.git",
+                "reference": "963a83c33390e115c22a5c861e5674646438075a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DataDog/dd-trace-php/zipball/963a83c33390e115c22a5c861e5674646438075a",
+                "reference": "963a83c33390e115c22a5c861e5674646438075a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^5.4 || ^7.0 || ^8.0.0"
+            },
+            "require-dev": {
+                "ext-posix": "*",
+                "g1a/composer-test-scenarios": "~3.0",
+                "mockery/mockery": "*",
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "^3.3.0",
+                "symfony/process": "<5"
+            },
+            "type": "library",
+            "extra": {
+                "scenarios": {
+                    "opentracing1": {
+                        "require": {
+                            "opentracing/opentracing": "1.0.0-beta6"
+                        },
+                        "scenario-options": {
+                            "create-lockfile": false
+                        }
+                    }
+                },
+                "scenario-options": {
+                    "dependency-licenses": false
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DDTrace\\": "./src/api/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "José Carlos Chávez",
+                    "email": "jcchavezs@gmail.com"
+                },
+                {
+                    "name": "DataDog",
+                    "email": "dev@datadoghq.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP APM Client",
+            "keywords": [
+                "DataDog",
+                "php",
+                "tracing"
+            ],
+            "time": "2020-11-17T15:24:54+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -119,7 +189,7 @@
                 "redis",
                 "xcache"
             ],
-            "time": "2019-11-29 15:36:20"
+            "time": "2019-11-29T15:36:20+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -211,7 +281,7 @@
                 "sqlserver",
                 "sqlsrv"
             ],
-            "time": "2020-01-04 12:56:21"
+            "time": "2020-01-04T12:56:21+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -287,7 +357,7 @@
                 "event system",
                 "events"
             ],
-            "time": "2019-11-10 09:48:07"
+            "time": "2019-11-10T09:48:07+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -339,7 +409,7 @@
                 "request",
                 "response"
             ],
-            "time": "2020-02-05 20:36:27"
+            "time": "2020-02-05T20:36:27+00:00"
         },
         {
             "name": "jsoumelidis/zend-sf-di-config",
@@ -383,7 +453,7 @@
                 "symfony di",
                 "zf"
             ],
-            "time": "2018-04-11 15:48:02"
+            "time": "2018-04-11T15:48:02+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -444,7 +514,7 @@
                 "code",
                 "laminas"
             ],
-            "time": "2019-12-31 16:28:24"
+            "time": "2019-12-31T16:28:24+00:00"
         },
         {
             "name": "laminas/laminas-component-installer",
@@ -500,7 +570,7 @@
                 "laminas",
                 "plugin"
             ],
-            "time": "2019-12-31 16:28:51"
+            "time": "2019-12-31T16:28:51+00:00"
         },
         {
             "name": "laminas/laminas-config-aggregator",
@@ -558,7 +628,7 @@
                 "config-aggregator",
                 "laminas"
             ],
-            "time": "2019-12-31 16:30:18"
+            "time": "2019-12-31T16:30:18+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -633,7 +703,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2020-01-07 19:25:17"
+            "time": "2020-01-07T19:25:17+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -682,7 +752,7 @@
                 "escaper",
                 "laminas"
             ],
-            "time": "2019-12-31 16:43:30"
+            "time": "2019-12-31T16:43:30+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -740,7 +810,7 @@
                 "events",
                 "laminas"
             ],
-            "time": "2019-12-31 16:44:52"
+            "time": "2019-12-31T16:44:52+00:00"
         },
         {
             "name": "laminas/laminas-http",
@@ -798,7 +868,7 @@
                 "http client",
                 "laminas"
             ],
-            "time": "2019-12-31 17:02:36"
+            "time": "2019-12-31T17:02:36+00:00"
         },
         {
             "name": "laminas/laminas-httphandlerrunner",
@@ -857,7 +927,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2019-12-31 17:06:16"
+            "time": "2019-12-31T17:06:16+00:00"
         },
         {
             "name": "laminas/laminas-loader",
@@ -906,7 +976,7 @@
                 "laminas",
                 "loader"
             ],
-            "time": "2019-12-31 17:18:27"
+            "time": "2019-12-31T17:18:27+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -956,7 +1026,7 @@
                 "laminas",
                 "stdlib"
             ],
-            "time": "2019-12-31 17:51:15"
+            "time": "2019-12-31T17:51:15+00:00"
         },
         {
             "name": "laminas/laminas-stratigility",
@@ -1030,7 +1100,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2020-01-07 21:13:38"
+            "time": "2020-01-07T21:13:38+00:00"
         },
         {
             "name": "laminas/laminas-uri",
@@ -1081,7 +1151,7 @@
                 "laminas",
                 "uri"
             ],
-            "time": "2019-12-31 17:56:00"
+            "time": "2019-12-31T17:56:00+00:00"
         },
         {
             "name": "laminas/laminas-validator",
@@ -1160,7 +1230,7 @@
                 "laminas",
                 "validator"
             ],
-            "time": "2020-01-15 09:59:30"
+            "time": "2020-01-15T09:59:30+00:00"
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
@@ -1212,7 +1282,7 @@
                 "laminas",
                 "zf"
             ],
-            "time": "2020-01-07 22:58:31"
+            "time": "2020-01-07T22:58:31+00:00"
         },
         {
             "name": "mezzio/mezzio",
@@ -1308,7 +1378,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2019-12-31 15:42:08"
+            "time": "2019-12-31T15:42:08+00:00"
         },
         {
             "name": "mezzio/mezzio-fastroute",
@@ -1378,7 +1448,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2019-12-31 15:43:56"
+            "time": "2019-12-31T15:43:56+00:00"
         },
         {
             "name": "mezzio/mezzio-helpers",
@@ -1441,7 +1511,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2019-12-31 15:44:52"
+            "time": "2019-12-31T15:44:52+00:00"
         },
         {
             "name": "mezzio/mezzio-problem-details",
@@ -1503,7 +1573,7 @@
                 "problem-details",
                 "rest"
             ],
-            "time": "2019-12-31 15:45:41"
+            "time": "2019-12-31T15:45:41+00:00"
         },
         {
             "name": "mezzio/mezzio-router",
@@ -1569,7 +1639,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2019-12-31 15:46:05"
+            "time": "2019-12-31T15:46:05+00:00"
         },
         {
             "name": "mezzio/mezzio-template",
@@ -1625,7 +1695,7 @@
                 "mezzio",
                 "template"
             ],
-            "time": "2019-12-31 15:47:51"
+            "time": "2019-12-31T15:47:51+00:00"
         },
         {
             "name": "neighborhoods/buphalo",
@@ -1685,7 +1755,102 @@
                 "Buphalo",
                 "code generation"
             ],
-            "time": "2020-01-21 21:31:44"
+            "time": "2020-01-21T21:31:44+00:00"
+        },
+        {
+            "name": "neighborhoods/datadog-component",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neighborhoods/DatadogComponent.git",
+                "reference": "2ed1508b8e577ce9c1d5337b8b833b0f303e2ebc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neighborhoods/DatadogComponent/zipball/2ed1508b8e577ce9c1d5337b8b833b0f303e2ebc",
+                "reference": "2ed1508b8e577ce9c1d5337b8b833b0f303e2ebc",
+                "shasum": ""
+            },
+            "require": {
+                "datadog/dd-trace": "0.51.0",
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Neighborhoods\\DatadogComponent\\": [
+                        "src"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Harsh Patel",
+                    "email": "harsh.patel@55places.com"
+                },
+                {
+                    "name": "Brad Wilson",
+                    "email": "brad.wilson@neighborhoods.com"
+                }
+            ],
+            "description": "A component to provide access to the Datadog PHP API.",
+            "time": "2020-11-23T23:10:52+00:00"
+        },
+        {
+            "name": "neighborhoods/dependency-injection-container-builder",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent.git",
+                "reference": "ffc94fb6ca1eae78fb5ef4a8aeb99b0260c97f2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neighborhoods/DependencyInjectionContainerBuilderComponent/zipball/ffc94fb6ca1eae78fb5ef4a8aeb99b0260c97f2c",
+                "reference": "ffc94fb6ca1eae78fb5ef4a8aeb99b0260c97f2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3",
+                "psr/container": "^1.0",
+                "sebastiaanluca/php-pipe-operator": "^3.0",
+                "symfony/config": "^4",
+                "symfony/dependency-injection": "^4",
+                "symfony/finder": "^4",
+                "symfony/yaml": "^4"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^9.3",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Neighborhoods\\DependencyInjectionContainerBuilderComponent\\": [
+                        "src"
+                    ],
+                    "Neighborhoods\\DependencyInjectionContainerBuilderComponent\\Test\\": [
+                        "tests"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Oleg Kulyk",
+                    "email": "olegkulik1985@gmail.com"
+                }
+            ],
+            "description": "A dependency injection container builder based on Symfony.",
+            "time": "2021-01-11T16:18:54+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -1731,7 +1896,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2018-02-13 20:26:39"
+            "time": "2018-02-13T20:26:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -1777,7 +1942,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/container",
@@ -1826,7 +1991,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14 16:28:37"
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1876,7 +2041,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/http-server-handler",
@@ -1929,7 +2094,7 @@
                 "response",
                 "server"
             ],
-            "time": "2018-10-30 16:46:14"
+            "time": "2018-10-30T16:46:14+00:00"
         },
         {
             "name": "psr/http-server-middleware",
@@ -1982,7 +2147,7 @@
                 "request",
                 "response"
             ],
-            "time": "2018-10-30 17:12:04"
+            "time": "2018-10-30T17:12:04+00:00"
         },
         {
             "name": "psr/log",
@@ -2029,7 +2194,58 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2019-11-01 11:05:21"
+            "time": "2019-11-01T11:05:21+00:00"
+        },
+        {
+            "name": "sebastiaanluca/php-pipe-operator",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastiaanluca/php-pipe-operator.git",
+                "reference": "0859ed6fa934119cb7b92b7afbb96db20286e444"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastiaanluca/php-pipe-operator/zipball/0859ed6fa934119cb7b92b7afbb96db20286e444",
+                "reference": "0859ed6fa934119cb7b92b7afbb96db20286e444",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SebastiaanLuca\\PipeOperator\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastiaan Luca",
+                    "email": "hello@sebastiaanluca.com",
+                    "homepage": "https://www.sebastiaanluca.com",
+                    "role": "Author"
+                }
+            ],
+            "description": "A (hopefully) temporary solution to implement the pipe operator in PHP.",
+            "homepage": "https://github.com/sebastiaanluca/php-pipe-operator",
+            "keywords": [
+                "operator",
+                "php",
+                "pipe",
+                "take"
+            ],
+            "time": "2019-07-02T16:17:56+00:00"
         },
         {
             "name": "spatie/array-to-xml",
@@ -2079,7 +2295,7 @@
                 "convert",
                 "xml"
             ],
-            "time": "2019-08-21 06:32:31"
+            "time": "2019-08-21T06:32:31+00:00"
         },
         {
             "name": "symfony/cache",
@@ -2158,7 +2374,7 @@
                 "caching",
                 "psr6"
             ],
-            "time": "2020-01-31 09:13:47"
+            "time": "2020-01-31T09:13:47+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -2216,7 +2432,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2019-11-18 17:27:11"
+            "time": "2019-11-18T17:27:11+00:00"
         },
         {
             "name": "symfony/config",
@@ -2280,7 +2496,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-04 13:00:46"
+            "time": "2020-01-04T13:00:46+00:00"
         },
         {
             "name": "symfony/console",
@@ -2356,7 +2572,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-25 12:44:29"
+            "time": "2020-01-25T12:44:29+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -2429,7 +2645,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-31 09:49:27"
+            "time": "2020-01-31T09:49:27+00:00"
         },
         {
             "name": "symfony/expression-language",
@@ -2480,7 +2696,7 @@
             ],
             "description": "Symfony ExpressionLanguage Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-04 13:00:46"
+            "time": "2020-01-04T13:00:46+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -2530,7 +2746,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-21 08:20:44"
+            "time": "2020-01-21T08:20:44+00:00"
         },
         {
             "name": "symfony/finder",
@@ -2579,7 +2795,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-04 13:00:46"
+            "time": "2020-01-04T13:00:46+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2637,7 +2853,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2020-01-13 11:15:53"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2696,7 +2912,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2020-01-13 11:15:53"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
@@ -2754,7 +2970,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2020-01-13 11:15:53"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -2812,7 +3028,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2019-11-18 17:27:11"
+            "time": "2019-11-18T17:27:11+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -2872,7 +3088,7 @@
                 "instantiate",
                 "serialize"
             ],
-            "time": "2020-01-04 14:08:26"
+            "time": "2020-01-04T14:08:26+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -2931,7 +3147,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-21 11:12:16"
+            "time": "2020-01-21T11:12:16+00:00"
         },
         {
             "name": "willdurand/negotiation",
@@ -2983,7 +3199,7 @@
                 "header",
                 "negotiation"
             ],
-            "time": "2017-05-14 17:21:12"
+            "time": "2017-05-14T17:21:12+00:00"
         }
     ],
     "packages-dev": [
@@ -3041,7 +3257,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-10-21 16:45:58"
+            "time": "2019-10-21T16:45:58+00:00"
         },
         {
             "name": "mikey179/vfsstream",
@@ -3087,7 +3303,7 @@
             ],
             "description": "Virtual file system to mock the real file system in unit tests.",
             "homepage": "http://vfs.bovigo.org/",
-            "time": "2019-10-30 15:31:00"
+            "time": "2019-10-30T15:31:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3135,7 +3351,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2020-01-17 21:11:47"
+            "time": "2020-01-17T21:11:47+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3190,7 +3406,7 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2018-07-08 19:23:20"
+            "time": "2018-07-08T19:23:20+00:00"
         },
         {
             "name": "phar-io/version",
@@ -3237,7 +3453,7 @@
                 }
             ],
             "description": "Library for handling version information and constraints",
-            "time": "2018-07-08 19:19:57"
+            "time": "2018-07-08T19:19:57+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3289,7 +3505,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2018-08-07 13:53:10"
+            "time": "2018-08-07T13:53:10+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3342,7 +3558,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2020-02-09 09:16:15"
+            "time": "2020-02-09T09:16:15+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3389,7 +3605,7 @@
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-            "time": "2019-08-22 18:11:29"
+            "time": "2019-08-22T18:11:29+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -3452,7 +3668,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2020-01-20 15:57:02"
+            "time": "2020-01-20T15:57:02+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3515,7 +3731,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-31 16:06:48"
+            "time": "2018-10-31T16:06:48+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3565,7 +3781,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-09-13 20:33:42"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3606,7 +3822,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -3655,7 +3871,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2019-06-07 04:22:29"
+            "time": "2019-06-07T04:22:29+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -3704,7 +3920,8 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2019-09-17 06:23:10"
+            "abandoned": true,
+            "time": "2019-09-17T06:23:10+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -3788,7 +4005,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-01-08 08:45:45"
+            "time": "2020-01-08T08:45:45+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3833,7 +4050,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 06:30:41"
+            "time": "2017-03-04T06:30:41+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -3897,7 +4114,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-07-12 15:12:46"
+            "time": "2018-07-12T15:12:46+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -3953,7 +4170,7 @@
                 "unidiff",
                 "unified diff"
             ],
-            "time": "2019-02-04 06:01:07"
+            "time": "2019-02-04T06:01:07+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -4006,7 +4223,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2019-11-20 08:46:58"
+            "time": "2019-11-20T08:46:58+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -4073,7 +4290,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2019-09-14 09:02:43"
+            "time": "2019-09-14T09:02:43+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -4124,7 +4341,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-04-27 15:39:26"
+            "time": "2017-04-27T15:39:26+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -4171,7 +4388,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-08-03 12:35:26"
+            "time": "2017-08-03T12:35:26+00:00"
         },
         {
             "name": "sebastian/object-reflector",
@@ -4216,7 +4433,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-03-29 09:07:27"
+            "time": "2017-03-29T09:07:27+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -4269,7 +4486,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-03 06:23:57"
+            "time": "2017-03-03T06:23:57+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -4311,7 +4528,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2018-10-04 04:07:39"
+            "time": "2018-10-04T04:07:39+00:00"
         },
         {
             "name": "sebastian/version",
@@ -4354,7 +4571,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -4394,7 +4611,7 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
-            "time": "2019-06-13 22:48:21"
+            "time": "2019-06-13T22:48:21+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4442,7 +4659,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2020-02-14 12:15:55"
+            "time": "2020-02-14T12:15:55+00:00"
         }
     ],
     "aliases": [],
@@ -4451,7 +4668,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.0"
+        "php": "^7.3"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
