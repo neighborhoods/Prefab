@@ -11,7 +11,7 @@ interface DiscoverableDirectoriesInterface
 
     public function getFullPaths(): array;
 
-    public function getWelcomeBaskets(): Prefab5\WelcomeBasketsInterface;
+    public function getWelcomeBaskets(): Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories\WelcomeBasketsInterface;
 
     public function appendPath(string $path): DiscoverableDirectoriesInterface;
 }

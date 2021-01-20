@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories;
 
 interface WelcomeBasketsInterface
 {

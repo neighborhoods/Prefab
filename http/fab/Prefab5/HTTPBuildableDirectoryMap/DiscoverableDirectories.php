@@ -174,10 +174,10 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this;
     }
 
-    public function getWelcomeBaskets() : Prefab5\WelcomeBasketsInterface
+    public function getWelcomeBaskets() : Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories\WelcomeBasketsInterface
     {
         if ($this->welcome_baskets === null) {
-            $welcomeBaskets = new Prefab5\WelcomeBaskets();
+            $welcomeBaskets = new Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories\WelcomeBaskets();
             $welcomeBaskets->setProteanContainerBuilderFilesystemProperties(
                 $this->getProteanContainerBuilderFilesystemProperties()
             );
