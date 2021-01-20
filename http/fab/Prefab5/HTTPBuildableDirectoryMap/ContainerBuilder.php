@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
+use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 
@@ -18,7 +19,7 @@ class ContainerBuilder implements ContainerBuilderInterface
     protected $directoryGroup;
     protected $rootDirectoryPath;
 
-    public function getContainerBuilder() : Protean\Container\BuilderInterface
+    public function build() : ContainerInterface
     {
         $proteanContainerBuilder = new Protean\Container\Builder();
         $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($this->getRootDirectoryPath());
@@ -46,7 +47,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         $this->addWelcomeBaskets($routeBuildableDirectories);
         $this->addAppendedPaths($routeBuildableDirectories);
 
-        return $this->getProteanContainerBuilder();
+        return $this->getProteanContainerBuilder()->build();
     }
 
     protected function addBuildableDirectories(array $httpBuildableDirectoryMap) : ContainerBuilderInterface

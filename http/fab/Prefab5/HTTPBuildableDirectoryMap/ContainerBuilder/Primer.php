@@ -19,13 +19,11 @@ class Primer implements PrimerInterface
         }
 
         foreach ($httpBuildableDirectoryMap as $key => $values) {
-            $containerBuilder = (new ContainerBuilder())
+            (new ContainerBuilder())
                 ->setRootDirectoryPath(__DIR__ . '/../../../../')
                 ->setDirectoryGroup($key)
                 ->setBuildableDirectoryMap([$key => $values])
-                ->getContainerBuilder();
-
-            $containerBuilder->build();
+                ->build();
         }
 
         return $this;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
@@ -19,8 +20,8 @@ class HTTP implements HTTPInterface
     public function respond(): HTTPInterface
     {
         try {
-            $containerBuilder = $this->getContainerBuilder();
-            $application = $containerBuilder->build()->get(Application::class);
+            $container = $this->buildContainer();
+            $application = $container->get(Application::class);
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
@@ -43,7 +44,7 @@ class HTTP implements HTTPInterface
         return $this;
     }
 
-    protected function getContainerBuilder(): Protean\Container\BuilderInterface
+    protected function buildContainer(): ContainerInterface
     {
         $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
@@ -53,14 +54,14 @@ class HTTP implements HTTPInterface
             $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($this->getRootDirectoryPath());
             $proteanContainerBuilder->buildZendExpressive();
             $proteanContainerBuilder->setContainerName('HTTP');
-            return $proteanContainerBuilder;
+            return $proteanContainerBuilder->build();
         }
 
         return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
             ->setRootDirectoryPath($this->getRootDirectoryPath())
             ->setBuildableDirectoryMap($httpBuildableDirectoryMap)
             ->setDirectoryGroup($this->getUrlRoot())
-            ->getContainerBuilder();
+            ->build();
     }
 
     protected function getUrlRoot(): string
