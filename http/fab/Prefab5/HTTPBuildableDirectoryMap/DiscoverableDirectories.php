@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 use Symfony\Component\Filesystem\Filesystem;
 
 class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 {
-    use Prefab5\Protean\Container\Builder\FilesystemProperties\AwareTrait;
+    use Prefab5\HTTPBuildableDirectoryMap\FilesystemProperties\AwareTrait;
 
     protected $directory_filters = [];
     protected $full_paths = [];

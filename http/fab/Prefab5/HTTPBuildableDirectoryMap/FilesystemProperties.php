@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 use Symfony\Component\Filesystem\Filesystem;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 
 class FilesystemProperties implements FilesystemPropertiesInterface
 {
-    use Protean\Container\Builder\AwareTrait;
+    use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\AwareTrait;
 
     protected $filesystem;
     protected $root_directory_path;

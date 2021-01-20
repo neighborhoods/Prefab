@@ -9,7 +9,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class WelcomeBaskets implements WelcomeBasketsInterface
 {
-    use Prefab5\Protean\Container\Builder\FilesystemProperties\AwareTrait;
+    use Prefab5\HTTPBuildableDirectoryMap\FilesystemProperties\AwareTrait;
 
     protected $directory_paths = [];
     protected $buildableDirectory = [];
