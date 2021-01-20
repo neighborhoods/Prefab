@@ -19,11 +19,8 @@ class Primer implements PrimerInterface
         }
 
         foreach ($httpBuildableDirectoryMap as $key => $values) {
-            $proteanContainerBuilder = new Builder();
-            $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(__DIR__ . '/../../../../');
-
             $containerBuilder = (new ContainerBuilder())
-                ->setProteanContainerBuilder($proteanContainerBuilder)
+                ->setRootDirectoryPath(__DIR__ . '/../../../../')
                 ->setDirectoryGroup($key)
                 ->setBuildableDirectoryMap([$key => $values])
                 ->getContainerBuilder();

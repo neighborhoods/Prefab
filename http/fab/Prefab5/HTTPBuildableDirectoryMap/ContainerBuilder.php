@@ -16,12 +16,16 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     protected $buildableDirectoryMap;
     protected $directoryGroup;
+    protected $rootDirectoryPath;
 
     public function getContainerBuilder() : Protean\Container\BuilderInterface
     {
-        $this->getProteanContainerBuilder()->setContainerName(
+        $proteanContainerBuilder = new Protean\Container\Builder();
+        $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($this->getRootDirectoryPath());
+        $proteanContainerBuilder->setContainerName(
             'HTTP_' . str_replace(['/', '-'], '_', $this->getDirectoryGroup())
         );
+        $this->setProteanContainerBuilder($proteanContainerBuilder);
 
         $directoryGroupRoot = explode('/', $this->getDirectoryGroup())[0];
 
@@ -87,6 +91,15 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
+    public function setRootDirectoryPath(string $rootDirectoryPath): ContainerBuilderInterface
+    {
+        if (isset($this->rootDirectoryPath)) {
+            throw new \LogicException('Root Directory Path is already set.');
+        }
+        $this->rootDirectoryPath = $rootDirectoryPath;
+        return $this;
+    }
+
 
     protected function getRoute() : string
     {
@@ -137,6 +150,14 @@ class ContainerBuilder implements ContainerBuilderInterface
         }
         $this->directoryGroup = $directoryGroup;
         return $this;
+    }
+
+    private function getRootDirectoryPath(): string
+    {
+        if (!isset($this->rootDirectoryPath)) {
+            throw new \LogicException('Root Directory Path has not been set.');
+        }
+        return $this->rootDirectoryPath;
     }
 
 }

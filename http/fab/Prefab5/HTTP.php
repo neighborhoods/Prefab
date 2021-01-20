@@ -12,8 +12,9 @@ use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
 {
-    use Protean\Container\Builder\AwareTrait;
     use HTTPBuildableDirectoryMap\ContainerBuilder\AwareTrait;
+
+    protected $rootDirectoryPath;
 
     public function respond(): HTTPInterface
     {
@@ -48,13 +49,15 @@ class HTTP implements HTTPInterface
 
         // No YAML file found. Build full container
         if ($httpBuildableDirectoryMap === null) {
-            $this->getProteanContainerBuilder()->buildZendExpressive();
-            $this->getProteanContainerBuilder()->setContainerName('HTTP');
-            return $this->getProteanContainerBuilder();
+            $proteanContainerBuilder = new Protean\Container\Builder();
+            $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($this->getRootDirectoryPath());
+            $proteanContainerBuilder->buildZendExpressive();
+            $proteanContainerBuilder->setContainerName('HTTP');
+            return $proteanContainerBuilder;
         }
 
         return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
-            ->setProteanContainerBuilder($this->getProteanContainerBuilder())
+            ->setRootDirectoryPath($this->getRootDirectoryPath())
             ->setBuildableDirectoryMap($httpBuildableDirectoryMap)
             ->setDirectoryGroup($this->getUrlRoot())
             ->getContainerBuilder();
@@ -73,6 +76,23 @@ class HTTP implements HTTPInterface
         }
 
         return $urlArray[1] . '/' . $urlArray[2];
+    }
+
+    public function setRootDirectoryPath(string $rootDirectoryPath): HTTPInterface
+    {
+        if (isset($this->rootDirectoryPath)) {
+            throw new \LogicException('Root Directory Path is already set.');
+        }
+        $this->rootDirectoryPath = $rootDirectoryPath;
+        return $this;
+    }
+
+    private function getRootDirectoryPath(): string
+    {
+        if (!isset($this->rootDirectoryPath)) {
+            throw new \LogicException('Root Directory Path has not been set.');
+        }
+        return $this->rootDirectoryPath;
     }
 
 }

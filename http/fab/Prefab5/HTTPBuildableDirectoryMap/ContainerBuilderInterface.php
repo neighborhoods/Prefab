@@ -11,5 +11,7 @@ interface ContainerBuilderInterface
 
     public function setBuildableDirectoryMap(array $buildableDirectoryMap) : ContainerBuilderInterface;
 
+    public function setRootDirectoryPath(string $rootDirectoryPath): ContainerBuilderInterface;
+
     public function getContainerBuilder() : Protean\Container\BuilderInterface;
 }
