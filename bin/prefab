@@ -14,13 +14,11 @@ set_error_handler(function (
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
-use Neighborhoods\Prefab\Protean\Container\Builder;
 use Neighborhoods\Prefab\Prefab;
 
-$proteanContainerBuilder = (new Builder())->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
 $prefab = (new Prefab())
     ->setProjectDir(__DIR__ . '/../../../../')
-    ->setProteanContainerBuilder($proteanContainerBuilder);
+    ->setApplicationRootDirectoryPath(realpath(__DIR__ . '/../'));
 $prefab->generate();
 
 return;
