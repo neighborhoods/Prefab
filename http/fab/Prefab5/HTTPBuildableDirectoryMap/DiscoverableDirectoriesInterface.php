@@ -9,9 +9,11 @@ interface DiscoverableDirectoriesInterface
 {
     public function addDirectoryPathFilter(string $directoryPathFilter): DiscoverableDirectoriesInterface;
 
-    public function getFullPaths(): array;
+    public function getDirectoryPathFilters(): array;
 
     public function getWelcomeBaskets(): Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories\WelcomeBasketsInterface;
 
     public function appendPath(string $path): DiscoverableDirectoriesInterface;
+
+    public function getAppendedPaths(): array;
 }

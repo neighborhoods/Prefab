@@ -12,6 +12,7 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Zend\Expressive\Application;
 
@@ -248,7 +249,7 @@ class Builder implements BuilderInterface
     {
         if ($this->symfony_container_builder === null) {
             $containerBuilder = new ContainerBuilder();
-            $discoverableDirectoryFullPaths = $this->getDiscoverableDirectories()->getFullPaths();
+            $discoverableDirectoryFullPaths = $this->getFullPaths($this->getDiscoverableDirectories());
             $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
             $containerBuilderFacade->addFinder(
                 (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
@@ -260,6 +261,32 @@ class Builder implements BuilderInterface
         }
 
         return $this->symfony_container_builder;
+    }
+
+    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories): array
+    {
+        $filesystem = new Filesystem();
+        $filesystemProperties = $this->getFilesystemProperties();
+        $fullPaths = [];
+        foreach ($discoverableDirectories->getAppendedPaths() as $appendedPath) {
+            $fullPaths[] = $filesystemProperties->getRootDirectoryPath() . '/' . $appendedPath;
+        }
+        if (empty($discoverableDirectories->getDirectoryPathFilters())) {
+            $fullPaths[] = $filesystemProperties->getSourceDirectoryPath();
+            if ($filesystem->exists($filesystemProperties->getFabricationDirectoryPath())) {
+                $fullPaths[] = $filesystemProperties->getFabricationDirectoryPath();
+            }
+        } else {
+            foreach ($discoverableDirectories->getDirectoryPathFilters() as $directoryPathFilter) {
+                $fullPaths[] = $filesystemProperties->getSourceDirectoryPath() . '/' . $directoryPathFilter;
+                $fabricationPathCandidate = $filesystemProperties->getFabricationDirectoryPath() . '/' . $directoryPathFilter;
+                if ($filesystem->exists($fabricationPathCandidate)) {
+                    $fullPaths[] = $fabricationPathCandidate;
+                }
+            }
+        }
+        $fullPaths = array_merge($fullPaths, $discoverableDirectories->getWelcomeBaskets()->getDirectoryPaths());
+        return $fullPaths;
     }
 
     protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
