@@ -13,8 +13,6 @@ interface FilesystemPropertiesInterface
 
     public function getRootDirectoryPath(): string;
 
-    public function getSymfonyContainerFilePath(): string;
-
     public function setRootDirectoryPath(string $rootDirectoryPath): FilesystemPropertiesInterface;
 
     public function getCacheDirectoryPath(): string;

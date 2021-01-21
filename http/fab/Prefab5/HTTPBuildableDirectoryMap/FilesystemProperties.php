@@ -4,12 +4,9 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 use Symfony\Component\Filesystem\Filesystem;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 
 class FilesystemProperties implements FilesystemPropertiesInterface
 {
-    use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder\AwareTrait;
-
     protected $filesystem;
     protected $root_directory_path;
     protected $prefab5_directory_path;
@@ -122,17 +119,6 @@ class FilesystemProperties implements FilesystemPropertiesInterface
         }
 
         return $this->prefab5_directory_path;
-    }
-
-    public function getSymfonyContainerFilePath(): string
-    {
-        $symfonyContainerFilePath = sprintf(
-            '%s/%s.php',
-            $this->getCacheDirectoryPath(),
-            $this->getProteanContainerBuilder()->getContainerName()
-        );
-
-        return $symfonyContainerFilePath;
     }
 
     public function setRootDirectoryPath(string $rootDirectoryPath): FilesystemPropertiesInterface

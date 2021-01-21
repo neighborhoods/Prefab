@@ -45,7 +45,7 @@ class Builder implements BuilderInterface
     protected function getContainer(): ContainerInterface
     {
         if ($this->container === null) {
-            $containerCacheFilePath = $this->getFilesystemProperties()->getSymfonyContainerFilePath();
+            $containerCacheFilePath = $this->getFilesystemProperties()->getCacheDirectoryPath() . '/' . $this->getContainerName() . '.php';
             if (file_exists($containerCacheFilePath)) {
                 require_once $containerCacheFilePath;
                 $containerClass = sprintf('\\%s', $this->getContainerName());
@@ -73,7 +73,6 @@ class Builder implements BuilderInterface
     {
         if ($this->filesystem_properties === null) {
             $this->filesystem_properties = new FilesystemProperties();
-            $this->filesystem_properties->setProteanContainerBuilder($this);
         }
 
         return $this->filesystem_properties;
@@ -191,7 +190,8 @@ class Builder implements BuilderInterface
         $containerClass = (new PhpDumper($containerBuilder))->dump(['class' => $this->getContainerName()]);
         // A possible issue is that the process is dying during the write. So write to a temporary file, then
         // transactionally rename it
-        $temporaryFilePath = $this->getFilesystemProperties()->getSymfonyContainerFilePath() . '-temp';
+        $containerFilePath = $this->getFilesystemProperties()->getCacheDirectoryPath() . '/' . $this->getContainerName() . '.php';
+        $temporaryFilePath = $containerFilePath . '-temp';
         if (file_exists($temporaryFilePath)) {
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
@@ -249,7 +249,7 @@ class Builder implements BuilderInterface
             }
         }
 
-        rename($temporaryFilePath, $this->getFilesystemProperties()->getSymfonyContainerFilePath());
+        rename($temporaryFilePath, $containerFilePath);
         return $this;
     }
 
