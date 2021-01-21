@@ -25,4 +25,6 @@ interface BuilderInterface
     public function getFilesystemProperties(): FilesystemPropertiesInterface;
 
     public function getDiscoverableDirectories(): DiscoverableDirectoriesInterface;
+
+    public function setDiscoverableDirectories(DiscoverableDirectoriesInterface $discoverableDirectories): BuilderInterface;
 }

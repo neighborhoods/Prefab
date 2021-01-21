@@ -164,12 +164,20 @@ class Builder implements BuilderInterface
     public function getDiscoverableDirectories(): DiscoverableDirectoriesInterface
     {
         if ($this->discoverable_directories === null) {
-            $discoverableDirectories = new DiscoverableDirectories();
-            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($this->getFilesystemProperties());
-            $this->discoverable_directories = $discoverableDirectories;
+            throw new \LogicException('Discoverable directories are not set.');
         }
 
         return $this->discoverable_directories;
+    }
+
+    public function setDiscoverableDirectories(DiscoverableDirectoriesInterface $discoverableDirectories): BuilderInterface
+    {
+        if (null !== $this->discoverable_directories) {
+            throw new \LogicException('Discoverable directories are already set.');
+        }
+
+        $this->discoverable_directories = $discoverableDirectories;
+        return $this;
     }
 
     protected function getZendCacheDirectoryPath(): string

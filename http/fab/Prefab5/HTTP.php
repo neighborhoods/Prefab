@@ -52,6 +52,9 @@ class HTTP implements HTTPInterface
         if ($httpBuildableDirectoryMap === null) {
             $proteanContainerBuilder = new Protean\Container\Builder();
             $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($this->getRootDirectoryPath());
+            $discoverableDirectories = new HTTPBuildableDirectoryMap\DiscoverableDirectories();
+            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($proteanContainerBuilder->getFilesystemProperties());
+            $proteanContainerBuilder->setDiscoverableDirectories($discoverableDirectories);
             $proteanContainerBuilder->buildZendExpressive();
             $proteanContainerBuilder->setContainerName('HTTP');
             return $proteanContainerBuilder->build();
