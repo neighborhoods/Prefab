@@ -19,11 +19,8 @@ class ContainerBuilder implements ContainerBuilderInterface
         $directoryGroup = $this->getDirectoryGroup();
         $directoryGroupRoot = explode('/', $directoryGroup)[0];
 
-        $proteanContainerBuilder = new Protean\Container\Builder();
-        $proteanContainerBuilder->setContainerName(
-            'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup)
-        );
-        $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($this->getRootDirectoryPath());
+        $filesystemProperties = new FilesystemProperties();
+        $filesystemProperties->setRootDirectoryPath($this->getRootDirectoryPath());
 
         if (
             !isset($this->getBuildableDirectoryMap()[$directoryGroup])
@@ -40,14 +37,18 @@ class ContainerBuilder implements ContainerBuilderInterface
             ->setDirectoryGroup($directoryGroup)
             ->setRecord($routeBuildableDirectories)
             ->build();
-
         $discoverableDirectories->setProteanContainerBuilderFilesystemProperties(
-            $proteanContainerBuilder->getFilesystemProperties()
+            $filesystemProperties
         );
+
+        $proteanContainerBuilder = new Protean\Container\Builder();
+        $proteanContainerBuilder->setContainerName(
+            'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup)
+        );
+        $proteanContainerBuilder->setFilesystemProperties($filesystemProperties);
         $proteanContainerBuilder->setDiscoverableDirectories($discoverableDirectories);
 
         $proteanContainerBuilder->buildZendExpressive();
-
         return $proteanContainerBuilder->build();
     }
 

@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container;
 
 use Psr\Container\ContainerInterface;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectoriesInterface;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\FilesystemProperties;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\FilesystemPropertiesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -50,7 +48,7 @@ class Builder implements BuilderInterface
     public function getFilesystemProperties(): FilesystemPropertiesInterface
     {
         if ($this->filesystem_properties === null) {
-            $this->filesystem_properties = new FilesystemProperties();
+            throw new \LogicException('Builder filesystem properties have not been set.');
         }
 
         return $this->filesystem_properties;
@@ -159,6 +157,16 @@ class Builder implements BuilderInterface
         }
         $this->service_ids_registered_for_public_access[$serviceId] = $serviceId;
 
+        return $this;
+    }
+
+    public function setFilesystemProperties(FilesystemPropertiesInterface $filesystemProperties): BuilderInterface
+    {
+        if (null !== $this->filesystem_properties) {
+            throw new \LogicException('Filesystem properties are already set.');
+        }
+
+        $this->filesystem_properties = $filesystemProperties;
         return $this;
     }
 }
