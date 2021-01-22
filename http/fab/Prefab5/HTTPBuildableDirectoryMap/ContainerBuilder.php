@@ -58,7 +58,7 @@ class ContainerBuilder implements ContainerBuilderInterface
             ->setDirectoryGroup($directoryGroup)
             ->setRecord($routeBuildableDirectories)
             ->build();
-        $discoverableDirectories->setProteanContainerBuilderFilesystemProperties(
+        $discoverableDirectories->setHTTPBuildableDirectoryMapFilesystemProperties(
             $filesystemProperties
         );
         $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));

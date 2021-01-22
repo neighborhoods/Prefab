@@ -59,7 +59,7 @@ class WelcomeBaskets implements WelcomeBasketsInterface
 
     protected function getPrefab5DirectoryPath(): string
     {
-        return $this->getProteanContainerBuilderFilesystemProperties()->getPrefab5DirectoryPath();
+        return $this->getHTTPBuildableDirectoryMapFilesystemProperties()->getPrefab5DirectoryPath();
     }
 
     public function getWelcomeBasketDirectories(): array

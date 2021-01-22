@@ -7,38 +7,38 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 
 trait AwareTrait
 {
-    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties;
+    protected $ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties;
 
-    public function setProteanContainerBuilderFilesystemProperties(FilesystemPropertiesInterface $proteanContainerBuilderFilesystemProperties): self
+    public function setHTTPBuildableDirectoryMapFilesystemProperties(FilesystemPropertiesInterface $proteanContainerBuilderFilesystemProperties): self
     {
-        if ($this->hasProteanContainerBuilderFilesystemProperties()) {
-            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is already set.');
+        if ($this->hasHTTPBuildableDirectoryMapFilesystemProperties()) {
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties is already set.');
         }
-        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties = $proteanContainerBuilderFilesystemProperties;
+        $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties = $proteanContainerBuilderFilesystemProperties;
 
         return $this;
     }
 
-    protected function getProteanContainerBuilderFilesystemProperties(): FilesystemPropertiesInterface
+    protected function getHTTPBuildableDirectoryMapFilesystemProperties(): FilesystemPropertiesInterface
     {
-        if (!$this->hasProteanContainerBuilderFilesystemProperties()) {
-            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is not set.');
+        if (!$this->hasHTTPBuildableDirectoryMapFilesystemProperties()) {
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties is not set.');
         }
 
-        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties;
+        return $this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties;
     }
 
-    protected function hasProteanContainerBuilderFilesystemProperties(): bool
+    protected function hasHTTPBuildableDirectoryMapFilesystemProperties(): bool
     {
-        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties);
+        return isset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties);
     }
 
-    protected function unsetProteanContainerBuilderFilesystemProperties(): self
+    protected function unsetHTTPBuildableDirectoryMapFilesystemProperties(): self
     {
-        if (!$this->hasProteanContainerBuilderFilesystemProperties()) {
-            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties is not set.');
+        if (!$this->hasHTTPBuildableDirectoryMapFilesystemProperties()) {
+            throw new \LogicException('ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties is not set.');
         }
-        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductProteanContainerBuilderFilesystemProperties);
+        unset($this->ReplaceThisWithTheNameOfYourVendorReplaceThisWithTheNameOfYourProductHTTPBuildableDirectoryMapFilesystemProperties);
 
         return $this;
     }

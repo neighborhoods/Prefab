@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
-
 class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 {
-    use Prefab5\HTTPBuildableDirectoryMap\FilesystemProperties\AwareTrait;
+    use FilesystemProperties\AwareTrait;
 
     protected $directory_filters = [];
     protected $appended_paths = [];
@@ -65,12 +63,12 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         return $this->appended_paths;
     }
 
-    public function getWelcomeBaskets() : Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories\WelcomeBasketsInterface
+    public function getWelcomeBaskets() : DiscoverableDirectories\WelcomeBasketsInterface
     {
         if ($this->welcome_baskets === null) {
-            $welcomeBaskets = new Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectories\WelcomeBaskets();
-            $welcomeBaskets->setProteanContainerBuilderFilesystemProperties(
-                $this->getProteanContainerBuilderFilesystemProperties()
+            $welcomeBaskets = new DiscoverableDirectories\WelcomeBaskets();
+            $welcomeBaskets->setHTTPBuildableDirectoryMapFilesystemProperties(
+                $this->getHTTPBuildableDirectoryMapFilesystemProperties()
             );
             $this->welcome_baskets = $welcomeBaskets;
         }
