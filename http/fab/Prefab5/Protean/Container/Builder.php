@@ -18,12 +18,6 @@ use Zend\Expressive\Application;
 
 class Builder implements BuilderInterface
 {
-    protected const INCORRECT_WRITE_LENGTH_EVENT_KEY = 'SymfonyContainerCacheWriteLengthMismatch';
-    protected const TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED = 'TemporaryContainerCacheFileNotRenamed';
-    protected const SUSPICOUS_CLASS_LENGTH_EVENT_KEY = 'SymfonyDumpSuspiciousClassLength';
-    // A semi-arbitrary size in bytes that signals that the Symfony PHP dumper may have failed to convert the entire file to string
-    protected const SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD = 300;
-
     protected $container;
     protected $symfony_container_builder;
     protected $service_ids_registered_for_public_access = [];
@@ -40,27 +34,21 @@ class Builder implements BuilderInterface
 
     protected function getContainer(): ContainerInterface
     {
-        if ($this->container === null) {
-            $containerCacheFilePath = $this->getFilesystemProperties()->getCacheDirectoryPath() . '/' . $this->getContainerName() . '.php';
-            if (file_exists($containerCacheFilePath)) {
-                require_once $containerCacheFilePath;
-                $containerClass = sprintf('\\%s', $this->getContainerName());
+        $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler\Builder())
+            ->setName($this->getContainerName())
+            ->setCacheDirPath($this->getFilesystemProperties()->getCacheDirectoryPath())
+            ->setDebug(false)
+            ->build();
 
-                // TODO: PREF-146 - For some reason the class occasionally isn't found even when it exists
-                // in the the cached file. For now, we just delete the file and recreate the container but
-                // we should figure out why this is happening
-                if (!class_exists($containerClass)) {
-                    $this->deleteCachedContainer($containerCacheFilePath);
-                    $containerBuilder = $this->buildContainerBuilder();
-                } else {
-                    $containerBuilder = new $containerClass;
-                }
-
-            } else {
-                $containerBuilder = $this->buildContainerBuilder();
-            }
-            $this->container = $containerBuilder;
+        if ($cacheHandler->hasInCache()) {
+            return $cacheHandler->getFromCache();
         }
+
+        $containerBuilder = $this->getSymfonyContainerBuilder();
+
+        $cacheHandler->cache($containerBuilder);
+
+        $this->container = $containerBuilder;
 
         return $this->container;
     }
@@ -94,25 +82,9 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    protected function deleteCachedContainer(string $containerCacheFilePath)
-    {
-        unlink($containerCacheFilePath);
-        opcache_invalidate($containerCacheFilePath);
-    }
 
     protected function buildContainerBuilder(): ContainerBuilder
     {
-        try {
-            $this->cacheSymfonyContainerBuilder();
-        } catch (\Throwable $throwable) {
-            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
-            $tracer = $repository->get();
-            $span = $tracer->getActiveSpan();
-            if ($span !== null) {
-                $span->setError($throwable);
-            }
-        }
-
         $containerBuilder = $this->getSymfonyContainerBuilder();
         return $containerBuilder;
     }
@@ -158,75 +130,6 @@ class Builder implements BuilderInterface
     protected function getZendCacheDirectoryPath(): string
     {
         return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
-    }
-
-    protected function cacheSymfonyContainerBuilder(): BuilderInterface
-    {
-        $containerBuilder = $this->getSymfonyContainerBuilder();
-        $containerClass = (new PhpDumper($containerBuilder))->dump(['class' => $this->getContainerName()]);
-        // A possible issue is that the process is dying during the write. So write to a temporary file, then
-        // transactionally rename it
-        $containerFilePath = $this->getFilesystemProperties()->getCacheDirectoryPath() . '/' . $this->getContainerName() . '.php';
-        $temporaryFilePath = $containerFilePath . '-temp';
-        if (file_exists($temporaryFilePath)) {
-            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
-            $tracer = $repository->get();
-            $span = $tracer->getActiveSpan();
-            if ($span !== null) {
-                $span->log(
-                    [
-                        'message' => sprintf('message: %s. filepath: %s. class: %s.',
-                            self::TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED,
-                            $temporaryFilePath,
-                            $containerClass)
-                    ]);
-            }
-
-        }
-
-        $writtenBytes = file_put_contents(
-            $temporaryFilePath,
-            $containerClass,
-            LOCK_EX
-        );
-
-        // This signals a failure of file_put_contents to write the entirety of the file to disk
-        if (strlen($containerClass) !== $writtenBytes) {
-            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
-            $tracer = $repository->get();
-            $span = $tracer->getActiveSpan();
-            if ($span !== null) {
-                $span->log(
-                    [
-                        'message' => sprintf('message: %s. bytes_written_to_disk: %s. class_size: %s. class: %s.',
-                            self::INCORRECT_WRITE_LENGTH_EVENT_KEY,
-                            $writtenBytes,
-                            strlen($containerClass),
-                            $containerClass)
-                    ]);
-            }
-
-            $this->deleteCachedContainer($temporaryFilePath);
-
-        } else if (strlen($containerClass) < self::SUSPICIOUS_CLASS_LENGTH_SIZE_THRESHOLD) {
-            // This signals that Symfony PHPDumper may have failed to convert the entire container class to a string when dumping
-            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
-            $tracer = $repository->get();
-            $span = $tracer->getActiveSpan();
-            if ($span !== null) {
-                $span->log(
-                    [
-                        'message' => sprintf('message: %s. bytes_written_to_disk: %s. class_size: %s. class: %s.',
-                            self::SUSPICOUS_CLASS_LENGTH_EVENT_KEY,
-                            $writtenBytes,
-                            strlen($containerClass),
-                            $containerClass)
-                    ]);
-            }
-        }
-
-        rename($temporaryFilePath, $containerFilePath);
-        return $this;
     }
 
     protected function getSymfonyContainerBuilder(): ContainerBuilder
