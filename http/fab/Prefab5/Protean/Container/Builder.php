@@ -18,21 +18,12 @@ use Zend\Expressive\Application;
 
 class Builder implements BuilderInterface
 {
-    protected $container;
-    protected $symfony_container_builder;
     protected $service_ids_registered_for_public_access = [];
     protected $container_name;
     protected $filesystem_properties;
     protected $discoverable_directories;
 
     public function build(): ContainerInterface
-    {
-        $container = $this->getContainer();
-
-        return $container;
-    }
-
-    protected function getContainer(): ContainerInterface
     {
         $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler\Builder())
             ->setName($this->getContainerName())
@@ -48,9 +39,7 @@ class Builder implements BuilderInterface
 
         $cacheHandler->cache($containerBuilder);
 
-        $this->container = $containerBuilder;
-
-        return $this->container;
+        return $containerBuilder;
     }
 
     public function getFilesystemProperties(): FilesystemPropertiesInterface
@@ -80,13 +69,6 @@ class Builder implements BuilderInterface
         $this->container_name = $containerName;
 
         return $this;
-    }
-
-
-    protected function buildContainerBuilder(): ContainerBuilder
-    {
-        $containerBuilder = $this->getSymfonyContainerBuilder();
-        return $containerBuilder;
     }
 
     public function buildZendExpressive(): BuilderInterface
@@ -134,20 +116,17 @@ class Builder implements BuilderInterface
 
     protected function getSymfonyContainerBuilder(): ContainerBuilder
     {
-        if ($this->symfony_container_builder === null) {
-            $containerBuilder = new ContainerBuilder();
-            $discoverableDirectoryFullPaths = $this->getFullPaths($this->getDiscoverableDirectories());
-            $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
-            $containerBuilderFacade->addFinder(
-                (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
-            );
-            $containerBuilderFacade->assembleYaml();
-            $this->updateServiceDefinitions($containerBuilder);
-            $containerBuilderFacade->build();
-            $this->symfony_container_builder = $containerBuilder;
-        }
+        $containerBuilder = new ContainerBuilder();
+        $discoverableDirectoryFullPaths = $this->getFullPaths($this->getDiscoverableDirectories());
+        $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
+        $containerBuilderFacade->addFinder(
+            (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
+        );
+        $containerBuilderFacade->assembleYaml();
+        $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
+        $containerBuilderFacade->build();
 
-        return $this->symfony_container_builder;
+        return $containerBuilder;
     }
 
     protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories): array
@@ -174,13 +153,6 @@ class Builder implements BuilderInterface
         }
         $fullPaths = array_merge($fullPaths, $discoverableDirectories->getWelcomeBaskets()->getDirectoryPaths());
         return $fullPaths;
-    }
-
-    protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
-    {
-        $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
-
-        return $this;
     }
 
     protected function registerUserSpecifiedDefinitionsAsPublic(ContainerBuilder $containerBuilder): void
