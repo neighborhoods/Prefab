@@ -8,7 +8,6 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\DiscoverableDirectoriesInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\FilesystemProperties;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\FilesystemPropertiesInterface;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Symfony\Component\DependencyInjection\ContainerBuilder\Facade;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
@@ -31,15 +30,21 @@ class Builder implements BuilderInterface
             ->setDebug(false)
             ->build();
 
-        if ($cacheHandler->hasInCache()) {
-            return $cacheHandler->getFromCache();
+        $containerBuilder = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
+            ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
+            ->setRootPath($this->getFilesystemProperties()->getRootDirectoryPath())
+            ->setCacheHandler($cacheHandler)
+            ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
+            ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass());
+
+        $paths = $this->getFullPaths($this->getDiscoverableDirectories());
+        foreach ($paths as $path) {
+            $containerBuilder->addSourcePath($path);
         }
-
-        $containerBuilder = $this->getSymfonyContainerBuilder();
-
-        $cacheHandler->cache($containerBuilder);
-
-        return $containerBuilder;
+        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
+            $containerBuilder->makePublic($serviceId);
+        }
+        return $containerBuilder->build();
     }
 
     public function getFilesystemProperties(): FilesystemPropertiesInterface
@@ -114,21 +119,6 @@ class Builder implements BuilderInterface
         return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
     }
 
-    protected function getSymfonyContainerBuilder(): ContainerBuilder
-    {
-        $containerBuilder = new ContainerBuilder();
-        $discoverableDirectoryFullPaths = $this->getFullPaths($this->getDiscoverableDirectories());
-        $containerBuilderFacade = (new Facade())->setContainerBuilder($containerBuilder);
-        $containerBuilderFacade->addFinder(
-            (new Finder())->name('*.service.yml')->files()->in($discoverableDirectoryFullPaths)
-        );
-        $containerBuilderFacade->assembleYaml();
-        $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
-        $containerBuilderFacade->build();
-
-        return $containerBuilder;
-    }
-
     protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories): array
     {
         $filesystem = new Filesystem();
@@ -153,13 +143,6 @@ class Builder implements BuilderInterface
         }
         $fullPaths = array_merge($fullPaths, $discoverableDirectories->getWelcomeBaskets()->getDirectoryPaths());
         return $fullPaths;
-    }
-
-    protected function registerUserSpecifiedDefinitionsAsPublic(ContainerBuilder $containerBuilder): void
-    {
-        foreach ($this->getServiceIdsRegisteredForPublicAccess() as $serviceId) {
-            $containerBuilder->getDefinition($serviceId)->setPublic(true);
-        }
     }
 
     protected function getServiceIdsRegisteredForPublicAccess(): array
