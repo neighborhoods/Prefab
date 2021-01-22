@@ -60,24 +60,6 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
-
-    protected function getRoute() : string
-    {
-        if ($this->route === null) {
-            throw new LogicException('ContainerBuilder route has not been set.');
-        }
-        return $this->route;
-    }
-
-    public function setRoute(string $route) : ContainerBuilderInterface
-    {
-        if ($this->route !== null) {
-            throw new LogicException('ContainerBuilder route is already set.');
-        }
-        $this->route = $route;
-        return $this;
-    }
-
     protected function getBuildableDirectoryMap() : array
     {
         if ($this->buildableDirectoryMap === null) {
