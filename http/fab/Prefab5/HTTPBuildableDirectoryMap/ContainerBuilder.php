@@ -4,9 +4,14 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 use LogicException;
+use Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler;
+use Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder;
 use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
+use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
+use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
 use Zend\Expressive\Application;
 
@@ -27,7 +32,7 @@ class ContainerBuilder implements ContainerBuilderInterface
             $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
         }
 
-        $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler\Builder())
+        $cacheHandler = (new SymfonyConfigCacheHandler\Builder())
             ->setName($containerName)
             ->setCacheDirPath($filesystemProperties->getCacheDirectoryPath())
             ->setDebug(false)
@@ -58,14 +63,14 @@ class ContainerBuilder implements ContainerBuilderInterface
         );
         $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));
 
-        $containerBuilder = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
-            ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
+        $containerBuilder = (new TinyContainerBuilder())
+            ->setContainerBuilder(new SymfonyContainerBuilder())
             ->setRootPath($filesystemProperties->getRootDirectoryPath())
             ->setCacheHandler($cacheHandler)
-            ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
-            ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass());
+            ->addCompilerPass(new AnalyzeServiceReferencesPass())
+            ->addCompilerPass(new InlineServiceDefinitionsPass());
 
-        $paths = $this->getFullPaths($discoverableDirectories);
+        $paths = $this->getFullPaths($discoverableDirectories, $filesystemProperties);
         foreach ($paths as $path) {
             $containerBuilder->addSourcePath($path);
         }
@@ -89,10 +94,9 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $filesystemProperties->getZendCacheDirectoryPath();
     }
 
-    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories): array
+    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
     {
         $filesystem = new Filesystem();
-        $filesystemProperties = $this->getFilesystemProperties();
         $fullPaths = [];
         foreach ($discoverableDirectories->getAppendedPaths() as $appendedPath) {
             $fullPaths[] = $filesystemProperties->getRootDirectoryPath() . '/' . $appendedPath;
