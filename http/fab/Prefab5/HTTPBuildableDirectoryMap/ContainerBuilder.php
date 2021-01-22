@@ -48,12 +48,25 @@ class ContainerBuilder implements ContainerBuilderInterface
         if ($directoryGroup !== '') {
             $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
         }
-        $proteanContainerBuilder = new Protean\Container\Builder();
-        $proteanContainerBuilder->setContainerName($containerName);
-        $proteanContainerBuilder->setFilesystemProperties($filesystemProperties);
-        $proteanContainerBuilder->setDiscoverableDirectories($discoverableDirectories);
 
-        return $proteanContainerBuilder->build();
+        $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler\Builder())
+            ->setName($containerName)
+            ->setCacheDirPath($filesystemProperties->getCacheDirectoryPath())
+            ->setDebug(false)
+            ->build();
+
+        $containerBuilder = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
+            ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
+            ->setRootPath($filesystemProperties->getRootDirectoryPath())
+            ->setCacheHandler($cacheHandler)
+            ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
+            ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass());
+
+        $paths = $this->getFullPaths($discoverableDirectories);
+        foreach ($paths as $path) {
+            $containerBuilder->addSourcePath($path);
+        }
+        return $containerBuilder->build();
     }
 
     public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
@@ -71,6 +84,32 @@ class ContainerBuilder implements ContainerBuilderInterface
         );
         chdir($currentWorkingDirectory);
         return $filesystemProperties->getZendCacheDirectoryPath();
+    }
+
+    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories): array
+    {
+        $filesystem = new Filesystem();
+        $filesystemProperties = $this->getFilesystemProperties();
+        $fullPaths = [];
+        foreach ($discoverableDirectories->getAppendedPaths() as $appendedPath) {
+            $fullPaths[] = $filesystemProperties->getRootDirectoryPath() . '/' . $appendedPath;
+        }
+        if (empty($discoverableDirectories->getDirectoryPathFilters())) {
+            $fullPaths[] = $filesystemProperties->getSourceDirectoryPath();
+            if ($filesystem->exists($filesystemProperties->getFabricationDirectoryPath())) {
+                $fullPaths[] = $filesystemProperties->getFabricationDirectoryPath();
+            }
+        } else {
+            foreach ($discoverableDirectories->getDirectoryPathFilters() as $directoryPathFilter) {
+                $fullPaths[] = $filesystemProperties->getSourceDirectoryPath() . '/' . $directoryPathFilter;
+                $fabricationPathCandidate = $filesystemProperties->getFabricationDirectoryPath() . '/' . $directoryPathFilter;
+                if ($filesystem->exists($fabricationPathCandidate)) {
+                    $fullPaths[] = $fabricationPathCandidate;
+                }
+            }
+        }
+        $fullPaths = array_merge($fullPaths, $discoverableDirectories->getWelcomeBaskets()->getDirectoryPaths());
+        return $fullPaths;
     }
 
     public function setRootDirectoryPath(string $rootDirectoryPath): ContainerBuilderInterface
