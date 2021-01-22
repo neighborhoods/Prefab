@@ -18,12 +18,26 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     public function build() : ContainerInterface
     {
-        $directoryGroup = $this->getDirectoryGroup();
-        $directoryGroupRoot = explode('/', $directoryGroup)[0];
-
         $filesystemProperties = new FilesystemProperties();
         $filesystemProperties->setRootDirectoryPath($this->getRootDirectoryPath());
 
+        $directoryGroup = $this->getDirectoryGroup();
+        $containerName = 'HTTP';
+        if ($directoryGroup !== '') {
+            $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
+        }
+
+        $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler\Builder())
+            ->setName($containerName)
+            ->setCacheDirPath($filesystemProperties->getCacheDirectoryPath())
+            ->setDebug(false)
+            ->build();
+
+        if ($cacheHandler->hasInCache()) {
+            return $cacheHandler->getFromCache();
+        }
+
+        $directoryGroupRoot = explode('/', $directoryGroup)[0];
         if (
             !isset($this->getBuildableDirectoryMap()[$directoryGroup])
             && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
@@ -43,17 +57,6 @@ class ContainerBuilder implements ContainerBuilderInterface
             $filesystemProperties
         );
         $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));
-
-        $containerName = 'HTTP';
-        if ($directoryGroup !== '') {
-            $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
-        }
-
-        $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler\Builder())
-            ->setName($containerName)
-            ->setCacheDirPath($filesystemProperties->getCacheDirectoryPath())
-            ->setDebug(false)
-            ->build();
 
         $containerBuilder = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
             ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
