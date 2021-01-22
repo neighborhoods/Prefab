@@ -50,16 +50,11 @@ class HTTP implements HTTPInterface
 
         // No YAML file found. Build full container
         if ($httpBuildableDirectoryMap === null) {
-            $filesystemProperties = new HTTPBuildableDirectoryMap\FilesystemProperties();
-            $filesystemProperties->setRootDirectoryPath($this->getRootDirectoryPath());
-            $discoverableDirectories = new HTTPBuildableDirectoryMap\DiscoverableDirectories();
-            $discoverableDirectories->setProteanContainerBuilderFilesystemProperties($filesystemProperties);
-            $proteanContainerBuilder = new Protean\Container\Builder();
-            $proteanContainerBuilder->setFilesystemProperties($filesystemProperties);
-            $proteanContainerBuilder->setDiscoverableDirectories($discoverableDirectories);
-            $proteanContainerBuilder->buildZendExpressive();
-            $proteanContainerBuilder->setContainerName('HTTP');
-            return $proteanContainerBuilder->build();
+            return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
+                ->setRootDirectoryPath($this->getRootDirectoryPath())
+                ->setBuildableDirectoryMap(['' => []])
+                ->setDirectoryGroup('')
+                ->build();
         }
 
         return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()

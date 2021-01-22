@@ -42,9 +42,11 @@ class ContainerBuilder implements ContainerBuilderInterface
         );
 
         $proteanContainerBuilder = new Protean\Container\Builder();
-        $proteanContainerBuilder->setContainerName(
-            'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup)
-        );
+        $containerName = 'HTTP';
+        if ($directoryGroup !== '') {
+            $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
+        }
+        $proteanContainerBuilder->setContainerName($containerName);
         $proteanContainerBuilder->setFilesystemProperties($filesystemProperties);
         $proteanContainerBuilder->setDiscoverableDirectories($discoverableDirectories);
 
