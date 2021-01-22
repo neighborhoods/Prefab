@@ -29,7 +29,6 @@ class Builder implements BuilderInterface
     protected $container;
     protected $symfony_container_builder;
     protected $service_ids_registered_for_public_access = [];
-    protected $can_build_zend_expressive;
     protected $container_name;
     protected $filesystem_properties;
     protected $discoverable_directories;
@@ -106,9 +105,6 @@ class Builder implements BuilderInterface
 
     protected function buildContainerBuilder(): ContainerBuilder
     {
-        if ($this->getCanBuildZendExpressive()) {
-            $this->buildZendExpressive();
-        }
         try {
             $this->cacheSymfonyContainerBuilder();
         } catch (\Throwable $throwable) {
@@ -122,23 +118,6 @@ class Builder implements BuilderInterface
 
         $containerBuilder = $this->getSymfonyContainerBuilder();
         return $containerBuilder;
-    }
-
-    protected function getCanBuildZendExpressive(): bool
-    {
-        return $this->can_build_zend_expressive === true;
-    }
-
-    /** @deprecated */
-    public function setCanBuildZendExpressive(bool $can_build_zend_expressive): BuilderInterface
-    {
-        if ($this->can_build_zend_expressive !== null) {
-            throw new \LogicException('Builder can_build_zend_expressive is already set.');
-        }
-
-        $this->can_build_zend_expressive = $can_build_zend_expressive;
-
-        return $this;
     }
 
     public function buildZendExpressive(): BuilderInterface
