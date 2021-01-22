@@ -7,6 +7,8 @@ use LogicException;
 use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
+use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
+use Zend\Expressive\Application;
 
 class ContainerBuilder implements ContainerBuilderInterface
 {
@@ -40,18 +42,35 @@ class ContainerBuilder implements ContainerBuilderInterface
         $discoverableDirectories->setProteanContainerBuilderFilesystemProperties(
             $filesystemProperties
         );
+        $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));
 
-        $proteanContainerBuilder = new Protean\Container\Builder();
         $containerName = 'HTTP';
         if ($directoryGroup !== '') {
             $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
         }
+        $proteanContainerBuilder = new Protean\Container\Builder();
         $proteanContainerBuilder->setContainerName($containerName);
         $proteanContainerBuilder->setFilesystemProperties($filesystemProperties);
         $proteanContainerBuilder->setDiscoverableDirectories($discoverableDirectories);
 
-        $proteanContainerBuilder->buildZendExpressive();
         return $proteanContainerBuilder->build();
+    }
+
+    public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
+    {
+        $currentWorkingDirectory = getcwd();
+        chdir($filesystemProperties->getRootDirectoryPath());
+        /** @noinspection PhpIncludeInspection */
+        $zendContainerBuilder = require $filesystemProperties->getZendConfigContainerFilePath();
+        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
+        /** @noinspection PhpIncludeInspection */
+        (require $filesystemProperties->getPipelineFilePath())($applicationServiceDefinition);
+        file_put_contents(
+            $filesystemProperties->getExpressiveDIYAMLFilePath(),
+            (new YamlDumper($zendContainerBuilder))->dump()
+        );
+        chdir($currentWorkingDirectory);
+        return $filesystemProperties->getZendCacheDirectoryPath();
     }
 
     public function setRootDirectoryPath(string $rootDirectoryPath): ContainerBuilderInterface

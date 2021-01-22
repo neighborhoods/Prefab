@@ -8,10 +8,8 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\FilesystemPropertiesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Zend\Expressive\Application;
 
 class Builder implements BuilderInterface
 {
@@ -74,25 +72,6 @@ class Builder implements BuilderInterface
         return $this;
     }
 
-    public function buildZendExpressive(): BuilderInterface
-    {
-        $currentWorkingDirectory = getcwd();
-        chdir($this->getFilesystemProperties()->getRootDirectoryPath());
-        /** @noinspection PhpIncludeInspection */
-        $zendContainerBuilder = require $this->getFilesystemProperties()->getZendConfigContainerFilePath();
-        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
-        /** @noinspection PhpIncludeInspection */
-        (require $this->getFilesystemProperties()->getPipelineFilePath())($applicationServiceDefinition);
-        file_put_contents(
-            $this->getFilesystemProperties()->getExpressiveDIYAMLFilePath(),
-            (new YamlDumper($zendContainerBuilder))->dump()
-        );
-        chdir($currentWorkingDirectory);
-        $this->getDiscoverableDirectories()->appendPath($this->getZendCacheDirectoryPath());
-
-        return $this;
-    }
-
     public function getDiscoverableDirectories(): DiscoverableDirectoriesInterface
     {
         if ($this->discoverable_directories === null) {
@@ -110,11 +89,6 @@ class Builder implements BuilderInterface
 
         $this->discoverable_directories = $discoverableDirectories;
         return $this;
-    }
-
-    protected function getZendCacheDirectoryPath(): string
-    {
-        return $this->getFilesystemProperties()->getZendCacheDirectoryPath();
     }
 
     protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories): array
