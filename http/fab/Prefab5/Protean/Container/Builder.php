@@ -18,8 +18,6 @@ use Zend\Expressive\Application;
 
 class Builder implements BuilderInterface
 {
-    protected const SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT = false;
-
     protected const INCORRECT_WRITE_LENGTH_EVENT_KEY = 'SymfonyContainerCacheWriteLengthMismatch';
     protected const TEMPORARY_CONTAINER_CACHE_FILE_NOT_RENAMED = 'TemporaryContainerCacheFileNotRenamed';
     protected const SUSPICOUS_CLASS_LENGTH_EVENT_KEY = 'SymfonyDumpSuspiciousClassLength';
@@ -32,7 +30,6 @@ class Builder implements BuilderInterface
     protected $container_name;
     protected $filesystem_properties;
     protected $discoverable_directories;
-    protected $shouldRegisterAllServicesAsPublic;
 
     public function build(): ContainerInterface
     {
@@ -278,49 +275,9 @@ class Builder implements BuilderInterface
 
     protected function updateServiceDefinitions(ContainerBuilder $containerBuilder): BuilderInterface
     {
-        if ($this->getShouldRegisterAllServicesAsPublic()) {
-            $this->registerAllDefinitionsAsPublic($containerBuilder);
-            $this->registerAllAliasesAsPublic($containerBuilder);
-        } else {
-            $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
-        }
+        $this->registerUserSpecifiedDefinitionsAsPublic($containerBuilder);
 
         return $this;
-    }
-
-    public function getShouldRegisterAllServicesAsPublic(): bool
-    {
-        if (null === $this->shouldRegisterAllServicesAsPublic) {
-            $this->shouldRegisterAllServicesAsPublic =
-                static::SHOULD_REGISTER_ALL_SERVICES_AS_PUBLIC_DEFAULT;
-        }
-
-        return $this->shouldRegisterAllServicesAsPublic;
-    }
-
-    public function setShouldRegisterAllServicesAsPublic(bool $shouldRegisterAllServicesAsPublic): BuilderInterface
-    {
-        if (null !== $this->shouldRegisterAllServicesAsPublic) {
-            throw new \LogicException('Builder shouldRegisterAllServicesAsPublic is already set.');
-        }
-
-        $this->shouldRegisterAllServicesAsPublic = $shouldRegisterAllServicesAsPublic;
-
-        return $this;
-    }
-
-    protected function registerAllDefinitionsAsPublic(ContainerBuilder $containerBuilder): void
-    {
-        foreach ($containerBuilder->getDefinitions() as $definition) {
-            $definition->setPublic(true);
-        }
-    }
-
-    protected function registerAllAliasesAsPublic(ContainerBuilder $containerBuilder): void
-    {
-        foreach ($containerBuilder->getAliases() as $alias) {
-            $alias->setPublic(true);
-        }
     }
 
     protected function registerUserSpecifiedDefinitionsAsPublic(ContainerBuilder $containerBuilder): void
