@@ -7,7 +7,6 @@ use LogicException;
 use Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler;
 use Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder;
 use Psr\Container\ContainerInterface;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
