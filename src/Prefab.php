@@ -5,18 +5,17 @@ namespace Neighborhoods\Prefab;
 
 
 use LogicException;
-use Neighborhoods\Prefab\Protean\Container\Builder;
+use Psr\Container\ContainerInterface;
 
 class Prefab implements PrefabInterface
 {
     protected $applicationRootDirectoryPath;
+    protected $container;
     protected $project_dir;
 
     public function generate() : PrefabInterface
     {
-        $container = (new Builder())
-            ->setApplicationRootDirectoryPath($this->getApplicationRootDirectoryPath())
-            ->build();
+        $container = $this->getContainer();
 
         $container
             ->get(GeneratorInterface::class)
@@ -24,6 +23,23 @@ class Prefab implements PrefabInterface
             ->generate();
 
         return $this;
+    }
+
+    protected function getContainer(): ContainerInterface
+    {
+        if ($this->container === null) {
+
+            $containerBuilder = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
+                ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
+                ->setRootPath($this->getApplicationRootDirectoryPath())
+                ->addSourcePath('src')
+                ->addSourcePath('fab')
+                ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
+                ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass());
+            $this->container = $containerBuilder->build();
+        }
+
+        return $this->container;
     }
 
     protected function getProjectDir()
@@ -45,10 +61,21 @@ class Prefab implements PrefabInterface
 
     public function setApplicationRootDirectoryPath(string $applicationRootDirectoryPath): PrefabInterface
     {
-        if (isset($this->applicationRootDirectoryPath)) {
-            throw new LogicException('Application Root Directory Path is already set.');
+        if ($this->applicationRootDirectoryPath === null) {
+            $applicationRootDirectoryPath = realpath(rtrim($applicationRootDirectoryPath, "/"));
+            if (is_dir($applicationRootDirectoryPath)) {
+                $this->applicationRootDirectoryPath = $applicationRootDirectoryPath;
+            } else {
+                $message = sprintf(
+                    'Application root directory path[%s] is not a directory.',
+                    $applicationRootDirectoryPath
+                );
+                throw new \UnexpectedValueException($message);
+            }
+        } else {
+            throw new \LogicException('Application root directory path is already set.');
         }
-        $this->applicationRootDirectoryPath = $applicationRootDirectoryPath;
+
         return $this;
     }
 
