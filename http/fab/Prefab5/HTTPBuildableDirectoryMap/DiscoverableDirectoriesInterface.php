@@ -9,7 +9,9 @@ interface DiscoverableDirectoriesInterface
 
     public function getDirectoryPathFilters(): array;
 
-    public function getWelcomeBaskets(): DiscoverableDirectories\WelcomeBasketsInterface;
+    public function addWelcomeBasket(string $welcomeBasket): DiscoverableDirectoriesInterface;
+
+    public function getWelcomeBaskets(): array;
 
     public function appendPath(string $path): DiscoverableDirectoriesInterface;
 

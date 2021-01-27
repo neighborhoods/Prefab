@@ -30,7 +30,7 @@ class Builder implements BuilderInterface
 
         if (isset($record[self::YAML_KEY_WELCOME_BASKETS])) {
             foreach ($record[self::YAML_KEY_WELCOME_BASKETS] as $welcomeBasket) {
-                $discoverableDirectories->getWelcomeBaskets()->addWelcomeBasket($welcomeBasket);
+                $discoverableDirectories->addWelcomeBasket($welcomeBasket);
             }
         }
 

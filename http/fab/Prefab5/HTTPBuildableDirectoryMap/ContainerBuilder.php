@@ -58,9 +58,6 @@ class ContainerBuilder implements ContainerBuilderInterface
             ->setDirectoryGroupName($directoryGroup)
             ->setRecord($routeBuildableDirectories)
             ->build();
-        $discoverableDirectories->setHTTPBuildableDirectoryMapFilesystemProperties(
-            $filesystemProperties
-        );
         $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));
 
         $containerBuilder = (new TinyContainerBuilder())
@@ -115,7 +112,9 @@ class ContainerBuilder implements ContainerBuilderInterface
                 }
             }
         }
-        $fullPaths = array_merge($fullPaths, $discoverableDirectories->getWelcomeBaskets()->getDirectoryPaths());
+        foreach ($discoverableDirectories->getWelcomeBaskets() as $welcomeBasket) {
+            $fullPaths[] = $filesystemProperties->getPrefab5DirectoryPath() . '/' . $welcomeBasket;
+        }
         return $fullPaths;
     }
 
