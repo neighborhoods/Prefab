@@ -14,4 +14,8 @@ interface DiscoverableDirectoriesInterface
     public function appendPath(string $path): DiscoverableDirectoriesInterface;
 
     public function getAppendedPaths(): array;
+
+    public function getDirectoryGroupName(): string;
+
+    public function setDirectoryGroupName(string $directoryGroupName): DiscoverableDirectoriesInterface;
 }

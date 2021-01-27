@@ -55,7 +55,7 @@ class ContainerBuilder implements ContainerBuilderInterface
             $this->getBuildableDirectoryMap()[$directoryGroupRoot];
 
         $discoverableDirectories = (new DiscoverableDirectories\Builder())
-            ->setDirectoryGroup($directoryGroup)
+            ->setDirectoryGroupName($directoryGroup)
             ->setRecord($routeBuildableDirectories)
             ->build();
         $discoverableDirectories->setHTTPBuildableDirectoryMapFilesystemProperties(

@@ -10,6 +10,16 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
     protected $directory_filters = [];
     protected $appended_paths = [];
     protected $welcome_baskets;
+    protected $directoryGroupName;
+
+    public function setDirectoryGroupName(string $directoryGroupName): DiscoverableDirectoriesInterface
+    {
+        if (isset($this->directoryGroupName)) {
+            throw new \LogicException('Directory Group Name is already set.');
+        }
+        $this->directoryGroupName = $directoryGroupName;
+        return $this;
+    }
 
     public function addDirectoryPathFilter(string $directoryPathFilter) : DiscoverableDirectoriesInterface
     {
@@ -74,5 +84,13 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
         }
 
         return $this->welcome_baskets;
+    }
+
+    public function getDirectoryGroupName(): string
+    {
+        if (!isset($this->directoryGroupName)) {
+            throw new \LogicException('Directory Group Name has not been set.');
+        }
+        return $this->directoryGroupName;
     }
 }
