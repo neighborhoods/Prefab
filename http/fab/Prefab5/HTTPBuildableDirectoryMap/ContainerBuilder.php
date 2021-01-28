@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
+use Symfony\Component\Filesystem\Filesystem;
 use Zend\Expressive\Application;
 
 class ContainerBuilder implements ContainerBuilderInterface
@@ -54,13 +55,9 @@ class ContainerBuilder implements ContainerBuilderInterface
             $this->getBuildableDirectoryMap()[$directoryGroupRoot];
 
         $discoverableDirectories = (new DiscoverableDirectories\Builder())
-            ->setDirectoryGroup($directoryGroup)
+            ->setDirectoryGroupName($directoryGroup)
             ->setRecord($routeBuildableDirectories)
             ->build();
-        $discoverableDirectories->setHTTPBuildableDirectoryMapFilesystemProperties(
-            $filesystemProperties
-        );
-        $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));
 
         $containerBuilder = (new TinyContainerBuilder())
             ->setContainerBuilder(new SymfonyContainerBuilder())
@@ -69,6 +66,7 @@ class ContainerBuilder implements ContainerBuilderInterface
             ->addCompilerPass(new AnalyzeServiceReferencesPass())
             ->addCompilerPass(new InlineServiceDefinitionsPass());
 
+        $containerBuilder->addSourcePath($this->buildZendExpressive($filesystemProperties));
         $paths = $this->getFullPaths($discoverableDirectories, $filesystemProperties);
         foreach ($paths as $path) {
             $containerBuilder->addSourcePath($path);
@@ -114,7 +112,13 @@ class ContainerBuilder implements ContainerBuilderInterface
                 }
             }
         }
-        $fullPaths = array_merge($fullPaths, $discoverableDirectories->getWelcomeBaskets()->getDirectoryPaths());
+        foreach ($discoverableDirectories->getWelcomeBaskets() as $welcomeBasket) {
+            $fullPaths[] = $filesystemProperties->getPrefab5DirectoryPath() . '/' . $welcomeBasket;
+        }
+        // Convert to unix style paths
+        $fullPaths = array_map(static function (string $fullPath) {
+            return str_replace('\\',  '/', $fullPath);
+        }, $fullPaths);
         return $fullPaths;
     }
 

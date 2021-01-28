@@ -9,5 +9,7 @@ interface BuilderInterface
 {
     public function build(): DiscoverableDirectoriesInterface;
 
+    public function setDirectoryGroupName(string $directoryGroupName): BuilderInterface;
+
     public function setRecord(array $record): BuilderInterface;
 }

@@ -14,10 +14,12 @@ class Builder implements BuilderInterface
     protected const YAML_KEY_APPENDED_PATHS = 'appended_paths';
 
     protected $record;
+    protected $directoryGroupName;
 
     public function build(): DiscoverableDirectoriesInterface
     {
         $discoverableDirectories = new DiscoverableDirectories();
+        $discoverableDirectories->setDirectoryGroupName($this->getDirectoryGroupName());
         $record = $this->getRecord();
 
         if (isset($record[self::YAML_KEY_BUILDABLE_DIRECTORIES])) {
@@ -28,7 +30,7 @@ class Builder implements BuilderInterface
 
         if (isset($record[self::YAML_KEY_WELCOME_BASKETS])) {
             foreach ($record[self::YAML_KEY_WELCOME_BASKETS] as $welcomeBasket) {
-                $discoverableDirectories->getWelcomeBaskets()->addWelcomeBasket($welcomeBasket);
+                $discoverableDirectories->addWelcomeBasket($welcomeBasket);
             }
         }
 
@@ -50,11 +52,28 @@ class Builder implements BuilderInterface
         return $this;
     }
 
+    public function setDirectoryGroupName(string $directoryGroupName): BuilderInterface
+    {
+        if (isset($this->directoryGroupName)) {
+            throw new LogicException('Directory Group Name is already set.');
+        }
+        $this->directoryGroupName = $directoryGroupName;
+        return $this;
+    }
+
     private function getRecord(): array
     {
         if (!isset($this->record)) {
             throw new LogicException('Record has not been set.');
         }
         return $this->record;
+    }
+
+    private function getDirectoryGroupName(): string
+    {
+        if (!isset($this->directoryGroupName)) {
+            throw new LogicException('Directory Group Name has not been set.');
+        }
+        return $this->directoryGroupName;
     }
 }
