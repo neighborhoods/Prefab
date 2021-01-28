@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
+use Symfony\Component\Filesystem\Filesystem;
 use Zend\Expressive\Application;
 
 class ContainerBuilder implements ContainerBuilderInterface
@@ -58,7 +59,6 @@ class ContainerBuilder implements ContainerBuilderInterface
             ->setDirectoryGroupName($directoryGroup)
             ->setRecord($routeBuildableDirectories)
             ->build();
-        $discoverableDirectories->appendPath($this->buildZendExpressive($filesystemProperties));
 
         $containerBuilder = (new TinyContainerBuilder())
             ->setContainerBuilder(new SymfonyContainerBuilder())
@@ -67,6 +67,7 @@ class ContainerBuilder implements ContainerBuilderInterface
             ->addCompilerPass(new AnalyzeServiceReferencesPass())
             ->addCompilerPass(new InlineServiceDefinitionsPass());
 
+        $containerBuilder->addSourcePath($this->buildZendExpressive($filesystemProperties));
         $paths = $this->getFullPaths($discoverableDirectories, $filesystemProperties);
         foreach ($paths as $path) {
             $containerBuilder->addSourcePath($path);

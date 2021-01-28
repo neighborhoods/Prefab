@@ -82,5 +82,6 @@ class DiscoverableDirectories implements DiscoverableDirectoriesInterface
 
         $this->welcomeBaskets[$welcomeBasket] = $welcomeBasket;
 
+        return $this;
     }
 }
