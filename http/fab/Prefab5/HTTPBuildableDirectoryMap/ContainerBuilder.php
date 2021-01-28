@@ -116,6 +116,10 @@ class ContainerBuilder implements ContainerBuilderInterface
         foreach ($discoverableDirectories->getWelcomeBaskets() as $welcomeBasket) {
             $fullPaths[] = $filesystemProperties->getPrefab5DirectoryPath() . '/' . $welcomeBasket;
         }
+        // Convert to unix style paths
+        $fullPaths = array_map(static function (string $fullPath) {
+            return str_replace('\\',  '/', $fullPath);
+        }, $fullPaths);
         return $fullPaths;
     }
 
