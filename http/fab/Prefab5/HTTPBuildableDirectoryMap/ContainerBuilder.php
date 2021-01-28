@@ -77,6 +77,8 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
     {
+        $currentWorkingDirectory = getcwd();
+        chdir($filesystemProperties->getRootDirectoryPath());
         /** @noinspection PhpIncludeInspection */
         $zendContainerBuilder = require $filesystemProperties->getZendConfigContainerFilePath();
         $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
@@ -86,6 +88,7 @@ class ContainerBuilder implements ContainerBuilderInterface
             $filesystemProperties->getExpressiveDIYAMLFilePath(),
             (new YamlDumper($zendContainerBuilder))->dump()
         );
+        chdir($currentWorkingDirectory);
         return $filesystemProperties->getZendCacheDirectoryPath();
     }
 
