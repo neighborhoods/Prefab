@@ -26,10 +26,11 @@ class ContainerBuilder implements ContainerBuilderInterface
         $filesystemProperties = new FilesystemProperties();
         $filesystemProperties->setRootDirectoryPath($this->getRootDirectoryPath());
 
-        $directoryGroup = $this->getDirectoryGroup();
+        $directoryGroup = 'HTTP';
         $containerName = 'HTTP';
-        if ($directoryGroup !== '') {
-            $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $directoryGroup);
+        if ($this->hasDirectoryGroup()) {
+            $directoryGroup = $this->getDirectoryGroup();
+            $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $this->getDirectoryGroup());
         }
 
         $cacheHandler = (new SymfonyConfigCacheHandler\Builder())
@@ -42,22 +43,25 @@ class ContainerBuilder implements ContainerBuilderInterface
             return $cacheHandler->getFromCache();
         }
 
-        $directoryGroupRoot = explode('/', $directoryGroup)[0];
-        if (
-            !isset($this->getBuildableDirectoryMap()[$directoryGroup])
-            && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
-        ) {
-            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
+        $discoverableDirectoriesBuilder = (new DiscoverableDirectories\Builder())
+            ->setDirectoryGroupName($directoryGroup);
+
+        if ($this->hasBuildableDirectoryMap()) {
+            $directoryGroupRoot = explode('/', $directoryGroup)[0];
+            if (
+                !isset($this->getBuildableDirectoryMap()[$directoryGroup])
+                && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
+            ) {
+                throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
+            }
+
+            $routeBuildableDirectories =
+                $this->getBuildableDirectoryMap()[$directoryGroup] ??
+                $this->getBuildableDirectoryMap()[$directoryGroupRoot];
+
+            $discoverableDirectoriesBuilder->setRecord($routeBuildableDirectories);
         }
-
-        $routeBuildableDirectories =
-            $this->getBuildableDirectoryMap()[$directoryGroup] ??
-            $this->getBuildableDirectoryMap()[$directoryGroupRoot];
-
-        $discoverableDirectories = (new DiscoverableDirectories\Builder())
-            ->setDirectoryGroupName($directoryGroup)
-            ->setRecord($routeBuildableDirectories)
-            ->build();
+        $discoverableDirectories = $discoverableDirectoriesBuilder->build();
 
         $containerBuilder = (new TinyContainerBuilder())
             ->setContainerBuilder(new SymfonyContainerBuilder())
@@ -139,6 +143,11 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this->buildableDirectoryMap;
     }
 
+    protected function hasBuildableDirectoryMap(): bool
+    {
+        return $this->buildableDirectoryMap !== null;
+    }
+
     public function setBuildableDirectoryMap(array $buildableDirectoryMap) : ContainerBuilderInterface
     {
         if ($this->buildableDirectoryMap !== null) {
@@ -163,6 +172,11 @@ class ContainerBuilder implements ContainerBuilderInterface
         }
         $this->directoryGroup = $directoryGroup;
         return $this;
+    }
+
+    protected function hasDirectoryGroup(): bool
+    {
+        return $this->directoryGroup !== null;
     }
 
     private function getRootDirectoryPath(): string

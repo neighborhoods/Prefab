@@ -20,7 +20,10 @@ class Builder implements BuilderInterface
     {
         $discoverableDirectories = new DiscoverableDirectories();
         $discoverableDirectories->setDirectoryGroupName($this->getDirectoryGroupName());
-        $record = $this->getRecord();
+        $record = [];
+        if ($this->hasRecord()) {
+            $record = $this->getRecord();
+        }
 
         if (isset($record[self::YAML_KEY_BUILDABLE_DIRECTORIES])) {
             foreach ($record[self::YAML_KEY_BUILDABLE_DIRECTORIES] as $directory) {
@@ -75,5 +78,10 @@ class Builder implements BuilderInterface
             throw new LogicException('Directory Group Name has not been set.');
         }
         return $this->directoryGroupName;
+    }
+
+    private function hasRecord(): bool
+    {
+        return isset($this->record);
     }
 }

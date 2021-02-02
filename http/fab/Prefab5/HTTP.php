@@ -47,20 +47,16 @@ class HTTP implements HTTPInterface
     {
         $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
-        // No YAML file found. Build full container
-        if ($httpBuildableDirectoryMap === null) {
-            return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
-                ->setRootDirectoryPath($this->getRootDirectoryPath())
-                ->setBuildableDirectoryMap(['' => []])
-                ->setDirectoryGroup('')
-                ->build();
+        $httpContainerBuilder = $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
+            ->setRootDirectoryPath($this->getRootDirectoryPath());
+
+        // If YAML file found. Build partial container
+        if ($httpBuildableDirectoryMap !== null) {
+            $httpContainerBuilder->setBuildableDirectoryMap($httpBuildableDirectoryMap)
+                ->setDirectoryGroup($this->getUrlRoot());
         }
 
-        return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
-            ->setRootDirectoryPath($this->getRootDirectoryPath())
-            ->setBuildableDirectoryMap($httpBuildableDirectoryMap)
-            ->setDirectoryGroup($this->getUrlRoot())
-            ->build();
+        return $httpContainerBuilder->build();
     }
 
     protected function getUrlRoot(): string
