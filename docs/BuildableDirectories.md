@@ -4,11 +4,13 @@ As Symfony containers get bigger, the response times for HTTP requests rise.  To
 
 The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. Example: `property_service.neighborhoods.com/MV1/property/{searchCriteria}` would build all directories under the `MV1/property` key in the file below.
 
-`buildable_directories` - These are the directories of your actors that you want to include for a request. Example: Having an `MV1/property` buildable directory will include `fab/MV1/property` and `src/MV1/property` in the container.
+`buildable_directories` - These are the directories of your actors that you want to include for a request. Example: Having an `MV1/property` buildable directory will include `fab/MV1/property` and `src/MV1/property` in the container.  
+`buildable_directories` are optional. If not provided or empty the whole `src` and `fab` folders will be included.
 
-`welcome_baskets` - These are the namespaces of actors that Prefab generates that would like to include in a request. Example: `Doctrine\DBAL` will include all of the files under the `Doctrine\DBAL` namespace that are in `fab/Prefab5/Doctrine/DBAL`.
+`welcome_baskets` - These are the namespaces of actors that Prefab generates that would like to include in a request. Example: `Doctrine\DBAL` will include all of the files under the `Doctrine\DBAL` namespace that are in `fab/Prefab5/Doctrine/DBAL`.  
+`welcome_baskets` are optional. If not provided or empty the whole `fab/Prefab5` folder will be included.
 
-`appended_paths` - These are any additional paths that you may want included in your container. Paths are relative to the root of your project. 
+`appended_paths` - These are any additional paths that you may want included in your container. Paths are relative to the root of your project. `appended_paths` are optional.
 
 **Example**
 ```yaml
