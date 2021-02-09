@@ -3,120 +3,155 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
+use LogicException;
+use Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler;
+use Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder;
+use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
+use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
+use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
+use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
+use Symfony\Component\Filesystem\Filesystem;
+use Zend\Expressive\Application;
 
 class ContainerBuilder implements ContainerBuilderInterface
 {
-    use Protean\Container\Builder\AwareTrait;
-
-    protected const YAML_KEY_BUILDABLE_DIRECTORIES = 'buildable_directories';
-    protected const YAML_KEY_WELCOME_BASKETS = 'welcome_baskets';
-    protected const YAML_KEY_APPENDED_PATHS = 'appended_paths';
-
     protected $buildableDirectoryMap;
     protected $directoryGroup;
+    protected $rootDirectoryPath;
 
-    public function getContainerBuilder() : Protean\Container\BuilderInterface
+    public function build() : ContainerInterface
     {
-        $this->getProteanContainerBuilder()->setContainerName(
-            'HTTP_' . str_replace(['/', '-'], '_', $this->getDirectoryGroup())
+        $filesystemProperties = new FilesystemProperties();
+        $filesystemProperties->setRootDirectoryPath($this->getRootDirectoryPath());
+
+        $directoryGroup = 'HTTP';
+        $containerName = 'HTTP';
+        if ($this->hasDirectoryGroup()) {
+            $directoryGroup = $this->getDirectoryGroup();
+            $containerName = 'HTTP_' . str_replace(['/', '-'], '_', $this->getDirectoryGroup());
+        }
+
+        $cacheHandler = (new SymfonyConfigCacheHandler\Builder())
+            ->setName($containerName)
+            ->setCacheDirPath($filesystemProperties->getCacheDirectoryPath())
+            ->setDebug(false)
+            ->build();
+
+        if ($cacheHandler->hasInCache()) {
+            return $cacheHandler->getFromCache();
+        }
+
+        $discoverableDirectoriesBuilder = (new DiscoverableDirectories\Builder())
+            ->setDirectoryGroupName($directoryGroup);
+
+        if ($this->hasBuildableDirectoryMap()) {
+            $directoryGroupRoot = explode('/', $directoryGroup)[0];
+            if (
+                !isset($this->getBuildableDirectoryMap()[$directoryGroup])
+                && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
+            ) {
+                throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
+            }
+
+            $routeBuildableDirectories =
+                $this->getBuildableDirectoryMap()[$directoryGroup] ??
+                $this->getBuildableDirectoryMap()[$directoryGroupRoot];
+
+            $discoverableDirectoriesBuilder->setRecord($routeBuildableDirectories);
+        }
+        $discoverableDirectories = $discoverableDirectoriesBuilder->build();
+
+        $containerBuilder = (new TinyContainerBuilder())
+            ->setContainerBuilder(new SymfonyContainerBuilder())
+            ->setRootPath($filesystemProperties->getRootDirectoryPath())
+            ->setCacheHandler($cacheHandler)
+            ->addCompilerPass(new AnalyzeServiceReferencesPass())
+            ->addCompilerPass(new InlineServiceDefinitionsPass());
+
+        $containerBuilder->addSourcePath($this->buildZendExpressive($filesystemProperties));
+        $paths = $this->getFullPaths($discoverableDirectories, $filesystemProperties);
+        foreach ($paths as $path) {
+            $containerBuilder->addSourcePath($path);
+        }
+        return $containerBuilder->build();
+    }
+
+    public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
+    {
+        $currentWorkingDirectory = getcwd();
+        chdir($filesystemProperties->getRootDirectoryPath());
+        /** @noinspection PhpIncludeInspection */
+        $zendContainerBuilder = require $filesystemProperties->getZendConfigContainerFilePath();
+        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
+        /** @noinspection PhpIncludeInspection */
+        (require $filesystemProperties->getPipelineFilePath())($applicationServiceDefinition);
+        file_put_contents(
+            $filesystemProperties->getExpressiveDIYAMLFilePath(),
+            (new YamlDumper($zendContainerBuilder))->dump()
         );
-
-        $directoryGroupRoot = explode('/', $this->getDirectoryGroup())[0];
-
-        if (
-            !isset($this->getBuildableDirectoryMap()[$this->getDirectoryGroup()])
-            && !isset($this->getBuildableDirectoryMap()[$directoryGroupRoot])
-        ) {
-            throw (new InvalidDirectory\Exception)->setCode(InvalidDirectory\Exception::CODE_INVALID_DIRECTORY);
-        }
-
-        $this->getProteanContainerBuilder()->buildZendExpressive();
-
-        $routeBuildableDirectories =
-            $this->getBuildableDirectoryMap()[$this->getDirectoryGroup()] ??
-            $this->getBuildableDirectoryMap()[$directoryGroupRoot];
-
-        $this->addBuildableDirectories($routeBuildableDirectories);
-        $this->addWelcomeBaskets($routeBuildableDirectories);
-        $this->addAppendedPaths($routeBuildableDirectories);
-
-        return $this->getProteanContainerBuilder();
+        chdir($currentWorkingDirectory);
+        return $filesystemProperties->getZendCacheDirectoryPath();
     }
 
-    protected function addBuildableDirectories(array $httpBuildableDirectoryMap) : ContainerBuilderInterface
+    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
     {
-        if (isset($httpBuildableDirectoryMap[self::YAML_KEY_BUILDABLE_DIRECTORIES])) {
-            foreach ($httpBuildableDirectoryMap[self::YAML_KEY_BUILDABLE_DIRECTORIES] as $directory) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->addDirectoryPathFilter($directory);
+        $filesystem = new Filesystem();
+        $fullPaths = [];
+        foreach ($discoverableDirectories->getAppendedPaths() as $appendedPath) {
+            $fullPaths[] = $filesystemProperties->getRootDirectoryPath() . '/' . $appendedPath;
+        }
+        if (empty($discoverableDirectories->getDirectoryPathFilters())) {
+            $fullPaths[] = $filesystemProperties->getSourceDirectoryPath();
+            if ($filesystem->exists($filesystemProperties->getFabricationDirectoryPath())) {
+                $fullPaths[] = $filesystemProperties->getFabricationDirectoryPath();
+            }
+        } else {
+            foreach ($discoverableDirectories->getDirectoryPathFilters() as $directoryPathFilter) {
+                $fullPaths[] = $filesystemProperties->getSourceDirectoryPath() . '/' . $directoryPathFilter;
+                $fabricationPathCandidate = $filesystemProperties->getFabricationDirectoryPath() . '/' . $directoryPathFilter;
+                if ($filesystem->exists($fabricationPathCandidate)) {
+                    $fullPaths[] = $fabricationPathCandidate;
+                }
             }
         }
-
-        return $this;
+        foreach ($discoverableDirectories->getWelcomeBaskets() as $welcomeBasket) {
+            $fullPaths[] = $filesystemProperties->getPrefab5DirectoryPath() . '/' . $welcomeBasket;
+        }
+        // Convert to unix style paths
+        $fullPaths = array_map(static function (string $fullPath) {
+            return str_replace('\\',  '/', $fullPath);
+        }, $fullPaths);
+        return $fullPaths;
     }
 
-    protected function addWelcomeBaskets(array $httpBuildableDirectoryMap) : ContainerBuilderInterface
+    public function setRootDirectoryPath(string $rootDirectoryPath): ContainerBuilderInterface
     {
-        if (isset($httpBuildableDirectoryMap[self::YAML_KEY_WELCOME_BASKETS])) {
-            foreach ($httpBuildableDirectoryMap[self::YAML_KEY_WELCOME_BASKETS] as $welcomeBasket) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->getWelcomeBaskets()
-                    ->addWelcomeBasket($welcomeBasket);
-            }
+        if (isset($this->rootDirectoryPath)) {
+            throw new LogicException('Root Directory Path is already set.');
         }
-
-        return $this;
-    }
-
-    protected function addAppendedPaths(array $httpBuildableDirectoryMap) : ContainerBuilderInterface
-    {
-        if (isset($httpBuildableDirectoryMap[self::YAML_KEY_APPENDED_PATHS])) {
-            foreach ($httpBuildableDirectoryMap[self::YAML_KEY_APPENDED_PATHS] as $path) {
-                $this->getProteanContainerBuilder()
-                    ->getDiscoverableDirectories()
-                    ->appendPath(
-                        $this->getProteanContainerBuilder()->getFilesystemProperties()->getRootDirectoryPath() . '/' . $path
-                    );
-            }
-        }
-
-        return $this;
-    }
-
-
-    protected function getRoute() : string
-    {
-        if ($this->route === null) {
-            throw new \LogicException('ContainerBuilder route has not been set.');
-        }
-        return $this->route;
-    }
-
-    public function setRoute(string $route) : ContainerBuilderInterface
-    {
-        if ($this->route !== null) {
-            throw new \LogicException('ContainerBuilder route is already set.');
-        }
-        $this->route = $route;
+        $this->rootDirectoryPath = $rootDirectoryPath;
         return $this;
     }
 
     protected function getBuildableDirectoryMap() : array
     {
         if ($this->buildableDirectoryMap === null) {
-            throw new \LogicException('ContainerBuilder buildableDirectoryMap has not been set.');
+            throw new LogicException('ContainerBuilder buildableDirectoryMap has not been set.');
         }
         return $this->buildableDirectoryMap;
+    }
+
+    protected function hasBuildableDirectoryMap(): bool
+    {
+        return $this->buildableDirectoryMap !== null;
     }
 
     public function setBuildableDirectoryMap(array $buildableDirectoryMap) : ContainerBuilderInterface
     {
         if ($this->buildableDirectoryMap !== null) {
-            throw new \LogicException('ContainerBuilder buildableDirectoryMap is already set.');
+            throw new LogicException('ContainerBuilder buildableDirectoryMap is already set.');
         }
         $this->buildableDirectoryMap = $buildableDirectoryMap;
         return $this;
@@ -125,7 +160,7 @@ class ContainerBuilder implements ContainerBuilderInterface
     public function getDirectoryGroup() : string
     {
         if ($this->directoryGroup === null) {
-            throw new \LogicException('ContainerBuilder directoryGroup has not been set.');
+            throw new LogicException('ContainerBuilder directoryGroup has not been set.');
         }
         return $this->directoryGroup;
     }
@@ -133,10 +168,23 @@ class ContainerBuilder implements ContainerBuilderInterface
     public function setDirectoryGroup(string $directoryGroup) : ContainerBuilderInterface
     {
         if ($this->directoryGroup !== null) {
-            throw new \LogicException('ContainerBuilder directoryGroup is already set.');
+            throw new LogicException('ContainerBuilder directoryGroup is already set.');
         }
         $this->directoryGroup = $directoryGroup;
         return $this;
+    }
+
+    protected function hasDirectoryGroup(): bool
+    {
+        return $this->directoryGroup !== null;
+    }
+
+    private function getRootDirectoryPath(): string
+    {
+        if (!isset($this->rootDirectoryPath)) {
+            throw new LogicException('Root Directory Path has not been set.');
+        }
+        return $this->rootDirectoryPath;
     }
 
 }

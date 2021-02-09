@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
+use Psr\Container\ContainerInterface;
 
 interface ContainerBuilderInterface
 {
@@ -11,5 +11,7 @@ interface ContainerBuilderInterface
 
     public function setBuildableDirectoryMap(array $buildableDirectoryMap) : ContainerBuilderInterface;
 
-    public function getContainerBuilder() : Protean\Container\BuilderInterface;
+    public function setRootDirectoryPath(string $rootDirectoryPath): ContainerBuilderInterface;
+
+    public function build(): ContainerInterface;
 }

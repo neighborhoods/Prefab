@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 
 interface FilesystemPropertiesInterface
 {
@@ -12,8 +12,6 @@ interface FilesystemPropertiesInterface
     public function getZendConfigContainerFilePath(): string;
 
     public function getRootDirectoryPath(): string;
-
-    public function getSymfonyContainerFilePath(): string;
 
     public function setRootDirectoryPath(string $rootDirectoryPath): FilesystemPropertiesInterface;
 

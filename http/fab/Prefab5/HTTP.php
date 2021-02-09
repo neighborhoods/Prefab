@@ -4,22 +4,23 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
 {
-    use Protean\Container\Builder\AwareTrait;
     use HTTPBuildableDirectoryMap\ContainerBuilder\AwareTrait;
+
+    protected $rootDirectoryPath;
 
     public function respond(): HTTPInterface
     {
         try {
-            $containerBuilder = $this->getContainerBuilder();
-            $application = $containerBuilder->build()->get(Application::class);
+            $container = $this->buildContainer();
+            $application = $container->get(Application::class);
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
@@ -42,22 +43,20 @@ class HTTP implements HTTPInterface
         return $this;
     }
 
-    protected function getContainerBuilder(): Protean\Container\BuilderInterface
+    protected function buildContainer(): ContainerInterface
     {
         $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
-        // No YAML file found. Build full container
-        if ($httpBuildableDirectoryMap === null) {
-            $this->getProteanContainerBuilder()->buildZendExpressive();
-            $this->getProteanContainerBuilder()->setContainerName('HTTP');
-            return $this->getProteanContainerBuilder();
+        $httpContainerBuilder = $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
+            ->setRootDirectoryPath($this->getRootDirectoryPath());
+
+        // If YAML file found. Build partial container
+        if ($httpBuildableDirectoryMap !== null) {
+            $httpContainerBuilder->setBuildableDirectoryMap($httpBuildableDirectoryMap)
+                ->setDirectoryGroup($this->getUrlRoot());
         }
 
-        return $this->getPrefab5HTTPBuildableDirectoryMapContainerBuilder()
-            ->setProteanContainerBuilder($this->getProteanContainerBuilder())
-            ->setBuildableDirectoryMap($httpBuildableDirectoryMap)
-            ->setDirectoryGroup($this->getUrlRoot())
-            ->getContainerBuilder();
+        return $httpContainerBuilder->build();
     }
 
     protected function getUrlRoot(): string
@@ -75,4 +74,20 @@ class HTTP implements HTTPInterface
         return $urlArray[1] . '/' . $urlArray[2];
     }
 
+    public function setRootDirectoryPath(string $rootDirectoryPath): HTTPInterface
+    {
+        if (isset($this->rootDirectoryPath)) {
+            throw new \LogicException('Root Directory Path is already set.');
+        }
+        $this->rootDirectoryPath = $rootDirectoryPath;
+        return $this;
+    }
+
+    private function getRootDirectoryPath(): string
+    {
+        if (!isset($this->rootDirectoryPath)) {
+            throw new \LogicException('Root Directory Path has not been set.');
+        }
+        return $this->rootDirectoryPath;
+    }
 }

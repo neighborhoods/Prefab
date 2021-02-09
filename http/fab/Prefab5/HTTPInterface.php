@@ -6,4 +6,5 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 interface HTTPInterface
 {
     public function respond(): HTTPInterface;
+    public function setRootDirectoryPath(string $rootDirectoryPath): HTTPInterface;
 }

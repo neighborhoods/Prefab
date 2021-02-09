@@ -6,7 +6,6 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
 class Primer implements PrimerInterface
 {
@@ -20,16 +19,11 @@ class Primer implements PrimerInterface
         }
 
         foreach ($httpBuildableDirectoryMap as $key => $values) {
-            $proteanContainerBuilder = new Builder();
-            $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(__DIR__ . '/../../../../');
-
-            $containerBuilder = (new ContainerBuilder())
-                ->setProteanContainerBuilder($proteanContainerBuilder)
+            (new ContainerBuilder())
+                ->setRootDirectoryPath(__DIR__ . '/../../../../')
                 ->setDirectoryGroup($key)
                 ->setBuildableDirectoryMap([$key => $values])
-                ->getContainerBuilder();
-
-            $containerBuilder->build();
+                ->build();
         }
 
         return $this;
