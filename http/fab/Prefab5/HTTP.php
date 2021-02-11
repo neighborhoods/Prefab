@@ -8,6 +8,7 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
@@ -23,10 +24,15 @@ class HTTP implements HTTPInterface
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
+
             if (getenv('DEBUG_MODE') === 'true') {
-                // open the stream just in case is not defined
-                $stderr = fopen('php://stderr', 'wb');
-                fwrite($stderr, $exception->__toString() . PHP_EOL);
+                if (defined('STDERR')) {
+                    // Should exist from a CLI context
+                    fwrite(STDERR, $exception->__toString() . PHP_EOL);
+                } else {
+                    $logger = (new Logger())->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log');
+                    $logger->critical($exception->__toString() . PHP_EOL);
+                }
             }
 
             // Try to send the error to DataDog
@@ -36,12 +42,18 @@ class HTTP implements HTTPInterface
             if ($span !== null) {
                 $span->setError($exception);
             }
+
         } catch (\Throwable $throwable) {
             http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+
             if (getenv('DEBUG_MODE') === 'true') {
-                // open the stream just in case is not defined
-                $stderr = fopen('php://stderr', 'wb');
-                fwrite($stderr, $throwable->__toString() . PHP_EOL);
+                if (defined('STDERR')) {
+                    // Should exist from a CLI context
+                    fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+                } else {
+                    $logger = (new Logger())->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log');
+                    $logger->critical($throwable->__toString() . PHP_EOL);
+                }
             }
 
             // Try to send the error to DataDog

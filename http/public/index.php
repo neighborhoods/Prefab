@@ -17,6 +17,7 @@ try {
     $exceptionHandler = (new ExceptionHandler())->setPrefab5Logger($logger);
     set_exception_handler($exceptionHandler);
     set_error_handler(new ErrorHandler());
+
     $proteanContainerBuilder = new Builder();
     $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(realpath(__DIR__ . '/../'));
     $httpBuildableDirectoryContainerBuilder = new HTTPBuildableDirectoryMap\ContainerBuilder();
@@ -28,10 +29,16 @@ try {
 
 } catch (\Throwable $throwable) {
     http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+
     if (getenv('DEBUG_MODE') === 'true') {
-        // open the stream just in case is not defined
-        $stderr = fopen('php://stderr', 'wb');
-        fwrite($stderr, $throwable->__toString() . PHP_EOL);
+        if (defined('STDERR')) {
+            // Should exist from a CLI context
+            fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+        } else {
+            (new Logger())
+                ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log')
+                ->critical($throwable->__toString() . PHP_EOL);
+        }
     }
 
     // Try to send the error to DataDog

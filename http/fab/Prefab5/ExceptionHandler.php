@@ -10,14 +10,12 @@ class ExceptionHandler implements ExceptionHandlerInterface
     public function __invoke(\Throwable $throwable): void
     {
         if (getenv('DEBUG_MODE') === 'true') {
-            // open the stream just in case is not defined
-            $stderr = fopen('php://stderr', 'wb');
-            fwrite($stderr, $throwable->__toString() . PHP_EOL);
-        }
-
-        if (getenv('SITE_ENVIRONMENT') === 'Local') {
-            // Writing to file is extremely slow and should never be done on Production from an HTTP context
-            $this->getPrefab5Logger()->critical($throwable->__toString() . PHP_EOL);
+            if (defined('STDERR')) {
+                // Should exist from a CLI context
+                fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+            } else {
+                $this->getPrefab5Logger()->critical($throwable->__toString() . PHP_EOL);
+            }
         }
 
         // Try to send the error to DataDog
