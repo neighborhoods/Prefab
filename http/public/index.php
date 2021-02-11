@@ -34,11 +34,10 @@ try {
         if (defined('STDERR')) {
             // Should exist from a CLI context
             fwrite(STDERR, $throwable->__toString() . PHP_EOL);
-        } else {
-            (new Logger())
-                ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log')
-                ->critical($throwable->__toString() . PHP_EOL);
         }
+        (new Logger())
+            ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log')
+            ->critical($throwable->__toString() . PHP_EOL);
     }
 
     // Try to send the error to DataDog

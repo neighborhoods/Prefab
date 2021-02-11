@@ -13,9 +13,8 @@ class ExceptionHandler implements ExceptionHandlerInterface
             if (defined('STDERR')) {
                 // Should exist from a CLI context
                 fwrite(STDERR, $throwable->__toString() . PHP_EOL);
-            } else {
-                $this->getPrefab5Logger()->critical($throwable->__toString() . PHP_EOL);
             }
+            $this->getPrefab5Logger()->critical($throwable->__toString() . PHP_EOL);
         }
 
         // Try to send the error to DataDog

@@ -93,11 +93,10 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
                 if (defined('STDERR')) {
                     // Should exist from a CLI context
                     fwrite(STDERR, $exception->__toString() . PHP_EOL);
-                } else {
-                    (new Logger())
-                        ->setLogFilePath(self::LOG_FILE_PATH)
-                        ->critical($exception->__toString() . PHP_EOL);
                 }
+                (new Logger())
+                    ->setLogFilePath(self::LOG_FILE_PATH)
+                    ->critical($exception->__toString() . PHP_EOL);
             }
 
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();

@@ -8,7 +8,6 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
@@ -29,10 +28,10 @@ class HTTP implements HTTPInterface
                 if (defined('STDERR')) {
                     // Should exist from a CLI context
                     fwrite(STDERR, $exception->__toString() . PHP_EOL);
-                } else {
-                    $logger = (new Logger())->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log');
-                    $logger->critical($exception->__toString() . PHP_EOL);
                 }
+                (new Logger())
+                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
+                    ->critical($exception->__toString() . PHP_EOL);
             }
 
             // Try to send the error to DataDog
@@ -50,10 +49,10 @@ class HTTP implements HTTPInterface
                 if (defined('STDERR')) {
                     // Should exist from a CLI context
                     fwrite(STDERR, $throwable->__toString() . PHP_EOL);
-                } else {
-                    $logger = (new Logger())->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log');
-                    $logger->critical($throwable->__toString() . PHP_EOL);
                 }
+                (new Logger())
+                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
+                    ->critical($throwable->__toString() . PHP_EOL);
             }
 
             // Try to send the error to DataDog
