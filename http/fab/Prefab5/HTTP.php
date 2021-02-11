@@ -23,6 +23,13 @@ class HTTP implements HTTPInterface
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
+            if (getenv('DEBUG_MODE') === 'true') {
+                // open the stream just in case is not defined
+                $stderr = fopen('php://stderr', 'wb');
+                fwrite($stderr, $exception->__toString() . PHP_EOL);
+            }
+
+            // Try to send the error to DataDog
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();
@@ -31,6 +38,13 @@ class HTTP implements HTTPInterface
             }
         } catch (\Throwable $throwable) {
             http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+            if (getenv('DEBUG_MODE') === 'true') {
+                // open the stream just in case is not defined
+                $stderr = fopen('php://stderr', 'wb');
+                fwrite($stderr, $throwable->__toString() . PHP_EOL);
+            }
+
+            // Try to send the error to DataDog
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();

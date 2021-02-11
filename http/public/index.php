@@ -4,27 +4,43 @@ error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
+use Fig\Http\Message\StatusCodeInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler;
-use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Protean\Container\Builder;
 
-$logger = (new Logger())
-    ->setLogFilePath(__DIR__ . '/../Logs/HTTP.log');
+try {
+    $logger = (new Logger())->setLogFilePath(__DIR__ . '/../Logs/HTTP.log');
+    $exceptionHandler = (new ExceptionHandler())->setPrefab5Logger($logger);
+    set_exception_handler($exceptionHandler);
+    set_error_handler(new ErrorHandler());
+    $proteanContainerBuilder = new Builder();
+    $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(realpath(__DIR__ . '/../'));
+    $httpBuildableDirectoryContainerBuilder = new HTTPBuildableDirectoryMap\ContainerBuilder();
 
-$exceptionHandler = (new ExceptionHandler())->setPrefab5Logger($logger);
+    $HTTP = (new HTTP())
+        ->setProteanContainerBuilder($proteanContainerBuilder)
+        ->setPrefab5HTTPBuildableDirectoryMapContainerBuilder($httpBuildableDirectoryContainerBuilder)
+        ->respond();
 
-set_exception_handler($exceptionHandler);
-set_error_handler(new ErrorHandler());
-$proteanContainerBuilder = new Builder();
-$proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath(realpath(__DIR__ . '/../'));
-$httpBuildableDirectoryContainerBuilder = new HTTPBuildableDirectoryMap\ContainerBuilder();
+} catch (\Throwable $throwable) {
+    http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+    if (getenv('DEBUG_MODE') === 'true') {
+        // open the stream just in case is not defined
+        $stderr = fopen('php://stderr', 'wb');
+        fwrite($stderr, $throwable->__toString() . PHP_EOL);
+    }
 
-$HTTP = (new HTTP())
-    ->setProteanContainerBuilder($proteanContainerBuilder)
-    ->setPrefab5HTTPBuildableDirectoryMapContainerBuilder($httpBuildableDirectoryContainerBuilder)
-    ->respond();
+    // Try to send the error to DataDog
+    $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+    $tracer = $repository->get();
+    $span = $tracer->getActiveSpan();
+    if ($span !== null) {
+        $span->setError($throwable);
+    }
+}
 
 return;
