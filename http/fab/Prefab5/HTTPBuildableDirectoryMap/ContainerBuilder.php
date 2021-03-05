@@ -11,7 +11,6 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
-use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
 use Symfony\Component\Filesystem\Filesystem;
 use Zend\Expressive\Application;
 
@@ -80,19 +79,9 @@ class ContainerBuilder implements ContainerBuilderInterface
 
     public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
     {
-        $currentWorkingDirectory = getcwd();
-        chdir($filesystemProperties->getRootDirectoryPath());
-        /** @noinspection PhpIncludeInspection */
-        $zendContainerBuilder = require $filesystemProperties->getZendConfigContainerFilePath();
-        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
-        /** @noinspection PhpIncludeInspection */
-        (require $filesystemProperties->getPipelineFilePath())($applicationServiceDefinition);
-        file_put_contents(
-            $filesystemProperties->getExpressiveDIYAMLFilePath(),
-            (new YamlDumper($zendContainerBuilder))->dump()
-        );
-        chdir($currentWorkingDirectory);
-        return $filesystemProperties->getZendCacheDirectoryPath();
+        $servicesBuilder = new ZendExpressiveServicesBuilder();
+        $servicesBuilder->setHTTPBuildableDirectoryMapFilesystemProperties($filesystemProperties);
+        return $servicesBuilder->buildDIYAMLFile();
     }
 
     protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
