@@ -77,7 +77,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $containerBuilder->build();
     }
 
-    public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
+    protected function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
     {
         $servicesBuilder = new ZendExpressiveServicesBuilder();
         $servicesBuilder->setHTTPBuildableDirectoryMapFilesystemProperties($filesystemProperties);
