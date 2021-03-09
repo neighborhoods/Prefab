@@ -16,9 +16,9 @@ use Zend\Expressive\Application;
 
 class ContainerBuilder implements ContainerBuilderInterface
 {
-    protected $buildableDirectoryMap;
-    protected $directoryGroup;
-    protected $rootDirectoryPath;
+    private $buildableDirectoryMap;
+    private $directoryGroup;
+    private $rootDirectoryPath;
 
     public function build() : ContainerInterface
     {
@@ -77,14 +77,14 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $containerBuilder->build();
     }
 
-    protected function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
+    private function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
     {
         $servicesBuilder = new ZendExpressiveServicesBuilder();
         $servicesBuilder->setHTTPBuildableDirectoryMapFilesystemProperties($filesystemProperties);
         return $servicesBuilder->buildDIYAMLFile();
     }
 
-    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
+    private function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
     {
         $filesystem = new Filesystem();
         $fullPaths = [];
@@ -124,7 +124,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
-    protected function getBuildableDirectoryMap() : array
+    private function getBuildableDirectoryMap() : array
     {
         if ($this->buildableDirectoryMap === null) {
             throw new LogicException('ContainerBuilder buildableDirectoryMap has not been set.');
@@ -132,7 +132,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this->buildableDirectoryMap;
     }
 
-    protected function hasBuildableDirectoryMap(): bool
+    private function hasBuildableDirectoryMap(): bool
     {
         return $this->buildableDirectoryMap !== null;
     }
@@ -163,7 +163,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
-    protected function hasDirectoryGroup(): bool
+    private function hasDirectoryGroup(): bool
     {
         return $this->directoryGroup !== null;
     }
