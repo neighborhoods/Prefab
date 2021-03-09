@@ -11,15 +11,14 @@ use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefa
 use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
-use Symfony\Component\DependencyInjection\Dumper\YamlDumper;
 use Symfony\Component\Filesystem\Filesystem;
 use Zend\Expressive\Application;
 
 class ContainerBuilder implements ContainerBuilderInterface
 {
-    protected $buildableDirectoryMap;
-    protected $directoryGroup;
-    protected $rootDirectoryPath;
+    private $buildableDirectoryMap;
+    private $directoryGroup;
+    private $rootDirectoryPath;
 
     public function build() : ContainerInterface
     {
@@ -78,24 +77,14 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $containerBuilder->build();
     }
 
-    public function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
+    private function buildZendExpressive(FilesystemPropertiesInterface $filesystemProperties): string
     {
-        $currentWorkingDirectory = getcwd();
-        chdir($filesystemProperties->getRootDirectoryPath());
-        /** @noinspection PhpIncludeInspection */
-        $zendContainerBuilder = require $filesystemProperties->getZendConfigContainerFilePath();
-        $applicationServiceDefinition = $zendContainerBuilder->findDefinition(Application::class);
-        /** @noinspection PhpIncludeInspection */
-        (require $filesystemProperties->getPipelineFilePath())($applicationServiceDefinition);
-        file_put_contents(
-            $filesystemProperties->getExpressiveDIYAMLFilePath(),
-            (new YamlDumper($zendContainerBuilder))->dump()
-        );
-        chdir($currentWorkingDirectory);
-        return $filesystemProperties->getZendCacheDirectoryPath();
+        $servicesBuilder = new ZendExpressiveServicesBuilder();
+        $servicesBuilder->setHTTPBuildableDirectoryMapFilesystemProperties($filesystemProperties);
+        return $servicesBuilder->buildDIYAMLFile();
     }
 
-    protected function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
+    private function getFullPaths(DiscoverableDirectoriesInterface $discoverableDirectories, FilesystemPropertiesInterface $filesystemProperties): array
     {
         $filesystem = new Filesystem();
         $fullPaths = [];
@@ -135,7 +124,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
-    protected function getBuildableDirectoryMap() : array
+    private function getBuildableDirectoryMap() : array
     {
         if ($this->buildableDirectoryMap === null) {
             throw new LogicException('ContainerBuilder buildableDirectoryMap has not been set.');
@@ -143,7 +132,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this->buildableDirectoryMap;
     }
 
-    protected function hasBuildableDirectoryMap(): bool
+    private function hasBuildableDirectoryMap(): bool
     {
         return $this->buildableDirectoryMap !== null;
     }
@@ -174,7 +163,7 @@ class ContainerBuilder implements ContainerBuilderInterface
         return $this;
     }
 
-    protected function hasDirectoryGroup(): bool
+    private function hasDirectoryGroup(): bool
     {
         return $this->directoryGroup !== null;
     }
