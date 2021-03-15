@@ -1,10 +1,5 @@
 services:
   ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\PrimaryActorName\SearchCriteria\BuilderInterface:
     alias: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\BuilderInterface
-#  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\PrimaryActorName\SearchCriteria\BuilderInterface:
-#    class: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\PrimaryActorName\SearchCriteria\Builder
     calls:
-#      - [setSearchCriteriaFilterFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Filter\FactoryInterface']]
-#      - [setSearchCriteriaSortOrderFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\SortOrder\FactoryInterface']]
-#      - [setSearchCriteriaFactory, ['@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\FactoryInterface']]
       - [setValidatorBuilderFactory, [ '@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\Builder\FactoryInterface' ] ]
