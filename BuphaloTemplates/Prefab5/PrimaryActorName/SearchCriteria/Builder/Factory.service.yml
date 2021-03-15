@@ -1,0 +1,5 @@
+services:
+  ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\PrimaryActorName\SearchCriteria\Builder\FactoryInterface:
+    alias: ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\Builder\FactoryInterface
+    calls:
+      - [ setSearchCriteriaBuilder, [ '@ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\PrimaryActorName\SearchCriteria\BuilderInterface' ] ]

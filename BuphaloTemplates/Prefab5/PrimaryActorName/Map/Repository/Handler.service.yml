@@ -12,25 +12,25 @@ services:
 ##   calls to `setValidatorBuilderFactory` in the php code. The setValidatorBuilderFactory at the bottom here also then
 ##   becomes unnecessary as well and the awaretrait can be removed from the Handler.
 #######
-  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.BuilderInterface:
-    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\BuilderInterface
-    calls:
-      - [ setValidatorBuilderFactory, [ '@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\Builder\FactoryInterface' ] ]
-  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.Builder.FactoryInterface:
-    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\Builder\FactoryInterface
-    calls:
-      - [ unsetSearchCriteriaBuilder ]
-      - [ setSearchCriteriaBuilder, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.BuilderInterface' ] ]
-  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.BuilderInterface:
-    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\ServerRequest\BuilderInterface
-    calls:
-      - [ unsetSearchCriteriaBuilderFactory ]
-      - [ setSearchCriteriaBuilderFactory, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.Builder.FactoryInterface' ] ]
-  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.Builder.FactoryInterface:
-    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface
-    calls:
-      - [ unsetSearchCriteriaServerRequestBuilder ]
-      - [ setSearchCriteriaServerRequestBuilder, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.BuilderInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.BuilderInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\BuilderInterface
+#    calls:
+#      - [ setValidatorBuilderFactory, [ '@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\Builder\FactoryInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.Builder.FactoryInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\Builder\FactoryInterface
+#    calls:
+#      - [ unsetSearchCriteriaBuilder ]
+#      - [ setSearchCriteriaBuilder, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.BuilderInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.BuilderInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\ServerRequest\BuilderInterface
+#    calls:
+#      - [ unsetSearchCriteriaBuilderFactory ]
+#      - [ setSearchCriteriaBuilderFactory, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.Builder.FactoryInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.Builder.FactoryInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface
+#    calls:
+#      - [ unsetSearchCriteriaServerRequestBuilder ]
+#      - [ setSearchCriteriaServerRequestBuilder, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.BuilderInterface' ] ]
   Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface:
     class: Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Handler
     public: false
@@ -38,5 +38,5 @@ services:
     calls:
       - [setPrimaryActorNameMapRepository, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\RepositoryInterface']]
 #      - [setSearchCriteriaServerRequestBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface']]
-      - [setSearchCriteriaServerRequestBuilderFactory, ['@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.Builder.FactoryInterface']]
+      - [setSearchCriteriaServerRequestBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\SearchCriteria\ServerRequest\Builder\FactoryInterface']]
 #      - [setValidatorBuilderFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\Builder\FactoryInterface']]
