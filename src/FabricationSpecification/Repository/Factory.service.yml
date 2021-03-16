@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\Prefab\FabricationSpecification\Repository\FactoryInterface:
+    class: Neighborhoods\Prefab\FabricationSpecification\Repository\Factory
+    public: false
+    shared: true
+    calls:
+      - [setFabricationSpecificationRepository, ['@Neighborhoods\Prefab\FabricationSpecification\RepositoryInterface']]
