@@ -88,17 +88,22 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         try {
             $this->saveValueToTempFile($value);
         } catch (Exception $exception) {
+
+            if (getenv('DEBUG_MODE') === 'true') {
+                if (defined('STDERR')) {
+                    // Should exist from a CLI context
+                    fwrite(STDERR, $exception->__toString() . PHP_EOL);
+                }
+                (new Logger())
+                    ->setLogFilePath(self::LOG_FILE_PATH)
+                    ->critical($exception->__toString() . PHP_EOL);
+            }
+
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();
             if ($span !== null) {
                 $span->setError($exception);
-            }
-
-            if (getenv('SITE_ENVIRONMENT') === 'Local') {
-                (new Logger())
-                    ->setLogFilePath(self::LOG_FILE_PATH)
-                    ->notice($exception->__toString());
             }
         }
 
@@ -113,8 +118,7 @@ class HTTPBuildableDirectoryMap implements HTTPBuildableDirectoryMapInterface
         );
 
         if ($fileDidSave === false) {
-            throw (new Exception())
-                ->setCode(Exception::CODE_FAILED_TO_WRITE_FILE);
+            throw (new Exception())->setCode(Exception::CODE_FAILED_TO_WRITE_FILE);
         }
     }
 }

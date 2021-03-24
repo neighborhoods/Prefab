@@ -328,4 +328,7 @@ return;
 Since Prefab is a code generation tool that allows users to override specific files and behaviors as needed, Prefab can't make a guarantee a minor version upgrade will work with your overriden files. Prefab *does* guarantee that all minor version upgrades of a purely Prefabbed project (no overriden files) will not have any breaking changes.  If you *do* override any files, it's important that you test your project to verify those files still work as expected with the new version of Prefab.
 
 ## Debug Mode
-Debug mode can be enabled by setting the environment variable `DEBUG_MODE=true`. Enabling debug mode will output additional details about exceptions and errors thrown during HTTP requests.  Note that this requires a valid container to be built in order to be used. If there is an error during container building (eg. A missing Symfony service file), you will not have the additional visibility provided by debug mode.
+Debug mode can be enabled by setting the environment variable `DEBUG_MODE=true`. 
+Enabling debug mode will output additional details about exceptions and errors thrown during HTTP requests. 
+If there is an error during container building (eg. A missing Symfony service file), you will have the additional visibility provided by debug mode.
+Debug mode will try to send the error to STDERR and also it will try to log the error in /Logs/HTTP.log

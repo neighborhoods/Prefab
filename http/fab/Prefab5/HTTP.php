@@ -24,14 +24,39 @@ class HTTP implements HTTPInterface
             $application->run();
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
+
+            if (getenv('DEBUG_MODE') === 'true') {
+                if (defined('STDERR')) {
+                    // Should exist from a CLI context
+                    fwrite(STDERR, $exception->__toString() . PHP_EOL);
+                }
+                (new Logger())
+                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
+                    ->critical($exception->__toString() . PHP_EOL);
+            }
+
+            // Try to send the error to DataDog
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();
             if ($span !== null) {
                 $span->setError($exception);
             }
+
         } catch (\Throwable $throwable) {
             http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
+
+            if (getenv('DEBUG_MODE') === 'true') {
+                if (defined('STDERR')) {
+                    // Should exist from a CLI context
+                    fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+                }
+                (new Logger())
+                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
+                    ->critical($throwable->__toString() . PHP_EOL);
+            }
+
+            // Try to send the error to DataDog
             $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
             $tracer = $repository->get();
             $span = $tracer->getActiveSpan();

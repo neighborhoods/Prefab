@@ -9,20 +9,20 @@ class ExceptionHandler implements ExceptionHandlerInterface
 
     public function __invoke(\Throwable $throwable): void
     {
-        // send throwable to Datadog
+        if (getenv('DEBUG_MODE') === 'true') {
+            if (defined('STDERR')) {
+                // Should exist from a CLI context
+                fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+            }
+            $this->getPrefab5Logger()->critical($throwable->__toString() . PHP_EOL);
+        }
+
+        // Try to send the error to DataDog
         $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
         $tracer = $repository->get();
         $span = $tracer->getActiveSpan();
         if ($span !== null) {
             $span->setError($throwable);
-        }
-
-        if (defined('STDERR')) {
-            // Should exist from a CLI context
-            fwrite(STDERR, $throwable->__toString() . PHP_EOL);
-        } else if (getenv('SITE_ENVIRONMENT') === 'Local') {
-            // Writing to file is extremely slow and should never be done on Production from an HTTP context
-            $this->getPrefab5Logger()->critical($throwable->__toString() . PHP_EOL);
         }
 
         exit(255);
