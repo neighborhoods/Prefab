@@ -12,6 +12,7 @@ class Builder implements BuilderInterface
     use \Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\Factory\AwareTrait;
     use \Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\Factory\AwareTrait;
     use \Neighborhoods\Prefab\FabricationSpecification\Handler\Builder\Factory\AwareTrait;
+    use \Neighborhoods\Prefab\FabricationSpecification\Repository\Builder\Factory\AwareTrait;
 
     protected $buildConfiguration;
 
