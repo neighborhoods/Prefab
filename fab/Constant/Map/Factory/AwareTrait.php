@@ -12,7 +12,7 @@ trait AwareTrait
     public function setConstantMapFactory(FactoryInterface $ConstantMapFactory): self
     {
         if ($this->hasConstantMapFactory()) {
-            throw new \LogicException('ActorMapFactory is already set.');
+            throw new \LogicException('ConstantMapFactory is already set.');
         }
         $this->ConstantMapFactory = $ConstantMapFactory;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getConstantMapFactory(): FactoryInterface
     {
         if (!$this->hasConstantMapFactory()) {
-            throw new \LogicException('ActorMapFactory is not set.');
+            throw new \LogicException('ConstantMapFactory is not set.');
         }
 
         return $this->ConstantMapFactory;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetConstantMapFactory(): self
     {
         if (!$this->hasConstantMapFactory()) {
-            throw new \LogicException('ActorMapFactory is not set.');
+            throw new \LogicException('ConstantMapFactory is not set.');
         }
         unset($this->ConstantMapFactory);
 

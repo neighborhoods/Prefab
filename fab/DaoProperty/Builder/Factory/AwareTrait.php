@@ -12,7 +12,7 @@ trait AwareTrait
     public function setDaoPropertyBuilderFactory(FactoryInterface $DaoPropertyBuilderFactory): self
     {
         if ($this->hasDaoPropertyBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is already set.');
+            throw new \LogicException('DaoPropertyBuilderFactory is already set.');
         }
         $this->DaoPropertyBuilderFactory = $DaoPropertyBuilderFactory;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getDaoPropertyBuilderFactory(): FactoryInterface
     {
         if (!$this->hasDaoPropertyBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is not set.');
+            throw new \LogicException('DaoPropertyBuilderFactory is not set.');
         }
 
         return $this->DaoPropertyBuilderFactory;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetDaoPropertyBuilderFactory(): self
     {
         if (!$this->hasDaoPropertyBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is not set.');
+            throw new \LogicException('DaoPropertyBuilderFactory is not set.');
         }
         unset($this->DaoPropertyBuilderFactory);
 
