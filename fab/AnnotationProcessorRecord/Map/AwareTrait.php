@@ -12,7 +12,7 @@ trait AwareTrait
     public function setAnnotationProcessorRecordMap(MapInterface $AnnotationProcessorRecords): self
     {
         if ($this->hasAnnotationProcessorRecordMap()) {
-            throw new \LogicException('Actors is already set.');
+            throw new \LogicException('AnnotationProcessorRecordMap is already set.');
         }
         $this->AnnotationProcessorRecords = $AnnotationProcessorRecords;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getAnnotationProcessorRecordMap(): MapInterface
     {
         if (!$this->hasAnnotationProcessorRecordMap()) {
-            throw new \LogicException('Actors is not set.');
+            throw new \LogicException('AnnotationProcessorRecordMap is not set.');
         }
 
         return $this->AnnotationProcessorRecords;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetAnnotationProcessorRecordMap(): self
     {
         if (!$this->hasAnnotationProcessorRecordMap()) {
-            throw new \LogicException('Actors is not set.');
+            throw new \LogicException('AnnotationProcessorRecordMap is not set.');
         }
         unset($this->AnnotationProcessorRecords);
 
