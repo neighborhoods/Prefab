@@ -6,3 +6,4 @@ services:
       - [setFabricationSpecificationCollectionBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Collection\Builder\FactoryInterface']]
       - [setFabricationSpecificationMinimalBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Minimal\Builder\FactoryInterface']]
       - [setFabricationSpecificationHandlerBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Handler\Builder\FactoryInterface']]
+      - [setFabricationSpecificationRepositoryBuilderFactory, ['@Neighborhoods\Prefab\FabricationSpecification\Repository\Builder\FactoryInterface']]

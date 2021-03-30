@@ -89,7 +89,7 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
     - Name of the database table containing the data that populates the actor
 - `supporting_actor_group`
     - The collection of supporting actors you need generated for the actor
-    - Can be one of `complete`, `collection`, `minimal` or `handler`
+    - Can be one of `complete`, `collection`, `minimal`, `handler` or `repository`
     - This field is optional and defaults to `complete`
     - See [below](#supporting-actor-groups) for more information
 - `http_route`
@@ -253,6 +253,14 @@ Prefab supports generating different subsets of supporting actors to support var
     See [Repository Handler docs](docs/RepositoryHandlerOnly.md)
     - Included supporting actors
         - Handler
+- `repository` - Generates the minimum number of supporting actors to have a map repository.  This should be used when you need to retrieve actors from an external source (for example, from a HTTP API) but don’t need to expose an endpoint on the service itself.
+    - Included supporting actors
+        - Factory
+        - Builder
+        - Aware Traits
+        - Repository
+        - Map
+        - Map Builder
         
 ## Subset Container Buildable Directories
 

@@ -11,6 +11,7 @@ interface BuildConfigurationInterface
     public const SUPPORTING_ACTOR_GROUP_COLLECTION = 'collection';
     public const SUPPORTING_ACTOR_GROUP_MINIMAL = 'minimal';
     public const SUPPORTING_ACTOR_GROUP_HANDLER = 'handler';
+    public const SUPPORTING_ACTOR_GROUP_REPOSITORY = 'repository';
 
     public const KEY_DAO = 'dao';
     public const KEY_TABLE_NAME = 'table_name';
