@@ -15,7 +15,10 @@ class ErrorHandler implements ErrorHandlerInterface
         string $errorFile,
         int $errorLine,
         array $errorContext
-    ): ErrorHandlerInterface {
+    ) {
+        if (!(error_reporting() & $errorNumber)) {
+            return false; /* @see https://www.php.net/manual/en/language.operators.errorcontrol.php */
+        }
         throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
     }
 }
