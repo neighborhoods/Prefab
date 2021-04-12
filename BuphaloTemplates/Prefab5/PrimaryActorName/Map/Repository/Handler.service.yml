@@ -1,4 +1,36 @@
 services:
+#######
+## Alternate solution:
+##   Instead of passing the handler-specific Validator/Builder/Factory down the chain
+##   (Handler -> Prefab's SC ServerRequest Builder -> Prefab's SC Builder)
+##   in the PHP application code (in the above actors), we can use Symfony service container "overrides" with
+##   "parent inheritance" to have di pass it down the same chain for us. Due to way this works in symfony (appending
+##   calls instead or replacing them, see https://symfony.com/doc/2.4/components/dependency_injection/parentservices.html#overriding-parent-dependencies)
+##   we must also modify all the unsetX methods below to be public.
+##   Note that in order for this approach to function, we must also flip which call to setSearchCriteriaServerRequestBuilderFactory
+##   is un/commented below, and update the Handler and Prefab's SC ServerRequest Builder actors to remove their explicit
+##   calls to `setValidatorBuilderFactory` in the php code. The setValidatorBuilderFactory at the bottom here also then
+##   becomes unnecessary as well and the awaretrait can be removed from the Handler.
+#######
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.BuilderInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\BuilderInterface
+#    calls:
+#      - [ setValidatorBuilderFactory, [ '@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\Builder\FactoryInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.Builder.FactoryInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\Builder\FactoryInterface
+#    calls:
+#      - [ unsetSearchCriteriaBuilder ]
+#      - [ setSearchCriteriaBuilder, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.BuilderInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.BuilderInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\ServerRequest\BuilderInterface
+#    calls:
+#      - [ unsetSearchCriteriaBuilderFactory ]
+#      - [ setSearchCriteriaBuilderFactory, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.Builder.FactoryInterface' ] ]
+#  Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.Builder.FactoryInterface:
+#    parent: Neighborhoods\ListingService\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface
+#    calls:
+#      - [ unsetSearchCriteriaServerRequestBuilder ]
+#      - [ setSearchCriteriaServerRequestBuilder, [ '@Neighborhoods.BuphaloTemplateTree.PrimaryActorName.SearchCriteria.ServerRequest.BuilderInterface' ] ]
   Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\HandlerInterface:
     class: Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Handler
     public: false
