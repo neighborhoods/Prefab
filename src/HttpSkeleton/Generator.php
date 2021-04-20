@@ -47,6 +47,15 @@ class Generator implements GeneratorInterface
         $this->getFileSystem()->mirror($this->getStagedDirectory(), $this->getTargetDirectory(), null, $options);
         $this->getFileSystem()->remove($this->getStagedDirectory());
 
+        $recursive = true;
+        $cacheDirectory = $this->getTargetDirectory() . 'data/cache';
+        $logsDirectory = $this->getTargetDirectory() . 'Logs';
+        $cachePermissions = 0777;
+        $umask = 0000;
+        $this->getFileSystem()->chmod($cacheDirectory, $cachePermissions, $umask, $recursive);
+        $logsPermissions = 0777;
+        $this->getFileSystem()->chmod($logsDirectory, $logsPermissions, $umask, $recursive);
+
         return $this;
     }
 
