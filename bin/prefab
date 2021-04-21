@@ -2,14 +2,32 @@
 <?php
 declare(strict_types=1);
 error_reporting(E_ALL);
-set_error_handler(function (
+set_error_handler(static function (
     int $errorNumber,
     string $errorString,
     string $errorFile,
     int $errorLine,
     array $errorContext
 ) {
-    throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
+    $nonFatalErrors = [
+        E_WARNING,
+        E_NOTICE,
+        E_CORE_WARNING,
+        E_COMPILE_WARNING,
+        E_USER_WARNING,
+        E_USER_NOTICE,
+        E_DEPRECATED,
+        E_USER_DEPRECATED
+    ];
+
+    if (!in_array($errorNumber, $nonFatalErrors, true)){
+        // Fatal Error
+        throw new \ErrorException($errorString, $errorNumber, $errorNumber, $errorFile, $errorLine);
+    }
+
+    $yellowFormat = "\e[0;30;43m%s\e[0m";
+    $message = $errorString . '. File: ' . $errorFile . '. Line: ' . $errorLine;
+    echo PHP_EOL . sprintf($yellowFormat, $message) . PHP_EOL;
 });
 
 require_once __DIR__ . '/../../../../vendor/autoload.php';
