@@ -96,7 +96,7 @@ class HTTP implements HTTPInterface
             throw (new HTTP\Exception())->setCode(HTTP\Exception::CODE_INVALID_ROUTE);
         }
 
-        return $urlArray[1] . '/' . $urlArray[2];
+        return implode('/', array_filter($urlArray));
     }
 
     public function setRootDirectoryPath(string $rootDirectoryPath): HTTPInterface

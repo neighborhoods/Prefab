@@ -18,7 +18,8 @@ A code generation tool. Takes the busywork out of building strongly-typed, patte
 - [Subset Container Buildable Directories](#subset-container-buildable-directories)
 - [Semantic Versioning](#semantic-versioning)
 - [Debug Mode](#debug-mode)
-- [Migration guide from Prefab v6 to v7](/docs/MigrationGuide.md)
+- [Migration guide from Prefab v6 to v7](/docs/MigrationGuideFrom6.xTo7.x.md)
+- [Migration guide from Prefab v7 to v8](/docs/MigrationGuide.md)
 
 ## Getting Started
 
@@ -268,7 +269,7 @@ As Symfony containers get bigger, the response times for HTTP requests increase.
 
 - Note: On the first request, Prefab will write this file to disk as a PHP array in the directory `data/cache/Opcache/HTTPBuildableDirectoryMap`. When making changes to the Buildable Directory File, the cached file MUST be deleted in order for changes to be reflected in the code.  It is also highly recommended to ensure [Opcache](https://www.php.net/manual/en/book.opcache.php) is enabled in production to prevent a read from disk on every HTTP request. 
 
-The top level key in the buildable directories file for each group should be the first two parts of the URI for the paths that use that container. If a key with the first two parts of the URI is not found, Prefab will then check for a key with just the first part of the URI.
+`top_level_key` - should be the URI. If a key with the first two parts of the URI is not found, Prefab will then check for a key with only the first part.
 - Examples
     - `neighborhoods.com/mv1/property/{searchCriteria}` would build all directories under the `mv1/property` key in the example file below
     - `neighborhoods.com/mv2/property/{searchCriteria}` would build all directories under the `mv2` key in the example file below
@@ -282,6 +283,8 @@ The top level key in the buildable directories file for each group should be the
     - `Doctrine\DBAL` will include all files under the `Doctrine\DBAL` namespace that are in `fab/Prefab5/Doctrine/DBAL`.
 
 `appended_paths` - These are any additional paths that you want included in your container that are not under `fab/` or `src/`. Paths are relative to the root of your project.  Since `appended_path` represents paths, **forward slashes** (/) should be used as a separator.
+- Example:
+    - `vendor/neighborhoods/throwable-diagnostic-component/src` will include all files under the `vendor/neighborhoods/throwable-diagnostic-component/src` folder in the container.
 
 **Example**
 ```yaml
@@ -297,7 +300,7 @@ mv1/property: # The URI to the component Handler.
     - Zend\Expressive
     - SearchCriteria
   appended_paths:
-    - some/other/dir
+    - vendor/neighborhoods/throwable-diagnostic-component/src
 mv2: # The URI to the component Handler.
   buildable_directories:
     - MV2 # The relative path to the directory of the component.
