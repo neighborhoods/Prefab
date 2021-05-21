@@ -11,6 +11,8 @@ Major changes have been made to vendor classes as well as to the prefabricated c
 
 `Neighborhoods\Product\Prefab5\Protean\Container\Builder` class has been removed. Replace it with `Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder`.
 
+As soon as a source path gets added to `TinyContainerBuilder`, it searches the filesystem for DI service definitions. To prevent this from happening for cached containers, check if the container is cached before configuring the container builder.
+
 Prefab 7
 
 ``` php
@@ -36,19 +38,23 @@ $cacheHandler = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent
     ->setCacheDirPath($rootDirectory . '/data/cache')
     ->setDebug(false)
     ->build();
-$container = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
-    ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
-    ->setRootPath($rootDirectory)
-    ->setCacheHandler($cacheHandler)
-    ->addSourcePath('src/ProductComponent')
-    ->addSourcePath('fab/ProductComponent')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src')
-    ->addSourcePath('fab/Prefab5/Opcache')
-    ->makePublic(SomeInterface::class)
-    ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
-    ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass())
-// Further builder configuration
-    ->build();
+if ($cacheHandler->hasInCache()) {
+    $container = $cacheHandler->getFromCache();
+} else {
+    $container = (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder())
+        ->setContainerBuilder(new \Symfony\Component\DependencyInjection\ContainerBuilder())
+        ->setRootPath($rootDirectory)
+        ->setCacheHandler($cacheHandler)
+        ->addSourcePath('src/ProductComponent')
+        ->addSourcePath('fab/ProductComponent')
+        ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src')
+        ->addSourcePath('fab/Prefab5/Opcache')
+        ->makePublic(SomeInterface::class)
+        ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
+        ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass())
+        // Further builder configuration
+        ->build();
+}
 
 $instance = $container->get(SomeInterface::class);
 ```
@@ -90,7 +96,7 @@ return (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyCont
     ->setCacheHandler($cacheHandler) // The container will be cached
     ->setRootPath($rootDirectory)
     ->addSourcePath($zendPath)
-// Further builder configuration
+    // Further builder configuration
     ->build();
 ```
  * `Neighborhoods\Product\Prefab5\Protean\Container\Builder\FilesystemProperties` and the interface were moved to the `Neighborhoods\Product\Prefab5\HTTPBuildableDirectoryMap` namespace. It is no longer aware of the Protean Container Builder and lost the `getSymfonyContainerFilePath()` method. You **probably don't** use this class.
