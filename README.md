@@ -93,6 +93,9 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
     - Can be one of `complete`, `collection`, `minimal`, `handler` or `repository`
     - This field is optional and defaults to `complete`
     - See [below](#supporting-actor-groups) for more information
+- `json_serialize_map_as_array`
+    - This field is optional and default to `false`
+    - Set to `true` when HTTP response containing actor map should be a JSON array rather than an object with numerical property names.
 - `http_route`
     - The HTTP route to access the actor
     - This field is optional and unnecessary if you don't want to expose the actor to HTTP traffic
