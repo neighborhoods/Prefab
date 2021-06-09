@@ -20,8 +20,8 @@
     "sort-packages": true
   },
   "require": {
-    "php": "^7.0",
-    "neighborhoods/prefab": "^5.0"
+    "php": "^8.0",
+    "neighborhoods/prefab": "^8.4"
   },
   "autoload": {
     "psr-4": {
