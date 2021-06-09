@@ -1,3 +1,4 @@
 !.gitignore
 .idea
 vendor/
+composer.lock
