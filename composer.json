@@ -18,8 +18,8 @@
     }
   ],
   "require": {
-    "php": "^7.3",
-    "jsoumelidis/zend-sf-di-config": "^0.3",
+    "php": "^7.3|^8.0",
+    "jsoumelidis/zend-sf-di-config": "^0.3|^0.4|^0.5",
     "doctrine/dbal": "2.7 - 2.12",
     "symfony/config": "^4.4",
     "symfony/console": "^4.4",
@@ -31,7 +31,7 @@
     "laminas/laminas-code": "^3.3",
     "laminas/laminas-component-installer": "^2.1.1",
     "laminas/laminas-config-aggregator": "^1.0",
-    "laminas/laminas-diactoros": "^1.7.1",
+    "laminas/laminas-diactoros": "^1.7.1 || ^2.0",
     "mezzio/mezzio": "^3.0.1",
     "mezzio/mezzio-fastroute": "^3.0",
     "mezzio/mezzio-helpers": "^5.0",
