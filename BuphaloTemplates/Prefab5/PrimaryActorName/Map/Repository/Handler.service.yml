@@ -6,5 +6,5 @@ services:
     calls:
       - [setPrimaryActorNameMapRepository, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\RepositoryInterface']]
       - [setSearchCriteriaServerRequestBuilderFactory, ['@PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\ServerRequest\Builder\FactoryInterface']]
-/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\HandlerService-callSetGlobalTracerRepository
+/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\HandlerServiceFile-callSetGlobalTracerRepository
  */
