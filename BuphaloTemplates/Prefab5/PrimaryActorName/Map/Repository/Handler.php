@@ -35,7 +35,6 @@ class Handler implements HandlerInterface
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
             $map = $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
-
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-callSetFilterFieldsTracerTag
  */
             return $map;
