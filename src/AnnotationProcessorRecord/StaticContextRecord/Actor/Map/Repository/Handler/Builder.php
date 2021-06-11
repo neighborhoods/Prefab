@@ -16,7 +16,7 @@ class Builder implements BuilderInterface
         $buildConfiguration = $this->getBuildConfiguration();
 
         return [
-            AnnotationProcessor\Actor\Map\Repository\HandlerServiceFile::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS => $buildConfiguration->getTagFilterFieldsOnTracer(),
+            AnnotationProcessor\Actor\Map\Repository\HandlerInterface::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER => $buildConfiguration->getTagFilterFieldsOnTracer(),
         ];
     }
 
