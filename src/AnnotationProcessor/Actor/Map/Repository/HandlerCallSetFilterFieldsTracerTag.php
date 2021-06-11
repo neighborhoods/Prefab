@@ -12,7 +12,7 @@ class HandlerCallSetFilterFieldsTracerTag implements AnnotationProcessorInterfac
 
     public const ANNOTATION_PROCESSOR_KEY = 'Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-callSetFilterFieldsTracerTag';
 
-    public const STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS = 'tag_filter_fields_on_tracer';
+    public const STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER = 'tag_filter_fields_on_tracer';
 
     public function getAnnotationProcessorContext() : ContextInterface
     {
@@ -36,7 +36,7 @@ class HandlerCallSetFilterFieldsTracerTag implements AnnotationProcessorInterfac
         $replacement = '';
 
         $record = $this->getAnnotationProcessorContext()->getStaticContextRecord();
-        if (isset($record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS]) && $record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS]) {
+        if (isset($record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) && $record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) {
             $replacement = <<< EOF
             $this->setFilterFieldsTracerTag($searchCriteria);
 EOF;
