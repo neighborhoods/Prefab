@@ -309,4 +309,26 @@ class BuildConfiguration implements BuildConfigurationInterface
     {
         return $this->daoPropertyMap !== null;
     }
+
+    public function setTagFilterFieldsOnTracer($tagFilterFieldsOnTracer): BuildConfigurationInterface
+    {
+        if (isset($this->tagFilterFieldsOnTracer)) {
+            throw new \LogicException('Tag Filter Fields On Tracer is already set.');
+        }
+        $this->tagFilterFieldsOnTracer = $tagFilterFieldsOnTracer;
+        return $this;
+    }
+
+    public function getTagFilterFieldsOnTracer()
+    {
+        if (!isset($this->tagFilterFieldsOnTracer)) {
+            throw new \LogicException('Tag Filter Fields On Tracer has not been set.');
+        }
+        return $this->tagFilterFieldsOnTracer;
+    }
+
+    public function hasTagFilterFieldsOnTracer() : bool
+    {
+        return $this->tagFilterFieldsOnTracer !== null;
+    }
 }
