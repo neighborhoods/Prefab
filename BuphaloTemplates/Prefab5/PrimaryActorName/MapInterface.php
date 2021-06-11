@@ -6,6 +6,8 @@ namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName;
 use Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface;
 
 interface MapInterface extends \SeekableIterator, \ArrayAccess, \Serializable, \Countable
+    /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\MapInterface-JsonSerializable
+     */
 {
     /** @param PrimaryActorNameInterface ...$PrimaryActorNames */
     public function __construct(array $PrimaryActorNames = [], int $flags = 0);

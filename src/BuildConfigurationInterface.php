@@ -21,6 +21,7 @@ interface BuildConfigurationInterface
     public const KEY_HTTP_VERBS = 'http_verbs';
     public const HTTP_VERB_GET = 'GET';
     public const KEY_SUPPORTING_ACTOR_GROUP = 'supporting_actor_group';
+    public const KEY_JSON_SERIALIZE_MAP_AS_ARRAY = 'json_serialize_map_as_array';
     public const KEY_PROPERTIES = 'properties';
     public const KEY_CONSTANTS = 'constants';
 
@@ -93,4 +94,10 @@ interface BuildConfigurationInterface
     public function setConstantMap(\Neighborhoods\Prefab\Constant\MapInterface $constantMap): BuildConfigurationInterface;
 
     public function hasConstantMap(): bool;
+
+    public function setJsonSerializeMapAsArray($jsonSerializeMapAsArray): BuildConfigurationInterface;
+
+    public function getJsonSerializeMapAsArray();
+
+    public function hasJsonSerializeMapAsArray(): bool;
 }
