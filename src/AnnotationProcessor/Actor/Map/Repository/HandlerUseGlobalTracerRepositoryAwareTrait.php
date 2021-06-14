@@ -37,6 +37,7 @@ class HandlerUseGlobalTracerRepositoryAwareTrait implements AnnotationProcessorI
         if (isset($record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) && $record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) {
             $replacement = <<< EOF
     use \Neighborhoods\DatadogComponent\GlobalTracer\Repository\AwareTrait;
+
 EOF;
         }
 
