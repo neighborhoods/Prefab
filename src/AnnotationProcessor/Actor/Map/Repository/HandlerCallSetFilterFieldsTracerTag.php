@@ -37,6 +37,7 @@ class HandlerCallSetFilterFieldsTracerTag implements AnnotationProcessorInterfac
         if (isset($record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) && $record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) {
             $replacement = <<<'EOT'
             $this->setFilterFieldsTracerTag($searchCriteria);
+
 EOT;
         }
 
