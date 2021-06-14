@@ -54,7 +54,6 @@ class HandlerSetFilterFieldsTracerTag implements AnnotationProcessorInterface, H
             $span->setTag('filter_fields', implode('-', $filterFields));
         }
     }
-
 EOT;
         }
 
