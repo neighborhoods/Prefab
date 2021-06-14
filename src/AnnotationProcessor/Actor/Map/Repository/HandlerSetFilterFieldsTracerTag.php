@@ -35,7 +35,7 @@ class HandlerSetFilterFieldsTracerTag implements AnnotationProcessorInterface, H
 
         $record = $this->getAnnotationProcessorContext()->getStaticContextRecord();
         if (isset($record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) && $record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) {
-            $replacement = <<< EOF
+            $replacement = <<<'EOT'
     private function setFilterFieldsTracerTag(Prefab5\SearchCriteriaInterface $searchCriteria): void {
 
         $filterFields = [];
@@ -55,7 +55,7 @@ class HandlerSetFilterFieldsTracerTag implements AnnotationProcessorInterface, H
         }
     }
 
-EOF;
+EOT;
         }
 
         return $replacement;
