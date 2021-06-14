@@ -36,7 +36,7 @@ class HandlerServiceFile implements AnnotationProcessorInterface, HandlerInterfa
         $record = $this->getAnnotationProcessorContext()->getStaticContextRecord();
         if (isset($record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) && $record[self::STATIC_CONTEXT_RECORD_KEY_TAG_FILTER_FIELDS_ON_TRACER]) {
             $replacement = <<< EOF
-        - [setGlobalTracerRepository, ['@Neighborhoods\DatadogComponent\GlobalTracer\RepositoryInterface']]
+      - [setGlobalTracerRepository, ['@Neighborhoods\DatadogComponent\GlobalTracer\RepositoryInterface']]
 EOF;
         }
 
