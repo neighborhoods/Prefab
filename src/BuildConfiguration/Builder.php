@@ -48,6 +48,12 @@ class Builder implements BuilderInterface
             $buildConfiguration->setTagFilterFieldsOnTracer(false);
         }
 
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_JSON_SERIALIZE_MAP_AS_ARRAY])) {
+            $buildConfiguration->setJsonSerializeMapAsArray($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_JSON_SERIALIZE_MAP_AS_ARRAY]);
+        } else {
+            $buildConfiguration->setJsonSerializeMapAsArray(false);
+        }
+
         if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME])
             || $buildConfiguration->getSupportingActorGroup() !== 'handler') {
             $buildConfiguration->setTableName($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TABLE_NAME]);

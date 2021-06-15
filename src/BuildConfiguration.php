@@ -16,6 +16,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $httpVerbs;
     protected $projectDir;
     protected $supportingActorGroup;
+    protected $jsonSerializeMapAsArray;
     protected $actorNamespace;
     protected $constantMap;
 
@@ -194,6 +195,28 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasSupportingActorGroup() : bool
     {
         return $this->supportingActorGroup !== null;
+    }
+
+    public function setJsonSerializeMapAsArray($jsonSerializeMapAsArray): BuildConfigurationInterface
+    {
+        if (isset($this->jsonSerializeMapAsArray)) {
+            throw new \LogicException('Json Serialize Map As Array is already set.');
+        }
+        $this->jsonSerializeMapAsArray = $jsonSerializeMapAsArray;
+        return $this;
+    }
+
+    public function getJsonSerializeMapAsArray()
+    {
+        if (!isset($this->jsonSerializeMapAsArray)) {
+            throw new \LogicException('Json Serialize Map As Array has not been set.');
+        }
+        return $this->jsonSerializeMapAsArray;
+    }
+
+    public function hasJsonSerializeMapAsArray() : bool
+    {
+        return $this->jsonSerializeMapAsArray !== null;
     }
 
     public function getDaoName() : string

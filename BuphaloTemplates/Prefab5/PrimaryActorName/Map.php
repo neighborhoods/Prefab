@@ -71,4 +71,6 @@ class Map extends \ArrayIterator implements MapInterface
 
         return $this;
     }
+    /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map-jsonSerialize
+     */
 }
