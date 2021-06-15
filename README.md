@@ -96,6 +96,7 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
 - `tag_filter_fields_on_tracer`
     - This field is optional and default to `false`
     - Set to `true` if you want to tag on the default global tracer all the filter fields sent to `Map\Repository\Handler`.
+    - Note: to access the global tracer, the code uses the `neighborhoods/datadog-component` package. The Symfony container for your endpoint will not build unless you include the package source path in the list of `appended_paths` inside the `http-buildable-directories.yml` file, under the `top_level_key` of your endpoint. The source path is usually `vendor/neighborhoods/datadog-component/src`.
 - `json_serialize_map_as_array`
     - This field is optional and default to `false`
     - Set to `true` when HTTP response containing actor map should be a JSON array rather than an object with numerical property names.
