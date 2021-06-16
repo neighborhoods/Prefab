@@ -35,7 +35,7 @@ class Handler implements HandlerInterface
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
         } catch (\LogicException $exception) {
-            throw new SearchCriteriaBuilderException($exception->getMessage());
+            throw (new SearchCriteriaBuilderException($exception->getMessage()))->setPrevious($exception);
         }
 
         $map = $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
