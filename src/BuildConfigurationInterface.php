@@ -95,18 +95,16 @@ interface BuildConfigurationInterface
     public function setConstantMap(\Neighborhoods\Prefab\Constant\MapInterface $constantMap): BuildConfigurationInterface;
 
     public function hasConstantMap(): bool;
-
-<<<<<<< HEAD
+    
     public function setTagFilterFieldsOnTracer($tagFilterFieldsOnTracer): BuildConfigurationInterface;
 
     public function getTagFilterFieldsOnTracer();
 
     public function hasTagFilterFieldsOnTracer(): bool;
-=======
+
     public function setJsonSerializeMapAsArray($jsonSerializeMapAsArray): BuildConfigurationInterface;
 
     public function getJsonSerializeMapAsArray();
 
     public function hasJsonSerializeMapAsArray(): bool;
->>>>>>> 8.x
 }
