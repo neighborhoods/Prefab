@@ -69,7 +69,6 @@ class Builder implements BuilderInterface
     {
         $requiredFilterProperties = [
             self::FIELD,
-            self::VALUES,
             self::CONDITION,
             self::GLUE,
         ];
@@ -83,6 +82,34 @@ class Builder implements BuilderInterface
 
         if (!empty($missingRequiredFilterProperties)) {
             throw new \LogicException('Filter property not set: ' . implode(', ', $missingRequiredFilterProperties));
+        }
+
+        // Inspect values only when values are used
+        if (!in_array($filterQuery[self::CONDITION], self::CONDITIONS_WITHOUT_VALUE, true)) {
+            if (!isset($filterQuery[self::VALUES])) {
+                throw new \LogicException('Filter property not set: ' . self::VALUES);
+            }
+            $values = $filterQuery[self::VALUES];
+            if (!is_array($values)) {
+                $values = [$values];
+            }
+            $valueKeys = array_keys($values);
+            // Conditions requiring single value with key 0
+            if (in_array($filterQuery[self::CONDITION], self::CONDITIONS_WITH_SINGLE_VALUE, true)) {
+                if (count($valueKeys) !== 1 || !in_array(0, $valueKeys, true)) {
+                    throw new \LogicException('Filter condition ' . $filterQuery[self::CONDITION] . ' expects exactly one value with key 0');
+                }
+            }
+            // Conditions requiring center and radius
+            elseif (in_array($filterQuery[self::CONDITION], self::CONDITIONS_WITH_CENTER_AND_RADIUS, true)) {
+                if (count($values) !== 2 || !in_array('center', $valueKeys, true) || !in_array('radius', $valueKeys, true)) {
+                    throw new \LogicException('Filter condition ' . $filterQuery[self::CONDITION] . ' expect center and radius values');
+                }
+            }
+            // Otherwise the condition should be able to handle multiple values
+            elseif (!in_array($filterQuery[self::CONDITION], self::CONDITIONS_WITH_MULTIPLE_VALUES, true)) {
+                throw new \LogicException('Unsupported filter condition ' . $filterQuery[self::CONDITION]);
+            }
         }
 
         return $this;
