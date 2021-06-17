@@ -12,9 +12,7 @@ class Builder implements BuilderInterface
     use SearchCriteria\Filter\Factory\AwareTrait;
     use SearchCriteria\SortOrder\Factory\AwareTrait;
     use SearchCriteria\Factory\AwareTrait;
-    use Psr\Http\Message\ServerRequest\AwareTrait;
 
-    protected $searchCriteriaQuery;
     protected $record;
 
     public function build(): SearchCriteriaInterface
@@ -123,7 +121,10 @@ class Builder implements BuilderInterface
                 if ($this->assertValidFilterQuery($filterQuery)) {
                     $filter = $this->getSearchCriteriaFilterFactory()->create();
                     $filter->setField($filterQuery[self::FIELD]);
-                    $value = $filterQuery[self::VALUES];
+                    $value = [];
+                    if (isset($filterQuery[self::VALUES])) {
+                        $value = $filterQuery[self::VALUES];
+                    }
                     if (is_array($value)) {
                         $values = [];
                         foreach ($value as $key => $valueItem) {
