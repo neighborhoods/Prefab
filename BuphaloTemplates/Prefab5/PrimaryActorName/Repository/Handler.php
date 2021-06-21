@@ -30,10 +30,10 @@ class Handler implements HandlerInterface
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
-            return $this->getPrimaryActorNameRepository()->get($searchCriteria);
         } catch (\LogicException $exception) {
-            throw new SearchCriteriaBuilderException($exception->getMessage());
+            throw new SearchCriteriaBuilderException("Failed to build search criteria from HTTP request", $exception);
         }
+        return $this->getPrimaryActorNameRepository()->get($searchCriteria);
     }
 
     protected function post()
