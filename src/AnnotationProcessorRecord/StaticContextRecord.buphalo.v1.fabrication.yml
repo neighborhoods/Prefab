@@ -7,6 +7,8 @@ actors:
         static_context_record:
           - name: processorFullyQualifiedClassname
             type: string
+          - name: staticContextRecord
+            type: array
   <PrimaryActorName>.service.yml:
     template: PrimaryActorName.service.yml
   <PrimaryActorName>Interface.php:
