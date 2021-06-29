@@ -42,6 +42,12 @@ class Builder implements BuilderInterface
             $buildConfiguration->setSupportingActorGroup(BuildConfigurationInterface::SUPPORTING_ACTOR_GROUP_COMPLETE);
         }
 
+        if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TAG_FILTER_FIELDS_ON_TRACER])) {
+            $buildConfiguration->setTagFilterFieldsOnTracer($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_TAG_FILTER_FIELDS_ON_TRACER]);
+        } else {
+            $buildConfiguration->setTagFilterFieldsOnTracer(false);
+        }
+
         if (!empty($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_JSON_SERIALIZE_MAP_AS_ARRAY])) {
             $buildConfiguration->setJsonSerializeMapAsArray($prefabDefinitionFileArray[BuildConfigurationInterface::KEY_JSON_SERIALIZE_MAP_AS_ARRAY]);
         } else {
