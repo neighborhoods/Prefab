@@ -34,13 +34,14 @@ class Handler implements HandlerInterface
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
-            $map = $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
-/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-callSetFilterFieldsTracerTag
- */
-            return $map;
         } catch (\LogicException $exception) {
-            throw new SearchCriteriaBuilderException($exception->getMessage());
+            throw (new SearchCriteriaBuilderException('Failed to build search criteria from HTTP request'))->setPrevious($exception);
         }
+
+        $map = $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
+        /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-callSetFilterFieldsTracerTag
+         */
+        return $map;
     }
 
     protected function post()
@@ -70,4 +71,3 @@ class Handler implements HandlerInterface
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-setFilterFieldsTracerTag
  */
 }
-

@@ -102,3 +102,9 @@ return (new \Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyCont
 
  * `Neighborhoods\Prefab\Protean\Container\Builder` class has been removed. It is **unlikely** that you use this class directly. If you use it, have a look at changes on `Neighborhoods\Prefab\Prefab` which used it as well.
  * `Neighborhoods\Prefab\Prefab` requires you to set the application root directory path on it, instead of passing a protean container builder having it set. It is **unlikely** that you use this class directly. If you use it have a look at changes on the `bin/prefab` script.
+
+## Improvements
+
+Until Prefab 8.7.1 the template for the Handler's was converting repository exceptions into `SearchCriteriaBuilderException`.
+
+Check if your handler code is based on the template. If so please modify it according to [this PR](https://github.com/neighborhoods/Prefab/pull/257/files).
