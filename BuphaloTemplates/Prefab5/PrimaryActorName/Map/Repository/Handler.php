@@ -35,7 +35,7 @@ class Handler implements HandlerInterface
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
         } catch (\LogicException $exception) {
-            throw (new SearchCriteriaBuilderException($exception->getMessage()))->setPrevious($exception);
+            throw (new SearchCriteriaBuilderException('Failed to build search criteria from HTTP request'))->setPrevious($exception);
         }
 
         $map = $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
@@ -71,4 +71,3 @@ class Handler implements HandlerInterface
 /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-setFilterFieldsTracerTag
  */
 }
-
