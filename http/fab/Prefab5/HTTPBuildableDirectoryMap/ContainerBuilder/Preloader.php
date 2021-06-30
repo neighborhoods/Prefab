@@ -12,6 +12,8 @@ use Zend\Expressive\Application;
 
 class Preloader implements PreloaderInterface
 {
+    private $applicationRun = false;
+
     public function preload() : PreloaderInterface
     {
         // Preload containers
@@ -45,9 +47,14 @@ class Preloader implements PreloaderInterface
     private function preloadContainer(ContainerInterface $container): PreloaderInterface
     {
         $application = $container->get(Application::class);
-        try {
-            $application->run();
-        } catch (Throwable $throwable) {
+
+        // Application may be run only once.
+        if (!$this->applicationRun) {
+            $this->applicationRun = true;
+            try {
+                $application->run();
+            } catch (Throwable $throwable) {
+            }
         }
 
         return $this;

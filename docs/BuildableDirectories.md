@@ -68,9 +68,9 @@ Container priming uses the environment variables and bakes them into the contain
 Preloading the built HTTP containers significantly reduces the response time. In addition to preloading the HTTP containers also preload Doctrine.
 
 First write the preloading script, an example is shown below.
+The script must not start with `#!/usr/bin/env php`!
 
 ```php
-#!/usr/bin/env php
 <?php
 declare(strict_types=1);
 error_reporting(E_ALL);
