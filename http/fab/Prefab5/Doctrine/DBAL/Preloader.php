@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL;
 
 use Doctrine\DBAL\DriverManager;
+use LogicException;
 use PDO;
+use PDOException;
 
 class Preloader implements PreloaderInterface
 {
@@ -22,14 +24,27 @@ class Preloader implements PreloaderInterface
 
     private function getPDO(): PDO
     {
-        return new PDO(
-            sprintf('%s:dbname=%s;host=%s', env('DATABASE_ADAPTER'), env('DATABASE_NAME'), env('DATABASE_HOST')),
-            env('DATABASE_USERNAME'),
-            env('DATABASE_PASSWORD'),
-            [
-                PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ]
-        );
+        $pdo = null;
+        $iteration = 0;
+        while (is_null($pdo) && $iteration < 100) {
+            $iteration ++;
+            try {
+                $pdo = new PDO(
+                    sprintf('%s:dbname=%s;host=%s', env('DATABASE_ADAPTER'), env('DATABASE_NAME'), env('DATABASE_HOST')),
+                    env('DATABASE_USERNAME'),
+                    env('DATABASE_PASSWORD'),
+                    [
+                        PDO::ATTR_PERSISTENT => true,
+                        PDO::ATTR_EMULATE_PREPARES => false,
+                    ]
+                );
+            } catch (PDOException $exception) {
+                sleep(1);
+            }
+        }
+        if (is_null($pdo)) {
+            throw new LogicException('Failed to connect to database');
+        }
+        return $pdo;
     }
 }
