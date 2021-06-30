@@ -43,7 +43,7 @@ MV2:
 
 Since there are now many containers that will be built, the legacy method of Bakery pre-baking the containers using `include index.php;` will no longer work. In order to prebuild your containers, add the following script to your `bin/` directory and include the script in your `composer.json` file after `vendor/bin/prefab` but before `vendor/bin/bakery`
 
-``` php
+```php
 #!/usr/bin/env php
 <?php
 declare(strict_types=1);
@@ -58,3 +58,46 @@ $primer->primeContainers();
 return;
 
 ```
+
+Container priming uses the environment variables and bakes them into the container, therefore container priming should be triggered by the entrypoint script.
+
+## Preloading
+
+[Preloading](https://www.php.net/manual/en/opcache.preloading.php) has been introduced in PHP 7.4.
+
+Preloading the built HTTP containers significantly reduces the response time. In addition to preloading the HTTP containers also preload Doctrine.
+
+First write the preloading script, an example is shown below.
+
+```php
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+error_reporting(E_ALL);
+
+require_once __DIR__ . '/../vendor/autoload.php';
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
+use Neighborhoods\ReplaceThisWithTheNameOfYourProduct\Prefab5\Doctrine\DBAL;
+
+(new ContainerBuilder\Preloader())->preload();
+(new DBAL\Preloader())->preload();
+
+return;
+
+```
+
+The preloading script should be added to the opcache configuration after the containers are primed.
+
+```bash
+bin/prime_http_containers.php || exit 1
+echo "opcache.preload=/var/www/html/project/bin/preload.php" >> /usr/local/etc/php/conf.d/opcache.ini
+```
+
+In addition to specifying the preload script, your opcache configuration has to specify the preloading user, which cannot be the root user.
+
+```ini
+opcache.preload_user=www-data
+;display_startup_errors=1
+```
+
+The preloading will silently error unless you set the `display_startup_errors` flag which will print the error message in the container log.
