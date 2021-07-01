@@ -63,7 +63,13 @@ class Preloader implements PreloaderInterface
     private function preloadCommon(): PreloaderInterface
     {
         class_exists(\Zend\Diactoros\Response\JsonResponse::class);
-        include __DIR__ . '/../../../../public/index.php';
+        opcache_compile_file(__DIR__ . '/../../../../public/index.php');
+        class_exists(\Fig\Http\Message\StatusCodeInterface::class);
+        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler::class);
+        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler::class);
+        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP::class);
+        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder::class);
+        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger::class);
 
         return $this;
     }

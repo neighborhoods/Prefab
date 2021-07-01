@@ -19,6 +19,10 @@ class Preloader implements PreloaderInterface
         $qb->select('*')->from('relation')->where($qb->expr()->eq('field', 'value'));
         // no need to execute the query
 
+        // Additional error handling classes.
+        class_exists(\Doctrine\DBAL\Exception::class);
+        class_exists(\Doctrine\DBAL\SQLParserUtils::class);
+
         return $this;
     }
 
