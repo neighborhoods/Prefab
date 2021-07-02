@@ -59,7 +59,7 @@ return;
 
 ```
 
-Container priming uses the environment variables and bakes them into the container, therefore container priming should be triggered by the entrypoint script.
+Container priming uses the environment variables and bakes them into the container, therefore container priming for docker should be triggered by the entrypoint script.
 
 ## Preloading
 
@@ -68,11 +68,10 @@ Container priming uses the environment variables and bakes them into the contain
 Preloading the built HTTP containers significantly reduces the response time. In addition to preloading the HTTP containers also preload Doctrine.
 
 First write the preloading script, an example is shown below.
-The script must not start with `#!/usr/bin/env php`!
+The script must not start with `#!/usr/bin/env php`, nor contain the `declare(strict_types=1);`!
 
 ```php
 <?php
-declare(strict_types=1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';

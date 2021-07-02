@@ -21,6 +21,7 @@ class Preloader implements PreloaderInterface
         try {
             $httpBuildableDirectoryMap = (new Opcache\HTTPBuildableDirectoryMap())->getBuildableDirectoryMap();
 
+            // Preload all subcontainers when http-buildable-directories.yml exists
             foreach ($httpBuildableDirectoryMap as $directoryGroup => $directoryMap) {
                 $this->preloadContainer(
                     (new ContainerBuilder())
@@ -31,7 +32,7 @@ class Preloader implements PreloaderInterface
                 );
             }
         } catch (BuildableDirectoryFileNotFound\Exception $exception) {
-            // No directory map file found. Preload unified HTTP container
+            // http-buildable-directories.yml not found. Preload unified HTTP container
             $this->preloadContainer(
                 (new ContainerBuilder())
                     ->setRootDirectoryPath($rootDirectoryPath)
@@ -46,11 +47,16 @@ class Preloader implements PreloaderInterface
 
     private function preloadContainer(ContainerInterface $container): PreloaderInterface
     {
+        // Getting application instance loads the microframework
+        // and hander with injected dependencies.
         $application = $container->get(Application::class);
 
-        // Application may be run only once.
+        // Application may be run only once. Running multiple times triggers a fatal error.
         if (!$this->applicationRun) {
             $this->applicationRun = true;
+            // Running the application forces the microframework to instantiate a bunch of classes.
+            // The run will fail since preloading is performed before any HTTP request arrives.
+            // Thanks to the instantiated classes, HTTP requests will be processed faster.
             try {
                 $application->run();
             } catch (Throwable $throwable) {
@@ -62,7 +68,10 @@ class Preloader implements PreloaderInterface
 
     private function preloadCommon(): PreloaderInterface
     {
+        // Typical response. Handlers create it using the 'new' keyword, not a factory
         class_exists(\Zend\Diactoros\Response\JsonResponse::class);
+
+        // Preload the index.php and classes used inside it
         opcache_compile_file(__DIR__ . '/../../../../public/index.php');
         class_exists(\Fig\Http\Message\StatusCodeInterface::class);
         class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler::class);
