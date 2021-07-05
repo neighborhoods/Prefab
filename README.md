@@ -118,6 +118,7 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
             - Note: This used to be called `php_type` which is maintained for backwards compatibility
         - `record_key`
             - Name of the key containing the data that populates the class property
+            - If not set, defaults to property name
             - Note: This used to be called `database_column_name` which is still maintained for backwards compatibility 
         - `nullable`
             - Whether or not this property can be null. If true, the builder method will surround this property with isset() before attempting to set the value on the actor
@@ -157,24 +158,19 @@ constants:
 properties:
   id:
     data_type: int
-    record_key: id
     nullable: false
     created_on_insert: true
   email:
     data_type: string
-    record_key: email
     nullable: true
   first_name:
     data_type: string
-    record_key: first_name
     nullable: false
   last_name:
     data_type: string
-    record_key: last_name
     nullable: false
   created_at:
     data_type: string
-    record_key: created_at
     nullable: false
     created_on_insert: true
 ```
