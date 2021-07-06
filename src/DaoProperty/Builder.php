@@ -20,7 +20,7 @@ class Builder implements BuilderInterface
         $daoproperty->setDataType($record['data_type'] ?? $record['php_type']);
 
         $daoproperty->setNullable($record['nullable'] ?? false);
-        $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name']);
+        $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name'] ?? $record['name']);
         $daoproperty->setCreatedOnInsert($record['created_on_insert'] ?? false);
 
         return $daoproperty;
