@@ -6,6 +6,7 @@ namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct
 use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\BuildableDirectoryFileNotFound;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder;
 use Throwable;
 use Zend\Expressive\Application;
@@ -74,11 +75,18 @@ class Preloader implements PreloaderInterface
         // Preload the index.php and classes used inside it
         opcache_compile_file(__DIR__ . '/../../../../public/index.php');
         class_exists(\Fig\Http\Message\StatusCodeInterface::class);
-        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ErrorHandler::class);
-        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\ExceptionHandler::class);
-        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP::class);
-        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder::class);
-        class_exists(\ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Logger::class);
+        class_exists(Prefab5\ErrorHandler::class);
+        class_exists(Prefab5\ExceptionHandler::class);
+        class_exists(Prefab5\HTTP::class);
+        class_exists(Prefab5\HTTPBuildableDirectoryMap\ContainerBuilder::class);
+        class_exists(Prefab5\Logger::class);
+
+        // Preload exceptions
+        class_exists(Prefab5\HTTP\Exception::class);
+        class_exists(Prefab5\HTTP\SearchCriteriaBuilderException::class);
+
+        // Additional classes needed when exception occurs
+        class_exists(\Psr\Log\LogLevel::class);
 
         return $this;
     }
