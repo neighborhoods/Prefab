@@ -87,7 +87,7 @@ class Preloader implements PreloaderInterface
 
         // Additional classes needed when exception occurs
         class_exists(\Psr\Log\LogLevel::class);
-        \DDTrace\GlobalTracer::get()->getActiveSpan();
+        \DDTrace\GlobalTracer::get();
 
         return $this;
     }
