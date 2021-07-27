@@ -93,6 +93,13 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
     - Can be one of `complete`, `collection`, `minimal`, `handler` or `repository`
     - This field is optional and defaults to `complete`
     - See [below](#supporting-actor-groups) for more information
+- `tag_filter_fields_on_tracer`
+    - This field is optional and default to `false`
+    - Set to `true` if you want to tag on the default global tracer all the filter fields sent to `Map\Repository\Handler`.
+    - Note: to access the global tracer, the code uses the `neighborhoods/datadog-component` package. The Symfony container for your endpoint will not build unless you include the package source path in the list of `appended_paths` inside the `http-buildable-directories.yml` file, under the `top_level_key` of your endpoint. The source path is usually `vendor/neighborhoods/datadog-component/src`.
+- `json_serialize_map_as_array`
+    - This field is optional and default to `false`
+    - Set to `true` when HTTP response containing actor map should be a JSON array rather than an object with numerical property names.
 - `http_route`
     - The HTTP route to access the actor
     - This field is optional and unnecessary if you don't want to expose the actor to HTTP traffic
@@ -111,6 +118,7 @@ The file MUST be named {ACTORNAME}.prefab.definition.yml and saved under `src/`.
             - Note: This used to be called `php_type` which is maintained for backwards compatibility
         - `record_key`
             - Name of the key containing the data that populates the class property
+            - If not set, defaults to property name
             - Note: This used to be called `database_column_name` which is still maintained for backwards compatibility 
         - `nullable`
             - Whether or not this property can be null. If true, the builder method will surround this property with isset() before attempting to set the value on the actor
@@ -150,24 +158,19 @@ constants:
 properties:
   id:
     data_type: int
-    record_key: id
     nullable: false
     created_on_insert: true
   email:
     data_type: string
-    record_key: email
     nullable: true
   first_name:
     data_type: string
-    record_key: first_name
     nullable: false
   last_name:
     data_type: string
-    record_key: last_name
     nullable: false
   created_at:
     data_type: string
-    record_key: created_at
     nullable: false
     created_on_insert: true
 ```

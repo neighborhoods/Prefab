@@ -16,6 +16,7 @@ class BuildConfiguration implements BuildConfigurationInterface
     protected $httpVerbs;
     protected $projectDir;
     protected $supportingActorGroup;
+    protected $jsonSerializeMapAsArray;
     protected $actorNamespace;
     protected $constantMap;
 
@@ -196,6 +197,28 @@ class BuildConfiguration implements BuildConfigurationInterface
         return $this->supportingActorGroup !== null;
     }
 
+    public function setJsonSerializeMapAsArray($jsonSerializeMapAsArray): BuildConfigurationInterface
+    {
+        if (isset($this->jsonSerializeMapAsArray)) {
+            throw new \LogicException('Json Serialize Map As Array is already set.');
+        }
+        $this->jsonSerializeMapAsArray = $jsonSerializeMapAsArray;
+        return $this;
+    }
+
+    public function getJsonSerializeMapAsArray()
+    {
+        if (!isset($this->jsonSerializeMapAsArray)) {
+            throw new \LogicException('Json Serialize Map As Array has not been set.');
+        }
+        return $this->jsonSerializeMapAsArray;
+    }
+
+    public function hasJsonSerializeMapAsArray() : bool
+    {
+        return $this->jsonSerializeMapAsArray !== null;
+    }
+
     public function getDaoName() : string
     {
         if ($this->daoName === null) {
@@ -308,5 +331,27 @@ class BuildConfiguration implements BuildConfigurationInterface
     public function hasDaoPropertyMap() : bool
     {
         return $this->daoPropertyMap !== null;
+    }
+
+    public function setTagFilterFieldsOnTracer($tagFilterFieldsOnTracer): BuildConfigurationInterface
+    {
+        if (isset($this->tagFilterFieldsOnTracer)) {
+            throw new \LogicException('Tag Filter Fields On Tracer is already set.');
+        }
+        $this->tagFilterFieldsOnTracer = $tagFilterFieldsOnTracer;
+        return $this;
+    }
+
+    public function getTagFilterFieldsOnTracer()
+    {
+        if (!isset($this->tagFilterFieldsOnTracer)) {
+            throw new \LogicException('Tag Filter Fields On Tracer has not been set.');
+        }
+        return $this->tagFilterFieldsOnTracer;
+    }
+
+    public function hasTagFilterFieldsOnTracer() : bool
+    {
+        return $this->tagFilterFieldsOnTracer !== null;
     }
 }

@@ -14,7 +14,8 @@ class Handler implements HandlerInterface
     use Repository\AwareTrait;
     use Prefab5\Psr\Http\Message\ServerRequest\AwareTrait;
     use Prefab5\SearchCriteria\ServerRequest\Builder\Factory\AwareTrait;
-
+/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-useGlobalTracerRepositoryAwareTrait
+ */
     public function handle(\Psr\Http\Message\ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface
     {
         $this->setPsrHttpMessageServerRequest($request);
@@ -33,10 +34,14 @@ class Handler implements HandlerInterface
         $searchCriteriaBuilder->setPsrHttpMessageServerRequest($this->getPsrHttpMessageServerRequest());
         try {
             $searchCriteria = $searchCriteriaBuilder->build();
-            return $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
         } catch (\LogicException $exception) {
-            throw new SearchCriteriaBuilderException($exception->getMessage());
+            throw (new SearchCriteriaBuilderException('Failed to build search criteria from HTTP request'))->setPrevious($exception);
         }
+
+        $map = $this->getPrimaryActorNameMapRepository()->get($searchCriteria);
+        /** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-callSetFilterFieldsTracerTag
+         */
+        return $map;
     }
 
     protected function post()
@@ -63,5 +68,6 @@ class Handler implements HandlerInterface
     {
         return $this->getPsrHttpMessageServerRequest()->getAttribute(\Zend\Expressive\Router\RouteResult::class);
     }
+/** @neighborhoods-buphalo:annotation-processor Neighborhoods\Prefab\AnnotationProcessor\Actor\Map\Repository\Handler-setFilterFieldsTracerTag
+ */
 }
-
