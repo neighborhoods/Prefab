@@ -43,6 +43,6 @@ EOF;
         $name = $this->getAnnotationProcessorContext()->getStaticContextRecord()[self::CONTEXT_KEY_ROUTE_NAME];
         $name = strtoupper($name);
 
-        return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, $path, $name, $name);
+        return sprintf(self::ROUTE_PATH_LINE_FORMAT_STRING, $name, addslashes($path), $name, $name);
     }
 }
