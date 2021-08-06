@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria\ValidationException;
 use Zend\Expressive\Application;
 
 class HTTP implements HTTPInterface
@@ -22,50 +23,47 @@ class HTTP implements HTTPInterface
             $container = $this->buildContainer();
             $application = $container->get(Application::class);
             $application->run();
+        } catch (ValidationException $exception) {
+            http_response_code(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
+            $this->recordError($exception);
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
-
-            if (getenv('DEBUG_MODE') === 'true') {
-                if (defined('STDERR')) {
-                    // Should exist from a CLI context
-                    fwrite(STDERR, $exception->__toString() . PHP_EOL);
-                }
-                (new Logger())
-                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
-                    ->critical($exception->__toString() . PHP_EOL);
-            }
-
-            // Try to send the error to DataDog
-            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
-            $tracer = $repository->get();
-            $span = $tracer->getActiveSpan();
-            if ($span !== null) {
-                $span->setError($exception);
-            }
-
+            $this->recordError($exception);
         } catch (\Throwable $throwable) {
             http_response_code(StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR);
-
-            if (getenv('DEBUG_MODE') === 'true') {
-                if (defined('STDERR')) {
-                    // Should exist from a CLI context
-                    fwrite(STDERR, $throwable->__toString() . PHP_EOL);
-                }
-                (new Logger())
-                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
-                    ->critical($throwable->__toString() . PHP_EOL);
-            }
-
-            // Try to send the error to DataDog
-            $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
-            $tracer = $repository->get();
-            $span = $tracer->getActiveSpan();
-            if ($span !== null) {
-                $span->setError($throwable);
-            }
+            $this->recordError($throwable);
         }
 
         return $this;
+    }
+
+    private function recordError(\Throwable $throwable) : void
+    {
+        $this->logError($throwable);
+        $this->sendErrorToDatadog($throwable);
+    }
+
+    private function logError(\Throwable $throwable) : void
+    {
+        if (getenv('DEBUG_MODE') === 'true') {
+            if (defined('STDERR')) {
+                // Should exist from a CLI context
+                fwrite(STDERR, $throwable->__toString() . PHP_EOL);
+            }
+            (new Logger())
+                ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
+                ->critical($throwable->__toString() . PHP_EOL);
+        }
+    }
+
+    private function sendErrorToDatadog(\Throwable $throwable) : void
+    {
+        $repository = new \Neighborhoods\DatadogComponent\GlobalTracer\Repository();
+        $tracer = $repository->get();
+        $span = $tracer->getActiveSpan();
+        if ($span !== null) {
+            $span->setError($throwable);
+        }
     }
 
     protected function buildContainer(): ContainerInterface
