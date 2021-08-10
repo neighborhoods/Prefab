@@ -20,7 +20,7 @@ class Validator implements ValidatorInterface
                     fwrite(STDERR, $exception->__toString() . PHP_EOL);
                 }
                 (new Logger())
-                    ->setLogFilePath(__DIR__ . '/../../Logs/HTTP.log')
+                    ->setLogFilePath(__DIR__ . '/../../../Logs/HTTP.log')
                     ->critical($exception->__toString() . PHP_EOL);
             }
 
