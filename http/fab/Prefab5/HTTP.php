@@ -23,9 +23,6 @@ class HTTP implements HTTPInterface
             $container = $this->buildContainer();
             $application = $container->get(Application::class);
             $application->run();
-        } catch (ValidationException $exception) {
-            http_response_code(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
-            $this->recordError($exception);
         } catch (InvalidDirectory\Exception | HTTP\Exception $exception) {
             http_response_code(StatusCodeInterface::STATUS_BAD_REQUEST);
             $this->recordError($exception);
