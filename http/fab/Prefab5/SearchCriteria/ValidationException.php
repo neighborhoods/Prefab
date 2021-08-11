@@ -4,25 +4,22 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 
 use Neighborhoods\ExceptionComponent\Exception;
+use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
 
 final class ValidationException extends Exception implements ValidationExceptionInterface
 {
+    use CommonProblemDetailsExceptionTrait;
 
-    protected const UNPROCESSABLE_ENTITY = 'Unprocessable Entity';
+    private const STATUS_CODE = 422;
+    private const STATUS_TITLE = 'Unprocessable Entity';
+    private const STATUS_TYPE = 'https://httpstatuses.com/422';
 
-    public function getStatus(): int
+    public function __construct()
     {
-        return 422;
-    }
-
-    public function getType(): string
-    {
-        return self::UNPROCESSABLE_ENTITY;
-    }
-
-    public function getTitle(): string
-    {
-        return self::UNPROCESSABLE_ENTITY;
+        parent::__construct();
+        $this->status = self::STATUS_CODE;
+        $this->title = self::STATUS_TITLE;
+        $this->type = self::STATUS_TYPE;
     }
 
     public function getDetail(): string
@@ -33,45 +30,5 @@ final class ValidationException extends Exception implements ValidationException
         }
         $messages = array_merge($messages, $this->getMessages());
         return implode('; ', $messages);
-    }
-
-    public function getAdditionalData(): array
-    {
-        return [];
-    }
-
-    /**
-     * Serialize the exception to an array of problem details.
-     *
-     * Likely useful for the JsonSerializable implementation, but also
-     * for cases where the XML variant is desired.
-     */
-    public function toArray() : array
-    {
-        return [
-            $this->getStatus(),
-            $this->getType(),
-            $this->getTitle(),
-            $this->getDetail(),
-            $this->getAdditionalData()
-        ];
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize() : array
-    {
-        return [
-            $this->getStatus(),
-            $this->getType(),
-            $this->getTitle(),
-            $this->getDetail(),
-            $this->getAdditionalData()
-        ];
     }
 }
