@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\SearchCriteria;
 
 use Neighborhoods\ExceptionComponent\NonTransientExceptionInterface;
+use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
 
-interface ValidationExceptionInterface extends NonTransientExceptionInterface
+interface ValidationExceptionInterface extends NonTransientExceptionInterface, ProblemDetailsExceptionInterface
 {
 
 }
