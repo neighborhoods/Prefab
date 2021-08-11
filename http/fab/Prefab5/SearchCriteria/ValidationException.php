@@ -27,7 +27,12 @@ final class ValidationException extends Exception implements ValidationException
 
     public function getDetail(): string
     {
-        return $this->getMessage();
+        $messages  = [];
+        if (!empty($this->getMessage())) {
+            $messages[] = $this->getMessage();
+        }
+        $messages = array_merge($messages, $this->getMessages());
+        return implode('; ', $messages);
     }
 
     public function getAdditionalData(): array
