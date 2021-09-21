@@ -31,7 +31,7 @@ EOF;
         );
 EOF;
     protected const NON_COMPLEX_OBJECT_METHOD_PATTERN =
-"\t\t\$PrimaryActorName->set%s(%s\$record[PrimaryActorNameInterface::PROP_%s]);";
+"        \$PrimaryActorName->set%s(%s\$record[PrimaryActorNameInterface::PROP_%s]);";
 
     protected const NULLABLE_PROPERTY_METHOD_PATTERN = <<< EOF
         if (isset(\$record[PrimaryActorNameInterface::PROP_%s])) {
@@ -157,7 +157,7 @@ EOF;
                 trim($method)
             );
         } else {
-            return '   ' . $method . "\n";
+            return $method . "\n";
         }
     }
 }
