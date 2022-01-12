@@ -12,7 +12,7 @@ trait AwareTrait
     public function setAnnotationProcessorRecord(AnnotationProcessorRecordInterface $AnnotationProcessorRecord): self
     {
         if ($this->hasAnnotationProcessorRecord()) {
-            throw new \LogicException('Actor is already set.');
+            throw new \LogicException('AnnotationProcessorRecord is already set.');
         }
         $this->AnnotationProcessorRecord = $AnnotationProcessorRecord;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getAnnotationProcessorRecord(): AnnotationProcessorRecordInterface
     {
         if (!$this->hasAnnotationProcessorRecord()) {
-            throw new \LogicException('Actor is not set.');
+            throw new \LogicException('AnnotationProcessorRecord is not set.');
         }
 
         return $this->AnnotationProcessorRecord;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetAnnotationProcessorRecord(): self
     {
         if (!$this->hasAnnotationProcessorRecord()) {
-            throw new \LogicException('Actor is not set.');
+            throw new \LogicException('AnnotationProcessorRecord is not set.');
         }
         unset($this->AnnotationProcessorRecord);
 
