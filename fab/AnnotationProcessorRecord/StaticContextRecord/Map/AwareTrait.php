@@ -12,7 +12,7 @@ trait AwareTrait
     public function setAnnotationProcessorRecordStaticContextRecordMap(MapInterface $StaticContextRecords): self
     {
         if ($this->hasAnnotationProcessorRecordStaticContextRecordMap()) {
-            throw new \LogicException('Actors is already set.');
+            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMap is already set.');
         }
         $this->AnnotationProcessorRecordStaticContextRecords = $StaticContextRecords;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getAnnotationProcessorRecordStaticContextRecordMap(): MapInterface
     {
         if (!$this->hasAnnotationProcessorRecordStaticContextRecordMap()) {
-            throw new \LogicException('Actors is not set.');
+            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMap is not set.');
         }
 
         return $this->AnnotationProcessorRecordStaticContextRecords;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetAnnotationProcessorRecordStaticContextRecordMap(): self
     {
         if (!$this->hasAnnotationProcessorRecordStaticContextRecordMap()) {
-            throw new \LogicException('Actors is not set.');
+            throw new \LogicException('AnnotationProcessorRecordStaticContextRecordMap is not set.');
         }
         unset($this->AnnotationProcessorRecordStaticContextRecords);
 

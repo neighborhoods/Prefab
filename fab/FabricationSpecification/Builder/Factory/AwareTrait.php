@@ -12,7 +12,7 @@ trait AwareTrait
     public function setFabricationSpecificationBuilderFactory(FactoryInterface $FabricationSpecificationBuilderFactory): self
     {
         if ($this->hasFabricationSpecificationBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is already set.');
+            throw new \LogicException('FabricationSpecificationBuilderFactory is already set.');
         }
         $this->FabricationSpecificationBuilderFactory = $FabricationSpecificationBuilderFactory;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getFabricationSpecificationBuilderFactory(): FactoryInterface
     {
         if (!$this->hasFabricationSpecificationBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is not set.');
+            throw new \LogicException('FabricationSpecificationBuilderFactory is not set.');
         }
 
         return $this->FabricationSpecificationBuilderFactory;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetFabricationSpecificationBuilderFactory(): self
     {
         if (!$this->hasFabricationSpecificationBuilderFactory()) {
-            throw new \LogicException('ActorBuilderFactory is not set.');
+            throw new \LogicException('FabricationSpecificationBuilderFactory is not set.');
         }
         unset($this->FabricationSpecificationBuilderFactory);
 

@@ -12,7 +12,7 @@ trait AwareTrait
     public function setFabricationSpecificationMap(MapInterface $FabricationSpecifications): self
     {
         if ($this->hasFabricationSpecificationMap()) {
-            throw new \LogicException('Actors is already set.');
+            throw new \LogicException('FabricationSpecificationMap is already set.');
         }
         $this->FabricationSpecifications = $FabricationSpecifications;
 
@@ -22,7 +22,7 @@ trait AwareTrait
     protected function getFabricationSpecificationMap(): MapInterface
     {
         if (!$this->hasFabricationSpecificationMap()) {
-            throw new \LogicException('Actors is not set.');
+            throw new \LogicException('FabricationSpecificationMap is not set.');
         }
 
         return $this->FabricationSpecifications;
@@ -36,7 +36,7 @@ trait AwareTrait
     protected function unsetFabricationSpecificationMap(): self
     {
         if (!$this->hasFabricationSpecificationMap()) {
-            throw new \LogicException('Actors is not set.');
+            throw new \LogicException('FabricationSpecificationMap is not set.');
         }
         unset($this->FabricationSpecifications);
 
