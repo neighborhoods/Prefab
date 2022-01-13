@@ -20,6 +20,12 @@ class DaoProperty implements DaoPropertyInterface
     /** @var bool */
     private $createdOnInsert;
 
+    /** @var bool */
+    private $deprecated;
+
+    /** @var string */
+    private $deprecated_message;
+
      public function getName(): string
      {
          if ($this->name === null) {
@@ -142,6 +148,56 @@ class DaoProperty implements DaoPropertyInterface
      public function hasCreatedOnInsert(): bool
      {
         return $this->createdOnInsert !== null;
+     }
+     
+
+     public function getDeprecated(): bool
+     {
+         if ($this->deprecated === null) {
+             throw new \LogicException('deprecated has not been set');
+         }
+         
+         return $this->deprecated;
+     }
+     
+     public function setDeprecated(bool $deprecated): DaoPropertyInterface
+     {
+         if ($this->deprecated !== null) {
+             throw new \LogicException('deprecated has already been set');
+         }
+         
+         $this->deprecated = $deprecated;
+         return $this;
+     }
+     
+     public function hasDeprecated(): bool
+     {
+        return $this->deprecated !== null;
+     }
+     
+
+     public function getDeprecatedMessage(): string
+     {
+         if ($this->deprecated_message === null) {
+             throw new \LogicException('deprecated_message has not been set');
+         }
+         
+         return $this->deprecated_message;
+     }
+     
+     public function setDeprecatedMessage(string $deprecated_message): DaoPropertyInterface
+     {
+         if ($this->deprecated_message !== null) {
+             throw new \LogicException('deprecated_message has already been set');
+         }
+         
+         $this->deprecated_message = $deprecated_message;
+         return $this;
+     }
+     
+     public function hasDeprecatedMessage(): bool
+     {
+        return $this->deprecated_message !== null;
      }
      
 

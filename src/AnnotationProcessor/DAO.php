@@ -35,12 +35,13 @@ class DAO implements AnnotationProcessorInterface
         $properties = [];
         $accessors = [];
 
-        foreach($context as $field) {
+        foreach ($context as $field) {
             $name = $field['name'];
             $type = $field['type'];
+            $deprecated = ($field['deprecated'] ?? false) ? $field['deprecated_message'] : null;
 
             $properties[] = $this->buildProperty($name, $type);
-            $accessors[] = $this->buildAccessors($name, $type);
+            $accessors[] = $this->buildAccessors($name, $type, $deprecated);
         }
 
         return implode(PHP_EOL . PHP_EOL, $properties) . PHP_EOL . PHP_EOL . implode(PHP_EOL . PHP_EOL, $accessors);
@@ -55,13 +56,14 @@ EOC;
 
     }
 
-    private function buildAccessors(string $propertyName, $type): string
+    private function buildAccessors(string $propertyName, string $type, ?string $deprecated): string
     {
         $pascalCaseName = $this->getPascalCaseName($propertyName);
         $interface = $this->getAnnotationProcessorContext()->getFabricationFile()->getFileName() . 'Interface';
+        $deprecatedTag = $deprecated !== null ? "/** @deprecated $deprecated */" . PHP_EOL . '     ' : '';
 
         return <<<EOC
-     public function get$pascalCaseName(): $type
+     {$deprecatedTag}public function get$pascalCaseName(): $type
      {
          if (\$this->$propertyName === null) {
              throw new \LogicException('$propertyName has not been set');
@@ -70,7 +72,7 @@ EOC;
          return \$this->$propertyName;
      }
      
-     public function set$pascalCaseName($type \$$propertyName): $interface
+     {$deprecatedTag}public function set$pascalCaseName($type \$$propertyName): $interface
      {
          if (\$this->$propertyName !== null) {
              throw new \LogicException('$propertyName has already been set');
@@ -80,7 +82,7 @@ EOC;
          return \$this;
      }
      
-     public function has$pascalCaseName(): bool
+     {$deprecatedTag}public function has$pascalCaseName(): bool
      {
         return \$this->$propertyName !== null;
      }
@@ -88,7 +90,7 @@ EOC;
 EOC;
     }
 
-    private function getPascalCaseName(string $propertyName) : string
+    private function getPascalCaseName(string $propertyName): string
     {
         $propertyArray = explode('_', $propertyName);
 

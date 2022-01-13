@@ -28,4 +28,12 @@ interface DaoPropertyInterface extends \JsonSerializable
     public function getCreatedOnInsert(): bool;
     public function setCreatedOnInsert(bool $createdOnInsert): DaoPropertyInterface;
     public function hasCreatedOnInsert(): bool;
+
+    public function getDeprecated(): bool;
+    public function setDeprecated(bool $deprecated): DaoPropertyInterface;
+    public function hasDeprecated(): bool;
+
+    public function getDeprecatedMessage(): string;
+    public function setDeprecatedMessage(string $deprecated_message): DaoPropertyInterface;
+    public function hasDeprecatedMessage(): bool;
 }

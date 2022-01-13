@@ -23,6 +23,12 @@ class Builder implements BuilderInterface
         $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name']);
         $daoproperty->setCreatedOnInsert($record['created_on_insert'] ?? false);
 
+        $daoproperty->setDeprecated($record['deprecated'] ?? false);
+        $daoproperty->setDeprecatedMessage($record['deprecated_message'] ?? '');
+        if (!$daoproperty->getDeprecated() && $daoproperty->getDeprecatedMessage() !== '') {
+            throw new \UnexpectedValueException("deprecated_message {$daoproperty->getDeprecatedMessage()} is set for a non-deprecated property");
+        }
+
         return $daoproperty;
     }
 

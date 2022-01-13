@@ -48,9 +48,10 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             $name = $field['name'];
             $type = $field['type'];
             $recordKey = $field['record_key'];
+            $deprecated = ($field['deprecated'] ?? false) ? $field['deprecated_message'] : null;
 
-            $constants[] = $this->buildPropertyConstant($name, $recordKey);
-            $accessors[] = $this->buildAccessors($name, $type);
+            $constants[] = $this->buildPropertyConstant($name, $recordKey, $deprecated);
+            $accessors[] = $this->buildAccessors($name, $type, $deprecated);
         }
 
         return
@@ -91,24 +92,26 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
         return '[ ' . implode(', ', $arrayItems) . ']';
     }
 
-    private function buildPropertyConstant(string $propertyName, string $recordKey) : string
+    private function buildPropertyConstant(string $propertyName, string $recordKey, ?string $deprecated) : string
     {
         $allUpperPropertyName = strtoupper($propertyName);
+        $deprecatedTag = $deprecated !== null ? "/** @deprecated $deprecated */" . PHP_EOL . '    ' : '';
 
         return <<<EOC
-    public const PROP_$allUpperPropertyName = '$recordKey';
+    {$deprecatedTag}public const PROP_$allUpperPropertyName = '$recordKey';
 EOC;
     }
 
-    private function buildAccessors(string $propertyName, string $type): string
+    private function buildAccessors(string $propertyName, string $type, ?string $deprecated): string
     {
         $pascalCaseName = $this->getPascalCaseName($propertyName);
         $interface = $this->getAnnotationProcessorContext()->getFabricationFile()->getFileName() . 'Interface';
+        $deprecatedTag = $deprecated !== null ? "/** @deprecated $deprecated */" . PHP_EOL . '    ' : '';
 
         return <<<EOC
-    public function get$pascalCaseName(): $type;
-    public function set$pascalCaseName($type \$$propertyName): $interface;
-    public function has$pascalCaseName(): bool;
+    {$deprecatedTag}public function get$pascalCaseName(): $type;
+    {$deprecatedTag}public function set$pascalCaseName($type \$$propertyName): $interface;
+    {$deprecatedTag}public function has$pascalCaseName(): bool;
 EOC;
     }
 

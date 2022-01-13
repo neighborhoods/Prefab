@@ -20,7 +20,7 @@ class Builder implements BuilderInterface
             foreach ($this->getBuildConfiguration()->getConstantMap() as $constant) {
                 $staticContextRecord[DAOInterfaceProperties::STATIC_CONTEXT_RECORD_KEY_CONSTANTS][] = [
                     'name' => $constant->getName(),
-                    'value' => $constant->getValue()
+                    'value' => $constant->getValue(),
                 ];
             }
         }
@@ -29,7 +29,9 @@ class Builder implements BuilderInterface
             $staticContextRecord[DAOInterfaceProperties::STATIC_CONTEXT_RECORD_KEY_PROPERTIES][] = [
                 'name' => $property->getName(),
                 'type' => $property->getDataType(),
-                'record_key' => $property->getRecordKey()
+                'record_key' => $property->getRecordKey(),
+                'deprecated' => $property->getDeprecated(),
+                'deprecated_message' => $property->getDeprecatedMessage(),
             ];
         }
 

@@ -19,7 +19,9 @@ class Builder implements BuilderInterface
         foreach ($buildConfiguration->getDaoPropertyMap() as $property) {
             $staticContextRecord[] = [
                 'name' => $property->getName(),
-                'type' => $property->getDataType()
+                'type' => $property->getDataType(),
+                'deprecated' => $property->getDeprecated(),
+                'deprecated_message' => $property->getDeprecatedMessage(),
             ];
         }
 
