@@ -6,6 +6,7 @@ namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Use
 use Neighborhoods\Prefab\AnnotationProcessor\UseNamespaces;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
 use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
+use JetBrains\PhpStorm\Deprecated;
 
 class Builder implements BuilderInterface
 {
@@ -25,8 +26,7 @@ class Builder implements BuilderInterface
         }
 
         if ($hasDeprecation) {
-            // `require JetBrains/phpstorm-stubs` & use Deprecated::class instead?
-            $namespaces[] = 'JetBrains\\PhpStorm\\Deprecated';
+            $namespaces[] = Deprecated::class;
         }
 
         if (!empty($namespaces)) {
