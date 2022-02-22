@@ -29,12 +29,12 @@ class Builder implements BuilderInterface
         $daoproperty->setReplacement($record['replacement'] ?? '');
         if (!$daoproperty->getIsDeprecated() && $daoproperty->getDeprecatedMessage() !== '') {
             throw new \UnexpectedValueException(
-                "deprecated_message {$daoproperty->getDeprecatedMessage()} is set for a non-deprecated property"
+                "deprecated_message '{$daoproperty->getDeprecatedMessage()}' is set for a non-deprecated property"
             );
         }
         if (!$daoproperty->getIsDeprecated() && $daoproperty->getReplacement() !== '') {
             throw new \UnexpectedValueException(
-                "replacement {$daoproperty->getReplacement()} is set for a non-deprecated property"
+                "replacement '{$daoproperty->getReplacement()}' is set for a non-deprecated property"
             );
         }
 
