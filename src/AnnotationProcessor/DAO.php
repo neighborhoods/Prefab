@@ -39,12 +39,12 @@ class DAO implements AnnotationProcessorInterface
             $name = $field['name'];
             $type = $field['type'];
 
-            $deprecated = $field['deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
+            $isDeprecated = $field['is_deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
             $deprecatedMessage = $field['deprecated_message'] ?? null;
             $replacement = $field['replacement'] ?? null;
 
             $properties[] = $this->buildProperty($name, $type);
-            $accessors[] = $this->buildAccessors($name, $type, $deprecated, $deprecatedMessage, $replacement);
+            $accessors[] = $this->buildAccessors($name, $type, $isDeprecated, $deprecatedMessage, $replacement);
         }
 
         return implode(PHP_EOL . PHP_EOL, $properties) . PHP_EOL . PHP_EOL . implode(PHP_EOL . PHP_EOL, $accessors);
@@ -61,15 +61,15 @@ EOC;
     private function buildAccessors(
         string $propertyName,
         string $type,
-        bool $deprecated,
+        bool $isDeprecated,
         ?string $deprecatedMessage,
         ?string $replacement
     ): string {
         $pascalCaseName = $this->getPascalCaseName($propertyName);
         $interface = $this->getAnnotationProcessorContext()->getFabricationFile()->getFileName() . 'Interface';
-        $getterDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('get', $deprecatedMessage, $replacement) : '';
-        $setterDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('set', $deprecatedMessage, $replacement) : '';
-        $hasserDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('has', $deprecatedMessage, $replacement) : '';
+        $getterDeprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('get', $deprecatedMessage, $replacement) : '';
+        $setterDeprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('set', $deprecatedMessage, $replacement) : '';
+        $hasserDeprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('has', $deprecatedMessage, $replacement) : '';
 
         return <<<EOC
     {$getterDeprecatedTag}public function get$pascalCaseName(): $type

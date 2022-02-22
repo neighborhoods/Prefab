@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessorRecord;
 
+
+
 interface StaticContextRecordInterface extends \JsonSerializable
 {
 

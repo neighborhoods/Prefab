@@ -20,7 +20,7 @@ class Builder implements BuilderInterface
 
         $hasDeprecation = false;
         foreach ($buildConfiguration->getDaoPropertyMap() as $property) {
-            if ($property->getDeprecated()) {
+            if ($property->getIsDeprecated()) {
                 $hasDeprecation = true;
             }
         }

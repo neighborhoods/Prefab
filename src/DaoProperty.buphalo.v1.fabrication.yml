@@ -15,7 +15,7 @@ actors:
             type: string
           - name: createdOnInsert
             type: bool
-          - name: deprecated
+          - name: is_deprecated
             type: bool
           - name: deprecated_message
             type: string
@@ -39,7 +39,7 @@ actors:
             type: string
           - name: createdOnInsert
             type: bool
-          - name: deprecated
+          - name: is_deprecated
             type: bool
           - name: deprecated_message
             type: string

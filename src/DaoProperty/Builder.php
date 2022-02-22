@@ -24,15 +24,15 @@ class Builder implements BuilderInterface
         $daoproperty->setRecordKey($record['record_key'] ?? $record['database_column_name']);
         $daoproperty->setCreatedOnInsert($record['created_on_insert'] ?? false);
 
-        $daoproperty->setDeprecated($record['deprecated'] ?? false);
+        $daoproperty->setIsDeprecated($record['is_deprecated'] ?? false);
         $daoproperty->setDeprecatedMessage($record['deprecated_message'] ?? '');
         $daoproperty->setReplacement($record['replacement'] ?? '');
-        if (!$daoproperty->getDeprecated() && $daoproperty->getDeprecatedMessage() !== '') {
+        if (!$daoproperty->getIsDeprecated() && $daoproperty->getDeprecatedMessage() !== '') {
             throw new \UnexpectedValueException(
                 "deprecated_message {$daoproperty->getDeprecatedMessage()} is set for a non-deprecated property"
             );
         }
-        if (!$daoproperty->getDeprecated() && $daoproperty->getReplacement() !== '') {
+        if (!$daoproperty->getIsDeprecated() && $daoproperty->getReplacement() !== '') {
             throw new \UnexpectedValueException(
                 "replacement {$daoproperty->getReplacement()} is set for a non-deprecated property"
             );

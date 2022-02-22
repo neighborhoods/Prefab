@@ -49,18 +49,18 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             $type = $field['type'];
             $recordKey = $field['record_key'];
 
-            $deprecated = $field['deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
+            $isDeprecated = $field['is_deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
             $deprecatedMessage = $field['deprecated_message'] ?? null;
             $replacement = $field['replacement'] ?? null;
 
             $constants[] = $this->buildPropertyConstant(
                 $name,
                 $recordKey,
-                $deprecated,
+                $isDeprecated,
                 $deprecatedMessage,
                 $replacement
             );
-            $accessors[] = $this->buildAccessors($name, $type, $deprecated, $deprecatedMessage, $replacement);
+            $accessors[] = $this->buildAccessors($name, $type, $isDeprecated, $deprecatedMessage, $replacement);
         }
 
         return
@@ -104,12 +104,12 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
     private function buildPropertyConstant(
         string $propertyName,
         string $recordKey,
-        bool $deprecated,
+        bool $isDeprecated,
         ?string $deprecatedMessage,
         ?string $replacement
     ): string {
         $allUpperPropertyName = strtoupper($propertyName);
-        $deprecatedTag = $deprecated ? $this->buildDeprecatedTag('const', $deprecatedMessage, $replacement) : '';
+        $deprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('const', $deprecatedMessage, $replacement) : '';
 
         return <<<EOC
     {$deprecatedTag}public const PROP_$allUpperPropertyName = '$recordKey';
@@ -119,15 +119,15 @@ EOC;
     private function buildAccessors(
         string $propertyName,
         string $type,
-        bool $deprecated,
+        bool $isDeprecated,
         ?string $deprecatedMessage,
         ?string $replacement
     ): string {
         $pascalCaseName = $this->getPascalCaseName($propertyName);
         $interface = $this->getAnnotationProcessorContext()->getFabricationFile()->getFileName() . 'Interface';
-        $getterDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('get', $deprecatedMessage, $replacement) : '';
-        $setterDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('set', $deprecatedMessage, $replacement) : '';
-        $hasserDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('has', $deprecatedMessage, $replacement) : '';
+        $getterDeprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('get', $deprecatedMessage, $replacement) : '';
+        $setterDeprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('set', $deprecatedMessage, $replacement) : '';
+        $hasserDeprecatedTag = $isDeprecated ? $this->buildDeprecatedTag('has', $deprecatedMessage, $replacement) : '';
 
         return <<<EOC
     {$getterDeprecatedTag}public function get$pascalCaseName(): $type;
