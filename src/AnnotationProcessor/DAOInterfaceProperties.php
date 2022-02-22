@@ -48,10 +48,19 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             $name = $field['name'];
             $type = $field['type'];
             $recordKey = $field['record_key'];
-            $deprecated = ($field['deprecated'] ?? false) ? $field['deprecated_message'] : null;
 
-            $constants[] = $this->buildPropertyConstant($name, $recordKey, $deprecated);
-            $accessors[] = $this->buildAccessors($name, $type, $deprecated);
+            $deprecated = $field['deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
+            $deprecatedMessage = $field['deprecated_message'] ?? null;
+            $replacement = $field['replacement'] ?? null;
+
+            $constants[] = $this->buildPropertyConstant(
+                $name,
+                $recordKey,
+                $deprecated,
+                $deprecatedMessage,
+                $replacement
+            );
+            $accessors[] = $this->buildAccessors($name, $type, $deprecated, $deprecatedMessage, $replacement);
         }
 
         return
@@ -60,9 +69,9 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             implode(PHP_EOL . PHP_EOL, $accessors);
     }
 
-    private function buildUserDefinedConstant(string $name, $value) : string
+    private function buildUserDefinedConstant(string $name, $value): string
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $valueString = $this->convertArrayToStringValue($value);
         } else {
             $valueString = var_export($value, true);
@@ -71,12 +80,12 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
         return "    public const $name = $valueString;";
     }
 
-    private function convertArrayToStringValue(array $values)
+    private function convertArrayToStringValue(array $values): string
     {
         $arrayItems = [];
 
         foreach ($values as $key => $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $valueToAppendToArray = $this->convertArrayToStringValue($value);
             } else {
                 $valueToAppendToArray = var_export($value, true);
@@ -92,30 +101,74 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
         return '[ ' . implode(', ', $arrayItems) . ']';
     }
 
-    private function buildPropertyConstant(string $propertyName, string $recordKey, ?string $deprecated) : string
-    {
+    private function buildPropertyConstant(
+        string $propertyName,
+        string $recordKey,
+        bool $deprecated,
+        ?string $deprecatedMessage,
+        ?string $replacement
+    ): string {
         $allUpperPropertyName = strtoupper($propertyName);
-        $deprecatedTag = $deprecated !== null ? "/** @deprecated $deprecated */" . PHP_EOL . '    ' : '';
+        $deprecatedTag = $deprecated ? $this->buildDeprecatedTag('const', $deprecatedMessage, $replacement) : '';
 
         return <<<EOC
     {$deprecatedTag}public const PROP_$allUpperPropertyName = '$recordKey';
 EOC;
     }
 
-    private function buildAccessors(string $propertyName, string $type, ?string $deprecated): string
-    {
+    private function buildAccessors(
+        string $propertyName,
+        string $type,
+        bool $deprecated,
+        ?string $deprecatedMessage,
+        ?string $replacement
+    ): string {
         $pascalCaseName = $this->getPascalCaseName($propertyName);
         $interface = $this->getAnnotationProcessorContext()->getFabricationFile()->getFileName() . 'Interface';
-        $deprecatedTag = $deprecated !== null ? "/** @deprecated $deprecated */" . PHP_EOL . '    ' : '';
+        $getterDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('get', $deprecatedMessage, $replacement) : '';
+        $setterDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('set', $deprecatedMessage, $replacement) : '';
+        $hasserDeprecatedTag = $deprecated ? $this->buildDeprecatedTag('has', $deprecatedMessage, $replacement) : '';
 
         return <<<EOC
-    {$deprecatedTag}public function get$pascalCaseName(): $type;
-    {$deprecatedTag}public function set$pascalCaseName($type \$$propertyName): $interface;
-    {$deprecatedTag}public function has$pascalCaseName(): bool;
+    {$getterDeprecatedTag}public function get$pascalCaseName(): $type;
+    {$setterDeprecatedTag}public function set$pascalCaseName($type \$$propertyName): $interface;
+    {$hasserDeprecatedTag}public function has$pascalCaseName(): bool;
 EOC;
     }
 
-    private function getPascalCaseName(string $propertyName) : string
+    /** @link https://blog.jetbrains.com/phpstorm/2020/10/phpstorm-2020-3-eap-4/#deprecated */
+    private function buildDeprecatedTag(string $method, ?string $message, ?string $replacement): string
+    {
+        $params = [];
+        if ($message) {
+            $params[] = sprintf('reason: \'%s\'', addslashes($message));
+        }
+
+        if ($replacement) {
+            $params[] = sprintf('replacement: \'%s\'', $this->buildReplacement($method, $replacement));
+        }
+
+        return sprintf('#[Deprecated(%s)]', implode(', ', $params)) . PHP_EOL . '    ';
+    }
+
+    private function buildReplacement(string $method, string $field): string
+    {
+        $pascalCaseName = $this->getPascalCaseName($field);
+        switch ($method) {
+            case 'get':
+            case 'has':
+                return "%class%->{$method}{$pascalCaseName}()";
+            case 'set':
+                return "%class%->{$method}{$pascalCaseName}(%parameter0%)";
+            case 'const':
+                return "%class%::PROP_" . strtoupper($field);
+            default:
+                throw new \UnexpectedValueException("Unexpected method $method");
+        }
+    }
+
+
+    private function getPascalCaseName(string $propertyName): string
     {
         $propertyArray = explode('_', $propertyName);
 

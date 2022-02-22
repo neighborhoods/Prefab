@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\Actor\DaoPropertiesAndAccessors;
+namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\UseNamespaces;
 
+use Neighborhoods\Prefab\AnnotationProcessor\UseNamespaces;
 use Neighborhoods\Prefab\BuildConfigurationInterface;
-use Neighborhoods\Prefab\DaoPropertyInterface;
 use Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\BuilderInterface;
 
 class Builder implements BuilderInterface
@@ -15,15 +15,22 @@ class Builder implements BuilderInterface
     {
         $buildConfiguration = $this->getBuildConfiguration();
         $staticContextRecord = [];
+        $namespaces = [];
 
+        $hasDeprecation = false;
         foreach ($buildConfiguration->getDaoPropertyMap() as $property) {
-            $staticContextRecord[] = [
-                'name' => $property->getName(),
-                'type' => $property->getDataType(),
-                'deprecated' => $property->getDeprecated(),
-                'deprecated_message' => $property->getDeprecatedMessage(),
-                'replacement' => $property->getReplacement(),
-            ];
+            if ($property->getDeprecated()) {
+                $hasDeprecation = true;
+            }
+        }
+
+        if ($hasDeprecation) {
+            // `require JetBrains/phpstorm-stubs` & use Deprecated::class instead?
+            $namespaces[] = 'JetBrains\\PhpStorm\\Deprecated';
+        }
+
+        if (!empty($namespaces)) {
+            $staticContextRecord[UseNamespaces::CONTEXT_KEY_USES] = $namespaces;
         }
 
         return $staticContextRecord;

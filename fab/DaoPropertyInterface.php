@@ -36,4 +36,8 @@ interface DaoPropertyInterface extends \JsonSerializable
     public function getDeprecatedMessage(): string;
     public function setDeprecatedMessage(string $deprecated_message): DaoPropertyInterface;
     public function hasDeprecatedMessage(): bool;
+
+    public function getReplacement(): string;
+    public function setReplacement(string $replacement): DaoPropertyInterface;
+    public function hasReplacement(): bool;
 }

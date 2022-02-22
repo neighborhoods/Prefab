@@ -19,6 +19,8 @@ actors:
             type: bool
           - name: deprecated_message
             type: string
+          - name: replacement
+            type: string
   <PrimaryActorName>.service.yml:
     template: PrimaryActorName.service.yml
   <PrimaryActorName>Interface.php:
@@ -40,6 +42,8 @@ actors:
           - name: deprecated
             type: bool
           - name: deprecated_message
+            type: string
+          - name: replacement
             type: string
   <PrimaryActorName>/AwareTrait.php:
     template: PrimaryActorName/AwareTrait.php

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\DaoProperty;
@@ -11,7 +12,7 @@ class Builder implements BuilderInterface
 
     protected $record;
 
-    public function build() : DaoPropertyInterface
+    public function build(): DaoPropertyInterface
     {
         $daoproperty = $this->getDaoPropertyFactory()->create();
         $record = $this->getRecord();
@@ -25,14 +26,22 @@ class Builder implements BuilderInterface
 
         $daoproperty->setDeprecated($record['deprecated'] ?? false);
         $daoproperty->setDeprecatedMessage($record['deprecated_message'] ?? '');
+        $daoproperty->setReplacement($record['replacement'] ?? '');
         if (!$daoproperty->getDeprecated() && $daoproperty->getDeprecatedMessage() !== '') {
-            throw new \UnexpectedValueException("deprecated_message {$daoproperty->getDeprecatedMessage()} is set for a non-deprecated property");
+            throw new \UnexpectedValueException(
+                "deprecated_message {$daoproperty->getDeprecatedMessage()} is set for a non-deprecated property"
+            );
+        }
+        if (!$daoproperty->getDeprecated() && $daoproperty->getReplacement() !== '') {
+            throw new \UnexpectedValueException(
+                "replacement {$daoproperty->getReplacement()} is set for a non-deprecated property"
+            );
         }
 
         return $daoproperty;
     }
 
-    protected function getRecord() : array
+    protected function getRecord(): array
     {
         if ($this->record === null) {
             throw new \LogicException('Builder record has not been set.');
@@ -41,7 +50,7 @@ class Builder implements BuilderInterface
         return $this->record;
     }
 
-    public function setRecord(array $record) : BuilderInterface
+    public function setRecord(array $record): BuilderInterface
     {
         if ($this->record !== null) {
             throw new \LogicException('Builder record is already set.');

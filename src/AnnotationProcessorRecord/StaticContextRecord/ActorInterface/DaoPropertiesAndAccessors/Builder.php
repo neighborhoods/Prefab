@@ -32,6 +32,7 @@ class Builder implements BuilderInterface
                 'record_key' => $property->getRecordKey(),
                 'deprecated' => $property->getDeprecated(),
                 'deprecated_message' => $property->getDeprecatedMessage(),
+                'replacement' => $property->getReplacement(),
             ];
         }
 

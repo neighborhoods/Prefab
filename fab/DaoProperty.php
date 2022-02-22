@@ -26,6 +26,9 @@ class DaoProperty implements DaoPropertyInterface
     /** @var string */
     private $deprecated_message;
 
+    /** @var string */
+    private $replacement;
+
      public function getName(): string
      {
          if ($this->name === null) {
@@ -198,6 +201,31 @@ class DaoProperty implements DaoPropertyInterface
      public function hasDeprecatedMessage(): bool
      {
         return $this->deprecated_message !== null;
+     }
+     
+
+     public function getReplacement(): string
+     {
+         if ($this->replacement === null) {
+             throw new \LogicException('replacement has not been set');
+         }
+         
+         return $this->replacement;
+     }
+     
+     public function setReplacement(string $replacement): DaoPropertyInterface
+     {
+         if ($this->replacement !== null) {
+             throw new \LogicException('replacement has already been set');
+         }
+         
+         $this->replacement = $replacement;
+         return $this;
+     }
+     
+     public function hasReplacement(): bool
+     {
+        return $this->replacement !== null;
      }
      
 
