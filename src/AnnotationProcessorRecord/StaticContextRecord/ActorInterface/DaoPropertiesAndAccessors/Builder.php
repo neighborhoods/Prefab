@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Neighborhoods\Prefab\AnnotationProcessorRecord\StaticContextRecord\ActorInterface\DaoPropertiesAndAccessors;
@@ -11,7 +12,7 @@ class Builder implements BuilderInterface
 {
     protected $buildConfiguration;
 
-    public function build() : array
+    public function build(): array
     {
         $buildConfiguration = $this->getBuildConfiguration();
         $staticContextRecord = [];
@@ -31,15 +32,15 @@ class Builder implements BuilderInterface
                 'type' => $property->getDataType(),
                 'record_key' => $property->getRecordKey(),
                 'is_deprecated' => $property->getIsDeprecated(),
-                'deprecated_message' => $property->getDeprecatedMessage(),
-                'replacement' => $property->getReplacement(),
+                'deprecated_message' => $property->hasDeprecatedMessage() ? $property->getDeprecatedMessage() : null,
+                'replacement' => $property->hasReplacement() ? $property->getReplacement() : null,
             ];
         }
 
         return $staticContextRecord;
     }
 
-    public function getBuildConfiguration() : BuildConfigurationInterface
+    public function getBuildConfiguration(): BuildConfigurationInterface
     {
         if ($this->buildConfiguration === null) {
             throw new \LogicException('Builder buildConfiguration has not been set.');
@@ -47,7 +48,7 @@ class Builder implements BuilderInterface
         return $this->buildConfiguration;
     }
 
-    public function setBuildConfiguration(BuildConfigurationInterface $buildConfiguration) : BuilderInterface
+    public function setBuildConfiguration(BuildConfigurationInterface $buildConfiguration): BuilderInterface
     {
         if ($this->buildConfiguration !== null) {
             throw new \LogicException('Builder buildConfiguration is already set.');

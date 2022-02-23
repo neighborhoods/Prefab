@@ -25,20 +25,35 @@ class Builder implements BuilderInterface
         $daoproperty->setCreatedOnInsert($record['created_on_insert'] ?? false);
 
         $daoproperty->setIsDeprecated($record['is_deprecated'] ?? false);
-        $daoproperty->setDeprecatedMessage($record['deprecated_message'] ?? '');
-        $daoproperty->setReplacement($record['replacement'] ?? '');
-        if (!$daoproperty->getIsDeprecated() && $daoproperty->getDeprecatedMessage() !== '') {
-            throw new \UnexpectedValueException(
-                "deprecated_message '{$daoproperty->getDeprecatedMessage()}' is set for a non-deprecated property"
-            );
-        }
-        if (!$daoproperty->getIsDeprecated() && $daoproperty->getReplacement() !== '') {
-            throw new \UnexpectedValueException(
-                "replacement '{$daoproperty->getReplacement()}' is set for a non-deprecated property"
-            );
+
+        if (!empty($record['deprecated_message'])) { // allow for empty or null in the prefab file
+            $daoproperty->setDeprecatedMessage($record['deprecated_message']);
         }
 
+        if (!empty($record['replacement'])) { // allow for empty or null in the prefab filet status
+            $daoproperty->setReplacement($record['replacement']);
+        }
+
+        $this->validateDaoProperty($daoproperty);
+
         return $daoproperty;
+    }
+
+    private function validateDaoProperty(DaoPropertyInterface $daoProperty): void
+    {
+        if (!$daoProperty->getIsDeprecated()) {
+            if ($daoProperty->hasDeprecatedMessage()) {
+                throw new \UnexpectedValueException(
+                    "deprecated_message '{$daoProperty->getDeprecatedMessage()}' is set for a non-deprecated property"
+                );
+            }
+
+            if ($daoProperty->hasReplacement()) {
+                throw new \UnexpectedValueException(
+                    "replacement '{$daoProperty->getReplacement()}' is set for a non-deprecated property"
+                );
+            }
+        }
     }
 
     protected function getRecord(): array

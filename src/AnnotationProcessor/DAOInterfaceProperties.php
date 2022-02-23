@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Neighborhoods\Prefab\AnnotationProcessor;
 
 use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
@@ -13,7 +15,7 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
     /** @var ContextInterface */
     private $context;
 
-    public function setAnnotationProcessorContext(ContextInterface $Context)
+    public function setAnnotationProcessorContext(ContextInterface $Context): void
     {
         if ($this->context !== null) {
             throw new \LogicException('DAOInterface Annotation Processor context is already set');
@@ -49,9 +51,10 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             $type = $field['type'];
             $recordKey = $field['record_key'];
 
-            $isDeprecated = $field['is_deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
+            $isDeprecated = $field['is_deprecated'] ?? false;
             $deprecatedMessage = $field['deprecated_message'] ?? null;
             $replacement = $field['replacement'] ?? null;
+            $this->validateDeprecation($isDeprecated, $deprecatedMessage, $replacement);
 
             $constants[] = $this->buildPropertyConstant(
                 $name,
@@ -67,6 +70,22 @@ class DAOInterfaceProperties implements AnnotationProcessorInterface
             implode(PHP_EOL, $constants) .
             PHP_EOL . PHP_EOL .
             implode(PHP_EOL . PHP_EOL, $accessors);
+    }
+
+    private function validateDeprecation(bool $isDeprecated, ?string $deprecatedMessage, ?string $replacement): void
+    {
+        if (!$isDeprecated) {
+            if ($deprecatedMessage !== null) {
+                throw new \UnexpectedValueException(
+                    "deprecated_message '$deprecatedMessage' is set for a non-deprecated property"
+                );
+            }
+            if ($replacement !== null) {
+                throw new \UnexpectedValueException(
+                    "replacement '$replacement' is set for a non-deprecated property"
+                );
+            }
+        }
     }
 
     private function buildUserDefinedConstant(string $name, $value): string

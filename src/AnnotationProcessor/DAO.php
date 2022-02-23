@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Neighborhoods\Prefab\AnnotationProcessor;
 
 use Neighborhoods\Buphalo\V1\AnnotationProcessor\ContextInterface;
@@ -10,7 +12,7 @@ class DAO implements AnnotationProcessorInterface
     /** @var ContextInterface */
     private $context;
 
-    public function setAnnotationProcessorContext(ContextInterface $Context)
+    public function setAnnotationProcessorContext(ContextInterface $Context): void
     {
         if ($this->context !== null) {
             throw new \LogicException('DAO Annotation Processor context is already set');
@@ -39,15 +41,32 @@ class DAO implements AnnotationProcessorInterface
             $name = $field['name'];
             $type = $field['type'];
 
-            $isDeprecated = $field['is_deprecated'] ?? isset($field['deprecated_message']) || isset($field['replacement']);
+            $isDeprecated = $field['is_deprecated'] ?? false;
             $deprecatedMessage = $field['deprecated_message'] ?? null;
             $replacement = $field['replacement'] ?? null;
+            $this->validateDeprecation($isDeprecated, $deprecatedMessage, $replacement);
 
             $properties[] = $this->buildProperty($name, $type);
             $accessors[] = $this->buildAccessors($name, $type, $isDeprecated, $deprecatedMessage, $replacement);
         }
 
         return implode(PHP_EOL . PHP_EOL, $properties) . PHP_EOL . PHP_EOL . implode(PHP_EOL . PHP_EOL, $accessors);
+    }
+
+    private function validateDeprecation(bool $isDeprecated, ?string $deprecatedMessage, ?string $replacement): void
+    {
+        if (!$isDeprecated) {
+            if ($deprecatedMessage !== null) {
+                throw new \UnexpectedValueException(
+                    "deprecated_message '$deprecatedMessage' is set for a non-deprecated property"
+                );
+            }
+            if ($replacement !== null) {
+                throw new \UnexpectedValueException(
+                    "replacement '$replacement' is set for a non-deprecated property"
+                );
+            }
+        }
     }
 
     private function buildProperty(string $name, string $type): string
