@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\Prefab;
 
+
+
 interface DaoPropertyInterface extends \JsonSerializable
 {
 
@@ -28,4 +30,16 @@ interface DaoPropertyInterface extends \JsonSerializable
     public function getCreatedOnInsert(): bool;
     public function setCreatedOnInsert(bool $createdOnInsert): DaoPropertyInterface;
     public function hasCreatedOnInsert(): bool;
+
+    public function getIsDeprecated(): bool;
+    public function setIsDeprecated(bool $is_deprecated): DaoPropertyInterface;
+    public function hasIsDeprecated(): bool;
+
+    public function getDeprecatedMessage(): string;
+    public function setDeprecatedMessage(string $deprecated_message): DaoPropertyInterface;
+    public function hasDeprecatedMessage(): bool;
+
+    public function getReplacement(): string;
+    public function setReplacement(string $replacement): DaoPropertyInterface;
+    public function hasReplacement(): bool;
 }
