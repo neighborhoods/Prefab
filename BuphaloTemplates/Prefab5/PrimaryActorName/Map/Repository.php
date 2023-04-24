@@ -18,6 +18,7 @@ class Repository implements RepositoryInterface
     use PrimaryActorName\Map\Builder\Factory\AwareTrait;
     use Prefab5\Doctrine\DBAL\Connection\Decorator\Repository\AwareTrait;
     use Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Builder\Factory\AwareTrait;
+    use Prefab5\SearchCriteria\Validator\Builder\Factory\AwareTrait;
 
     protected $connection;
 
@@ -33,6 +34,10 @@ class Repository implements RepositoryInterface
 
     public function get(Prefab5\SearchCriteriaInterface $searchCriteria) : MapInterface
     {
+        if ($this->hasValidatorBuilderFactory()) {
+            $this->getValidatorBuilderFactory()->create()->build()->validate($searchCriteria);
+        }
+
         $queryBuilderBuilder = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderBuilderFactory()->create();
         $queryBuilderBuilder->setSearchCriteria($searchCriteria);
         $queryBuilder = $queryBuilderBuilder->build();

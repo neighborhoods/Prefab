@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTP;
 
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Runtime;
-use Zend\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
+use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
 
 class SearchCriteriaBuilderException extends Runtime\Exception implements ProblemDetailsExceptionInterface
 {

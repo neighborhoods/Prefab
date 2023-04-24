@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\Builder\FactoryInterface:
+    class: PREFAB_PLACEHOLDER_VENDOR\PREFAB_PLACEHOLDER_PRODUCT\Prefab5\SearchCriteria\Validator\Builder\Factory
+    public: false
+    shared: true
+    calls:
+      - [setValidatorBuilder, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Map\Repository\Validator\BuilderInterface']]
