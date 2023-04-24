@@ -50,7 +50,7 @@ class BuilderFactoryTrait implements AnnotationProcessorInterface
                 && !in_array($property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE], $builtTraits)
             ) {
                 $dataType = str_replace('Interface', '', $property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE]);
-                $replacement .= "\tuse " . $dataType . '\\Builder\\Factory\\AwareTrait;' . PHP_EOL;
+                $replacement .= "    use " . $dataType . '\\Builder\\Factory\\AwareTrait;' . PHP_EOL;
                 $builtTraits[] = $property[self::STATIC_CONTEXT_RECORD_KEY_DATA_TYPE];
             }
         }
