@@ -7,6 +7,7 @@ use LogicException;
 use Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler;
 use Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder;
 use Psr\Container\ContainerInterface;
+use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\HTTPBuildableDirectoryMap\BuildableDirectoryNotFound;
 use ReplaceThisWithTheNameOfYourVendor\ReplaceThisWithTheNameOfYourProduct\Prefab5\Opcache\HTTPBuildableDirectoryMap\InvalidDirectory;
 use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass;
@@ -98,9 +99,19 @@ class ContainerBuilder implements ContainerBuilderInterface
             }
         } else {
             foreach ($discoverableDirectories->getDirectoryPathFilters() as $directoryPathFilter) {
-                $fullPaths[] = $filesystemProperties->getSourceDirectoryPath() . '/' . $directoryPathFilter;
+                $sourcePathCandidate = $filesystemProperties->getSourceDirectoryPath() . '/' . $directoryPathFilter;
                 $fabricationPathCandidate = $filesystemProperties->getFabricationDirectoryPath() . '/' . $directoryPathFilter;
-                if ($filesystem->exists($fabricationPathCandidate)) {
+                $sourceExists = $filesystem->exists($sourcePathCandidate);
+                $fabricationExists = $filesystem->exists($fabricationPathCandidate);
+                if (!$sourceExists && !$fabricationExists) {
+                    throw (new BuildableDirectoryNotFound\Exception())
+                        ->setCode(BuildableDirectoryNotFound\Exception::CODE_BUILDABLE_DIRECTORY_NOT_FOUND)
+                        ->addMessage('Directory not found in src or fab: ' . $directoryPathFilter);
+                }
+                if ($sourceExists) {
+                    $fullPaths[] = $sourcePathCandidate;
+                }
+                if ($fabricationExists) {
                     $fullPaths[] = $fabricationPathCandidate;
                 }
             }
